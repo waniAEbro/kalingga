@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Category;
+use App\Models\Component;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -11,13 +15,13 @@ class Product extends Model
 
     protected $with = ["components", "categories"];
 
-    public function components()
+    public function components(): BelongsToMany
     {
-        return $this->belongsToMany(Component::class, "component_products");
+        return $this->belongsToMany(Component::class, "component_product");
     }
 
-    public function categories()
+    public function categories(): BelongsTo
     {
-        return $this->belongsToMany(Category::class, "category_products");
+        return $this->belongsTo(Category::class, "category_id", "id");
     }
 }

@@ -2,65 +2,78 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\component;
+use App\Models\Component;
 use App\Http\Requests\StorecomponentRequest;
 use App\Http\Requests\UpdatecomponentRequest;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class ComponentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
-        //
+        return view("components.index", ["components" => Component::get()]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view("components.create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorecomponentRequest $request)
+    public function store(StorecomponentRequest $request): RedirectResponse
     {
-        //
+        Component::create([
+            "name" => $request->name,
+            "price_per_unit" => $request->price_per_unit,
+            "unit" => $request->unit
+        ]);
+
+        return redirect("/components");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(component $component)
+    public function show(component $component): View
     {
-        //
+        return view("components.show", ["component" => Component::find($component->id)]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(component $component)
+    public function edit(component $component): View
     {
-        //
+        return view("components.edit", ["component" => Component::find($component->id)]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatecomponentRequest $request, component $component)
+    public function update(UpdatecomponentRequest $request, component $component): RedirectResponse
     {
-        //
+        $component->update([
+            "name" => $request->name,
+            "price_per_unit" => $request->price_per_unit,
+            "unit" => $request->unit
+        ]);
+        return redirect("/components");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(component $component)
+    public function destroy(component $component): RedirectResponse
     {
-        //
+        return redirect("/components");
     }
 }

@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Component extends Model
 {
     use HasFactory;
 
-    protected $with = ["products"];
-
-    public function products()
+    public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, "component_products");
+        return $this->belongsToMany(Product::class, "component_product");
     }
 }
