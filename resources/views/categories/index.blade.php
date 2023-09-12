@@ -2,6 +2,8 @@
 
 @section('content')
     <div x-data="data()" class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <a href="/categories/create" class="mb-5 text-white normal-case rounded btn btn-primary">Tambah
+            Data</a>
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
