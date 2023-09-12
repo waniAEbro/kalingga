@@ -75,8 +75,9 @@
                                     </svg>
                                 </button>
                             </a>
-                            <form action="/component/{{ $component->id }}" class="btn btn-sm btn-secondary" method="DELETE">
+                            <form action="/components/{{ $component->id }}" class="btn btn-sm btn-secondary" method="post">
                                 @csrf
+                                @method('delete')
                                 <button>
                                     <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" stroke="#000000">

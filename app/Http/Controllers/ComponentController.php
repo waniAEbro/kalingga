@@ -66,6 +66,7 @@ class ComponentController extends Controller
             "price_per_unit" => $request->price_per_unit,
             "unit" => $request->unit
         ]);
+
         return redirect("/components");
     }
 
