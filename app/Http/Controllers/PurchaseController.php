@@ -46,7 +46,7 @@ class PurchaseController extends Controller
      */
     public function show(Purchase $purchase)
     {
-
+        return view("purchases.show", ["purchases" => Purchase::find($purchase->id)]);
     }
 
     /**
@@ -54,7 +54,7 @@ class PurchaseController extends Controller
      */
     public function edit(Purchase $purchase)
     {
-        //
+        return view("purchases.edit", ["purchases" => Purchase::find($purchase->id)]);
     }
 
     /**
@@ -62,7 +62,15 @@ class PurchaseController extends Controller
      */
     public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
-        //
+        $purchase->update([
+            'supplier_id' => $request->supplier_id,
+            'purchase_date' => $request->purchase_date,
+            'due_date' => $request->due_date,
+            'status' => $request->status,
+            'remain_bill' => $request->remain_bill,
+        ]);
+
+        return redirect("/purchases");
     }
 
     /**
@@ -70,6 +78,7 @@ class PurchaseController extends Controller
      */
     public function destroy(Purchase $purchase)
     {
-        //
+        $purchase->delete();
+        return redirect("/purchases");
     }
 }
