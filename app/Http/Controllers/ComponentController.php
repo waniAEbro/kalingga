@@ -74,6 +74,7 @@ class ComponentController extends Controller
      */
     public function destroy(component $component): RedirectResponse
     {
+        $component->delete();
         return redirect("/components");
     }
 }

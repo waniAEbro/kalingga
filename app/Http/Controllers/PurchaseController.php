@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
+use Illuminate\Http\RedirectResponse;
 
 class PurchaseController extends Controller
 {
@@ -13,7 +14,7 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        //
+        return view('purchases.index', ["purchases" =>Purchase::get()]);
     }
 
     /**
@@ -21,15 +22,23 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        //
+        return view('purchases.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePurchaseRequest $request)
+    public function store(StorePurchaseRequest $request) :RedirectResponse
     {
-        //
+        Purchase::create([
+            'supplier_id' => $request->supplier_id,
+            'purchase_date' => $request->purchase_date,
+            'due_date' => $request->due_date,
+            'status' => $request->status,
+            'remain_bill' => $request->remain_bill,
+        ]);
+
+        return redirect("/purchases");
     }
 
     /**
@@ -37,7 +46,7 @@ class PurchaseController extends Controller
      */
     public function show(Purchase $purchase)
     {
-        //
+
     }
 
     /**
