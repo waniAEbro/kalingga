@@ -6,6 +6,7 @@ use App\Models\Sale;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Production extends Model
@@ -14,9 +15,9 @@ class Production extends Model
 
     protected $guarded = ["id"];
 
-    public function products(): BelongsToMany
+    public function product(): BelongsTo
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsTo(Product::class, "product_id", "id");
     }
 
     public function sales(): BelongsToMany

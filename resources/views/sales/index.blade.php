@@ -142,7 +142,7 @@
                             {{ $sale->total_bill }}
                         </td>
                         <td class="flex gap-2 py-4">
-                            <a href="/components/{{ $component->id }}/edit">
+                            <a href="/sales/{{ $sale->id }}/edit">
                                 <button class="btn btn-sm btn-primary">
                                     <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -161,8 +161,7 @@
                                     </svg>
                                 </button>
                             </a>
-                            <form action="/components/{{ $component->id }}" class="btn btn-sm btn-secondary"
-                                method="post">
+                            <form action="/sales/{{ $sale->id }}" class="btn btn-sm btn-secondary" method="post">
                                 @csrf
                                 @method('delete')
                                 <button>

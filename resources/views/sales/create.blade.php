@@ -144,8 +144,8 @@
                         </div>
                     </div>
                     <div class="m-6 flex items-center justify-end gap-x-6">
-                        <h4>Total</h4>
-                        <h4 id="total">0</h4>
+                        <label for="total_bill">Total</label>
+                        <input type="number" name="total_bill" id="total_bill" value="0" readonly>
                     </div>
                     <div class="m-6 flex items-center justify-end gap-x-6">
                         <label for="paid">Bayar</label>
@@ -224,7 +224,7 @@
             subtotals.forEach(subtotalElement => {
                 total += parseFloat(subtotalElement.textContent);
             });
-            document.querySelector('#total').textContent = total.toString();
+            document.querySelector('#total_bill').value = total;
         }
 
         function delete_element(element) {

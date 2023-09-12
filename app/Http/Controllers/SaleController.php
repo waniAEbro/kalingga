@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
+use App\Models\Production;
 
 class SaleController extends Controller
 {
@@ -37,17 +38,33 @@ class SaleController extends Controller
             'customer_id' => $request->customer_id,
             'sale_date' => $request->sale_date,
             'due_date' => $request->due_date,
-            'status' => $request->total - $request->paid == 0 ? "close" : "open",
-            'total_bill' => $request->total,
+            'status' => $request->total_bill - $request->paid == 0 ? "close" : "open",
+            'total_bill' => $request->total_bill,
             'paid' => $request->paid,
-            "remain_bill" => $request->total - $request->paid,
+            "remain_bill" => $request->total_bill - $request->paid,
         ]);
 
+        $products = [];
+
         foreach ($request->product_id as $key => $id) {
-            DB::table("product_sale")->insert([
-                "product_id" => $id,
-                "sale_id" => $sale->id,
-                "quantity" => $request->quantity[$key],
+            $id = DB::table('product_sale')->insertGetId([
+                'product_id' => $id,
+                'sale_id' => $sale->id,
+                'quantity' => $request->quantity[$key],
+            ]);
+
+            $products[] = DB::table('product_sale')->find($id);
+        }
+
+        $customer = Customer::find($request->customer_id);
+
+        foreach ($products as $product) {
+            Production::create([
+                "code" => $customer->code . $product->quantity . "00",
+                "product_id" => $product->product_id,
+                "quantity_finished" => 0,
+                "quantity_not_finished" => $product->quantity,
+                "total_production" => $product->quantity,
             ]);
         }
 
