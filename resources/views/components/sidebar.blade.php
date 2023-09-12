@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li>
-                <a href="#"
+                <a href="/categories"
                     class="relative flex flex-row items-center pr-6 border-l-4 border-transparent h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 hover:border-blue-500 dark:hover:border-gray-800">
                     <span class="inline-flex items-center justify-center ml-4">
                         <svg fill="#ffffff" width="18px" height="18px" viewBox="0 0 35 35" data-name="Layer 2"
@@ -140,7 +140,7 @@
                 </a>
             </li>
             <li>
-                <a href="#"
+                <a href="/suppliers"
                     class="relative flex flex-row items-center pr-6 border-l-4 border-transparent h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 hover:border-blue-500 dark:hover:border-gray-800">
                     <span class="inline-flex items-center justify-center ml-4">
                         <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none"
@@ -160,7 +160,7 @@
                 </a>
             </li>
             <li>
-                <a href="#"
+                <a href="/customers"
                     class="relative flex flex-row items-center pr-6 border-l-4 border-transparent h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 hover:border-blue-500 dark:hover:border-gray-800">
                     <span class="inline-flex items-center justify-center ml-4">
                         <svg fill="#ffffff" width="18px" height="18px" viewBox="0 0 32 32" version="1.1"
@@ -206,7 +206,7 @@
                 </a>
             </li>
             <li>
-                <a href="#"
+                <a href="/purchases"
                     class="relative flex flex-row items-center pr-6 border-l-4 border-transparent h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 hover:border-blue-500 dark:hover:border-gray-800">
                     <span class="inline-flex items-center justify-center ml-4">
                         <svg fill="#ffffff" width="18px" height="18px" viewBox="0 0 1000 1000"
