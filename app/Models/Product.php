@@ -19,7 +19,7 @@ class Product extends Model
 
     public function components(): BelongsToMany
     {
-        return $this->belongsToMany(Component::class, "component_product");
+        return $this->belongsToMany(Component::class, "component_product")->withPivot("quantity");
     }
 
     public function categories(): BelongsTo

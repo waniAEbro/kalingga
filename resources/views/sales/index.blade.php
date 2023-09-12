@@ -2,33 +2,41 @@
 
 @section('content')
     <div x-data="data()" class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <a href="/components/create" class="mb-5 text-white normal-case rounded btn btn-primary">Tambah
+
+        {{-- header --}}
+        <div class="flex m-8 space-x-5">
+            <div class="flex-1 rounded-lg overflow-hidden border-2 border-yellow-500 shadow-lg shadow-yellow-300">
+                <div class="border-b-2 border-yellow-500 px-6 py-4 mb-2 mt-2 ">
+                    <div class="font-bold text-xl mb-2 text-center">Pembayaran Belum Selesai</div>
+                </div>
+                <div class="px-6 pt-4 pb-2">
+                </div>
+            </div>
+            <div class="flex-1 rounded-lg overflow-hidden border-2 border-red-500 shadow-lg shadow-red-300">
+                <div class="border-b-2 border-red-500 px-6 py-4 mb-2 mt-2 ">
+                    <div class="font-bold text-xl mb-2 text-center">Pembayaran Jatuh Tempo</div>
+                </div>
+                <div class="px-6 pt-4 pb-2">
+                </div>
+            </div>
+            <div class="flex-1 rounded-lg overflow-hidden border-2 border-green-500 shadow-lg shadow-green-300">
+                <div class="border-b-2 border-green-500 px-6 py-4 mb-2 mt-2 ">
+                    <div class="font-bold text-xl mb-2 text-center">Penjualan Lunas</div>
+                </div>
+                <div class="px-6 pt-4 pb-2">
+                </div>
+            </div>
+        </div>
+        {{-- end header --}}
+
+        <a href="/sales/create" class="mb-5 text-white normal-case rounded btn btn-primary">Tambah
             Data</a>
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3">
                         <div class="flex items-center">
-                            No <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                    <path
-                                        d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                                </svg></a>
-                        </div>
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        <div class="flex items-center">
-                            Component name <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5"
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                                </svg></a>
-                        </div>
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        <div class="flex items-center">
-                            Unit
+                            No
                             <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                                     <path
@@ -38,7 +46,57 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         <div class="flex items-center">
-                            Price per Unit
+                            Tanggal
+                            <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                </svg></a>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        <div class="flex items-center">
+                            Pelanggan
+                            <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                </svg></a>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        <div class="flex items-center">
+                            Tanggal Jatuh Tempo
+                            <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                </svg></a>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        <div class="flex items-center">
+                            Status
+                            <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                </svg></a>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        <div class="flex items-center">
+                            Sisa Tagihan
+                            <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                </svg></a>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        <div class="flex items-center">
+                            Total
                             <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                                     <path
@@ -60,19 +118,28 @@
                 </tr>
             </thead>
             <tbody x-ref="tbody">
-                @foreach ($components as $no => $component)
+                @foreach ($sales as $no => $sale)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $no + 1 }}
                         </th>
                         <td class="px-6 py-4">
-                            {{ $component->name }}
+                            {{ $sale->sale_date }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $component->unit }}
+                            {{ $sale->customer->name }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $component->price_per_unit }}
+                            {{ $sale->due_date }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $sale->status }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $sale->remain_bill }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $sale->total_bill }}
                         </td>
                         <td class="flex gap-2 py-4">
                             <a href="/components/{{ $component->id }}/edit">
@@ -94,7 +161,8 @@
                                     </svg>
                                 </button>
                             </a>
-                            <form action="/components/{{ $component->id }}" class="btn btn-sm btn-secondary" method="post">
+                            <form action="/components/{{ $component->id }}" class="btn btn-sm btn-secondary"
+                                method="post">
                                 @csrf
                                 @method('delete')
                                 <button>
