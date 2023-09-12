@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/app', function () {
+    return view('app');
+});
+
 Route::resource("products", ProductController::class);
 Route::resource("components", ProductController::class);
 Route::resource("categories", ProductController::class);
