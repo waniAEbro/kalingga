@@ -11,6 +11,8 @@ class Component extends Model
 {
     use HasFactory;
 
+    protected $guarded = ["id"];
+
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, "component_product");

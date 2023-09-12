@@ -9,6 +9,8 @@ class Supplier extends Model
 {
     use HasFactory;
 
+    protected $guarded = ["id"];
+
     public function components()
     {
         return $this->hasMany(Component::class);

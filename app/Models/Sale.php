@@ -13,6 +13,8 @@ class Sale extends Model
 {
     use HasFactory;
 
+    protected $guarded = ["id"];
+
     protected $with = ["customer", "product"];
 
     public function customer()
@@ -25,7 +27,8 @@ class Sale extends Model
         return $this->belongsToMany(Product::class);
     }
 
-    public function productions() : BelongsToMany {
+    public function productions(): BelongsToMany
+    {
         return $this->belongsToMany(Production::class);
     }
 }

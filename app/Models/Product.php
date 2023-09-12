@@ -13,6 +13,8 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $guarded = ["id"];
+
     protected $with = ["components", "categories"];
 
     public function components(): BelongsToMany

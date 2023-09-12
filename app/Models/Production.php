@@ -12,11 +12,15 @@ class Production extends Model
 {
     use HasFactory;
 
-    public function products() :BelongsToMany {
+    protected $guarded = ["id"];
+
+    public function products(): BelongsToMany
+    {
         return $this->belongsToMany(Product::class);
     }
 
-    public function sales() : BelongsToMany {
+    public function sales(): BelongsToMany
+    {
         return $this->belongsToMany(Sale::class);
     }
 }
