@@ -1,7 +1,14 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ComponentController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductionController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,10 +30,10 @@ Route::get('/index', function () {
 });
 
 Route::resource("products", ProductController::class);
-Route::resource("components", ProductController::class);
-Route::resource("categories", ProductController::class);
-Route::resource("sales", ProductController::class);
-Route::resource("suppliers", ProductController::class);
-Route::resource("puchases", ProductController::class);
-Route::resource("productions", ProductController::class);
-Route::resource("customers", ProductController::class);
+Route::resource("components", ComponentController::class);
+Route::resource("categories", CategoryController::class);
+Route::resource("sales", SaleController::class);
+Route::resource("suppliers", SupplierController::class);
+Route::resource("purchases", PurchaseController::class);
+Route::resource("productions", ProductionController::class);
+Route::resource("customers", CustomerController::class);

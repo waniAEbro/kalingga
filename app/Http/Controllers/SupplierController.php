@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Supplier;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
+use Illuminate\Http\RedirectResponse;
 
 class SupplierController extends Controller
 {
@@ -13,7 +14,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        return view("suppliers.index", ["suppliers" => Supplier::get()]);
     }
 
     /**
@@ -21,15 +22,22 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        return view("supplier.create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSupplierRequest $request)
+    public function store(StoreSupplierRequest $request) :RedirectResponse
     {
-        //
+        Supplier::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
+
+        return redirect("/suppliers");
     }
 
     /**
@@ -37,7 +45,7 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        //
+        return view("suppliers.show", ["suppliers" => Supplier::find($supplier->id)]);
     }
 
     /**
@@ -45,7 +53,7 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        //
+        return view("supplier.edit", ["suppliers" => Supplier::find($supplier->id)]);
     }
 
     /**
@@ -53,7 +61,14 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, Supplier $supplier)
     {
-        //
+        $supplier->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
+
+        return redirect("/suppliers");
     }
 
     /**
@@ -61,6 +76,7 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        //
+        $supplier->delete();
+        return redirect("/suppliers");
     }
 }

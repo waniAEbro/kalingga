@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
+use Illuminate\Http\RedirectResponse;
 
 class SaleController extends Controller
 {
@@ -13,7 +14,7 @@ class SaleController extends Controller
      */
     public function index()
     {
-        //
+        return view('sales.index', ["sales" => Sale::get()]);
     }
 
     /**
@@ -21,15 +22,23 @@ class SaleController extends Controller
      */
     public function create()
     {
-        //
+        return view('sales.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSaleRequest $request)
+    public function store(StoreSaleRequest $request) :RedirectResponse
     {
-        //
+        Sale::create([
+            'customer_id' => $request-> customer_id,
+            'sale_date' => $request->sale_date,
+            'due_date' => $request->due_date,
+            'status' => $request->status,
+            'remain_bill' => $request->remain_bill,
+        ]);
+
+        return redirect("/sales");
     }
 
     /**
@@ -37,7 +46,7 @@ class SaleController extends Controller
      */
     public function show(Sale $sale)
     {
-        //
+        return view("sales.show", ["sales" => Sale::find($sale->id)]);
     }
 
     /**
@@ -45,7 +54,7 @@ class SaleController extends Controller
      */
     public function edit(Sale $sale)
     {
-        //
+        return view("sales.edit", ["sales" => Sale::find($sale->id)]);
     }
 
     /**
@@ -53,7 +62,15 @@ class SaleController extends Controller
      */
     public function update(UpdateSaleRequest $request, Sale $sale)
     {
-        //
+        $sale->update([
+            'customer_id' => $request-> customer_id,
+            'sale_date' => $request->sale_date,
+            'due_date' => $request->due_date,
+            'status' => $request->status,
+            'remain_bill' => $request->remain_bill,
+        ]);
+
+        return redirect("/sales");
     }
 
     /**
@@ -61,6 +78,7 @@ class SaleController extends Controller
      */
     public function destroy(Sale $sale)
     {
-        //
+        $sale->delete();
+        return redirect("/sales");
     }
 }
