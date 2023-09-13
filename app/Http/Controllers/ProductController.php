@@ -35,6 +35,7 @@ class ProductController extends Controller
      */
     public function store(StoreproductRequest $request): RedirectResponse
     {
+        // dd($request->quantities);
         $product = Product::create([
             "name" => $request->name,
             "code" => $request->code,

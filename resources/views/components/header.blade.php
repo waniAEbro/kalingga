@@ -1,7 +1,7 @@
 <div class="fixed z-10 flex items-center justify-between w-full text-white h-14">
     <div
         class="flex items-center justify-start pl-3 bg-blue-800 border-none md:justify-center w-14 md:w-64 h-14 dark:bg-gray-800">
-        <img class="mr-2 overflow-hidden rounded-md w-7 h-7 md:w-10 md:h-10" src="img/image 6.png" />
+        <img class="mr-2 overflow-hidden rounded-md w-7 h-7 md:w-10 md:h-10" src="/img/image 6.png" />
         <span class="hidden ml-2 font-bold md:block">Kalingga Keling Jati</span>
     </div>
     <div class="flex items-center justify-between bg-blue-800 h-14 dark:bg-gray-800 header-right">
