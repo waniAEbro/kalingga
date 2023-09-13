@@ -22,7 +22,7 @@ use App\Http\Controllers\SupplierController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::get('/index', function () {
