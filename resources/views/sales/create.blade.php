@@ -7,7 +7,7 @@
             <div class="space-y-12">
                 <div class="border-b border-gray-900/10 p-12">
                     <h2 class="text-base font-semibold leading-7 text-gray-900">Create Data Sales</h2>
-                    <div class="mt-10 grid auto-cols-max gap-x-6 gap-y-8">
+                    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-4">
                             <label for="sale_date" class="block text-sm font-medium leading-6 text-gray-900">Tanggal
                                 Transaksi</label>
@@ -47,7 +47,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="sm:col-span-4 overflow-x-auto shadow-md rounded-lg">
+                        <div class=" col-span-full overflow-x-auto shadow-md rounded-lg">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead
                                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

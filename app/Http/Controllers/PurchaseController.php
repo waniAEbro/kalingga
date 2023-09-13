@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Purchase;
+use App\Models\Supplier;
+use App\Models\Component;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
-use App\Models\Supplier;
-use Illuminate\Http\RedirectResponse;
 
 class PurchaseController extends Controller
 {
@@ -16,8 +18,8 @@ class PurchaseController extends Controller
     public function index()
     {
         return view('purchases.index', [
-            "purchases" =>Purchase::get(),
-            "suppliers" =>Supplier::get(),
+            "purchases" => Purchase::get(),
+            "suppliers" => Supplier::get(),
         ]);
     }
 
@@ -26,23 +28,31 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        return view('purchases.create', ["suppliers" =>Supplier::get()]);
+        return view('purchases.create', ["suppliers" => Supplier::get(), "components" => Component::get()]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePurchaseRequest $request) :RedirectResponse
+    public function store(StorePurchaseRequest $request): RedirectResponse
     {
-        Purchase::create([
+        $purchase = Purchase::create([
             'supplier_id' => $request->supplier_id,
             'purchase_date' => $request->purchase_date,
             'due_date' => $request->due_date,
-            'status' => $request->status,
-            'remain_bill' => $request->remain_bill,
+            'status' => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
+            'remain_bill' => $request->total_bill - $request->paid,
             'total_bill' => $request->total_bill,
             'paid' => $request->paid,
         ]);
+
+        foreach ($request->component_id as $index => $id) {
+            DB::table("component_purchase")->insert([
+                "component_id" => $id,
+                "purchase_id" => $purchase->id,
+                "quantity" => $request->quantity[$index],
+            ]);
+        }
 
         return redirect("/purchases");
     }
@@ -58,7 +68,7 @@ class PurchaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Purchase $purchase , Supplier $supplier)
+    public function edit(Purchase $purchase, Supplier $supplier)
     {
         return view("purchases.edit", [
             "purchases" => Purchase::find($purchase->id),

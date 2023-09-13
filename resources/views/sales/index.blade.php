@@ -9,21 +9,24 @@
                 <div class="border-b-2 border-yellow-500 px-6 py-4 mb-2 mt-2 ">
                     <div class="font-bold text-xl mb-2 text-center">Pembayaran Belum Selesai</div>
                 </div>
-                <div class="px-6 pt-4 pb-2">
+                <div class="px-6 pt-4 pb-4 text-center">
+                    <p id="pembayaran_belum_selesai"></p>
                 </div>
             </div>
             <div class="flex-1 rounded-lg overflow-hidden border-2 border-red-500 shadow-lg shadow-red-300">
                 <div class="border-b-2 border-red-500 px-6 py-4 mb-2 mt-2 ">
                     <div class="font-bold text-xl mb-2 text-center">Pembayaran Jatuh Tempo</div>
                 </div>
-                <div class="px-6 pt-4 pb-2">
+                <div class="px-6 pt-4 pb-4 text-center">
+                    <p id="pembayaran_jatuh_tempo"></p>
                 </div>
             </div>
             <div class="flex-1 rounded-lg overflow-hidden border-2 border-green-500 shadow-lg shadow-green-300">
                 <div class="border-b-2 border-green-500 px-6 py-4 mb-2 mt-2 ">
                     <div class="font-bold text-xl mb-2 text-center">Penjualan Lunas</div>
                 </div>
-                <div class="px-6 pt-4 pb-2">
+                <div class="px-6 pt-4 pb-4 text-center">
+                    <p id="pembayaran_lunas"></p>
                 </div>
             </div>
         </div>
@@ -135,10 +138,10 @@
                         <td class="px-6 py-4">
                             {{ $sale->status }}
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 rupiah">
                             {{ $sale->remain_bill }}
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 rupiah">
                             {{ $sale->total_bill }}
                         </td>
                         <td class="flex gap-2 py-4">
@@ -186,3 +189,54 @@
         </table>
     </div>
 @endsection
+@push('script')
+    <script>
+        let sales = {!! $sales !!}
+
+        let currentDate = new Date();
+
+        function set_belum_selesai() {
+            let filteredData = sales.filter(item => {
+                let dueDate = new Date(item.due_date);
+                return dueDate > currentDate;
+            });
+
+            let belum_selesai = 0
+
+            if (filteredData.length > 0) {
+                belum_selesai = filteredData.reduce((total, data) => total + data.remain_bill, 0)
+            }
+
+            document.getElementById("pembayaran_belum_selesai").innerText = toRupiah(belum_selesai);
+        }
+
+        function set_lunas() {
+            let lunas = sales.reduce((total, data) => total + data.paid, 0)
+
+            document.getElementById("pembayaran_lunas").innerText = toRupiah(lunas);
+        }
+
+        function set_jatuh_tempo() {
+            let filteredData = sales.filter(item => {
+                let dueDate = new Date(item.due_date)
+                return dueDate < currentDate
+            })
+
+            let jatuh_tempo = 0
+
+            if (filteredData.length > 0) {
+                jatuh_tempo = filteredData.reduce((total, data) => total + data.remain_bill, 0)
+            }
+
+            document.getElementById("pembayaran_jatuh_tempo").innerText = toRupiah(jatuh_tempo);
+        }
+
+        set_belum_selesai()
+        set_jatuh_tempo()
+        set_lunas()
+
+        document.querySelectorAll(".rupiah").forEach(element => {
+            element.innerText = toRupiah(element.innerText)
+        });
+    </script>
+@endpush

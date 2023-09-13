@@ -10,25 +10,28 @@
 
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-4">
-                            <label for="supplier_id" class="block text-sm font-medium leading-6 text-gray-900">
-                                Supplier ID</label>
+                            <label for="supplier_id"
+                                class="block text-sm font-medium leading-6 text-gray-900">Supplier</label>
                             <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <select class="form-control" id="supplier_id" name="supplier_id">
-                                        @foreach ($suppliers as $sp)
-                                           <option value="{{ $sp->id }}">{{ $sp->id }} - {{ $sp->name }}</option>
-                                        @endforeach
-                                     </select>
-                                </div>
+                                <select id="supplier_id" name="supplier_id"
+                                    class="block w-full rounded-sm p-2 text-gray-900 shadow-sm ring-1 ring-offset-4 ring-gray-300 focus:ring-2 focus:ring-offset-4 focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                    <option value="" selected hidden disabled>
+                                        Pilih Supplier
+                                    </option>
+                                    @foreach ($suppliers as $supplier)
+                                        <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="sm:col-span-4">
-                            <label for="purchase_date" class="block text-sm font-medium leading-6 text-gray-900">Purchase Date</label>
+                            <label for="purchase_date" class="block text-sm font-medium leading-6 text-gray-900">Purchase
+                                Date</label>
                             <div class="mt-2">
                                 <div
                                     class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                     <input type="date" name="purchase_date" id="purchase_date"
+                                        value="{{ Carbon\Carbon::now()->toDateString() }}"
                                         class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         placeholder="Purchase Date">
                                 </div>
@@ -40,60 +43,130 @@
                                 <div
                                     class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                     <input type="date" name="due_date" id="due_date"
+                                        value="{{ Carbon\Carbon::now()->toDateString() }}"
                                         class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                         placeholder="Due Date">
                                 </div>
                             </div>
                         </div>
-                        <div class="sm:col-span-4">
-                            <label for="status" class="block text-sm font-medium leading-6 text-gray-900">
-                                Status</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <textarea id="status" name="status" rows="3" class="block w-full
-                                        rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset
-                                        ring-gray-300 placeholder:text-gray-400 focus:ring-2
-                                        focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-                                </div>
-                            </div>
+                        <div class=" col-span-full overflow-x-auto shadow-md rounded-lg">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead
+                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">
+                                            <div class="flex items-center">
+                                                Component
+                                                <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor" viewBox="0 0 24 24">
+                                                        <path
+                                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                                    </svg></a>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            <div class="flex items-center">
+                                                Jumlah
+                                                <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor" viewBox="0 0 24 24">
+                                                        <path
+                                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                                    </svg></a>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            <div class="flex items-center">
+                                                Satuan
+                                                <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor" viewBox="0 0 24 24">
+                                                        <path
+                                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                                    </svg></a>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            <div class="flex items-center">
+                                                Harga Satuan
+                                                <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor" viewBox="0 0 24 24">
+                                                        <path
+                                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                                    </svg></a>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            <div class="flex items-center">
+                                                Total
+                                                <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor" viewBox="0 0 24 24">
+                                                        <path
+                                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                                    </svg></a>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            <div class="flex items-center">
+                                                Action
+                                                <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor" viewBox="0 0 24 24">
+                                                        <path
+                                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                                    </svg></a>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody x-ref="tbody" id="components">
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4">
+                                            <select id="component_id" name="component_id[]"
+                                                onchange="set_component(this)"
+                                                class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-offset-4 ring-gray-300 focus:ring-2 focus:ring-offset-4 focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                                <option value="" selected hidden disabled>
+                                                    Pilih Komponen
+                                                </option>
+                                                @foreach ($components as $component)
+                                                    <option value="{{ $component->id }}">{{ $component->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <input type="number" name="quantity[]" id="quantity"
+                                                onchange="set_subtotal(this)"
+                                                class="block flex-1 border-0 p-2 focus:ring-0" placeholder="0"
+                                                value="0">
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <p id="unit">unit</p>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <p id="price">0</p>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <p id="subtotal">0</p>
+                                        </td>
+                                        <td class="gap-2 py-4">
+                                            <button onclick="delete_element(this)" type="button">hapus</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="sm:col-span-4">
-                            <label for="remain_bill" class="block text-sm font-medium leading-6 text-gray-900">
-                                Remain Bill</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input type="number" name="remain_bill" id="remain_bill"
-                                        class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="Remain Bill">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4">
-                            <label for="total_bill" class="block text-sm font-medium leading-6 text-gray-900">
-                                Total Bill</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input type="number" name="total_bill" id="total_bill"
-                                        class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="Total Bill">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4">
-                            <label for="paid" class="block text-sm font-medium leading-6 text-gray-900">
-                                Paid</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input type="number" name="paid" id="paid"
-                                        class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="Paid">
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="m-6 flex items-center justify-end gap-x-6">
+                        <label for="total_bill">Total</label>
+                        <input type="number" name="total_bill" id="total_bill" value="0" readonly>
+                    </div>
+                    <div class="m-6 flex items-center justify-end gap-x-6">
+                        <label for="paid">Bayar</label>
+                        <input type="number" name="paid" id="paid" value="0">
                     </div>
                 </div>
             </div>
@@ -108,3 +181,73 @@
         </form>
     </div>
 @endsection
+@push('script')
+    <script>
+        let components = {!! $components !!}
+
+        let components_element = document.getElementById('components');
+
+        function set_component(element) {
+            let component = components.find(component => component.id == element.value);
+            let tr = element.parentElement.parentElement;
+            let price = tr.querySelector('#price');
+            let unit = tr.querySelector('#unit');
+            price.textContent = component.price_per_unit;
+            unit.textContent = component.unit;
+
+            let newElement = `
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4">
+                                            <select id="component_id" name="component_id[]"
+                                                onchange="set_component(this)"
+                                                class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-offset-4 ring-gray-300 focus:ring-2 focus:ring-offset-4 focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                                <option value="" selected hidden disabled>
+                                                    Pilih Komponen
+                                                </option>
+                                                @foreach ($components as $component)
+                                                    <option value="{{ $component->id }}">{{ $component->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <input type="number" name="quantity[]" id="quantity"
+                                                onchange="set_subtotal(this)"
+                                                class="block flex-1 border-0 p-2 focus:ring-0" placeholder="0"
+                                                value="0">
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <p id="unit">unit</p>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <p id="price">0</p>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <p id="subtotal">0</p>
+                                        </td>
+                                        <td class="gap-2 py-4">
+                                            <button onclick="delete_element(this)" type="button">hapus</button>
+                                        </td>
+                                    </tr>`;
+
+            components_element.insertAdjacentHTML('beforeend', newElement);
+        }
+
+        function set_subtotal(element) {
+            let tr = element.parentElement.parentElement;
+            let price = tr.querySelector('#price').textContent;
+            let subtotal = tr.querySelector('#subtotal');
+            subtotal.textContent = price * element.value;
+
+            let subtotals = document.querySelectorAll('#subtotal');
+            let total = 0;
+            subtotals.forEach(subtotalElement => {
+                total += parseFloat(subtotalElement.textContent);
+            });
+            document.querySelector('#total_bill').value = total;
+        }
+
+        function delete_element(element) {
+            element.parentElement.parentElement.remove();
+        }
+    </script>
+@endpush

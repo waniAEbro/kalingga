@@ -71,7 +71,7 @@
                         <td class="px-6 py-4">
                             {{ $component->unit }}
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 price">
                             {{ $component->price_per_unit }}
                         </td>
                         <td class="flex gap-2 py-4">
@@ -119,3 +119,10 @@
         </table>
     </div>
 @endsection
+@push('script')
+    <script>
+        document.querySelectorAll('.price').forEach(element => {
+            element.innerHTML = toRupiah(parseInt(element.innerText))
+        });
+    </script>
+@endpush
