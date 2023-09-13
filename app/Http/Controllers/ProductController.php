@@ -35,7 +35,7 @@ class ProductController extends Controller
      */
     public function store(StoreproductRequest $request): RedirectResponse
     {
-        // dd($request->quantities);
+        // dd($request->components);
         $product = Product::create([
             "name" => $request->name,
             "code" => $request->code,
@@ -43,11 +43,11 @@ class ProductController extends Controller
             "category_id" => $request->category_id,
         ]);
 
-        foreach ($request->components as $component) {
-            DB::table("product_component")->insert([
+        foreach ($request->components as $index=> $component) {
+            DB::table("component_product")->insert([
                 "product_id" => $product->id,
                 "component_id" => $component,
-                "quantity" => $request->quantities[$component] ?? "1"
+                "quantity" => $request->quantities[$index]
             ]);
         }
         return redirect("/products");
@@ -66,7 +66,7 @@ class ProductController extends Controller
      */
     public function edit(product $product): View
     {
-        return view("products.edit", ["product" => Product::find($product->id)]);
+        return view("products.edit", ["product" => Product::find($product->id), "categories" => Category::get(), "components" => Component::get()]);
     }
 
     /**
@@ -80,12 +80,11 @@ class ProductController extends Controller
             "rfid" => $request->rfid,
             "category_id" => $request->category_id
         ]);
-
-        foreach ($request->components as $component) {
-            DB::table("product_component")->insert([
+        foreach ($request->components as $index=> $component) {
+            DB::table("component_product")->insert([
                 "product_id" => $product->id,
                 "component_id" => $component,
-                "quantity" => $request->quantities[$component] ?? "1"
+                "quantity" => $request->quantities[$index]
             ]);
         }
         return redirect("/products");

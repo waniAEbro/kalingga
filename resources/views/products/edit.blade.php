@@ -3,27 +3,28 @@
 @section('content')
     <div class="p-5 shadow-xl bg-slate-50 rounded-xl">
 
-        <h1 class="mb-5 text-3xl font-bold text-center text-gray-800">Tambah Data</h1>
-        <form action="{{ route('products.store') }}" method="POST" class="w-full form-control">
+        <h1 class="mb-5 text-3xl font-bold text-center text-gray-800">Edit Data</h1>
+        <form action="{{ route('products.update', $product->id) }}" method="POST" class="w-full form-control">
             @csrf
+            @method('put')
 
             <div class="flex gap-5">
                 <div>
                     <label for="name" class="label label-text">Product Name</label>
-                    <input id="name" name="name" type="text" placeholder="Type here"
+                    <input value="{{ $product->name }}" id="name" name="name" type="text" placeholder="Type here"
                         class="w-full max-w-xs input input-bordered" />
 
                     <label for="code" class="label label-text">Product Code</label>
-                    <input id="code" name="code" type="text" placeholder="Type here"
+                    <input value="{{ $product->code }}" id="code" name="code" type="text" placeholder="Type here"
                         class="w-full max-w-xs input input-bordered" />
 
                     <label for="rfid" class="label label-text">RFID</label>
-                    <input id="rfid" name="rfid" type="number" placeholder="Type here"
+                    <input value="{{ $product->rfid }}" id="rfid" name="rfid" type="number" placeholder="Type here"
                         class="w-full max-w-xs input input-bordered" />
 
                     <label for="category_id" class="label label-text">Category</label>
                     <select id="category_id" name="category_id" class="w-full max-w-xs select select-bordered">
-                        <option disabled selected>Category</option>
+                        <option value="{{ $product->category_id }}" selected>Category</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
@@ -95,6 +96,7 @@
             <div class="flex justify-end w-full gap-5">
                 <a href="/products" type="button"
                     class="float-left w-32 mt-5 text-white normal-case rounded btn btn-warning">Cancel</a>
+
                 <button type="submit"
                     class="float-left w-32 mt-5 text-white normal-case rounded btn btn-primary">Submit</button>
             </div>
