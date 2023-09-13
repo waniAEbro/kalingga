@@ -58,13 +58,22 @@ class SaleController extends Controller
 
         $customer = Customer::find($request->customer_id);
 
+        $productions = [];
+
         foreach ($products as $product) {
-            Production::create([
+            $productions[] = Production::create([
                 "code" => $customer->code . $product->quantity . "00",
                 "product_id" => $product->product_id,
                 "quantity_finished" => 0,
                 "quantity_not_finished" => $product->quantity,
                 "total_production" => $product->quantity,
+            ]);
+        }
+
+        foreach ($productions as $production) {
+            DB::table("production_sale")->insert([
+                "production_id" => $production->id,
+                "sale_id" => $sale->id,
             ]);
         }
 

@@ -106,7 +106,7 @@
                 </a>
             </li>
             <li>
-                <a href="#"
+                <a href="/productions"
                     class="relative flex flex-row items-center pr-6 border-l-4 border-transparent h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 hover:border-blue-500 dark:hover:border-gray-800">
                     <span class="inline-flex items-center justify-center ml-4">
                         <svg fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"

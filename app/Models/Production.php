@@ -15,6 +15,8 @@ class Production extends Model
 
     protected $guarded = ["id"];
 
+    protected $with = ["product"];
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, "product_id", "id");

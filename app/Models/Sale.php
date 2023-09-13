@@ -15,7 +15,7 @@ class Sale extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["customer", "product"];
+    protected $with = ["customer", "product", "productions"];
 
     public function customer()
     {
@@ -24,7 +24,7 @@ class Sale extends Model
 
     public function product()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot("quantity");
     }
 
     public function productions(): BelongsToMany

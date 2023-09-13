@@ -29,7 +29,7 @@ class ProductionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductionRequest $request) :RedirectResponse
+    public function store(StoreProductionRequest $request): RedirectResponse
     {
         Production::create([
             "product_id" => $request->product_id,
@@ -44,7 +44,7 @@ class ProductionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Production $production) :View
+    public function show(Production $production): View
     {
         return view("productions.show", ["productions" => Production::find($production->id)]);
     }
@@ -52,21 +52,19 @@ class ProductionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Production $production) :View
+    public function edit(Production $production): View
     {
-        return view("productions.edit", ["productions" => Production::find($production->id)]);
+        return view("productions.edit", ["production" => Production::find($production->id)]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductionRequest $request, Production $production) :RedirectResponse
+    public function update(UpdateProductionRequest $request, Production $production): RedirectResponse
     {
         $production->update([
-            "product_id" => $request->product_id,
             "quantity_finished" => $request->quantity_finished,
             "quantity_not_finished" => $request->quantity_not_finished,
-            "total_product" => $request->total_product,
         ]);
 
         return redirect("/productions");
