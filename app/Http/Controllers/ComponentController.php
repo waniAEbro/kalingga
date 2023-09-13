@@ -15,7 +15,7 @@ class ComponentController extends Controller
      */
     public function index(): View
     {
-        return view("components.index", ["components" => Component::get()]);
+        return view("component.index", ["components" => Component::get()]);
     }
 
     /**
@@ -23,7 +23,7 @@ class ComponentController extends Controller
      */
     public function create(): View
     {
-        return view("components.create");
+        return view("component.create");
     }
 
     /**
@@ -45,7 +45,7 @@ class ComponentController extends Controller
      */
     public function show(component $component): View
     {
-        return view("components.show", ["component" => Component::find($component->id)]);
+        return view("component.show", ["component" => Component::find($component->id)]);
     }
 
     /**
@@ -53,7 +53,7 @@ class ComponentController extends Controller
      */
     public function edit(component $component): View
     {
-        return view("components.edit", ["component" => Component::find($component->id)]);
+        return view("component.edit", ["component" => Component::find($component->id)]);
     }
 
     /**
@@ -66,6 +66,7 @@ class ComponentController extends Controller
             "price_per_unit" => $request->price_per_unit,
             "unit" => $request->unit
         ]);
+
         return redirect("/components");
     }
 

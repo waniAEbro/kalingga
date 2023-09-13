@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
+use App\Models\Supplier;
 use Illuminate\Http\RedirectResponse;
 
 class PurchaseController extends Controller
@@ -14,7 +15,10 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        return view('purchases.index', ["purchases" =>Purchase::get()]);
+        return view('purchases.index', [
+            "purchases" =>Purchase::get(),
+            "suppliers" =>Supplier::get(),
+        ]);
     }
 
     /**
@@ -22,7 +26,7 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        return view('purchases.create');
+        return view('purchases.create', ["suppliers" =>Supplier::get()]);
     }
 
     /**
@@ -36,6 +40,8 @@ class PurchaseController extends Controller
             'due_date' => $request->due_date,
             'status' => $request->status,
             'remain_bill' => $request->remain_bill,
+            'total_bill' => $request->total_bill,
+            'paid' => $request->paid,
         ]);
 
         return redirect("/purchases");
@@ -52,9 +58,12 @@ class PurchaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Purchase $purchase)
+    public function edit(Purchase $purchase , Supplier $supplier)
     {
-        return view("purchases.edit", ["purchases" => Purchase::find($purchase->id)]);
+        return view("purchases.edit", [
+            "purchases" => Purchase::find($purchase->id),
+            "suppliers" => Supplier::get(),
+        ]);
     }
 
     /**
@@ -68,6 +77,8 @@ class PurchaseController extends Controller
             'due_date' => $request->due_date,
             'status' => $request->status,
             'remain_bill' => $request->remain_bill,
+            'total_bill' => $request->total_bill,
+            'paid' => $request->paid,
         ]);
 
         return redirect("/purchases");

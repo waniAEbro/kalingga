@@ -6,17 +6,24 @@ use App\Models\Sale;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Production extends Model
 {
     use HasFactory;
 
-    public function products() :BelongsToMany {
-        return $this->belongsToMany(Product::class);
+    protected $guarded = ["id"];
+
+    protected $with = ["product"];
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class, "product_id", "id");
     }
 
-    public function sales() : BelongsToMany {
+    public function sales(): BelongsToMany
+    {
         return $this->belongsToMany(Sale::class);
     }
 }

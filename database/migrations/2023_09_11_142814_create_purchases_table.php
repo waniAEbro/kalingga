@@ -18,6 +18,8 @@ return new class extends Migration
             $table->date("due_date");
             $table->string("status");
             $table->integer("remain_bill");
+            $table->integer("total_bill");
+            $table->integer("paid");
             $table->timestamps();
         });
     }

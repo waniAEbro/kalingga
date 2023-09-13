@@ -10,6 +10,8 @@ class Purchase extends Model
 {
     use HasFactory;
 
+    protected $guarded = ["id"];
+
     public function suppliers(): BelongsToMany
     {
         return $this->belongsToMany(Supplier::class);

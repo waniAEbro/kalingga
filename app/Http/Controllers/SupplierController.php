@@ -22,7 +22,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view("supplier.create");
+        return view("suppliers.create");
     }
 
     /**
@@ -53,7 +53,7 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        return view("supplier.edit", ["suppliers" => Supplier::find($supplier->id)]);
+        return view("suppliers.edit", ["suppliers" => Supplier::find($supplier->id)]);
     }
 
     /**

@@ -13,7 +13,9 @@ class Sale extends Model
 {
     use HasFactory;
 
-    protected $with = ["customer", "product"];
+    protected $guarded = ["id"];
+
+    protected $with = ["customer", "product", "productions"];
 
     public function customer()
     {
@@ -22,10 +24,11 @@ class Sale extends Model
 
     public function product()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot("quantity");
     }
 
-    public function productions() : BelongsToMany {
+    public function productions(): BelongsToMany
+    {
         return $this->belongsToMany(Production::class);
     }
 }
