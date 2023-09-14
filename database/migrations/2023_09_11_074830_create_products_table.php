@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string("code");
             $table->string("name");
             $table->string("rfid");
-            $table->foreignId("category_id")->constrained("categories")->onDelete("cascade");
             $table->timestamps();
         });
     }

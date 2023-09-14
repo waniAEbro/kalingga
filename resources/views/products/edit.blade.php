@@ -23,12 +23,6 @@
                         class="w-full max-w-xs input input-bordered" />
 
                     <label for="category_id" class="label label-text">Category</label>
-                    <select id="category_id" name="category_id" class="w-full max-w-xs select select-bordered">
-                        <option value="{{ $product->category_id }}" selected>Category</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
                 </div>
 
                 <div x-data="{ componentId: null, totalPrice: 0 }">

@@ -16,16 +16,11 @@ class Product extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["components", "categories"];
+    protected $with = ["components"];
 
     public function components(): BelongsToMany
     {
         return $this->belongsToMany(Component::class, "component_product")->withPivot("quantity");
-    }
-
-    public function categories(): BelongsTo
-    {
-        return $this->belongsTo(Category::class, "category_id", "id");
     }
 
     public function sales(): BelongsToMany

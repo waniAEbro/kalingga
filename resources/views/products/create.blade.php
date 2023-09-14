@@ -20,14 +20,6 @@
                     <label for="rfid" class="label label-text">RFID</label>
                     <input id="rfid" name="rfid" type="number" placeholder="Type here"
                         class="w-full max-w-xs input input-bordered" />
-
-                    <label for="category_id" class="label label-text">Category</label>
-                    <select id="category_id" name="category_id" class="w-full max-w-xs select select-bordered">
-                        <option disabled selected>Category</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
                 </div>
 
                 <div x-data="{ componentId: null, totalPrice: 0 }">

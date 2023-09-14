@@ -27,7 +27,7 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        return view("products.create", ["categories" => Category::get(), "components" => Component::get()]);
+        return view("products.create", ["components" => Component::get()]);
     }
 
     /**
@@ -40,10 +40,9 @@ class ProductController extends Controller
             "name" => $request->name,
             "code" => $request->code,
             "rfid" => $request->rfid,
-            "category_id" => $request->category_id,
         ]);
 
-        foreach ($request->components as $index=> $component) {
+        foreach ($request->components as $index => $component) {
             DB::table("component_product")->insert([
                 "product_id" => $product->id,
                 "component_id" => $component,
@@ -66,7 +65,7 @@ class ProductController extends Controller
      */
     public function edit(product $product): View
     {
-        return view("products.edit", ["product" => Product::find($product->id), "categories" => Category::get(), "components" => Component::get()]);
+        return view("products.edit", ["product" => Product::find($product->id), "components" => Component::get()]);
     }
 
     /**
@@ -77,10 +76,9 @@ class ProductController extends Controller
         $product->update([
             "name" => $request->name,
             "code" => $request->code,
-            "rfid" => $request->rfid,
-            "category_id" => $request->category_id
+            "rfid" => $request->rfid
         ]);
-        foreach ($request->components as $index=> $component) {
+        foreach ($request->components as $index => $component) {
             DB::table("component_product")->insert([
                 "product_id" => $product->id,
                 "component_id" => $component,
