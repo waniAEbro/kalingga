@@ -53,7 +53,7 @@ class ComponentController extends Controller
      */
     public function edit(component $component): View
     {
-        return view("component.edit", ["component" => Component::find($component->id)]);
+        return view("component.edit", ["componentedit" => Component::find($component->id)]);
     }
 
     /**

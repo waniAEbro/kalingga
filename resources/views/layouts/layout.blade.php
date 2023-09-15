@@ -5,7 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite('resources/css/app.css')
+    {{-- @vite('resources/css/app.css') --}}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.7.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <style type="text/tailwindcss">
+        @layer components {
+            .active {
+                @apply pl-5 flex gap-4 items-center text-[#064E3B] bg-[#F1F5F9] before:bg-transparent before:h-10 before:w-10 before:right-0 before:bottom-[100%] before:shadow-[20px_20px_0_#F1F5F9] before:rounded-full before:absolute relative py-1 mb-2 rounded-l-full after:h-10 after:absolute after:w-10 after:bg-transparent after:right-0 after:top-[100%] after:shadow-[20px_-20px_0_#F1F5F9] after:rounded-full;
+            }
+
+            .active-pembelian {
+                @apply pl-5 flex gap-4 items-center text-[#064E3B] bg-[#F1F5F9] before:bg-transparent before:h-10 before:w-10 before:right-0 before:bottom-[100%] before:shadow-[20px_20px_0_#F1F5F9] before:rounded-full before:absolute relative py-1 mb-2 rounded-l-full after:w-5 after:h-5 after:absolute after:-right-1 after:bottom-0 after:bg-[#F1F5F9];
+            }
+        }
+    </style>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -26,51 +40,17 @@
     <div class="flex">
         <x-nav />
 
-        <main class="w-full py-5 min-h-screen bg-[#064E3B] pr-7">
-            <div class="w-full h-full bg-[#F1F5F9] rounded-[30px] pl-6 pr-0 pt-4">
-                <div class="w-[98%]">
-                    <div class="flex justify-between mt-3">
-                        <div class="text-sm text-[#739C93] font-[500] breadcrumbs">
-                            <ul id="breadcrumbs">
-
-                            </ul>
-                        </div>
-
-                        <div x-data="" x-init="console.log(window.location.pathname)" class="flex justify-between gap-5">
-                            <div class="relative">
-                                <input type="text"
-                                    class="py-2 focus:outline-4 focus:outline focus:outline-[#C2D4D3] outline-none focus:outline-offset-0 pl-4 font-[500] pr-4 rounded-full w-52 transition-all ease-in-out focus:w-72 text-sm bg-[#DEE5ED]"
-                                    placeholder="Search...">
-                                <span class="absolute text-xl right-3 top-2 text-slate-600"><ion-icon
-                                        name="search-outline"></ion-icon></span>
-                            </div>
-                            <div class="bg-yellow-400 rounded-full w-9 h-9"></div>
-                        </div>
-                    </div>
-
-                    <div class="my-6 border-t border-slate-200"></div>
-
-                    @yield('content')
-
-                </div>
-            </div>
-        </main>
+        <x-main>
+            @yield('content')
+        </x-main>
     </div>
 </body>
 <script>
     const breadcrumbs = document.querySelector('#breadcrumbs');
     let pathname = window.location.pathname;
-    let pathArray = pathname.replace(/\d+/g, '').split('/').filter(function(item) {
-        return item !== '';
-    });;
-    console.log(pathArray);
-
-    pathArray.forEach(e => {
-        const listItem = document.createElement('li');
-        const textNode = document.createTextNode(e.charAt(0).toUpperCase() + e.slice(1));
-        listItem.appendChild(textNode);
-        breadcrumbs.appendChild(listItem);
-    })
+    let pathArray = pathname.replace(/\d+/g, '').split('/').filter(item => item !== '').forEach(e => {
+        breadcrumbs.innerHTML += `<li>${e.charAt(0).toUpperCase() + e.slice(1)}</li>`
+    });
 
     const setup = () => {
         const getTheme = () => {
