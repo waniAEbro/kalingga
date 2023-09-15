@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .active {
+        @apply pl-5 flex gap-4 items-center text-[#064E3B] bg-[#F1F5F9] before:bg-transparent before:h-10 before:w-10 before:right-0 before:bottom-[100%] before:shadow-[20px_20px_0_#F1F5F9] before:rounded-full before:absolute relative py-1 mb-2 rounded-l-full after:h-10 after:absolute after:w-10 after:bg-transparent after:right-0 after:top-[100%] after:shadow-[20px_-20px_0_#F1F5F9] after:rounded-full;
+    }
+
+    .active-pembelian {
+        @apply pl-5 flex gap-4 items-center text-[#064E3B] bg-[#F1F5F9] before:bg-transparent before:h-10 before:w-10 before:right-0 before:bottom-[100%] before:shadow-[20px_20px_0_#F1F5F9] before:rounded-full before:absolute relative py-1 mb-2 rounded-l-full after:w-5 after:h-5 after:absolute after:-right-1 after:bottom-0 after:bg-[#F1F5F9];
+    }
+}
