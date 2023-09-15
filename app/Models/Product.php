@@ -37,4 +37,9 @@ class Product extends Model
     {
         return $this->hasOne(Production::class, "product_id", "id");
     }
+
+    public function warehouse(): HasOne
+    {
+        return $this->hasOne(Warehouse::class, "product_id", "id");
+    }
 }

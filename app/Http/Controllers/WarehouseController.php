@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Warehouse;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Casts\Json;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-
 class WarehouseController extends Controller
 {
     /**
@@ -12,7 +14,7 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        //
+        return view("warehouse.index", ["warehouse" => Warehouse::get()]);
     }
 
     /**
@@ -20,7 +22,7 @@ class WarehouseController extends Controller
      */
     public function create()
     {
-        //
+        //return view("warehouse.create");
     }
 
     /**
@@ -28,15 +30,20 @@ class WarehouseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $warehouse = Warehouse::create([
+            "production_id" => $request->input("production_id"),
+            "quantity" => $request->input("quantity"),
+        ]);
+
+        return response()->json($warehouse, 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Warehouse $warehouse)
+    public function show(Warehouse $warehouse) :View
     {
-        //
+        return view("warehouse.show", ["warehouse" => Warehouse::find($warehouse->id)]);
     }
 
     /**
@@ -44,7 +51,7 @@ class WarehouseController extends Controller
      */
     public function edit(Warehouse $warehouse)
     {
-        //
+        //return view("warehouse.edit", ["warehouse" => Warehouse::find($warehouse->id)]);
     }
 
     /**
@@ -52,7 +59,12 @@ class WarehouseController extends Controller
      */
     public function update(Request $request, Warehouse $warehouse)
     {
-        //
+        $warehouse->update([
+            "production_id" => $request->input("production_id"),
+            "quantity" => $request->input("quantity"),
+        ]);
+
+        return response()->json($warehouse, 200);
     }
 
     /**
@@ -60,6 +72,7 @@ class WarehouseController extends Controller
      */
     public function destroy(Warehouse $warehouse)
     {
-        //
+        $warehouse->delete();
+        return redirect("/warehouse");
     }
 }
