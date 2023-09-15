@@ -16,6 +16,13 @@ return new class extends Migration
             $table->foreignId("product_id")->constrained("products")->onDelete("cascade");
             $table->foreignId("sale_id")->constrained("sales")->onDelete("cascade");
             $table->integer("quantity");
+            $table->integer("packing_cost");
+            $table->integer("outer_length");
+            $table->integer("outer_width");
+            $table->integer("outer_height");
+            $table->integer("inner_length");
+            $table->integer("inner_width");
+            $table->integer("inner_height");
             $table->timestamps();
         });
     }

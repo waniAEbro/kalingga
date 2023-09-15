@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer("remain_bill");
             $table->integer("total_bill");
             $table->integer("paid");
+            $table->string("code");
             $table->timestamps();
         });
     }

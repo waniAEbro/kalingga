@@ -16,6 +16,13 @@ return new class extends Migration
             $table->string("code");
             $table->string("name");
             $table->string("rfid");
+            $table->integer("sell_price");
+            $table->integer("length");
+            $table->integer("width");
+            $table->integer("height");
+            $table->integer("production_cost");
+            $table->integer("other_cost");
+            $table->string("logo");
             $table->timestamps();
         });
     }

@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <x-data-list :heads="['No', 'Date', 'Customer', 'Due Date', 'Status', 'Code', 'Remaining Bill', 'Total']">
+    <x-data-list :heads="['No', 'Date', 'Customer', 'Due Date', 'Status', 'Remaining Bill', 'Total']">
         @foreach ($sales as $no => $sale)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
                 <td class="p-4 rounded-l-lg">{{ $no + 1 }}</td>
@@ -35,8 +35,8 @@
                 <td class="p-4">{{ $sale->customer->name }}</td>
                 <td class="p-4">{{ $sale->due_date }}</td>
                 <td class="p-4">{{ $sale->status }}</td>
-                <td class="p-4">{{ $sale->remain_bill }}</td>
-                <td class="p-4">{{ $sale->total_bill }}</td>
+                <td class="p-4 rupiah">{{ $sale->remain_bill }}</td>
+                <td class="p-4 rupiah">{{ $sale->total_bill }}</td>
                 <td class="p-4 rounded-r-lg">
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                         <a href="productions/{{ $sale->id }}/edit" class="flex items-center gap-1 text-slate-600"><span
