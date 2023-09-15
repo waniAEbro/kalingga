@@ -1,10 +1,13 @@
-@props(['heads'])
+@props(['heads', 'isProductions' => false])
 
 <div class="flex items-center justify-between">
-    <a href="/{{ request()->path() }}/create"
-        class="py-2 px-3 text-[#FCFDFD] font-[500] bg-[#1D5E4D] text-sm rounded-md">Add New
-        Data</a>
-    <div class="text-xs text-[#95989c]">Showing 1 to 10 of 150 entries</div>
+    @if (!$isProductions)
+        <a href="/{{ request()->path() }}/create"
+            class="py-2 px-3 text-[#FCFDFD] font-[500] bg-[#1D5E4D] text-sm rounded-md">Add New
+            Data</a>
+    @endif
+    <div class="text-xs text-[#95989c] @if ($isProductions) ml-[400px] @endif">Showing 1 to 10 of 150
+        entries</div>
     <div class="relative">
         <input type="text"
             class="py-2 px-4 text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded outline-none  w-52"
@@ -24,7 +27,7 @@
     </thead>
     <tbody class="text-center ">
 
-        {{-- @yield('table-body') --}}
         {{ $slot }}
+
     </tbody>
 </table>

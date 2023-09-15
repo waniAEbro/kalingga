@@ -39,9 +39,9 @@
                 <td class="p-4 rupiah">{{ $sale->total_bill }}</td>
                 <td class="p-4 rounded-r-lg">
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
-                        <a href="productions/{{ $sale->id }}/edit" class="flex items-center gap-1 text-slate-600"><span
+                        <a href="/sales/{{ $sale->id }}/edit" class="flex items-center gap-1 text-slate-600"><span
                                 class="text-lg"><ion-icon name="create-outline"></ion-icon></span>Edit</a>
-                        <form action="productions / {{ $sale->id }}">
+                        <form action="/sales/{{ $sale->id }}">
                             @csrf
                             @method('delete')
                             <button class="flex items-center gap-1 text-red-700"><span class="text-lg"><ion-icon

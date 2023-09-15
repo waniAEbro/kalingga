@@ -12,9 +12,9 @@
                 <td class="p-4">{{ $customer->code }}</td>
                 <td class="p-4 rounded-r-lg">
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
-                        <a href="productions/{{ $customer->id }}/edit" class="flex items-center gap-1 text-slate-600"><span
+                        <a href="/customers/{{ $customer->id }}/edit" class="flex items-center gap-1 text-slate-600"><span
                                 class="text-lg"><ion-icon name="create-outline"></ion-icon></span>Edit</a>
-                        <form action="productions / {{ $customer->id }}">
+                        <form action="/customers/{{ $customer->id }}">
                             @csrf
                             @method('delete')
                             <button class="flex items-center gap-1 text-red-700"><span class="text-lg"><ion-icon

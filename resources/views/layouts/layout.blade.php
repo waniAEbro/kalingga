@@ -31,10 +31,8 @@
                 <div class="w-[98%]">
                     <div class="flex justify-between mt-3">
                         <div class="text-sm text-[#739C93] font-[500] breadcrumbs">
-                            <ul>
-                                @foreach (explode('/', request()->path()) as $item)
-                                    <li>{{ ucfirst($item) }}</li>
-                                @endforeach
+                            <ul id="breadcrumbs">
+
                             </ul>
                         </div>
 
@@ -60,6 +58,20 @@
     </div>
 </body>
 <script>
+    const breadcrumbs = document.querySelector('#breadcrumbs');
+    let pathname = window.location.pathname;
+    let pathArray = pathname.replace(/\d+/g, '').split('/').filter(function(item) {
+        return item !== '';
+    });;
+    console.log(pathArray);
+
+    pathArray.forEach(e => {
+        const listItem = document.createElement('li');
+        const textNode = document.createTextNode(e.charAt(0).toUpperCase() + e.slice(1));
+        listItem.appendChild(textNode);
+        breadcrumbs.appendChild(listItem);
+    })
+
     const setup = () => {
         const getTheme = () => {
             if (window.localStorage.getItem('dark')) {
