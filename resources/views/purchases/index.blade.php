@@ -14,9 +14,9 @@
                 <td class="p-4">{{ $purchase->paid }}</td>
                 <td class="p-4 rounded-r-lg">
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
-                        <a href="productions/{{ $purchase->id }}/edit" class="flex items-center gap-1 text-slate-600"><span
+                        <a href="/purchases/{{ $purchase->id }}/edit" class="flex items-center gap-1 text-slate-600"><span
                                 class="text-lg"><ion-icon name="create-outline"></ion-icon></span>Edit</a>
-                        <form action="productions / {{ $purchase->id }}">
+                        <form action="/purchases/{{ $purchase->id }}">
                             @csrf
                             @method('delete')
                             <button class="flex items-center gap-1 text-red-700"><span class="text-lg"><ion-icon
