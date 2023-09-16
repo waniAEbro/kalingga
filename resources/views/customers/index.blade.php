@@ -14,7 +14,7 @@
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                         <a href="/customers/{{ $customer->id }}/edit" class="flex items-center gap-1 text-slate-600"><span
                                 class="text-lg"><ion-icon name="create-outline"></ion-icon></span>Edit</a>
-                        <form action="/customers/{{ $customer->id }}">
+                        <form action="/customers/{{ $customer->id }}" method="POST">
                             @csrf
                             @method('delete')
                             <button class="flex items-center gap-1 text-red-700"><span class="text-lg"><ion-icon
