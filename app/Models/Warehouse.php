@@ -14,9 +14,9 @@ class Warehouse extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["warehouses"];
+    protected $with = ["production"];
 
-    public function product(): BelongsTo
+    public function production(): BelongsTo
     {
         return $this->belongsTo(Production::class, "production_id", "id");
     }

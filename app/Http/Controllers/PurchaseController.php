@@ -44,6 +44,7 @@ class PurchaseController extends Controller
             'remain_bill' => $request->total_bill - $request->paid,
             'total_bill' => $request->total_bill,
             'paid' => $request->paid,
+            "code" => $request->code
         ]);
 
         foreach ($request->component_id as $index => $id) {
@@ -89,6 +90,7 @@ class PurchaseController extends Controller
             'remain_bill' => $request->remain_bill,
             'total_bill' => $request->total_bill,
             'paid' => $request->paid,
+            "code" => $request->code
         ]);
 
         return redirect("/purchases");
