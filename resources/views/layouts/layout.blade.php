@@ -8,6 +8,7 @@
     {{-- @vite('resources/css/app.css') --}}
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.7.4/dist/full.css" rel="stylesheet" type="text/css" />
+
     <style type="text/tailwindcss">
         @layer components {
             .active {
@@ -28,9 +29,15 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    @stack('head')
     <style>
         ion-icon {
             --ionicon-stroke-width: 40px;
+        }
+
+        [x-cloak] {
+            display: none;
         }
     </style>
     <title>Document</title>
@@ -44,6 +51,9 @@
             @yield('content')
         </x-main>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+
 </body>
 <script>
     const breadcrumbs = document.querySelector('#breadcrumbs');
@@ -74,56 +84,7 @@
         }
     }
 
-    function data() {
-        return {
-            sortBy: "",
-            sortAsc: false,
-            sortByColumn($event) {
-                if (this.sortBy === $event.target.innerText) {
-                    if (this.sortAsc) {
-                        this.sortBy = "";
-                        this.sortAsc = false;
-                    } else {
-                        this.sortAsc = !this.sortAsc;
-                    }
-                } else {
-                    this.sortBy = $event.target.innerText;
-                }
 
-                let rows = this.getTableRows()
-                    .sort(
-                        this.sortCallback(
-                            Array.from($event.target.parentNode.children).indexOf(
-                                $event.target
-                            )
-                        )
-                    )
-                    .forEach((tr) => {
-                        this.$refs.tbody.appendChild(tr);
-                    });
-            },
-            getTableRows() {
-                return Array.from(this.$refs.tbody.querySelectorAll("tr"));
-            },
-            getCellValue(row, index) {
-                return row.children[index].innerText;
-            },
-            sortCallback(index) {
-                return (a, b) =>
-                    ((row1, row2) => {
-                        return row1 !== "" &&
-                            row2 !== "" &&
-                            !isNaN(row1) &&
-                            !isNaN(row2) ?
-                            row1 - row2 :
-                            row1.toString().localeCompare(row2);
-                    })(
-                        this.getCellValue(this.sortAsc ? a : b, index),
-                        this.getCellValue(this.sortAsc ? b : a, index)
-                    );
-            }
-        };
-    }
 
     function toRupiah(number) {
         var rupiah = '';
@@ -134,7 +95,6 @@
         return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
     }
 </script>
-
 @stack('script')
 
 </html>

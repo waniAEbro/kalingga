@@ -28,7 +28,7 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        return view('purchases.create', ["suppliers" => Supplier::get(), "components" => Component::get()]);
+        return view('purchases.create', ["suppliersName" => Supplier::pluck('name')->toArray(), "components" => Component::get(), "justArray" => ['one', 'two', 'three']]);
     }
 
     /**
@@ -36,23 +36,24 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request): RedirectResponse
     {
-        $purchase = Purchase::create([
-            'supplier_id' => $request->supplier_id,
-            'purchase_date' => $request->purchase_date,
-            'due_date' => $request->due_date,
-            'status' => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
-            'remain_bill' => $request->total_bill - $request->paid,
-            'total_bill' => $request->total_bill,
-            'paid' => $request->paid,
-        ]);
+        dd($request->component_id, $request->total_bill, $request->paid);
+        // $purchase = Purchase::create([
+        //     'supplier_id' => $request->supplier_id,
+        //     'purchase_date' => $request->purchase_date,
+        //     'due_date' => $request->due_date,
+        //     'status' => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
+        //     'remain_bill' => $request->total_bill - $request->paid,
+        //     'total_bill' => $request->total_bill,
+        //     'paid' => $request->paid,
+        // ]);
 
-        foreach ($request->component_id as $index => $id) {
-            DB::table("component_purchase")->insert([
-                "component_id" => $id,
-                "purchase_id" => $purchase->id,
-                "quantity" => $request->quantity[$index],
-            ]);
-        }
+        // foreach ($request->component_id as $index => $id) {
+        //     DB::table("component_purchase")->insert([
+        //         "component_id" => $id,
+        //         "purchase_id" => $purchase->id,
+        //         "quantity" => $request->quantity[$index],
+        //     ]);
+        // }
 
         return redirect("/purchases");
     }

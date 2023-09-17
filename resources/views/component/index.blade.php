@@ -7,7 +7,7 @@
                 <td class="p-4 rounded-l-lg">{{ $no + 1 }}</td>
                 <td class="p-4">{{ $component->name }}</td>
                 <td class="p-4">{{ $component->unit }}</td>
-                <td class="p-4">{{ $component->price_per_unit }}</td>
+                <td class="p-4 price">{{ $component->price_per_unit }}</td>
                 <td class="p-4 rounded-r-lg">
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                         <a href="/components/{{ $component->id }}/edit" class="flex items-center gap-1 text-slate-600"><span

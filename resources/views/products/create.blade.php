@@ -24,7 +24,7 @@
 
                 <div x-data="{ componentId: null, totalPrice: 0 }">
                     <p class="mt-1 font-bold">Components: </p>
-                    <div x-data="{ quantity: 0, price: 0 }" class="flex gap-5 mt-2 w-fit items-center">
+                    <div x-data="{ quantity: 0, price: 0 }" class="flex items-center gap-5 mt-2 w-fit">
                         <select x-on:change="componentId = $el.value" name="components[]"
                             class="w-40 select select-bordered">
                             <option disabled selected>Component</option>
@@ -77,7 +77,7 @@
                     <template x-if="componentId">
                         <div>
                             <div class="divider"></div>
-                            <div class="flex justify-end font-bold mt-3 mr-16">Total : Rp<span id="total"></span></div>
+                            <div class="flex justify-end mt-3 mr-16 font-bold">Total : Rp<span id="total"></span></div>
                         </div>
                     </template>
                 </div>
@@ -108,7 +108,7 @@
 
         function addComponentField() {
             const container = document.querySelector('#add-component-container');
-            const buttonHTML = `<div x-data="{ component: $el, componentId: null, quantity: 0 }" class="flex gap-5 mt-2 w-fit items-center">
+            const buttonHTML = `<div x-data="{ component: $el, componentId: null, quantity: 0 }" class="flex items-center gap-5 mt-2 w-fit">
                                     <select x-on:change="componentId = $el.value" name="components[]" class="w-40 select select-bordered">
                                         <option disabled selected>Component</option>
                                         @foreach ($components as $component)

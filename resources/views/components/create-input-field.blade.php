@@ -1,6 +1,6 @@
-@props(['action'])
+@props(['action', 'width' => '[490px]'])
 
-<div class="w-[490px] h-fit relative bg-white rounded-xl px-4 pt-6 pb-20 drop-shadow-lg">
+<div class="w-{{ $width }} h-fit relative bg-white rounded-xl px-4 pt-6 pb-20 drop-shadow-lg">
     <form method="POST" action="/{{ $action }}">
         @csrf
 

@@ -27,7 +27,7 @@ class SaleController extends Controller
      */
     public function create()
     {
-        return view('sales.create', ["customers" => Customer::get(), "products" => Product::get()]);
+        return view('sales.create', ["customersName" => Customer::pluck('name')->toArray(), "products" => Product::get(), "justArray" => ['one', 'two', 'three', 'four', 'five']]);
     }
 
     /**
@@ -35,50 +35,51 @@ class SaleController extends Controller
      */
     public function store(StoreSaleRequest $request)
     {
-        $sale = Sale::create([
-            'customer_id' => $request->customer_id,
-            'sale_date' => $request->sale_date,
-            'due_date' => $request->due_date,
-            'status' => $request->total_bill - $request->paid == 0 ? "close" : "open",
-            'total_bill' => $request->total_bill,
-            'paid' => $request->paid,
-            "remain_bill" => $request->total_bill - $request->paid,
-        ]);
+        dd($request->product_id, $request->quantity, $request->customer_name, $request->total_bill, $request->paid);
+        // $sale = Sale::create([
+        //     'customer_id' => Customer::where('name', $request->customer_name)->first()->id,
+        //     'sale_date' => $request->sale_date,
+        //     'due_date' => $request->due_date,
+        //     'status' => $request->total_bill - $request->paid == 0 ? "close" : "open",
+        //     'total_bill' => $request->total_bill,
+        //     'paid' => $request->paid,
+        //     "remain_bill" => $request->total_bill - $request->paid,
+        // ]);
 
-        $products = [];
+        // $products = [];
 
-        foreach ($request->product_id as $key => $id) {
-            $id = DB::table('product_sale')->insertGetId([
-                'product_id' => $id,
-                'sale_id' => $sale->id,
-                'quantity' => $request->quantity[$key],
-            ]);
+        // foreach ($request->product_id as $key => $id) {
+        //     $id = DB::table('product_sale')->insertGetId([
+        //         'product_id' => $id,
+        //         'sale_id' => $sale->id,
+        //         'quantity' => $request->quantity[$key],
+        //     ]);
 
-            $products[] = DB::table('product_sale')->find($id);
-        }
+        //     $products[] = DB::table('product_sale')->find($id);
+        // }
 
-        $customer = Customer::find($request->customer_id);
+        // $customer = Customer::find($request->customer_id);
 
-        $productions = [];
+        // $productions = [];
 
-        foreach ($products as $product) {
-            $productions[] = Production::create([
-                "code" => $customer->code . $product->quantity . "00",
-                "product_id" => $product->product_id,
-                "quantity_finished" => 0,
-                "quantity_not_finished" => $product->quantity,
-                "total_production" => $product->quantity,
-            ]);
-        }
+        // foreach ($products as $product) {
+        //     $productions[] = Production::create([
+        //         "code" => $customer->code . $product->quantity . "00",
+        //         "product_id" => $product->product_id,
+        //         "quantity_finished" => 0,
+        //         "quantity_not_finished" => $product->quantity,
+        //         "total_production" => $product->quantity,
+        //     ]);
+        // }
 
-        foreach ($productions as $production) {
-            DB::table("production_sale")->insert([
-                "production_id" => $production->id,
-                "sale_id" => $sale->id,
-            ]);
-        }
+        // foreach ($productions as $production) {
+        //     DB::table("production_sale")->insert([
+        //         "production_id" => $production->id,
+        //         "sale_id" => $sale->id,
+        //     ]);
+        // }
 
-        return redirect("/sales");
+        // return redirect("/sales");
     }
 
     /**

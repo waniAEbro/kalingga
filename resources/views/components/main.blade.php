@@ -1,5 +1,5 @@
 <main class="w-full py-5 min-h-screen bg-[#064E3B] pr-7">
-    <div class="w-full h-full bg-[#F1F5F9] rounded-[30px] pl-6 pr-0 pb-5 pt-4">
+    <div class="w-full h-full bg-[#F1F5F9] rounded-[30px] pl-6 pr-0 pb-10 pt-4">
         <div class="w-[98%]">
             <div class="flex justify-between mt-3">
                 <div class="text-sm text-[#739C93] font-[500] breadcrumbs">
