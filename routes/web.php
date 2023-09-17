@@ -10,6 +10,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\WarehouseController;
+use App\Models\Warehouse;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,4 @@ Route::resource("suppliers", SupplierController::class);
 Route::resource("purchases", PurchaseController::class);
 Route::resource("productions", ProductionController::class);
 Route::resource("customers", CustomerController::class);
+Route::resource("warehouse", WarehouseController::class);

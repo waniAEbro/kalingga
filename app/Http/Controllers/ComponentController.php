@@ -33,7 +33,8 @@ class ComponentController extends Controller
     {
         Component::create([
             "name" => $request->name,
-            "price_per_unit" => $request->price_per_unit,
+            "price_per_unit_sell" => $request->price_per_unit_sell,
+            "price_per_unit_buy" => $request->price_per_unit_buy,
             "unit" => $request->unit
         ]);
 
@@ -63,7 +64,8 @@ class ComponentController extends Controller
     {
         $component->update([
             "name" => $request->name,
-            "price_per_unit" => $request->price_per_unit,
+            "price_per_unit_sell" => $request->price_per_unit_sell,
+            "price_per_unit_buy" => $request->price_per_unit_buy,
             "unit" => $request->unit
         ]);
 

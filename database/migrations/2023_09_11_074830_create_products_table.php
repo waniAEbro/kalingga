@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer("production_cost");
             $table->integer("other_cost");
             $table->string("logo");
+            $table->foreignId("pack_id")->constrained("packs")->onDelete("cascade");
             $table->timestamps();
         });
     }

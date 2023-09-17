@@ -1,13 +1,18 @@
 @extends('layouts.layout')
 
 @section('content')
-    <x-data-list :heads="['No', 'Component Name', 'Unit', 'Price per Unit']">
+    <x-data-list :heads="['No', 'Component Name', 'Unit', 'Price per Unit Sell', 'Price per Unit Buy']">
         @foreach ($components as $no => $component)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
                 <td class="p-4 rounded-l-lg">{{ $no + 1 }}</td>
                 <td class="p-4">{{ $component->name }}</td>
                 <td class="p-4">{{ $component->unit }}</td>
+<<<<<<< HEAD
                 <td class="p-4 price">{{ $component->price_per_unit }}</td>
+=======
+                <td class="p-4">{{ $component->price_per_unit_sell }}</td>
+                <td class="p-4">{{ $component->price_per_unit_buy }}</td>
+>>>>>>> bb998a53a870f3f48d6d7a209e7ad078d9bb62ed
                 <td class="p-4 rounded-r-lg">
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                         <a href="/components/{{ $component->id }}/edit" class="flex items-center gap-1 text-slate-600"><span

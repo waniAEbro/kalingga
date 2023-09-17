@@ -37,6 +37,7 @@ class PurchaseController extends Controller
     public function store(StorePurchaseRequest $request): RedirectResponse
     {
         dd($request->component_id, $request->total_bill, $request->paid);
+        
         // $purchase = Purchase::create([
         //     'supplier_id' => $request->supplier_id,
         //     'purchase_date' => $request->purchase_date,
@@ -45,6 +46,7 @@ class PurchaseController extends Controller
         //     'remain_bill' => $request->total_bill - $request->paid,
         //     'total_bill' => $request->total_bill,
         //     'paid' => $request->paid,
+        //     "code" => $request->code
         // ]);
 
         // foreach ($request->component_id as $index => $id) {
@@ -90,6 +92,7 @@ class PurchaseController extends Controller
             'remain_bill' => $request->remain_bill,
             'total_bill' => $request->total_bill,
             'paid' => $request->paid,
+            "code" => $request->code
         ]);
 
         return redirect("/purchases");

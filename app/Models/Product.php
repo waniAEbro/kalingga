@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Pack;
 use App\Models\Category;
 use App\Models\Component;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -16,7 +17,7 @@ class Product extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["components"];
+    protected $with = ["components", "pack"];
 
     public function components(): BelongsToMany
     {
@@ -41,5 +42,10 @@ class Product extends Model
     public function warehouse(): HasOne
     {
         return $this->hasOne(Warehouse::class, "product_id", "id");
+    }
+
+    public function pack(): BelongsTo
+    {
+        return $this->belongsTo(Pack::class);
     }
 }
