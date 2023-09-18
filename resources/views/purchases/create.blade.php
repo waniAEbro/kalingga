@@ -24,7 +24,7 @@
 
                 <label for="customer_id" class="block text-sm">Supplier</label>
                 <div class="w-40 mt-2">
-                    <x-select-with-search :dataLists="$suppliersName" :name="'supplier_name'" />
+                    <x-select-with-search :dataLists="$suppliers->pluck('name')->toArray()" :name="'supplier_name'" />
                 </div>
             </div>
 
@@ -44,19 +44,20 @@
                         </tr>
                     </thead>
                     <tbody id="purchaseBody">
-                        <tr x-data="{ sale: $el }" class="border-b">
+                        <tr x-data="{ purchase: $el }" class="border-b">
                             <td class="p-2">1</td>
                             <td class="w-40 p-2">
-                                <x-select-with-search :dataLists="$justArray" :name="'component_id[]'" />
+                                <x-select-with-search x-on:click="await $nextTick(); getComponent()" :dataLists="$components->pluck('name')->toArray()"
+                                    :name="'component_name[]'" :id="'component_name'" />
                             </td>
                             <td class="p-2"><input type="number" name="quantity[]" onchange="set_subtotal(this)"
                                     class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                             </td>
-                            <td class="p-2">m</td>
-                            <td id="price" class="p-2">9000</td>
+                            <td id="unit" class="p-2"></td>
+                            <td id="price" class="p-2"></td>
                             <td id="subtotal" class="p-2"></td>
                             <td class="p-2">
-                                <button type="button" x-on:click="sale.remove(); set_total()"
+                                <button type="button" x-on:click="purchase.remove(); set_total()"
                                     class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
                                         class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                             </td>
@@ -261,35 +262,52 @@
 @endsection
 @push('script')
     <script>
-        let components = {!! $components !!}
+        function getComponent() {
 
-        // let components_element = document.getElementById('components');
-        console.log(components)
+            let components = {!! $components !!};
+            const componentName = document.querySelectorAll('#component_name');
+
+            const units = document.querySelectorAll('#unit')
+            const prices = document.querySelectorAll('#price')
+
+            for (let i = 0; i < prices.length; i++) {
+                const component = components.find(component => component.name === componentName[i].value)
+                units[i].innerText = component.unit;
+                prices[i].innerText = component.price_per_unit_buy;
+            }
+            // console.log(componentName)
+            // units.forEach(unit => console.log(component.unit))
+            // prices.forEach(price => price.innerText = component.price)
+        }
+
+        let i = 2;
 
         function addNew() {
             const purchaseBody = document.getElementById('purchaseBody');
             const purchaseRow = document.createElement('tr');
-            purchaseRow.setAttribute('x-data', '{ sale: $el }')
+            purchaseRow.setAttribute('x-data', '{ purchase: $el }')
             purchaseRow.className = 'border-b';
             purchaseRow.innerHTML = `
-                                <td class="p-2">1</td>
-                                <td class="w-40 p-2">
-                                    <x-select-with-search :dataLists="$justArray" :name="'component_id[]'" />
-                                </td>
-                                <td class="p-2"><input type="number" name="quantity[]" onchange="set_subtotal(this)"
-                                        class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
-                                </td>
-                                <td class="p-2">m</td>
-                                <td id="price" class="p-2">9000</td>
-                                <td id="subtotal" class="p-2"></td>
-                                <td class="p-2">
-                                    <button type="button" x-on:click="sale.remove(); set_total()"
-                                        class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
-                                            class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
-                                </td>
+                                    <td class="p-2">${i}</td>
+                                    <td class="w-40 p-2">
+                                        <x-select-with-search x-on:click="await $nextTick(); getComponent()" :dataLists="$components->pluck('name')->toArray()"
+                                            :name="'component_name[]'" :id="'component_name'" />
+                                    </td>
+                                    <td class="p-2"><input type="number" name="quantity[]" onchange="set_subtotal(this)"
+                                            class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                    </td>
+                                    <td id="unit" class="p-2"></td>
+                                    <td id="price" class="p-2"></td>
+                                    <td id="subtotal" class="p-2"></td>
+                                    <td class="p-2">
+                                        <button type="button" x-on:click="purchase.remove(); set_total()"
+                                            class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                                class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                    </td>
                         `;
 
             purchaseBody.appendChild(purchaseRow);
+            i++;
 
         }
 

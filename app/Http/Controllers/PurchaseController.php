@@ -28,7 +28,7 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        return view('purchases.create', ["suppliersName" => Supplier::pluck('name')->toArray(), "components" => Component::get(), "justArray" => ['one', 'two', 'three']]);
+        return view('purchases.create', ["suppliers" => Supplier::get(), "components" => Component::get(), "justArray" => ['one', 'two', 'three']]);
     }
 
     /**
@@ -36,7 +36,7 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request): RedirectResponse
     {
-        dd($request->component_id, $request->total_bill, $request->paid);
+        dd($request->component_name, $request->total_bill, $request->paid, $request->quantity);
         
         // $purchase = Purchase::create([
         //     'supplier_id' => $request->supplier_id,

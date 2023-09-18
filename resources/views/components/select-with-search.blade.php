@@ -1,7 +1,7 @@
-@props(['dataLists', 'name'])
+@props(['dataLists', 'name', 'id' => ''])
 
 <div class="relative text-black" x-data="selectmenu([@foreach ($dataLists as $dt) '{{ $dt }}', @endforeach])" @click.away="close()">
-    <input type="text" x-model="selectedlabel" name="{{ $name }}" id="{{ $name }}" class="hidden">
+    <input type="text" x-model="selectedlabel" name="{{ $name }}" id="{{ $id }}" class="hidden">
     <span class="inline-block w-full rounded-md shadow-sm" @click="toggle(); $nextTick(() => $refs.filterinput.focus());">
         <button type="button"
             class="relative z-0 w-full py-2 pl-3 pr-10 text-left transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md cursor-default focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5">
@@ -24,7 +24,7 @@
 
             <template x-for="(value, key) in getlist()" :key="key">
 
-                <li @click="select(value, key)" :class="{ 'bg-gray-100': isselected(key) }"
+                <li @click="select(value, key)" {{ $attributes }} :class="{ 'bg-gray-100': isselected(key) }"
                     class="relative py-1 pl-3 mb-1 text-gray-900 rounded-md cursor-pointer select-none pr-9 hover:bg-gray-100">
                     <span x-text="value" class="block font-normal truncate"></span>
 
@@ -43,11 +43,6 @@
 </div>
 @push('script')
     <script>
-        // console.log('{{ $dataLists[0] }}')
-
-        // data()
-
-
         function selectmenu(dataLists) {
 
             return {
@@ -88,11 +83,5 @@
                 }
             };
         }
-
-        // function data() {
-
-        //     return dataLists;
-        // }
-        // console.log(data())
     </script>
 @endpush
