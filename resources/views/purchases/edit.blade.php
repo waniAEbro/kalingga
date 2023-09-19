@@ -8,10 +8,10 @@
         <div class="flex gap-5">
             <div>
                 <label for="purchase_date" class="block text-sm">Purchase Date</label>
-                <x-input-text type="date" :name="'purchase_date'" :value="$purchase->purchase_date" class="mb-3" />
+                <x-input-text type="date" :name="'purchase_date'" :value="$purchase->purchase_date" readonly class="mb-3 bg-slate-100" />
 
                 <label for="due_date" class="block text-sm">Due Date</label>
-                <x-input-text type="date" :name="'due_date'" :value="$purchase->due_date" class="mb-3" />
+                <x-input-text type="date" :name="'due_date'" :value="$purchase->due_date" readonly class="mb-3 bg-slate-100" />
 
                 <label for="customer_id" class="block text-sm">Supplier</label>
                 <div class="w-40 mt-2 mb-3">
@@ -27,7 +27,7 @@
                 <x-input-text :name="'supplier_email'" :label="'Supplier Email'" :value="$purchase->supplier->email" readonly class="mb-3 bg-slate-100" />
                 <x-input-text :name="'supplier_phone'" :label="'Supplier Phone'" :value="$purchase->supplier->phone" readonly class="mb-3 bg-slate-100" />
                 <x-input-text :name="'code'" :type="'number'" :label="'Code'" :value="$purchase->code" readonly
-                    class="mb-3" />
+                    class="bg-slate-100" />
             </div>
 
             <div class="divider divider-horizontal"></div>
@@ -46,7 +46,7 @@
                     </thead>
                     <tbody id="purchaseBody">
                         @foreach ($purchase->components as $cs)
-                            <tr x-data="{ subtotal: 0, unit: 0, price: 0 }" class="border-b">
+                            <tr id="tr" x-data="{ subtotal: 0, unit: 0, price: 0 }" class="border-b">
                                 <td id="number" class="p-2"></td>
                                 <td class="w-40 p-2">{{ $cs->name }}
                                     {{-- <x-ngetes x-on:click="getComponent(purchase); $nextTick(); set_subtotal($refs.quantity)"
@@ -55,16 +55,14 @@
                                         set_subtotal($refs.quantity)" :dataLists="$components->toArray()" :value="$cs->component_id" :name="'component_id[]'"
                                         :label="$cs->name" :id="'component_id'" /> --}}
                                 </td>
-                                <td class="p-2" x-ref="quantity">{{ $cs->pivot->quantity }}
+                                <td id="quantity" class="p-2" x-ref="quantity">{{ $cs->pivot->quantity }}
                                     {{-- <input x-ref="quantity" type="number" name="quantity[]" onchange="set_subtotal(this)"
                                         value="{{ $cs->quantity }}"
                                         class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300"> --}}
                                 </td>
                                 <td id="unit" class="p-2">{{ $cs->unit }}</td>
                                 <td id="price" x-ref="price" class="p-2">{{ $cs->price_per_unit_buy }}</td>
-                                <td id="subtotal"
-                                    x-text="parseInt($refs.quantity.innerText) * parseInt($refs.price.innerText)"
-                                    class="p-2">
+                                <td id="subtotal" class="p-2">
                                 </td>
 
                             </tr>
@@ -163,14 +161,19 @@
 
         function set_subtotal() {
             // let tr = element.parentElement.parentElement;
-            let price = tr.querySelector('#price').textContent;
-            let subtotal = tr.querySelector('#subtotal');
-            subtotal.textContent = price * element.value;
+            const trs = document.querySelectorAll('#tr');
 
-            // set_total();
+            trs.forEach(tr => {
+                let quantity = tr.querySelector('#quantity').textContent;
+                let price = tr.querySelector('#price').textContent;
+                let subtotal = tr.querySelector('#subtotal');
+                subtotal.textContent = parseInt(price) * parseInt(quantity);
+            })
+
+            set_total();
         }
 
-        // set_subtotal();
+        set_subtotal();
 
         function set_total() {
             let subtotals = document.querySelectorAll('#subtotal');
@@ -183,10 +186,6 @@
 
                 console.log(subtotalElement.textContent)
             })
-
-            // console.log(subtotals)
         }
-
-        set_total();
     </script>
 @endpush
