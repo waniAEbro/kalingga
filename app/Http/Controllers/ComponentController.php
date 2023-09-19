@@ -31,15 +31,15 @@ class ComponentController extends Controller
      */
     public function store(StorecomponentRequest $request): RedirectResponse
     {
-        dd($request->selectfield);
-        // Component::create([
-        //     "name" => $request->name,
-        //     "price_per_unit_sell" => $request->price_per_unit_sell,
-        //     "price_per_unit_buy" => $request->price_per_unit_buy,
-        //     "unit" => $request->unit
-        // ]);
+        // dd($request->selectfield);
+        Component::create([
+            "name" => $request->name,
+            "price_per_unit_sell" => $request->price_per_unit_sell,
+            "price_per_unit_buy" => $request->price_per_unit_buy,
+            "unit" => $request->unit
+        ]);
 
-        // return redirect("/components");
+        return redirect("/components");
     }
 
     /**

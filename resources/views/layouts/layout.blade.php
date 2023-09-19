@@ -94,6 +94,15 @@
         }
         return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
     }
+
+    function update_bill(element) {
+        let total = document.querySelector('#total_bill').value;
+        if (parseInt(element.value) >= parseInt(total)) {
+            element.value = total
+        } else if (parseInt(element.value) <= 0) {
+            element.value = 0
+        }
+    }
 </script>
 @stack('script')
 

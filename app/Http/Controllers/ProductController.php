@@ -58,14 +58,15 @@ class ProductController extends Controller
             "length" => $request->length,
             "width" => $request->width,
             "height" => $request->height,
-            "sell_price" => $request->sell_price
+            "sell_price" => $request->sell_price,
+            "barcode" => $request->barcode,
         ]);
 
-        foreach ($request->components as $index => $component) {
+        foreach ($request->component_id as $index => $component) {
             DB::table("component_product")->insert([
                 "product_id" => $product->id,
                 "component_id" => $component,
-                "quantity" => $request->quantities[$index]
+                "quantity" => $request->quantity[$index]
             ]);
         }
         return redirect("/products");

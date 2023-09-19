@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('packs', function (Blueprint $table) {
             $table->id();
             $table->integer("cost");
-            $table->integer("outer_length");
-            $table->integer("outer_width");
-            $table->integer("outer_height");
-            $table->integer("inner_length");
-            $table->integer("inner_width");
-            $table->integer("inner_height");
+            $table->double("outer_length");
+            $table->double("outer_width");
+            $table->double("outer_height");
+            $table->double("inner_length");
+            $table->double("inner_width");
+            $table->double("inner_height");
             $table->timestamps();
         });
     }

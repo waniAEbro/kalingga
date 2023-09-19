@@ -17,12 +17,13 @@ return new class extends Migration
             $table->string("name");
             $table->string("rfid");
             $table->integer("sell_price");
-            $table->integer("length");
-            $table->integer("width");
-            $table->integer("height");
+            $table->double("length");
+            $table->double("width");
+            $table->double("height");
             $table->integer("production_cost");
             $table->integer("other_cost");
             $table->string("logo");
+            $table->integer("barcode");
             $table->foreignId("pack_id")->constrained("packs")->onDelete("cascade");
             $table->timestamps();
         });
