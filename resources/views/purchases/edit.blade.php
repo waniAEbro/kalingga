@@ -81,7 +81,7 @@
                     </div>
                     <div class="w-40">
                         <x-input-text :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :value="$purchase->paid"
-                            :type="'number'" />
+                            :type="'number'" onInput="update_bill(this)" />
                     </div>
                 </div>
             </div>
@@ -186,6 +186,15 @@
 
                 console.log(subtotalElement.textContent)
             })
+        }
+
+        function update_bill(element) {
+            let total = document.querySelector('#total_bill').value;
+            if (parseInt(element.value) >= parseInt(total)) {
+                element.value = total
+            } else if (parseInt(element.value) <= 0) {
+                element.value = 0
+            }
         }
     </script>
 @endpush
