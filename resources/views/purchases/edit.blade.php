@@ -1,106 +1,192 @@
 @extends('layouts.layout')
 
 @section('content')
-    <div x-data="data()" class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <form method="post" action="/purchases/{{ $purchases->id }}">
-            @csrf
-            @method('put')
-            <div class="space-y-12">
-                <div class="border-b border-gray-900/10 p-12">
-                    <h2 class="text-base font-semibold leading-7 text-gray-900">Update Purchases Data</h2>
+    {{-- @dd($purchase->supplier) --}}
+    <h1 class="text-lg font my-7 font-[500]">Create Purchases</h1>
 
-                    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <div class="sm:col-span-4">
-                            <label for="supplier_id" class="block text-sm font-medium leading-6 text-gray-900">Suppliers ID
-                                </label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <select class="form-control" id="supplier_id" name="supplier_id">
-                                        @foreach ($suppliers as $sp)
-                                           <option value="{{ $sp->id }}">{{ $sp->id }} - {{ $sp->name }}</option>
-                                        @endforeach
-                                     </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4">
-                            <label for="purchase_date" class="block text-sm font-medium leading-6 text-gray-900">Purchase Date</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input type="date" name="purchase_date" id="purchase_date"
-                                        class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="Purchase Date" value="{{ $purchases->purchase_date }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4">
-                            <label for="due_date" class="block text-sm font-medium leading-6 text-gray-900">Due Date</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input type="date" name="due_date" id="due_date"
-                                        class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="Due Date" value="{{ $purchases->due_date }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4">
-                            <label for="status" class="block text-sm font-medium leading-6 text-gray-900">Status</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input type="text" name="status" id="status"
-                                        class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="Status" value="{{ $purchases->status }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4">
-                            <label for="remain_bill" class="block text-sm font-medium leading-6 text-gray-900">Remain Bill</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input type="number" name="remain_bill" id="remain_bill"
-                                        class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="Remain Bill" value="{{ $purchases->remain_bill }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4">
-                            <label for="total_bill" class="block text-sm font-medium leading-6 text-gray-900">Total Bill</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input type="number" name="total_bill" id="total_bill"
-                                        class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="Remain Bill" value="{{ $purchases->total_bill }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4">
-                            <label for="paid" class="block text-sm font-medium leading-6 text-gray-900">Paid</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input type="number" name="paid" id="paid"
-                                        class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="Paid" value="{{ $purchases->paid }}">
-                                </div>
-                            </div>
-                        </div>
+    <x-edit-input-field :action="'purchases'" :items="$purchase" :width="'full'">
+        <div class="flex gap-5">
+            <div>
+                <label for="purchase_date" class="block text-sm">Purchase Date</label>
+                <x-input-text type="date" :name="'purchase_date'" :value="$purchase->purchase_date" class="mb-3" />
+
+                <label for="due_date" class="block text-sm">Due Date</label>
+                <x-input-text type="date" :name="'due_date'" :value="$purchase->due_date" class="mb-3" />
+
+                <label for="customer_id" class="block text-sm">Supplier</label>
+                <div class="w-40 mt-2 mb-3">
+                    <x-input-text :name="'supplier_address'" :label="'Supplier Address'" :value="$purchase->supplier->name" readonly
+                        class="mb-3 bg-slate-100" />
+
+                    {{-- <x-ngetes readonly x-on:click="getSupplier()" x-init="await $nextTick;
+                    getSupplier()" :value="$supplier->id" :label="$supplier->name"
+                        :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'" /> --}}
+                </div>
+
+                <x-input-text :name="'supplier_address'" :label="'Supplier Address'" :value="$purchase->supplier->address" readonly class="mb-3 bg-slate-100" />
+                <x-input-text :name="'supplier_email'" :label="'Supplier Email'" :value="$purchase->supplier->email" readonly class="mb-3 bg-slate-100" />
+                <x-input-text :name="'supplier_phone'" :label="'Supplier Phone'" :value="$purchase->supplier->phone" readonly class="mb-3 bg-slate-100" />
+                <x-input-text :name="'code'" :type="'number'" :label="'Code'" :value="$purchase->code" readonly
+                    class="mb-3" />
+            </div>
+
+            <div class="divider divider-horizontal"></div>
+
+            <div class="w-full">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b-2">
+                            <th class="p-2">#</th>
+                            <th class="p-2">Component</th>
+                            <th class="p-2">Amount</th>
+                            <th class="p-2">Unit</th>
+                            <th class="p-2">Price per Product</th>
+                            <th class="p-2">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="purchaseBody">
+                        @foreach ($purchase->components as $cs)
+                            <tr x-data="{ subtotal: 0, unit: 0, price: 0 }" class="border-b">
+                                <td id="number" class="p-2"></td>
+                                <td class="w-40 p-2">{{ $cs->name }}
+                                    {{-- <x-ngetes x-on:click="getComponent(purchase); $nextTick(); set_subtotal($refs.quantity)"
+                                        x-init="getComponent(purchase);
+                                        $nextTick();
+                                        set_subtotal($refs.quantity)" :dataLists="$components->toArray()" :value="$cs->component_id" :name="'component_id[]'"
+                                        :label="$cs->name" :id="'component_id'" /> --}}
+                                </td>
+                                <td class="p-2" x-ref="quantity">{{ $cs->pivot->quantity }}
+                                    {{-- <input x-ref="quantity" type="number" name="quantity[]" onchange="set_subtotal(this)"
+                                        value="{{ $cs->quantity }}"
+                                        class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300"> --}}
+                                </td>
+                                <td id="unit" class="p-2">{{ $cs->unit }}</td>
+                                <td id="price" x-ref="price" class="p-2">{{ $cs->price_per_unit_buy }}</td>
+                                <td id="subtotal"
+                                    x-text="parseInt($refs.quantity.innerText) * parseInt($refs.price.innerText)"
+                                    class="p-2">
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <button type="button" x-data x-on:click="addNew(); set_number()"
+                    class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
+                    New</button>
+
+                <div class="flex justify-end gap-3 mt-10">
+                    <div class="w-40">
+                        <x-input-text :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
+                            readonly />
+                    </div>
+                    <div class="w-40">
+                        <x-input-text :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :value="$purchase->paid"
+                            :type="'number'" />
                     </div>
                 </div>
             </div>
-
-            <div class="m-6 flex items-center justify-end gap-x-6">
-                <a href="/customers">
-                    <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-                </a>
-                <button type="submit"
-                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
-            </div>
-        </form>
-    </div>
+        </div>
+    </x-edit-input-field>
 @endsection
+@push('script')
+    <script>
+        function editComponent() {
+            const purchaseBody = document.querySelector('#purchaseBody');
+
+            purchaseBody.innerHTML = '<div></div>'
+        }
+
+        function getSupplier() {
+            let suppliers = {!! $suppliers !!}
+            const supplierId = document.getElementById('supplier_id')
+            const supplier = suppliers.find(supplier => supplier.id == supplierId.value)
+            // suppliers.forEach(supplier => console.log(supplier.id))
+            console.log(supplierId.value)
+            // console.log(supplier)
+
+            const supplierAddress = document.getElementById('supplier_address').value = supplier.address;
+            const supplierEmail = document.getElementById('supplier_email').value = supplier.email;
+            const supplierPhone = document.getElementById('supplier_phone').value = supplier.phone;
+        }
+
+        function getComponent(tr) {
+
+            let components = {!! $components !!};
+            const componentId = tr.querySelector('#component_id');
+
+            if (componentId.value) {
+                const component = components.find(component => component.id == componentId.value)
+                const unit = tr.querySelector('#unit').innerText = component.unit;
+                const price = tr.querySelector('#price').innerText = component.price_per_unit_buy;
+            } else {
+                const unit = tr.querySelector('#unit').innerText = '';
+                const price = tr.querySelector('#price').innerText = '';
+            }
+        }
+
+        function set_number() {
+            const numbers = document.querySelectorAll('#number');
+            numbers.forEach((number, i) => number.innerText = i + 1)
+        }
+
+        set_number();
+
+        function addNew() {
+            const purchaseBody = document.getElementById('purchaseBody');
+            const purchaseRow = document.createElement('tr');
+            purchaseRow.setAttribute('x-data', '{ purchase: $el }')
+            purchaseRow.className = 'border-b';
+            purchaseRow.innerHTML = `
+                                        <td id="number" class="p-2"></td>
+                                        <td class="w-40 p-2">
+                                            <x-ngetes x-on:click="getComponent(purchase); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
+                                                :name="'component_id[]'" :id="'component_id'" />
+                                        </td>
+                                        <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
+                                                onchange="set_subtotal(this)" value="0"
+                                                class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                        </td>
+                                        <td id="unit" class="p-2"></td>
+                                        <td id="price" class="p-2"></td>
+                                        <td id="subtotal" class="p-2"></td>
+                                        <td class="p-2">
+                                            <button type="button" x-on:click="purchase.remove(); set_total(); set_number()"
+                                                class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                        </td>
+                                    `;
+
+            purchaseBody.appendChild(purchaseRow);
+        }
+
+        function set_subtotal() {
+            // let tr = element.parentElement.parentElement;
+            let price = tr.querySelector('#price').textContent;
+            let subtotal = tr.querySelector('#subtotal');
+            subtotal.textContent = price * element.value;
+
+            // set_total();
+        }
+
+        // set_subtotal();
+
+        function set_total() {
+            let subtotals = document.querySelectorAll('#subtotal');
+            let total = 0;
+            subtotals.forEach(subtotalElement => {
+                let subtotalValue = parseFloat(subtotalElement.textContent);
+                total += isNaN(subtotalValue) ? 0 : subtotalValue;
+
+                document.querySelector('#total_bill').value = total;
+
+                console.log(subtotalElement.textContent)
+            })
+
+            // console.log(subtotals)
+        }
+
+        set_total();
+    </script>
+@endpush

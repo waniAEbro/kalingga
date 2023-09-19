@@ -15,8 +15,9 @@
             <x-nav-menu :menuName="'Productions'" :menuIcon="'cog'" />
             <x-nav-menu :menuName="'Suppliers'" :menuIcon="'boat'" />
             <x-nav-menu :menuName="'Customers'" :menuIcon="'person'" />
-            <x-nav-menu :menuName="'Sales'"  :menuIcon="'cash'" />
+            <x-nav-menu :menuName="'Sales'" :menuIcon="'cash'" />
             <x-nav-menu :menuName="'Purchases'" :menuIcon="'bag-check'" />
+            <x-nav-menu-warehouse :menuName="'Warehouse'" :menuIcon="'grid'" />
 
         </div>
     </div>

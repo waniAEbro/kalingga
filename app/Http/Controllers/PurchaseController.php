@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
+use App\Models\ComponentPurchase;
 
 class PurchaseController extends Controller
 {
@@ -36,26 +37,26 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request): RedirectResponse
     {
-        dd($request->component_name, $request->total_bill, $request->paid, $request->quantity);
+        // dd($request->due_date);
         
-        // $purchase = Purchase::create([
-        //     'supplier_id' => $request->supplier_id,
-        //     'purchase_date' => $request->purchase_date,
-        //     'due_date' => $request->due_date,
-        //     'status' => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
-        //     'remain_bill' => $request->total_bill - $request->paid,
-        //     'total_bill' => $request->total_bill,
-        //     'paid' => $request->paid,
-        //     "code" => $request->code
-        // ]);
+        $purchase = Purchase::create([
+            'supplier_id' => $request->supplier_id,
+            'purchase_date' => $request->purchase_date,
+            'due_date' => $request->due_date,
+            'status' => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
+            'remain_bill' => $request->total_bill - $request->paid,
+            'total_bill' => $request->total_bill,
+            'paid' => $request->paid,
+            "code" => $request->code
+        ]);
 
-        // foreach ($request->component_id as $index => $id) {
-        //     DB::table("component_purchase")->insert([
-        //         "component_id" => $id,
-        //         "purchase_id" => $purchase->id,
-        //         "quantity" => $request->quantity[$index],
-        //     ]);
-        // }
+        foreach ($request->component_id as $index => $id) {
+            DB::table("component_purchase")->insert([
+                "component_id" => $id,
+                "purchase_id" => $purchase->id,
+                "quantity" => $request->quantity[$index],
+            ]);
+        }
 
         return redirect("/purchases");
     }
@@ -73,9 +74,11 @@ class PurchaseController extends Controller
      */
     public function edit(Purchase $purchase, Supplier $supplier)
     {
+
         return view("purchases.edit", [
-            "purchases" => Purchase::find($purchase->id),
+            "purchase" => $purchase,
             "suppliers" => Supplier::get(),
+            "components" => Component::get(),
         ]);
     }
 
@@ -85,14 +88,9 @@ class PurchaseController extends Controller
     public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
         $purchase->update([
-            'supplier_id' => $request->supplier_id,
-            'purchase_date' => $request->purchase_date,
-            'due_date' => $request->due_date,
-            'status' => $request->status,
-            'remain_bill' => $request->remain_bill,
-            'total_bill' => $request->total_bill,
+            'status' => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
+            'remain_bill' => $request->total_bill - $request->paid,
             'paid' => $request->paid,
-            "code" => $request->code
         ]);
 
         return redirect("/purchases");
