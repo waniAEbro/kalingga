@@ -105,11 +105,9 @@ class SaleController extends Controller
     public function update(UpdateSaleRequest $request, Sale $sale)
     {
         $sale->update([
-            'customer_id' => $request->customer_id,
-            'sale_date' => $request->sale_date,
-            'due_date' => $request->due_date,
-            'status' => $request->status,
-            'remain_bill' => $request->remain_bill,
+            'status' => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
+            'remain_bill' => $request->total_bill - $request->paid,
+            'paid' => $request->paid,
         ]);
 
         return redirect("/sales");

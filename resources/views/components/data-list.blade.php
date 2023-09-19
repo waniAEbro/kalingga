@@ -1,12 +1,12 @@
-@props(['heads', 'isProductions' => false])
+@props(['heads', 'isReadOnly' => false])
 
 <div class="flex items-center justify-between">
-    @if (!$isProductions)
+    @if (!$isReadOnly)
         <a href="/{{ request()->path() }}/create"
             class="py-2 px-3 text-[#FCFDFD] font-[500] bg-[#1D5E4D] text-sm rounded-md">Add New
             Data</a>
     @endif
-    <div class="text-xs text-[#95989c] @if ($isProductions) ml-[400px] @endif">Showing 1 to 10 of 150
+    <div class="text-xs text-[#95989c] @if ($isReadOnly) ml-[400px] @endif">Showing 1 to 10 of 150
         entries</div>
     <div class="relative">
         <input type="text"
@@ -22,7 +22,6 @@
             @foreach ($heads as $head)
                 <th class="px-4 py-5 font-[500]">{{ $head }}</th>
             @endforeach
-            <th class="px-4 py-5 font-[500]">Actions</th>
         </tr>
     </thead>
     <tbody class="text-center ">

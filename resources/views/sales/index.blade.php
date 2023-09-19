@@ -57,7 +57,7 @@
         </div> --}}
     </div>
 
-    <x-data-list :heads="['No', 'Date', 'Customer', 'Due Date', 'Status', 'Remaining Bill', 'Total']">
+    <x-data-list :heads="['No', 'Date', 'Customer', 'Due Date', 'Status', 'Remaining Bill', 'Total', 'Action']">
         @foreach ($sales as $no => $sale)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
                 <td class="p-4 rounded-l-lg">{{ $no + 1 }}</td>
@@ -133,9 +133,5 @@
         set_belum_selesai()
         set_jatuh_tempo()
         set_lunas()
-
-        document.querySelectorAll(".rupiah").forEach(element => {
-            element.innerText = toRupiah(element.innerText)
-        });
     </script>
 @endpush

@@ -71,7 +71,8 @@
                             readonly />
                     </div>
                     <div class="w-40">
-                        <x-input-text :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :type="'number'" />
+                        <x-input-text :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :type="'number'"
+                            oninput="update_bill(this)" />
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-    <x-data-list :heads="['No', 'Suppliers Name', 'Email', 'Phone', 'Address']">
+    <x-data-list :heads="['No', 'Suppliers Name', 'Email', 'Phone', 'Address', 'Action']">
         @foreach ($suppliers as $no => $supplier)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
                 <td class="p-4 rounded-l-lg">{{ $no + 1 }}</td>

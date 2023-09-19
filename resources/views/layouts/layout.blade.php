@@ -101,6 +101,10 @@
             element.value = 0
         }
     }
+
+    document.querySelectorAll(".rupiah").forEach(element => {
+        element.innerText = toRupiah(element.innerText)
+    });
 </script>
 @stack('script')
 

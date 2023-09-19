@@ -1,235 +1,104 @@
 @extends('layouts.layout')
 
 @section('content')
-    <div x-data="data()" class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <form method="POST" action="/sales/{{ $component->id }}">
-            @csrf
-            @method('put')
-            <div class="space-y-12">
-                <div class="border-b border-gray-900/10 p-12">
-                    <h2 class="text-base font-semibold leading-7 text-gray-900">Create Data Sales</h2>
-                    <div class="mt-10 grid auto-cols-max gap-x-6 gap-y-8">
-                        <div class="sm:col-span-4">
-                            <label for="sale_date" class="block text-sm font-medium leading-6 text-gray-900">Tanggal
-                                Transaksi</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input type="date" name="sale_date" id="sale_date"
-                                        value="{{ $component->sale_date->toDateString() }}"
-                                        class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4">
-                            <label for="due_date" class="block text-sm font-medium leading-6 text-gray-900">Tanggal
-                                Jatuh Tempo</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input type="date" name="due_date" id="due_date"
-                                        value="{{ $component->due_date->toDateString() }}"
-                                        class="block flex-1 border-0 bg-transparent p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4">
-                            <label for="customer_id"
-                                class="block text-sm font-medium leading-6 text-gray-900">Pelanggan</label>
-                            <div class="mt-2">
-                                <select id="customer_id" name="customer_id"
-                                    class="block w-full rounded-md p-2 text-gray-900 shadow-sm ring-1 ring-offset-4 ring-gray-300 focus:ring-2 focus:ring-offset-4 focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option value="" selected hidden disabled>
-                                        Pilih Pelanggan
-                                    </option>
-                                    @foreach ($customers as $customer)
-                                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4 overflow-x-auto shadow-md rounded-lg">
-                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                <thead
-                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">
-                                            <div class="flex items-center">
-                                                Produk
-                                                <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5"
-                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                        fill="currentColor" viewBox="0 0 24 24">
-                                                        <path
-                                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                                                    </svg></a>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            <div class="flex items-center">
-                                                Jumlah
-                                                <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5"
-                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                        fill="currentColor" viewBox="0 0 24 24">
-                                                        <path
-                                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                                                    </svg></a>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            <div class="flex items-center">
-                                                Harga Satuan
-                                                <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5"
-                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                        fill="currentColor" viewBox="0 0 24 24">
-                                                        <path
-                                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                                                    </svg></a>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            <div class="flex items-center">
-                                                Total
-                                                <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5"
-                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                        fill="currentColor" viewBox="0 0 24 24">
-                                                        <path
-                                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                                                    </svg></a>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            <div class="flex items-center">
-                                                Action
-                                                <a href="#" @click="sortByColumn"><svg class="w-3 h-3 ml-1.5"
-                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                        fill="currentColor" viewBox="0 0 24 24">
-                                                        <path
-                                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                                                    </svg></a>
-                                            </div>
-                                        </th>
+    <h1 class="text-lg font my-7 font-[500]">Edit Sales</h1>
 
-                                    </tr>
-                                </thead>
-                                <tbody x-ref="tbody" id="products">
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td class="px-6 py-4">
-                                            <select id="product_id" name="product_id[]" onchange="set_product(this)"
-                                                class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-offset-4 ring-gray-300 focus:ring-2 focus:ring-offset-4 focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                                <option value="" selected hidden disabled>
-                                                    Pilih Produk
-                                                </option>
-                                                @foreach ($products as $product)
-                                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <input type="number" name="quantity[]" id="quantity"
-                                                onchange="set_subtotal(this)"
-                                                class="block flex-1 border-0 p-2 focus:ring-0" placeholder="0"
-                                                value="0">
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <p id="price">0</p>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <p id="subtotal">0</p>
-                                        </td>
-                                        <td class="gap-2 py-4">
-                                            <button onclick="delete_element(this)" type="button">hapus</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+    <x-edit-input-field :action="'sales'" :items="$sales" :width="'full'">
+        <div class="flex gap-5">
+            <div>
+                <x-input-text type="date" :name="'sale_date'" :label="'Sale Date'" :value="$sales->sale_date" readonly
+                    class="mb-3 bg-slate-100" />
+                <x-input-text type="date" :name="'due_date'" :label="'Due Date'" :value="$sales->due_date" readonly
+                    class="mb-3 bg-slate-100" />
+                <x-input-text :name="'customer_name'" :label="'Customer Name'" :value="$sales->customer->name" readonly class="mb-3 bg-slate-100" />
+                <x-input-text :name="'customer_address'" :label="'Customer Address'" :value="$sales->customer->address" readonly class="mb-3 bg-slate-100" />
+                <x-input-text :name="'customer_email'" :label="'Customer Email'" :value="$sales->customer->email" readonly class="mb-3 bg-slate-100" />
+                <x-input-text :name="'customer_phone'" :label="'Customer Phone'" :value="$sales->customer->phone" readonly class="mb-3 bg-slate-100" />
+                <x-input-text :name="'code'" :type="'number'" :label="'Code'" :value="$sales->code" readonly
+                    class="bg-slate-100" />
+            </div>
+
+            <div class="divider divider-horizontal"></div>
+
+            <div class="w-full">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b-2">
+                            <th class="p-2">#</th>
+                            <th class="p-2">Product</th>
+                            <th class="p-2">Amount</th>
+                            <th class="p-2">Price per Product</th>
+                            <th class="p-2">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salesBody">
+                        @foreach ($sales->product as $product)
+                            <tr id="tr" x-data="{ subtotal: 0, unit: 0, price: 0 }" class="border-b">
+                                <td id="number" class="p-2"></td>
+                                <td class="w-40 p-2">{{ $product->name }}</td>
+                                <td id="quantity" class="p-2" x-ref="quantity">{{ $product->pivot->quantity }}</td>
+                                <td id="price" x-ref="price" class="p-2">{{ $product->sell_price }}</td>
+                                <td id="subtotal" class="p-2"></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <div class="flex justify-end gap-3 mt-10">
+                    <div class="w-40">
+                        <x-input-text :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
+                            readonly />
                     </div>
-                    <div class="m-6 flex items-center justify-end gap-x-6">
-                        <label for="total_bill">Total</label>
-                        <input type="number" name="total_bill" id="total_bill" value="0" readonly>
-                    </div>
-                    <div class="m-6 flex items-center justify-end gap-x-6">
-                        <label for="paid">Bayar</label>
-                        <input type="number" name="paid" id="paid" value="0">
+                    <div class="w-40">
+                        <x-input-text :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :value="$sales->paid"
+                            :type="'number'" onInput="update_bill(this)" />
                     </div>
                 </div>
             </div>
-
-            <div class="m-6 flex items-center justify-end gap-x-6">
-                <a href="/sales">
-                    <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-                </a>
-                <button type="submit"
-                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
-            </div>
-        </form>
-    </div>
+        </div>
+    </x-edit-input-field>
 @endsection
 @push('script')
     <script>
-        let products = {!! $products !!}
-
-        let products_element = document.getElementById('products');
-
-        function set_product(element) {
-            let product = products.find(product => product.id == element.value);
-            let product_price = 0
-            product.components.forEach(component => {
-                product_price += component.price_per_unit * component.pivot.quantity
-            });
-            let tr = element.parentElement.parentElement;
-            let price = tr.querySelector('#price');
-            price.textContent = product_price;
-
-            let newElement = `
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td class="px-6 py-4">
-                                            <select id="product_id" name="product_id[]" onchange="set_product(this)"
-                                                class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-offset-4 ring-gray-300 focus:ring-2 focus:ring-offset-4 focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                                <option value="" selected hidden disabled>
-                                                    Pilih Produk
-                                                </option>
-                                                @foreach ($products as $product)
-                                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <input type="number" name="quantity[]" id="quantity"
-                                                onchange="set_subtotal(this)"
-                                                class="block flex-1 border-0 p-2 focus:ring-0" placeholder="0"
-                                                value="0">
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <p id="price">0</p>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <p id="subtotal">0</p>
-                                        </td>
-                                        <td class="gap-2 py-4">
-                                            <button onclick="delete_element(this)" type="button">hapus</button>
-                                        </td>
-                                    </tr>`;
-
-            products_element.insertAdjacentHTML('beforeend', newElement);
+        function set_number() {
+            const numbers = document.querySelectorAll('#number');
+            numbers.forEach((number, i) => number.innerText = i + 1)
         }
 
-        function set_subtotal(element) {
-            let tr = element.parentElement.parentElement;
-            let price = tr.querySelector('#price').textContent;
-            let subtotal = tr.querySelector('#subtotal');
-            subtotal.textContent = price * element.value;
+        function set_subtotal() {
+            const trs = document.querySelectorAll('#tr');
 
+            trs.forEach(tr => {
+                let quantity = tr.querySelector('#quantity').textContent;
+                let price = tr.querySelector('#price').textContent;
+                let subtotal = tr.querySelector('#subtotal');
+                subtotal.textContent = parseInt(price) * parseInt(quantity);
+            })
+
+            set_total();
+        }
+
+        function set_total() {
             let subtotals = document.querySelectorAll('#subtotal');
             let total = 0;
             subtotals.forEach(subtotalElement => {
-                total += parseFloat(subtotalElement.textContent);
-            });
-            document.querySelector('#total_bill').value = total;
+                let subtotalValue = parseFloat(subtotalElement.textContent);
+                total += isNaN(subtotalValue) ? 0 : subtotalValue;
+
+                document.querySelector('#total_bill').value = total;
+            })
         }
 
-        function delete_element(element) {
-            element.parentElement.parentElement.remove();
+        function update_bill(element) {
+            let total = document.querySelector('#total_bill').value;
+            if (parseInt(element.value) >= parseInt(total)) {
+                element.value = total
+            } else if (parseInt(element.value) <= 0) {
+                element.value = 0
+            }
         }
+
+        set_number();
+        set_subtotal();
     </script>
 @endpush
