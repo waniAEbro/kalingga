@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
+use App\Models\Warehouse;
 
 class SaleController extends Controller
 {
@@ -77,6 +78,11 @@ class SaleController extends Controller
             DB::table("production_sale")->insert([
                 "production_id" => $production->id,
                 "sale_id" => $sale->id,
+            ]);
+
+            Warehouse::create([
+                "production_id" => $production->id,
+                "quantity" => 0
             ]);
         }
 

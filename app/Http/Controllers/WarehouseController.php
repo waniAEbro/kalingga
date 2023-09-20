@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Warehouse;
-use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Casts\Json;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\Eloquent\Casts\Json;
+
 class WarehouseController extends Controller
 {
     /**
@@ -18,61 +20,29 @@ class WarehouseController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //return view("warehouse.create");
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $warehouse = Warehouse::create([
-            "production_id" => $request->input("production_id"),
-            "quantity" => $request->input("quantity"),
-        ]);
-
-        return response()->json($warehouse, 200);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Warehouse $warehouse) :View
-    {
-        return view("warehouse.show", ["warehouse" => Warehouse::find($warehouse->id)]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Warehouse $warehouse)
-    {
-        //return view("warehouse.edit", ["warehouse" => Warehouse::find($warehouse->id)]);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Warehouse $warehouse)
+    public function stockin(Request $request, Warehouse $warehouse)
     {
+        $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
+
         $warehouse->update([
-            "production_id" => $request->input("production_id"),
-            "quantity" => $request->input("quantity"),
+            "product_id" => $production->product_id,
+            "quantity" => $warehouse->quantity + 1,
         ]);
 
         return response()->json($warehouse, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Warehouse $warehouse)
+    public function stockout(Request $request, Warehouse $warehouse)
     {
-        $warehouse->delete();
-        return redirect("/warehouse");
+        $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
+
+        $warehouse->update([
+            "product_id" => $production->product_id,
+            "quantity" => $warehouse->quantity - 1,
+        ]);
+
+        return response()->json($warehouse, 200);
     }
 }
