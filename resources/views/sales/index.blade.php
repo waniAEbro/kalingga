@@ -35,26 +35,6 @@
                 <div class="text-[#707E94] mt-2">Pembayaran Lunas</div>
             </div>
         </div>
-        {{-- 
-        <div
-            class="w-full peer/dua hover:scale-110 duration-500 h-40 p-5 rounded-xl shadow-[0px_3px_20px_#0000000b] bg-white z-10">
-            <ion-icon class="text-3xl text-red-600" name="time-outline"></ion-icon>
-            <h1 id="pembayaran_belum_selesai" class="font-bold text-2xl mt-4 text-[#1E293B]"></h1>
-            <div class="text-[#707E94] mt-2">Pembayaran Belum Selesai</div>
-        </div>
-        <div
-            class="w-[300px] peer-hover/dua:scale-110 duration-500 h-20 bg-slate-50 shadow-[0px_3px_20px_#0000000b] absolute rounded-xl -bottom-3 left-[367px]">
-        </div>
-
-        <div
-            class="w-full peer/tiga hover:scale-110 duration-500 h-40 p-5 rounded-xl shadow-[0px_3px_20px_#0000000b] bg-white z-10">
-            <ion-icon class="text-3xl text-green-600" name="checkmark-done-circle-outline"></ion-icon>
-            <h1 id="pembayaran_lunas" class="font-bold text-2xl mt-4 text-[#1E293B]"></h1>
-            <div class="text-[#707E94] mt-2">Pembayaran Lunas</div>
-        </div>
-        <div
-            class="w-[300px] peer-hover/tiga:scale-110 duration-500 h-20 bg-slate-50 shadow-[0px_3px_20px_#0000000b] absolute rounded-xl -bottom-3 left-[720px]">
-        </div> --}}
     </div>
 
     <x-data-list :heads="['No', 'Date', 'Customer', 'Due Date', 'Status', 'Remaining Bill', 'Total', 'Action']">

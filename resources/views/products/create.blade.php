@@ -10,7 +10,7 @@
                 <div class="flex gap-3">
                     <div class="w-full">
                         <x-input-text :label="'Name'" :name="'name'" class="mb-3" />
-                        <x-input-text :label="'Code'" :name="'code'" :type="'number'" class="mb-3" />
+                        <x-input-text :label="'Code'" :name="'code'" :type="'text'" class="mb-3" />
                         <x-input-text :label="'Barcode'" :name="'barcode'" :type="'number'" class="mb-3" />
                         <x-input-text :label="'Length'" :name="'length'" :type="'number'" class="mb-3" />
                         <x-input-text :label="'Height'" :name="'height'" :type="'number'" class="mb-3" />
@@ -92,12 +92,8 @@
 
             <div class="flex justify-end gap-3 mt-10">
                 <div class="w-40">
-                    <x-input-text :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'" readonly
+                    <x-input-text :label="'Total HPP'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'" readonly
                         x-ref="total" />
-                </div>
-                <div class="w-40">
-                    <x-input-text :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :type="'number'"
-                        onInput="update_bill(this)" />
                 </div>
             </div>
         </div>
@@ -171,6 +167,12 @@
                 let subtotalValue = parseFloat(subtotalElement.textContent);
                 total += isNaN(subtotalValue) ? 0 : subtotalValue;
             })
+
+            let production_cost = parseInt(document.querySelector('#production_cost').value);
+            let other_cost = parseInt(document.querySelector('#other_cost').value);
+            let pack_cost = parseInt(document.querySelector('#pack_cost').value);
+
+            total += production_cost + other_cost + pack_cost
 
             document.querySelector('#total_bill').value = total;
         }

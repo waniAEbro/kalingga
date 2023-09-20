@@ -22,9 +22,11 @@ class WarehouseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function stockin(Request $request, Warehouse $warehouse)
+    public function stockin(Request $request)
     {
         $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
+
+        $warehouse = Warehouse::where("production_id", $production->product_id)->first();
 
         $warehouse->update([
             "product_id" => $production->product_id,
@@ -34,9 +36,11 @@ class WarehouseController extends Controller
         return response()->json($warehouse, 200);
     }
 
-    public function stockout(Request $request, Warehouse $warehouse)
+    public function stockout(Request $request)
     {
         $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
+
+        $warehouse = Warehouse::where("production_id", $production->product_id)->first();
 
         $warehouse->update([
             "product_id" => $production->product_id,

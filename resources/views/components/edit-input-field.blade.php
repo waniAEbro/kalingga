@@ -1,6 +1,6 @@
 @props(['action', 'items', 'width' => '[490px]'])
 
-<div class="w-{{ $width }} relative bg-white rounded-xl px-4 py-6 drop-shadow-lg">
+<div class="w-{{ $width }} h-fit relative bg-white rounded-xl px-4 pt-6 pb-20 drop-shadow-lg">
     <form method="post" action="/{{ $action }}/{{ $items->id }}">
         @csrf
         @method('put')

@@ -14,7 +14,7 @@
                 <x-input-text :name="'customer_address'" :label="'Customer Address'" :value="$sales->customer->address" readonly class="mb-3 bg-slate-100" />
                 <x-input-text :name="'customer_email'" :label="'Customer Email'" :value="$sales->customer->email" readonly class="mb-3 bg-slate-100" />
                 <x-input-text :name="'customer_phone'" :label="'Customer Phone'" :value="$sales->customer->phone" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'code'" :type="'number'" :label="'Code'" :value="$sales->code" readonly
+                <x-input-text :name="'code'" :type="'text'" :label="'Code'" :value="$sales->code" readonly
                     class="bg-slate-100" />
             </div>
 

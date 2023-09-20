@@ -36,7 +36,6 @@ class ProductController extends Controller
      */
     public function store(StoreproductRequest $request): RedirectResponse
     {
-        // dd($request->components);
         $pack = Pack::create([
             "cost" => $request->pack_cost,
             "outer_length" => $request->pack_outer_length,
@@ -85,7 +84,7 @@ class ProductController extends Controller
      */
     public function edit(product $product): View
     {
-        return view("products.edit", ["product" => Product::find($product->id), "components" => Component::get()]);
+        return view("products.edit", ["product" => $product, "components" => Component::get()]);
     }
 
     /**
@@ -93,7 +92,9 @@ class ProductController extends Controller
      */
     public function update(UpdateproductRequest $request, product $product): RedirectResponse
     {
-        $pack = Pack::where("id", $product->pack_id)->update([
+        $pack = Pack::where("id", $product->pack_id)->first();
+
+        $pack->update([
             "cost" => $request->pack_cost,
             "outer_length" => $request->pack_outer_length,
             "outer_width" => $request->pack_outer_width,
@@ -115,11 +116,14 @@ class ProductController extends Controller
             "height" => $request->height,
             "sell_price" => $request->sell_price
         ]);
-        foreach ($request->components as $index => $component) {
+
+        DB::table("component_product")->where("product_id", $product->id)->delete();
+
+        foreach ($request->component_id as $index => $component) {
             DB::table("component_product")->insert([
                 "product_id" => $product->id,
                 "component_id" => $component,
-                "quantity" => $request->quantities[$index]
+                "quantity" => $request->quantity[$index]
             ]);
         }
         return redirect("/products");

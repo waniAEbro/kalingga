@@ -28,13 +28,14 @@ class SupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSupplierRequest $request) :RedirectResponse
+    public function store(StoreSupplierRequest $request): RedirectResponse
     {
         Supplier::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
+            "code" => $request->code
         ]);
 
         return redirect("/suppliers");
@@ -66,6 +67,7 @@ class SupplierController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
+            "request" => $request->code
         ]);
 
         return redirect("/suppliers");
