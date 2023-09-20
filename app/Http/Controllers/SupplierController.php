@@ -67,7 +67,7 @@ class SupplierController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
-            "request" => $request->code
+            "code" => $request->code
         ]);
 
         return redirect("/suppliers");
