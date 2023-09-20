@@ -9,7 +9,7 @@
         <x-input-text :name="'email'" :label="'Email'" :placeholder="'email'" :value="$suppliers->email" :type="'email'"
             class="mb-3" />
         <x-input-text :name="'phone'" :label="'Phone'" :placeholder="'phone'" :value="$suppliers->phone" class="mb-3" />
-        <x-input-text :name="'phone'" :label="'Code'" :placeholder="'Code'" :value="$suppliers->code" class="mb-3" />
+        <x-input-text :name="'code'" :label="'Code'" :placeholder="'Code'" :value="$suppliers->code" class="mb-3" />
         <x-input-textarea :name="'address'" :label="'Address'" :placeholder="'address'" :value="$suppliers->address" />
     </x-edit-input-field>
 @endsection
