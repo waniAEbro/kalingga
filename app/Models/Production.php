@@ -15,7 +15,7 @@ class Production extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["product"];
+    protected $with = ["product", "sales"];
 
     public function product(): BelongsTo
     {

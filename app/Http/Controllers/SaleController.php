@@ -65,6 +65,8 @@ class SaleController extends Controller
         $productions = [];
 
         foreach ($products as $product) {
+            $data_productions = Production::get();
+
             $productions[] = Production::create([
                 "code" => $customer->code . $product->quantity . "00",
                 "product_id" => $product->product_id,

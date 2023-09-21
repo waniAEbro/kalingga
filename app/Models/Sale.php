@@ -15,7 +15,7 @@ class Sale extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["customer", "product", "productions"];
+    protected $with = ["customer", "product"];
 
     public function customer()
     {
