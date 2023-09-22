@@ -1,7 +1,9 @@
 @props(['label' => '', 'name' => '', 'placeholder' => '', 'value' => '', 'type' => 'text', 'desc' => ''])
 
 <div>
-    <label for="{{ $name }}" class="block text-sm mb-2">{{ $label }}</label>
+    @if ($label)
+        <label for="{{ $name }}" class="block text-sm mb-2">{{ $label }}</label>
+    @endif
     <div class="flex">
         <div class="py-2 px-3 text-sm bg-[#F1F5F9] border-l border-y rounded-l">
             {{ $desc }}

@@ -1,72 +1,29 @@
 @extends('layouts.layout')
 
 @section('content')
-    <h1 class="text-lg font my-7 font-[500]">Create Product</h1>
+    <h1 class="text-lg font my-7 font-[500]">Buat Produk</h1>
 
     <x-create-input-field :action="'products'" :width="'w-full'">
-        <div class="flex w-full gap-3 px-">
-            <div class="w-full">
-                <h1 class="mb-3 text-xl font-bold">Product</h1>
-                <div class="flex gap-3">
-                    <div class="w-full">
-                        <x-input-text :label="'Name'" :name="'name'" class="mb-3" />
-                        <x-input-text :label="'Code'" :name="'code'" :type="'text'" class="mb-3" />
-                        <x-input-text :label="'Barcode'" :name="'barcode'" :type="'number'" class="mb-3" />
-                        <x-input-text :label="'Length'" :name="'length'" :type="'number'" class="mb-3" />
-                        <x-input-text :label="'Height'" :name="'height'" :type="'number'" class="mb-3" />
-                        <x-input-text :label="'Production Cost'" :name="'production_cost'" :type="'number'" />
-
-                    </div>
-                    <div class="w-full">
-                        <x-input-text :label="'Logo'" :name="'logo'" class="mb-3" />
-                        <x-input-text :label="'RFID Code'" :name="'rfid'" :type="'number'" class="mb-3" />
-                        <x-input-text :label="'Width'" :name="'width'" :type="'number'" class="mb-3" />
-                        <x-input-text :label="'Other Cost'" :name="'other_cost'" :type="'number'" class="mb-3" />
-                        <x-input-text :label="'Sell Price'" :name="'sell_price'" :type="'number'" />
-
-                    </div>
-                </div>
-            </div>
-            <div class="divider divider-horizontal"></div>
-            <div class="w-full">
-                <h1 class="mb-3 text-xl font-bold">Pack</h1>
-                <div class="flex gap-3">
-                    <div class="w-full">
-                        <x-input-text :label="'Outer Length'" :name="'pack_outer_length'" :type="'number'" class="mb-3" />
-                        <x-input-text :label="'Outer Width'" :name="'pack_outer_width'" :type="'number'" class="mb-3" />
-                        <x-input-text :label="'Outer Height'" :name="'pack_outer_height'" :type="'number'" class="mb-3" />
-                    </div>
-                    <div class="w-full">
-                        <x-input-text :label="'Inner Length'" :name="'pack_inner_length'" :type="'number'" class="mb-3" />
-                        <x-input-text :label="'Inner Width'" :name="'pack_inner_width'" :type="'number'" class="mb-3" />
-                        <x-input-text :label="'Inner Height'" :name="'pack_inner_height'" :type="'number'" class="mb-3" />
-                        <x-input-text :label="'Cost'" :name="'pack_cost'" />
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="divider divider-vertival"></div>
-
         <div class="w-full">
+            <h1 class="mb-3 text-xl font-bold">Komponen</h1>
+
             <table class="w-full text-left">
                 <thead>
                     <tr class="border-b-2">
-                        <th class="p-2">#</th>
-                        <th class="p-2">Component</th>
-                        <th class="p-2">Amount</th>
-                        <th class="p-2">Unit</th>
-                        <th class="p-2">Price per Product</th>
-                        <th class="p-2">Total</th>
-                        <th class="p-2"></th>
+                        <th class="p-2 text-sm">#</th>
+                        <th class="p-2 text-sm">Komponen</th>
+                        <th class="p-2 text-sm">Jumlah</th>
+                        <th class="p-2 text-sm">Unit</th>
+                        <th class="p-2 text-sm">Harga Per Produk</th>
+                        <th class="p-2 text-sm">Total</th>
+                        <th class="p-2 text-sm"></th>
                     </tr>
                 </thead>
-                <tbody id="purchaseBody">
-                    <tr x-data="{ purchase: $el }" class="border-b">
+                <tbody id="productBody">
+                    <tr x-data="{ productEl: $el }" class="border-b">
                         <td id="number" class="p-2"></td>
                         <td class="w-40 p-2">
-                            <x-ngetes x-on:click="getComponent(purchase); $nextTick(); set_subtotal($refs.quantity)"
+                            <x-ngetes x-on:click="getComponent(productEl); $nextTick(); set_subtotal($refs.quantity)"
                                 :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
                         </td>
                         <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"
@@ -78,29 +35,205 @@
                         <td id="subtotal" class="p-2"></td>
                         <td class="p-2">
                             <button type="button"
-                                x-on:click="purchase.remove(); await $nextTick; set_total(); set_number()"
+                                x-on:click="productEl.remove(); await $nextTick; set_total(); set_number()"
                                 class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
-                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                    class="p-2 text-r0 material-symbols-outlined">delete</span></button>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
             <button type="button" x-data x-on:click="addNew(); set_number()"
-                class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
-                New</button>
+                class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Tambah
+                Data Baru</button>
+        </div>
 
-            <div class="flex justify-end gap-3 mt-10">
-                <div class="w-40">
-                    <x-input-text :label="'Total HPP'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'" readonly
-                        x-ref="total" />
+        <div class="divider"></div>
+
+        <div class="flex w-full gap-3 px-">
+            <div class="w-full">
+                <h1 class="mb-3 text-xl font-bold">Product</h1>
+
+                <div class="w-full flex gap-3">
+                    <x-input :label="'Nama Produk'" :name="'name'" />
+                    <x-input :label="'Logo'" :name="'logo'" />
+                </div>
+
+                <h1 class="my-3 font-bold">Kode</h1>
+                <div class="w-full flex gap-3">
+                    <x-input-with-desc :desc="'RFID'" :name="'rfid'" :type="'number'" />
+                    <x-input-with-desc :desc="'Produk'" :name="'code'" :type="'text'" />
+                    <x-input-with-desc :desc="'Barcode'" :name="'barcode'" :type="'number'" />
+                </div>
+
+                <h1 class="my-3 font-bold">Dimensi</h1>
+                <div class="w-full flex gap-3">
+                    <x-input-with-desc :desc="'Panjang'" :name="'length'" :type="'number'" />
+                    <x-input-with-desc :desc="'Tinggi'" :name="'height'" :type="'number'" />
+                    <x-input-with-desc :desc="'Lebar'" :name="'width'" :type="'number'" />
+                </div>
+            </div>
+
+            <div class="divider divider-horizontal"></div>
+
+            <div class="w-full">
+                <h1 class="mb-3 text-xl font-bold">Pack</h1>
+
+                <h1 class="my-3 font-bold">Dimensi Dalam</h1>
+                <div class="w-full flex gap-3">
+                    <x-input-with-desc :desc="'Panjang'" :name="'pack_inner_length'" :type="'number'" />
+                    <x-input-with-desc :desc="'Tinggi'" :name="'pack_inner_height'" :type="'number'" />
+                    <x-input-with-desc :desc="'Lebar'" :name="'pack_inner_width'" :type="'number'" />
+                </div>
+
+                <h1 class="my-3 font-bold">Dimensi Luar</h1>
+                <div class="w-full flex gap-3">
+                    <x-input-with-desc :desc="'Panjang'" :name="'pack_outer_length'" :type="'number'" oninput="set_volume()" />
+                    <x-input-with-desc :desc="'Tinggi'" :name="'pack_outer_height'" :type="'number'" oninput="set_volume()" />
+                    <x-input-with-desc :desc="'Lebar'" :name="'pack_outer_width'" :type="'number'" oninput="set_volume()" />
+                </div>
+                <div class="w-40 my-3">
+                    <x-input :label="'Volume (m³)'" :name="'volume'" :type="'number'" readonly />
+                </div>
+
+                <h1 class="my-3 font-bold">Berat</h1>
+                <div class="w-full flex gap-3">
+                    <x-input-with-desc :desc="'NW'" :name="'nw'" :type="'number'" />
+                    <x-input-with-desc :desc="'GW'" :name="'gw'" :type="'number'" />
                 </div>
             </div>
         </div>
+
+        <div class="divider"></div>
+
+        <div class="w-full">
+            <h1 class="mb-3 text-xl font-bold">Biaya</h1>
+
+            <h1 class="my-3 font-bold text-center">Biaya Produksi</h1>
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="border-b-2">
+                        <th class="p-2 text-sm">Harga Perakitan</th>
+                        <th class="p-2 text-sm">Harga Perakitan PRJ</th>
+                        <th class="p-2 text-sm">Harga Grendo</th>
+                        <th class="p-2 text-sm">Harga Obat</th>
+                        <th class="p-2 text-sm">Upah</th>
+                        <th class="p-2 text-sm">Total</th>
+                    </tr>
+                </thead>
+                <tbody id="productBody">
+                    <tr class="border-b">
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        </td>
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        </td>
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        </td>
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        </td>
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        </td>
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'production_cost'" :type="'number'"
+                                readonly />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h1 class="my-3 font-bold text-center">Biaya Packing</h1>
+
+            <div class="overflow-x-auto w-[980px]">
+
+                <table class="text-left w-[1200px]">
+                    <thead>
+                        <tr class="border-b-2">
+                            <th class="p-2 w-80 text-sm">Harga Box 2023</th>
+                            <th class="p-2 w-80 text-sm">Box Hardware</th>
+                            <th class="p-2 w-80 text-sm">Assembling</th>
+                            <th class="p-2 w-80 text-sm">Stiker</th>
+                            <th class="p-2 w-80 text-sm">Hagtag</th>
+                            <th class="p-2 w-80 text-sm">Maintenance</th>
+                            <th class="p-2 w-80 text-sm">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productBody">
+                        <tr class="border-b">
+                            <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
+                                    :name="''" :type="'number'" />
+                            </td>
+                            <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
+                                    :name="''" :type="'number'" />
+                            </td>
+                            <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
+                                    :name="''" :type="'number'" />
+                            </td>
+                            <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
+                                    :name="''" :type="'number'" />
+                            </td>
+                            <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
+                                    :name="''" :type="'number'" />
+                            </td>
+                            <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
+                                    :name="''" :type="'number'" />
+                            </td>
+                            <td class="p-2"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
+                                    :name="'production_cost'" :type="'number'" readonly />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h1 class="my-3 font-bold text-center">Biaya Lain-Lain</h1>
+
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="border-b-2">
+                        <th class="p-2 text-sm">Overhead Pabrik</th>
+                        <th class="p-2 text-sm">Listrik</th>
+                        <th class="p-2 text-sm">Pajak</th>
+                        <th class="p-2 text-sm">Export+Usaha</th>
+                        <th class="p-2 text-sm">Total</th>
+                    </tr>
+                </thead>
+                <tbody id="productBody">
+                    <tr class="border-b">
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        </td>
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        </td>
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        </td>
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''"
+                                :type="'number'" />
+                        </td>
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'production_cost'" :type="'number'"
+                                readonly />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="divider"></div>
+
+            <div class="flex justify-end gap-3 mt-5">
+                <div class="w-52">
+                    <x-input-with-desc :desc="'Rp'" :label="'Harga Jual'" :name="'sell_price'" :type="'number'" />
+                </div>
+            </div>
     </x-create-input-field>
 @endsection
 @push('script')
     <script>
+        function set_volume() {
+            const packOuterLength = document.getElementById('pack_outer_length').value;
+            const packOuterWidth = document.getElementById('pack_outer_width').value;
+            const packOuterHeight = document.getElementById('pack_outer_height').value;
+            const volume = document.getElementById('volume').value = packOuterHeight * packOuterLength * packOuterWidth;
+
+        }
+
+
         function getComponent(tr) {
 
             let components = {!! $components !!};
@@ -124,14 +257,14 @@
         set_number();
 
         function addNew() {
-            const purchaseBody = document.getElementById('purchaseBody');
-            const purchaseRow = document.createElement('tr');
-            purchaseRow.setAttribute('x-data', '{ purchase: $el }')
-            purchaseRow.className = 'border-b';
-            purchaseRow.innerHTML = `
+            const productBody = document.getElementById('productBody');
+            const productRow = document.createElement('tr');
+            productRow.setAttribute('x-data', '{ productEl: $el }')
+            productRow.className = 'border-b';
+            productRow.innerHTML = `
                                         <td id="number" class="p-2"></td>
                                         <td class="w-40 p-2">
-                                            <x-ngetes x-on:click="getComponent(purchase); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
+                                            <x-ngetes x-on:click="getComponent(productEl); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"
@@ -142,13 +275,13 @@
                                         <td id="price" class="p-2"></td>
                                         <td id="subtotal" class="p-2"></td>
                                         <td class="p-2">
-                                            <button type="button" x-on:click="purchase.remove(); set_total(); set_number()"
+                                            <button type="button" x-on:click="productEl.remove(); set_total(); set_number()"
                                                 class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
-                                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                                    class="p-2 text-r0 material-symbols-outlined">delete</span></button>
                                         </td>
                                     `;
 
-            purchaseBody.appendChild(purchaseRow);
+            productBody.appendChild(productRow);
         }
 
         function set_subtotal(element) {
