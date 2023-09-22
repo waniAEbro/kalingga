@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
+use App\Models\Warehouse;
 
 class SaleController extends Controller
 {
@@ -64,6 +65,8 @@ class SaleController extends Controller
         $productions = [];
 
         foreach ($products as $product) {
+            $data_productions = Production::get();
+
             $productions[] = Production::create([
                 "code" => $customer->code . $product->quantity . "00",
                 "product_id" => $product->product_id,
@@ -77,6 +80,11 @@ class SaleController extends Controller
             DB::table("production_sale")->insert([
                 "production_id" => $production->id,
                 "sale_id" => $sale->id,
+            ]);
+
+            Warehouse::create([
+                "production_id" => $production->id,
+                "quantity" => 0
             ]);
         }
 

@@ -10,14 +10,14 @@
         <div class="text-[#F4F7F6] font-[500]">
 
             <x-nav-menu-dashboard :menuIcon="'home'" />
-            <x-nav-menu :menuName="'Components'" :menuIcon="'hardware-chip'" />
-            <x-nav-menu :menuName="'Products'" :menuIcon="'cube'" />
-            <x-nav-menu :menuName="'Productions'" :menuIcon="'cog'" />
-            <x-nav-menu :menuName="'Suppliers'" :menuIcon="'boat'" />
-            <x-nav-menu :menuName="'Customers'" :menuIcon="'person'" />
-            <x-nav-menu :menuName="'Sales'" :menuIcon="'cash'" />
-            <x-nav-menu :menuName="'Purchases'" :menuIcon="'bag-check'" />
-            <x-nav-menu-warehouse :menuName="'Warehouse'" :menuIcon="'grid'" />
+            <x-nav-menu :menuName="'Komponen'" :menuUrl="'Components'" :menuIcon="'hardware-chip'" />
+            <x-nav-menu :menuName="'Produk'" :menuUrl="'Products'" :menuIcon="'cube'" />
+            <x-nav-menu :menuName="'Produksi'" :menuUrl="'Productions'" :menuIcon="'cog'" />
+            <x-nav-menu :menuName="'Pemasok'" :menuUrl="'Suppliers'" :menuIcon="'boat'" />
+            <x-nav-menu :menuName="'Pelanggan'" :menuUrl="'Customers'" :menuIcon="'person'" />
+            <x-nav-menu :menuName="'Penjualan'" :menuUrl="'Sales'" :menuIcon="'cash'" />
+            <x-nav-menu :menuName="'Pembelian'" :menuUrl="'Purchases'" :menuIcon="'bag-check'" />
+            <x-nav-menu-warehouse :menuName="'Gudang'" :menuUrl="'Warehouse'" :menuIcon="'grid'" />
 
         </div>
     </div>

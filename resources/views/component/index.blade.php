@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-    <x-data-list :heads="['No', 'Component Name', 'Unit', 'Price per Unit Sell', 'Price per Unit Buy', 'Action']">
+    <x-data-list :heads="['No', 'Nama Component', 'Unit', 'Harga Jual Per Unit', 'Harga Beli Per Unit', 'Aksi']">
         @foreach ($components as $no => $component)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
                 <td class="p-4 rounded-l-lg">{{ $no + 1 }}</td>
@@ -17,7 +17,7 @@
                             @csrf
                             @method('delete')
                             <button type="submit" class="flex items-center gap-1 text-red-700"><span
-                                    class="text-lg"><ion-icon name="trash-outline"></ion-icon></span>Delete</button>
+                                    class="text-lg"><ion-icon name="trash-outline"></ion-icon></span>Hapus</button>
 
                         </form>
                     </div>

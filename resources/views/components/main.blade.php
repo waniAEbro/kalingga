@@ -23,5 +23,22 @@
             {{ $slot }}
 
         </div>
+        <li><a href=""></a></li>
     </div>
 </main>
+
+@push('script')
+    <script>
+        const breadcrumbs = document.querySelector('#breadcrumbs');
+        let pathname = window.location.pathname;
+        let pathArray = pathname.replace(/\d+/g, '').split('/').filter(item => item !== '')
+
+        pathArray.forEach((e, i) => {
+            if (i < pathArray.length - 1) {
+                breadcrumbs.innerHTML += `<li><a href="/${e}">${e.charAt(0).toUpperCase() + e.slice(1)}</a></li>`
+            } else {
+                breadcrumbs.innerHTML += `<li>${e.charAt(0).toUpperCase() + e.slice(1)}</li>`
+            }
+        });
+    </script>
+@endpush

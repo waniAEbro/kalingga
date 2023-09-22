@@ -56,12 +56,6 @@
 
 </body>
 <script>
-    const breadcrumbs = document.querySelector('#breadcrumbs');
-    let pathname = window.location.pathname;
-    let pathArray = pathname.replace(/\d+/g, '').split('/').filter(item => item !== '').forEach(e => {
-        breadcrumbs.innerHTML += `<li>${e.charAt(0).toUpperCase() + e.slice(1)}</li>`
-    });
-
     const setup = () => {
         const getTheme = () => {
             if (window.localStorage.getItem('dark')) {

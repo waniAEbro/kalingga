@@ -20,7 +20,7 @@
                 <x-input-text :name="'supplier_address'" :label="'Supplier Address'" readonly class="mb-3 bg-slate-100" />
                 <x-input-text :name="'supplier_email'" :label="'Supplier Email'" readonly class="mb-3 bg-slate-100" />
                 <x-input-text :name="'supplier_phone'" :label="'Supplier Phone'" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'code'" :type="'number'" :label="'Code'" class="mb-3" />
+                <x-input-text :name="'code'" :type="'text'" :label="'Code'" class="mb-3" />
             </div>
 
             <div class="divider divider-horizontal"></div>
