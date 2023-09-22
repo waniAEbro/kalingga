@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('productions', function (Blueprint $table) {
+        Schema::create('other_costs', function (Blueprint $table) {
             $table->id();
-            $table->string("code");
-            $table->foreignId("product_id")->constrained("products")->onDelete("cascade");
-            $table->integer("quantity_finished");
-            $table->integer("quantity_not_finished");
+            $table->integer("biaya_overhead_pabrik");
+            $table->integer("biaya_listrik");
+            $table->integer("biaya_pajak");
+            $table->integer("biaya_ekspor");
+            $table->integer("total");
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('productions');
+        Schema::dropIfExists('other_costs');
     }
 };

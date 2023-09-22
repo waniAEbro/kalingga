@@ -20,6 +20,12 @@ return new class extends Migration
             $table->double("inner_length");
             $table->double("inner_width");
             $table->double("inner_height");
+            $table->integer("box_price");
+            $table->integer("box_hardware");
+            $table->integer("assembling");
+            $table->integer("stiker");
+            $table->integer("hagtag");
+            $table->integer("maintenance");
             $table->timestamps();
         });
     }
