@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="text-lg font my-7 font-[500]">Create Purchases</h1>
 
-    <x-create-input-field :action="'purchases'" :width="'full'">
+    <x-create-input-field :action="'purchases'" :width="'w-full'">
         <div class="flex gap-5">
             <div>
                 <label for="purchase_date" class="block text-sm">Purchase Date</label>

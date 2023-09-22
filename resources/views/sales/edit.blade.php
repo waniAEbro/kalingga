@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="text-lg font my-7 font-[500]">Edit Sales</h1>
 
-    <x-edit-input-field :action="'sales'" :items="$sales" :width="'full'">
+    <x-edit-input-field :action="'sales'" :items="$sales" :width="'w-full'">
         <div class="flex gap-5">
             <div>
                 <x-input-text type="date" :name="'sale_date'" :label="'Sale Date'" :value="$sales->sale_date" readonly

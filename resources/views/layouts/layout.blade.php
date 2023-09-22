@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.7.4/dist/full.css" rel="stylesheet" type="text/css" /> --}}
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.7.4/dist/full.css" rel="stylesheet" type="text/css" />
 
     <style type="text/tailwindcss">
         @layer components {
@@ -19,7 +19,7 @@
                 @apply pl-5 flex gap-4 items-center text-[#064E3B] bg-[#F1F5F9] before:bg-transparent before:h-10 before:w-10 before:right-0 before:bottom-[100%] before:shadow-[20px_20px_0_#F1F5F9] before:rounded-full before:absolute relative py-1 mb-2 rounded-l-full after:w-5 after:h-5 after:absolute after:-right-1 after:bottom-0 after:bg-[#F1F5F9];
             }
         }
-    </style>
+    </style> --}}
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
