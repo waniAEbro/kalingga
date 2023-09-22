@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Pack;
 use App\Models\Category;
 use App\Models\Component;
+use App\Models\ProductionCost;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +18,7 @@ class Product extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["components", "pack"];
+    protected $with = ["components", "pack", "production_costs", "other_costs"];
 
     public function components(): BelongsToMany
     {
@@ -47,5 +48,15 @@ class Product extends Model
     public function pack(): BelongsTo
     {
         return $this->belongsTo(Pack::class);
+    }
+
+    public function production_cost(): BelongsTo
+    {
+        return $this->belongsTo(ProductionCost::class);
+    }
+
+    public function other_cost(): BelongsTo
+    {
+        return $this->belongsTo(OtherCost::class);
     }
 }

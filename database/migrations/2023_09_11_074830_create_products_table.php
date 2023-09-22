@@ -20,13 +20,11 @@ return new class extends Migration
             $table->double("length");
             $table->double("width");
             $table->double("height");
-            $table->integer("production_cost");
-            $table->integer("other_cost");
             $table->string("logo");
             $table->string("barcode");
             $table->foreignId("pack_id")->constrained("packs")->onDelete("cascade");
-            $table->foreignId("othercosts_id")->constrained("other_costs")->onDelete("cascade");
             $table->foreignId("productioncosts_id")->constrained("production_costs")->onDelete("cascade");
+            $table->foreignId("othercosts_id")->constrained("other_costs")->onDelete("cascade");
             $table->timestamps();
         });
     }

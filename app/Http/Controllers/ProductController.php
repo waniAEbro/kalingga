@@ -8,7 +8,9 @@ use App\Models\Component;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreproductRequest;
 use App\Http\Requests\UpdateproductRequest;
+use App\Models\OtherCost;
 use App\Models\Pack;
+use App\Models\ProductionCost;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -43,7 +45,29 @@ class ProductController extends Controller
             "outer_height" => $request->pack_outer_height,
             "inner_length" => $request->pack_inner_length,
             "inner_width" => $request->pack_inner_width,
-            "inner_height" => $request->pack_inner_height
+            "inner_height" => $request->pack_inner_height,
+            "box_price" => $request->pack_box_price,
+            "box_hardware" => $request->pack_box_hardware,
+            "assembling" => $request->pack_assembling,
+            "hagtag" => $request->pack_hagtag,
+            "maintenance" => $request->pack_maintenance,
+        ]);
+
+        $production_costs = ProductionCost::create([
+            "total_production" => $request->total_production,
+            "price_perakitan" => $request->price_perakitan,
+            "price_perakitan_prj" => $request->price_perakitan_prj,
+            "price_grendo" => $request->price_grendo,
+            "price_obat" => $request->price_obat,
+            "upah" => $request->upah,
+        ]);
+
+        $other_costs = OtherCost::create([
+            "biaya_overhead_pabrik" => $request->biaya_overhead_pabrik,
+            "biaya_listrik" => $request->biaya_listrik,
+            "biaya_pajak" => $request->biaya_pajak,
+            "biaya_ekspor" => $request->biaya_ekspor,
+            "total" => $request->total,
         ]);
 
         $product = Product::create([
@@ -54,6 +78,8 @@ class ProductController extends Controller
             "other_cost" => $request->other_cost,
             "production_cost" => $request->production_cost,
             "pack_id" => $pack->id,
+            "productioncosts_id" => $production_costs->id,
+            "othercosts_id" => $other_costs->id,
             "length" => $request->length,
             "width" => $request->width,
             "height" => $request->height,
@@ -93,6 +119,8 @@ class ProductController extends Controller
     public function update(UpdateproductRequest $request, product $product): RedirectResponse
     {
         $pack = Pack::where("id", $product->pack_id)->first();
+        $production_costs = ProductionCost::where("id", $product->productioncost_id)->first();
+        $other_costs = OtherCost::where("id", $product->othercosts_id)->first();
 
         $pack->update([
             "cost" => $request->pack_cost,
@@ -101,8 +129,31 @@ class ProductController extends Controller
             "outer_height" => $request->pack_outer_height,
             "inner_length" => $request->pack_inner_length,
             "inner_width" => $request->pack_inner_width,
-            "inner_height" => $request->pack_inner_height
+            "inner_height" => $request->pack_inner_height,
+            "box_price" => $request->pack_box_price,
+            "box_hardware" => $request->pack_box_hardware,
+            "assembling" => $request->pack_assembling,
+            "hagtag" => $request->pack_hagtag,
+            "maintenance" => $request->pack_maintenance,
         ]);
+
+        $production_costs->update([
+            "total_production" => $request->total_production,
+            "price_perakitan" => $request->price_perakitan,
+            "price_perakitan_prj" => $request->price_perakitan_prj,
+            "price_grendo" => $request->price_grendo,
+            "price_obat" => $request->price_obat,
+            "upah" => $request->upah,
+        ]);
+
+        $other_costs->update([
+            "biaya_overhead_pabrik" => $request->biaya_overhead_pabrik,
+            "biaya_listrik" => $request->biaya_listrik,
+            "biaya_pajak" => $request->biaya_pajak,
+            "biaya_ekspor" => $request->biaya_ekspor,
+            "total" => $request->total,
+        ]);
+
         $product->update([
             "name" => $request->name,
             "code" => $request->code,
@@ -110,6 +161,8 @@ class ProductController extends Controller
             "logo" => $request->logo,
             "other_cost" => $request->other_cost,
             "production_cost" => $request->production_cost,
+            "productioncosts_id" => $production_costs->id,
+            "othercosts_id" => $other_costs->id,
             "pack_id" => $pack->id,
             "length" => $request->length,
             "width" => $request->width,
