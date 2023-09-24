@@ -39,16 +39,19 @@ class ProductController extends Controller
     public function store(StoreproductRequest $request): RedirectResponse
     {
         $pack = Pack::create([
-            "cost" => $request->pack_cost,
+            //"cost" => $request->pack_cost,
             "outer_length" => $request->pack_outer_length,
             "outer_width" => $request->pack_outer_width,
             "outer_height" => $request->pack_outer_height,
             "inner_length" => $request->pack_inner_length,
             "inner_width" => $request->pack_inner_width,
             "inner_height" => $request->pack_inner_height,
+            "nw" => $request->pack_nw,
+            "gw" => $request->pack_gw,
             "box_price" => $request->pack_box_price,
             "box_hardware" => $request->pack_box_hardware,
             "assembling" => $request->pack_assembling,
+            "stiker" => $request->pack_stiker,
             "hagtag" => $request->pack_hagtag,
             "maintenance" => $request->pack_maintenance,
         ]);
@@ -123,16 +126,19 @@ class ProductController extends Controller
         $other_costs = OtherCost::where("id", $product->othercosts_id)->first();
 
         $pack->update([
-            "cost" => $request->pack_cost,
+            //"cost" => $request->pack_cost,
             "outer_length" => $request->pack_outer_length,
             "outer_width" => $request->pack_outer_width,
             "outer_height" => $request->pack_outer_height,
             "inner_length" => $request->pack_inner_length,
             "inner_width" => $request->pack_inner_width,
             "inner_height" => $request->pack_inner_height,
+            "nw" => $request->pack_nw,
+            "gw" => $request->pack_gw,
             "box_price" => $request->pack_box_price,
             "box_hardware" => $request->pack_box_hardware,
             "assembling" => $request->pack_assembling,
+            "stiker" => $request->pack_stiker,
             "hagtag" => $request->pack_hagtag,
             "maintenance" => $request->pack_maintenance,
         ]);

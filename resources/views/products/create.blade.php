@@ -123,17 +123,17 @@
                 </thead>
                 <tbody id="productBody">
                     <tr class="border-b">
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'price_perakitan'" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'price_perakitan_prj'" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'price_grendo'" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'price_obat'" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'upah'" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'production_cost'" :type="'number'"
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'total_production'" :type="'number'"
                                 readonly />
                         </td>
                     </tr>
@@ -159,22 +159,22 @@
                     <tbody id="productBody">
                         <tr class="border-b">
                             <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="''" :type="'number'" />
+                                    :name="'pack_box_price'" :type="'number'" />
                             </td>
                             <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="''" :type="'number'" />
+                                    :name="'pack_box_hardware'" :type="'number'" />
                             </td>
                             <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="''" :type="'number'" />
+                                    :name="'pack_assembling'" :type="'number'" />
                             </td>
                             <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="''" :type="'number'" />
+                                    :name="'pack_stiker'" :type="'number'" />
                             </td>
                             <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="''" :type="'number'" />
+                                    :name="'pack_hagtag'" :type="'number'" />
                             </td>
                             <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="''" :type="'number'" />
+                                    :name="'pack_maintenance'" :type="'number'" />
                             </td>
                             <td class="p-2"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
                                     :name="'production_cost'" :type="'number'" readonly />
@@ -198,16 +198,16 @@
                 </thead>
                 <tbody id="productBody">
                     <tr class="border-b">
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'biaya_overhead_pabrik'" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'biaya_listrik'" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'biaya_pajak'" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''"
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'biaya_ekspor'"
                                 :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'production_cost'" :type="'number'"
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'total'" :type="'number'"
                                 readonly />
                         </td>
                     </tr>
