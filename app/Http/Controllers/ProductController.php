@@ -113,7 +113,7 @@ class ProductController extends Controller
      */
     public function edit(product $product): View
     {
-        return view("products.edit", ["product" => $product, "components" => Component::get()]);
+        return view("products.edit", ["product" => Product::find($product->id), "components" => Component::get()]);
     }
 
     /**
