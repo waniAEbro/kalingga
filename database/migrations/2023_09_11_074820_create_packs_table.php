@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('packs', function (Blueprint $table) {
             $table->id();
-            $table->integer("cost");
+            //$table->integer("cost");
             $table->double("outer_length");
             $table->double("outer_width");
             $table->double("outer_height");
             $table->double("inner_length");
             $table->double("inner_width");
             $table->double("inner_height");
+            $table->double("nw");
+            $table->double("gw");
             $table->integer("box_price");
             $table->integer("box_hardware");
             $table->integer("assembling");

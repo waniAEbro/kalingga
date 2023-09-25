@@ -50,7 +50,7 @@ class Product extends Model
         return $this->belongsTo(Pack::class);
     }
 
-    public function production_cost(): BelongsTo
+    public function production_costs(): BelongsTo
     {
         return $this->belongsTo(ProductionCost::class);
     }
