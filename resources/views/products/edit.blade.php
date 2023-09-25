@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-    @dd($product)
+    {{-- @dd($product) --}}
     <h1 class="text-lg font my-7 font-[500]">Buat Produk</h1>
 
     <x-edit-input-field :action="'products'" :items="$product" :width="'w-full'">
@@ -29,9 +29,9 @@
                                     x-on:click="getComponent(purchase); $nextTick(); set_subtotal($refs.quantity)"
                                     :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
                             </td>
-                            <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"
-                                    onchange="set_subtotal(this)" value="{{ $cp->pivot->quantity }}"
-                                    class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                            <td class="p-2"><input step="0.001" x-ref="quantity" x-init="set_subtotal($el)" type="number"
+                                    name="quantity[]" onchange="set_subtotal(this)" value="{{ $cp->pivot->quantity }}"
+                                    class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                             </td>
                             <td id="unit" class="p-2">{{ $cp->unit }}</td>
                             <td id="price" class="p-2">
@@ -125,46 +125,46 @@
                 <div class="flex-1 px-2 biaya_produksi">
                     <h1 class="my-3 font-bold text-center">Biaya Produksi</h1>
 
-                    <x-input oninput="set_total_produksi()" :label="'Harga Perakitan'" :desc="'Rp'" :name="'price_perakitan'"
-                        :type="'number'" class="mb-3" />
-                    <x-input oninput="set_total_produksi()" :label="'Harga Perakitan PRJ'" :desc="'Rp'" :name="'price_perakitan_prj'"
-                        :type="'number'" class="mb-3" />
-                    <x-input oninput="set_total_produksi()" :label="'Harga Grendo'" :desc="'Rp'" :name="'price_grendo'"
-                        :type="'number'" class="mb-3" />
-                    <x-input oninput="set_total_produksi()" :label="'Harga Obat'" :desc="'Rp'" :name="'price_obat'"
-                        :type="'number'" class="mb-3" />
-                    <x-input oninput="set_total_produksi()" :label="'Upah'" :desc="'Rp'" :name="'upah'"
-                        :type="'number'" class="mb-2" />
+                    <x-input :value="$product->production_costs->price_perakitan" oninput="set_total_produksi()" :label="'Harga Perakitan'" :desc="'Rp'"
+                        :name="'price_perakitan'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->production_costs->price_perakitan_prj" oninput="set_total_produksi()" :label="'Harga Perakitan PRJ'" :desc="'Rp'"
+                        :name="'price_perakitan_prj'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->production_costs->price_grendo" oninput="set_total_produksi()" :label="'Harga Grendo'" :desc="'Rp'"
+                        :name="'price_grendo'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->production_costs->price_obat" oninput="set_total_produksi()" :label="'Harga Obat'" :desc="'Rp'"
+                        :name="'price_obat'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->production_costs->upah" oninput="set_total_produksi()" :label="'Upah'" :desc="'Rp'"
+                        :name="'upah'" :type="'number'" class="mb-2" />
                 </div>
 
                 <div class="flex-1 px-4 border-gray-200 biaya_packing border-x-2">
                     <h1 class="my-3 font-bold text-center">Biaya Packing</h1>
 
-                    <x-input oninput="set_total_packing()" :label="'Harga Box'" :desc="'Rp'" :name="'pack_box_price'"
-                        :type="'number'" class="mb-3" />
-                    <x-input oninput="set_total_packing()" :label="'Box Hardware'" :desc="'Rp'" :name="'pack_box_hardware'"
-                        :type="'number'" class="mb-3" />
-                    <x-input oninput="set_total_packing()" :label="'Assembling'" :desc="'Rp'" :name="'pack_assembling'"
-                        :type="'number'" class="mb-3" />
-                    <x-input oninput="set_total_packing()" :label="'Stiker'" :desc="'Rp'" :name="'pack_stiker'"
-                        :type="'number'" class="mb-3" />
-                    <x-input oninput="set_total_packing()" :label="'Hagtag'" :desc="'Rp'" :name="'pack_hagtag'"
-                        :type="'number'" class="mb-3" />
-                    <x-input oninput="set_total_packing()" :label="'Maintenance'" :desc="'Rp'" :name="'pack_maintenance'"
-                        :type="'number'" class="mb-3" />
+                    <x-input :value="$product->pack->box_price" oninput="set_total_packing()" :label="'Harga Box'" :desc="'Rp'"
+                        :name="'pack_box_price'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->pack->box_hardware" oninput="set_total_packing()" :label="'Box Hardware'" :desc="'Rp'"
+                        :name="'pack_box_hardware'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->pack->assembling" oninput="set_total_packing()" :label="'Assembling'" :desc="'Rp'"
+                        :name="'pack_assembling'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->pack->stiker" oninput="set_total_packing()" :label="'Stiker'" :desc="'Rp'"
+                        :name="'pack_stiker'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->pack->hagtag" oninput="set_total_packing()" :label="'Hagtag'" :desc="'Rp'"
+                        :name="'pack_hagtag'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->pack->maintenance" oninput="set_total_packing()" :label="'Maintenance'" :desc="'Rp'"
+                        :name="'pack_maintenance'" :type="'number'" class="mb-3" />
                 </div>
 
                 <div class="flex-1 px-2 biaya_lain">
                     <h1 class="my-3 font-bold text-center">Biaya Lain-Lain</h1>
 
-                    <x-input oninput="set_total_lain()" :label="'Overhead Pabrik'" :desc="'Rp'" :name="'biaya_overhead_pabrik'"
-                        :type="'number'" class="mb-3" />
-                    <x-input oninput="set_total_lain()" :label="'Listrik'" :desc="'Rp'" :name="'biaya_listrik'"
-                        :type="'number'" class="mb-3" />
-                    <x-input oninput="set_total_lain()" :label="'Pajak'" :desc="'Rp'" :name="'biaya_pajak'"
-                        :type="'number'" class="mb-3" />
-                    <x-input oninput="set_total_lain()" :label="'Export+Usaha'" :desc="'Rp'" :name="'biaya_ekspor'"
-                        :type="'number'" class="mb-3" />
+                    <x-input :value="$product->other_costs->biaya_overhead_pabrik" oninput="set_total_lain()" :label="'Overhead Pabrik'" :desc="'Rp'"
+                        :name="'biaya_overhead_pabrik'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->other_costs->biaya_listrik" oninput="set_total_lain()" :label="'Listrik'" :desc="'Rp'"
+                        :name="'biaya_listrik'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->other_costs->biaya_pajak" oninput="set_total_lain()" :label="'Pajak'" :desc="'Rp'"
+                        :name="'biaya_pajak'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->other_costs->biaya_ekspor" oninput="set_total_lain()" :label="'Export+Usaha'" :desc="'Rp'"
+                        :name="'biaya_ekspor'" :type="'number'" class="mb-3" />
                 </div>
 
             </div>
@@ -194,13 +194,21 @@
                 </div>
 
                 <div class="w-52">
-                    <x-input-with-desc :desc="'Rp'" :label="'Harga Jual'" :name="'sell_price'" :type="'number'" />
+                    <x-input-with-desc :value="$product->sell_price" :desc="'Rp'" :label="'Harga Jual'" :name="'sell_price'"
+                        :type="'number'" />
                 </div>
             </div>
             </x-create-input-field>
         @endsection
         @push('script')
             <script>
+                set_number();
+                set_volume();
+                set_total_produksi();
+                set_total_packing();
+                set_total_lain();
+                // set_subtotal();
+
                 function set_total_produksi() {
                     const el_biaya_produksi = document.querySelectorAll('.biaya_produksi input')
                     const biaya_produksi = Array.from(el_biaya_produksi)
@@ -261,9 +269,6 @@
                     const numbers = document.querySelectorAll('#number');
                     numbers.forEach((number, i) => number.innerText = i + 1)
                 }
-
-                set_number();
-                set_volume();
 
                 function addNew() {
                     const productBody = document.getElementById('productBody');

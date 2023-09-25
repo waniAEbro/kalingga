@@ -28,7 +28,7 @@
                         </td>
                         <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"
                                 onchange="set_subtotal(this)" value="0"
-                                class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                         </td>
                         <td id="unit" class="p-2"></td>
                         <td id="price" class="p-2"></td>
@@ -112,111 +112,6 @@
 
         <div class="w-full">
             <h1 class="mb-3 text-xl font-bold">Biaya</h1>
-
-            {{-- <h1 class="my-3 font-bold text-center">Biaya Produksi</h1>
-            <table class="w-full text-left">
-                <thead>
-                    <tr class="border-b-2">
-                        <th class="p-2 text-sm">Harga Perakitan</th>
-                        <th class="p-2 text-sm">Harga Perakitan PRJ</th>
-                        <th class="p-2 text-sm">Harga Grendo</th>
-                        <th class="p-2 text-sm">Harga Obat</th>
-                        <th class="p-2 text-sm">Upah</th>
-                        <th class="p-2 text-sm">Total</th>
-                    </tr>
-                </thead>
-                <tbody id="productBody">
-                    <tr class="border-b">
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
-                        </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
-                        </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
-                        </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
-                        </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
-                        </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'production_cost'" :type="'number'"
-                                readonly />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h1 class="my-3 font-bold text-center">Biaya Packing</h1>
-
-            <div class="overflow-x-auto w-[980px]">
-
-                <table class="text-left w-[1200px]">
-                    <thead>
-                        <tr class="border-b-2">
-                            <th class="p-2 text-sm w-80">Harga Box 2023</th>
-                            <th class="p-2 text-sm w-80">Box Hardware</th>
-                            <th class="p-2 text-sm w-80">Assembling</th>
-                            <th class="p-2 text-sm w-80">Stiker</th>
-                            <th class="p-2 text-sm w-80">Hagtag</th>
-                            <th class="p-2 text-sm w-80">Maintenance</th>
-                            <th class="p-2 text-sm w-80">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody id="productBody">
-                        <tr class="border-b">
-                            <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="''" :type="'number'" />
-                            </td>
-                            <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="''" :type="'number'" />
-                            </td>
-                            <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="''" :type="'number'" />
-                            </td>
-                            <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="''" :type="'number'" />
-                            </td>
-                            <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="''" :type="'number'" />
-                            </td>
-                            <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="''" :type="'number'" />
-                            </td>
-                            <td class="p-2"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="'production_cost'" :type="'number'" readonly />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h1 class="my-3 font-bold text-center">Biaya Lain-Lain</h1>
-
-            <table class="w-full text-left">
-                <thead>
-                    <tr class="border-b-2">
-                        <th class="p-2 text-sm">Overhead Pabrik</th>
-                        <th class="p-2 text-sm">Listrik</th>
-                        <th class="p-2 text-sm">Pajak</th>
-                        <th class="p-2 text-sm">Export+Usaha</th>
-                        <th class="p-2 text-sm">Total</th>
-                    </tr>
-                </thead>
-                <tbody id="productBody">
-                    <tr class="border-b">
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
-                        </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
-                        </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
-                        </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''"
-                                :type="'number'" />
-                        </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'production_cost'" :type="'number'"
-                                readonly />
-                        </td>
-                    </tr>
-                </tbody>
-            </table> --}}
 
             <div class="flex w-full gap-2">
                 <div class="flex-1 px-2 biaya_produksi">

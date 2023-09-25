@@ -52,11 +52,11 @@ class Product extends Model
 
     public function production_costs(): BelongsTo
     {
-        return $this->belongsTo(ProductionCost::class);
+        return $this->belongsTo(ProductionCost::class, "productioncosts_id", "id");
     }
 
     public function other_costs(): BelongsTo
     {
-        return $this->belongsTo(OtherCost::class);
+        return $this->belongsTo(OtherCost::class, "othercosts_id", "id");
     }
 }

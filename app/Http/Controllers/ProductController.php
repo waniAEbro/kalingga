@@ -121,6 +121,7 @@ class ProductController extends Controller
      */
     public function update(UpdateproductRequest $request, product $product): RedirectResponse
     {
+        dd($request);
         $pack = Pack::where("id", $product->pack_id)->first();
         $production_costs = ProductionCost::where("id", $product->productioncost_id)->first();
         $other_costs = OtherCost::where("id", $product->othercosts_id)->first();
