@@ -54,20 +54,24 @@
             <div class="w-full">
                 <h1 class="mb-3 text-xl font-bold">Product</h1>
 
-                <div class="w-full flex gap-3">
-                    <x-input :label="'Nama Produk'" :name="'name'" />
-                    <x-input :label="'Logo'" :name="'logo'" />
+                <div class="flex w-full gap-3">
+                    <div class="flex-1">
+                        <x-input :label="'Nama Produk'" :name="'name'" />
+                    </div>
+                    <div class="flex-1">
+                        <x-input :label="'Logo'" :name="'logo'" />
+                    </div>
                 </div>
 
                 <h1 class="my-3 font-bold">Kode</h1>
-                <div class="w-full flex gap-3">
+                <div class="flex w-full gap-3">
                     <x-input-with-desc :desc="'RFID'" :name="'rfid'" :type="'number'" />
                     <x-input-with-desc :desc="'Produk'" :name="'code'" :type="'text'" />
                     <x-input-with-desc :desc="'Barcode'" :name="'barcode'" :type="'number'" />
                 </div>
 
                 <h1 class="my-3 font-bold">Dimensi</h1>
-                <div class="w-full flex gap-3">
+                <div class="flex w-full gap-3">
                     <x-input-with-desc :desc="'Panjang'" :name="'length'" :type="'number'" />
                     <x-input-with-desc :desc="'Tinggi'" :name="'height'" :type="'number'" />
                     <x-input-with-desc :desc="'Lebar'" :name="'width'" :type="'number'" />
@@ -80,14 +84,14 @@
                 <h1 class="mb-3 text-xl font-bold">Pack</h1>
 
                 <h1 class="my-3 font-bold">Dimensi Dalam</h1>
-                <div class="w-full flex gap-3">
+                <div class="flex w-full gap-3">
                     <x-input-with-desc :desc="'Panjang'" :name="'pack_inner_length'" :type="'number'" />
                     <x-input-with-desc :desc="'Tinggi'" :name="'pack_inner_height'" :type="'number'" />
                     <x-input-with-desc :desc="'Lebar'" :name="'pack_inner_width'" :type="'number'" />
                 </div>
 
                 <h1 class="my-3 font-bold">Dimensi Luar</h1>
-                <div class="w-full flex gap-3">
+                <div class="flex w-full gap-3">
                     <x-input-with-desc :desc="'Panjang'" :name="'pack_outer_length'" :type="'number'" oninput="set_volume()" />
                     <x-input-with-desc :desc="'Tinggi'" :name="'pack_outer_height'" :type="'number'" oninput="set_volume()" />
                     <x-input-with-desc :desc="'Lebar'" :name="'pack_outer_width'" :type="'number'" oninput="set_volume()" />
@@ -97,7 +101,7 @@
                 </div>
 
                 <h1 class="my-3 font-bold">Berat</h1>
-                <div class="w-full flex gap-3">
+                <div class="flex w-full gap-3">
                     <x-input-with-desc :desc="'NW'" :name="'nw'" :type="'number'" />
                     <x-input-with-desc :desc="'GW'" :name="'gw'" :type="'number'" />
                 </div>
@@ -109,7 +113,7 @@
         <div class="w-full">
             <h1 class="mb-3 text-xl font-bold">Biaya</h1>
 
-            <h1 class="my-3 font-bold text-center">Biaya Produksi</h1>
+            {{-- <h1 class="my-3 font-bold text-center">Biaya Produksi</h1>
             <table class="w-full text-left">
                 <thead>
                     <tr class="border-b-2">
@@ -147,13 +151,13 @@
                 <table class="text-left w-[1200px]">
                     <thead>
                         <tr class="border-b-2">
-                            <th class="p-2 w-80 text-sm">Harga Box 2023</th>
-                            <th class="p-2 w-80 text-sm">Box Hardware</th>
-                            <th class="p-2 w-80 text-sm">Assembling</th>
-                            <th class="p-2 w-80 text-sm">Stiker</th>
-                            <th class="p-2 w-80 text-sm">Hagtag</th>
-                            <th class="p-2 w-80 text-sm">Maintenance</th>
-                            <th class="p-2 w-80 text-sm">Total</th>
+                            <th class="p-2 text-sm w-80">Harga Box 2023</th>
+                            <th class="p-2 text-sm w-80">Box Hardware</th>
+                            <th class="p-2 text-sm w-80">Assembling</th>
+                            <th class="p-2 text-sm w-80">Stiker</th>
+                            <th class="p-2 text-sm w-80">Hagtag</th>
+                            <th class="p-2 text-sm w-80">Maintenance</th>
+                            <th class="p-2 text-sm w-80">Total</th>
                         </tr>
                     </thead>
                     <tbody id="productBody">
@@ -212,7 +216,60 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table> --}}
+
+            <div class="flex w-full gap-2">
+                <div class="flex-1 px-2">
+                    <h1 class="my-3 font-bold text-center">Biaya Produksi</h1>
+
+                    <x-input :label="'Harga Perakitan'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
+                    <x-input :label="'Harga Perakitan PRJ'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
+                    <x-input :label="'Harga Grendo'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
+                    <x-input :label="'Harga Obat'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
+                    <x-input :label="'Upah'" :desc="'Rp'" :name="''" :type="'number'" class="mb-2" />
+                </div>
+
+                <div class="flex-1 px-4 border-gray-200 border-x-2">
+                    <h1 class="my-3 font-bold text-center">Biaya Packing</h1>
+
+                    <x-input :label="'Harga Box'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
+                    <x-input :label="'Box Hardware'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
+                    <x-input :label="'Assembling'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
+                    <x-input :label="'Stiker'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
+                    <x-input :label="'Hagtag'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
+                    <x-input :label="'Maintenance'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
+                </div>
+
+                <div class="flex-1 px-2">
+                    <h1 class="my-3 font-bold text-center">Biaya Lain-Lain</h1>
+
+                    <x-input :label="'Overhead Pabrik'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
+                    <x-input :label="'Listrik'" :desc="'Rp'" :name="''" :type="'number'"
+                        class="mb-3" />
+                    <x-input :label="'Pajak'" :desc="'Rp'" :name="''" :type="'number'"
+                        class="mb-3" />
+                    <x-input :label="'Export+Usaha'" :desc="'Rp'" :name="''" :type="'number'"
+                        class="mb-3" />
+                </div>
+
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="flex w-full gap-2">
+                <div class="flex-1 px-2">
+                    <x-input :label="'Total Produksi'" :desc="'Rp'" :name="''" :type="'number'"
+                        class="" />
+                </div>
+                <div class="flex-1 px-4">
+                    <x-input :label="'Total Packing'" :desc="'Rp'" :name="''" :type="'number'"
+                        class="" />
+                </div>
+                <div class="flex-1 px-2">
+                    <x-input :label="'Total Lain-Lain'" :desc="'Rp'" :name="''" :type="'number'"
+                        class="" />
+                </div>
+            </div>
 
             <div class="divider"></div>
 
