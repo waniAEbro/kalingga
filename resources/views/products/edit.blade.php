@@ -165,6 +165,8 @@
                         :name="'biaya_pajak'" :type="'number'" class="mb-3" />
                     <x-input :value="$product->other_costs->biaya_ekspor" oninput="set_total_lain()" :label="'Export+Usaha'" :desc="'Rp'"
                         :name="'biaya_ekspor'" :type="'number'" class="mb-3" />
+                    <x-input :value="$product->other_costs->total" oninput="set_total_lain()" :label="'Total'" :desc="'Rp'"
+                        :name="'total'" :type="'number'" class="mb-3" />
                 </div>
 
             </div>
