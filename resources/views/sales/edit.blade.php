@@ -6,15 +6,15 @@
     <x-edit-input-field :action="'sales'" :items="$sales" :width="'w-full'">
         <div class="flex gap-5">
             <div>
-                <x-input-text type="date" :name="'sale_date'" :label="'Sale Date'" :value="$sales->sale_date" readonly
+                <x-input type="date" :name="'sale_date'" :label="'Sale Date'" :value="$sales->sale_date" readonly
                     class="mb-3 bg-slate-100" />
-                <x-input-text type="date" :name="'due_date'" :label="'Due Date'" :value="$sales->due_date" readonly
+                <x-input type="date" :name="'due_date'" :label="'Due Date'" :value="$sales->due_date" readonly
                     class="mb-3 bg-slate-100" />
-                <x-input-text :name="'customer_name'" :label="'Customer Name'" :value="$sales->customer->name" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'customer_address'" :label="'Customer Address'" :value="$sales->customer->address" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'customer_email'" :label="'Customer Email'" :value="$sales->customer->email" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'customer_phone'" :label="'Customer Phone'" :value="$sales->customer->phone" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'code'" :type="'text'" :label="'Code'" :value="$sales->code" readonly
+                <x-input :name="'customer_name'" :label="'Customer Name'" :value="$sales->customer->name" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'customer_address'" :label="'Customer Address'" :value="$sales->customer->address" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'customer_email'" :label="'Customer Email'" :value="$sales->customer->email" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'customer_phone'" :label="'Customer Phone'" :value="$sales->customer->phone" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'code'" :type="'text'" :label="'Code'" :value="$sales->code" readonly
                     class="bg-slate-100" />
             </div>
 
@@ -46,11 +46,11 @@
 
                 <div class="flex justify-end gap-3 mt-10">
                     <div class="w-40">
-                        <x-input-text :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
+                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
                             readonly />
                     </div>
                     <div class="w-40">
-                        <x-input-text :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :value="$sales->paid"
+                        <x-input :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :value="$sales->paid"
                             :type="'number'" onInput="update_bill(this)" />
                     </div>
                 </div>

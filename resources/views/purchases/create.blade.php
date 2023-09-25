@@ -7,20 +7,20 @@
         <div class="flex gap-5">
             <div>
                 <label for="purchase_date" class="block text-sm">Purchase Date</label>
-                <x-input-text type="date" :name="'purchase_date'" class="mb-3" />
+                <x-input type="date" :name="'purchase_date'" class="mb-3" />
 
                 <label for="due_date" class="block text-sm">Due Date</label>
-                <x-input-text type="date" :name="'due_date'" class="mb-3" />
+                <x-input type="date" :name="'due_date'" class="mb-3" />
 
                 <label for="customer_id" class="block text-sm">Supplier</label>
                 <div class="w-40 mt-2 mb-3">
                     <x-ngetes x-on:click="getSupplier" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'" />
                 </div>
 
-                <x-input-text :name="'supplier_address'" :label="'Supplier Address'" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'supplier_email'" :label="'Supplier Email'" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'supplier_phone'" :label="'Supplier Phone'" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'code'" :type="'text'" :label="'Code'" class="mb-3" />
+                <x-input :name="'supplier_address'" :label="'Supplier Address'" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'supplier_email'" :label="'Supplier Email'" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'supplier_phone'" :label="'Supplier Phone'" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'code'" :type="'text'" :label="'Code'" class="mb-3" />
             </div>
 
             <div class="divider divider-horizontal"></div>
@@ -67,11 +67,11 @@
 
                 <div class="flex justify-end gap-3 mt-10">
                     <div class="w-40">
-                        <x-input-text :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
+                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
                             readonly />
                     </div>
                     <div class="w-40">
-                        <x-input-text :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :type="'number'"
+                        <x-input :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :type="'number'"
                             oninput="update_bill(this)" />
                     </div>
                 </div>
