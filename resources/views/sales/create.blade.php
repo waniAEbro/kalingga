@@ -7,17 +7,17 @@
         <div class="flex gap-5">
             <div>
                 <label for="sale_date" class="block text-sm">Sale Date</label>
-                <x-input-text type="date" :name="'sale_date'" class="mb-3" />
+                <x-input type="date" :name="'sale_date'" class="mb-3" />
 
                 <label for="due_date" class="block text-sm">Due Date</label>
-                <x-input-text type="date" :name="'due_date'" class="mb-3" />
+                <x-input type="date" :name="'due_date'" class="mb-3" />
 
                 <label for="customer_id" class="block text-sm">Customer</label>
                 <div class="w-40 mt-2 mb-3">
                     <x-ngetes :dataLists="$customers->toArray()" :name="'customer_id'" :id="'customer_id'" />
                 </div>
 
-                <x-input-text :name="'code'" :type="'text'" :label="'Code'" class="mb-3" />
+                <x-input :name="'code'" :type="'text'" :label="'Code'" class="mb-3" />
             </div>
 
             <div class="divider divider-horizontal"></div>
@@ -62,11 +62,11 @@
 
                 <div class="flex justify-end gap-3 mt-10">
                     <div class="w-40">
-                        <x-input-text :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
+                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
                             readonly />
                     </div>
                     <div class="w-40">
-                        <x-input-text :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :type="'number'"
+                        <x-input :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :type="'number'"
                             onInput="update_bill(this)" />
                     </div>
                 </div>
@@ -74,6 +74,7 @@
         </div>
     </x-create-input-field>
 @endsection
+
 @push('script')
     <script>
         function getProduct(tr) {

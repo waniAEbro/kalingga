@@ -6,15 +6,15 @@
     <x-edit-input-field :action="'purchases'" :items="$purchase" :width="'w-full'">
         <div class="flex gap-5">
             <div>
-                <x-input-text type="date" :name="'purchase_date'" :label="'Purchase Date'" :value="$purchase->purchase_date" readonly
+                <x-input type="date" :name="'purchase_date'" :label="'Purchase Date'" :value="$purchase->purchase_date" readonly
                     class="mb-3 bg-slate-100" />
-                <x-input-text type="date" :name="'due_date'" :label="'Due Date'" :value="$purchase->due_date" readonly
+                <x-input type="date" :name="'due_date'" :label="'Due Date'" :value="$purchase->due_date" readonly
                     class="mb-3 bg-slate-100" />
-                <x-input-text :name="'supplier_name'" :label="'Supplier Name'" :value="$purchase->supplier->name" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'supplier_address'" :label="'Supplier Address'" :value="$purchase->supplier->address" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'supplier_email'" :label="'Supplier Email'" :value="$purchase->supplier->email" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'supplier_phone'" :label="'Supplier Phone'" :value="$purchase->supplier->phone" readonly class="mb-3 bg-slate-100" />
-                <x-input-text :name="'code'" :type="'text'" :label="'Code'" :value="$purchase->code" readonly
+                <x-input :name="'supplier_name'" :label="'Supplier Name'" :value="$purchase->supplier->name" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'supplier_address'" :label="'Supplier Address'" :value="$purchase->supplier->address" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'supplier_email'" :label="'Supplier Email'" :value="$purchase->supplier->email" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'supplier_phone'" :label="'Supplier Phone'" :value="$purchase->supplier->phone" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'code'" :type="'text'" :label="'Code'" :value="$purchase->code" readonly
                     class="bg-slate-100" />
             </div>
 
@@ -49,11 +49,11 @@
 
                 <div class="flex justify-end gap-3 mt-10">
                     <div class="w-40">
-                        <x-input-text :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
+                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
                             readonly />
                     </div>
                     <div class="w-40">
-                        <x-input-text :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :value="$purchase->paid"
+                        <x-input :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :value="$purchase->paid"
                             :type="'number'" onInput="update_bill(this)" />
                     </div>
                 </div>
