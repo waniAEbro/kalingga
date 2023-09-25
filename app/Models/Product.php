@@ -55,7 +55,7 @@ class Product extends Model
         return $this->belongsTo(ProductionCost::class);
     }
 
-    public function other_cost(): BelongsTo
+    public function other_costs(): BelongsTo
     {
         return $this->belongsTo(OtherCost::class);
     }
