@@ -39,7 +39,7 @@ class ProductController extends Controller
     public function store(StoreproductRequest $request): RedirectResponse
     {
         $pack = Pack::create([
-            //"cost" => $request->pack_cost,
+            "cost" => $request->pack_cost,
             "outer_length" => $request->pack_outer_length,
             "outer_width" => $request->pack_outer_width,
             "outer_height" => $request->pack_outer_height,
@@ -70,7 +70,7 @@ class ProductController extends Controller
             "biaya_listrik" => $request->biaya_listrik,
             "biaya_pajak" => $request->biaya_pajak,
             "biaya_ekspor" => $request->biaya_ekspor,
-            "total" => $request->total,
+            "total" => $request->total_other_cost,
         ]);
 
         $product = Product::create([

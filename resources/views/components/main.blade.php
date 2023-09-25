@@ -23,7 +23,6 @@
             {{ $slot }}
 
         </div>
-        <li><a href=""></a></li>
     </div>
 </main>
 

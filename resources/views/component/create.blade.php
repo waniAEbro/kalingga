@@ -5,8 +5,12 @@
 
     <x-create-input-field :action="'components'">
         <div class="grid gap-3  grid-cols-[5fr_1fr] mb-5">
-            <x-input :name="'name'" :label="'Nama Komponen'" :placeholder="'kayu'" :type="'text'" />
-            <x-input :name="'unit'" :label="'Unit'" :placeholder="'m'" />
+            <div>
+                <x-input :name="'name'" :label="'Nama Komponen'" :placeholder="'kayu'" :type="'text'" />
+            </div>
+            <div>
+                <x-input :name="'unit'" :label="'Unit'" :placeholder="'m'" />
+            </div>
         </div>
         <div class="grid gap-3  grid-cols-[1fr_1fr] mb-3">
             <x-input-with-desc :desc="'Rp'" :name="'price_per_unit_sell'" :type="'number'" :label="'Harga Jual Per Unit'"

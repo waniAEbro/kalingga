@@ -15,7 +15,7 @@ class ProductionController extends Controller
      */
     public function index()
     {
-        dd(Production::get());
+        // dd(Production::get());
         return view("productions.index", ["productions" => Production::get()]);
     }
 

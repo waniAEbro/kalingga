@@ -102,8 +102,8 @@
 
                 <h1 class="my-3 font-bold">Berat</h1>
                 <div class="flex w-full gap-3">
-                    <x-input-with-desc :desc="'NW'" :name="'nw'" :type="'number'" />
-                    <x-input-with-desc :desc="'GW'" :name="'gw'" :type="'number'" />
+                    <x-input-with-desc :desc="'NW'" :name="'pack_nw'" :type="'number'" />
+                    <x-input-with-desc :desc="'GW'" :name="'pack_gw'" :type="'number'" />
                 </div>
             </div>
         </div>
@@ -127,17 +127,17 @@
                 </thead>
                 <tbody id="productBody">
                     <tr class="border-b">
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'price_perakitan'" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'price_perakitan_prj'" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'price_grendo'" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'price_obat'" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'upah'" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'total_production'" :type="'number'"
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'production_cost'" :type="'number'"
                                 readonly />
                         </td>
                     </tr>
@@ -163,22 +163,22 @@
                     <tbody id="productBody">
                         <tr class="border-b">
                             <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="'pack_box_price'" :type="'number'" />
+                                    :name="''" :type="'number'" />
                             </td>
                             <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="'pack_box_hardware'" :type="'number'" />
+                                    :name="''" :type="'number'" />
                             </td>
                             <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="'pack_assembling'" :type="'number'" />
+                                    :name="''" :type="'number'" />
                             </td>
                             <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="'pack_stiker'" :type="'number'" />
+                                    :name="''" :type="'number'" />
                             </td>
                             <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="'pack_hagtag'" :type="'number'" />
+                                    :name="''" :type="'number'" />
                             </td>
                             <td class="p-2 w-80"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
-                                    :name="'pack_maintenance'" :type="'number'" />
+                                    :name="''" :type="'number'" />
                             </td>
                             <td class="p-2"><x-input-with-desc inputmode="numeric" :desc="'Rp'"
                                     :name="'production_cost'" :type="'number'" readonly />
@@ -202,16 +202,16 @@
                 </thead>
                 <tbody id="productBody">
                     <tr class="border-b">
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'biaya_overhead_pabrik'" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'biaya_listrik'" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'biaya_pajak'" :type="'number'" />
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''" :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'biaya_ekspor'"
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="''"
                                 :type="'number'" />
                         </td>
-                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'total'" :type="'number'"
+                        <td class="p-2"><x-input-with-desc :desc="'Rp'" :name="'production_cost'" :type="'number'"
                                 readonly />
                         </td>
                     </tr>
@@ -219,54 +219,66 @@
             </table> --}}
 
             <div class="flex w-full gap-2">
-                <div class="flex-1 px-2">
+                <div class="flex-1 px-2 biaya_produksi">
                     <h1 class="my-3 font-bold text-center">Biaya Produksi</h1>
 
-                    <x-input :label="'Harga Perakitan'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
-                    <x-input :label="'Harga Perakitan PRJ'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
-                    <x-input :label="'Harga Grendo'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
-                    <x-input :label="'Harga Obat'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
-                    <x-input :label="'Upah'" :desc="'Rp'" :name="''" :type="'number'" class="mb-2" />
+                    <x-input oninput="set_total_produksi()" :label="'Harga Perakitan'" :desc="'Rp'" :name="'price_perakitan'"
+                        :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_produksi()" :label="'Harga Perakitan PRJ'" :desc="'Rp'" :name="'price_perakitan_prj'"
+                        :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_produksi()" :label="'Harga Grendo'" :desc="'Rp'" :name="'price_grendo'"
+                        :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_produksi()" :label="'Harga Obat'" :desc="'Rp'" :name="'price_obat'"
+                        :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_produksi()" :label="'Upah'" :desc="'Rp'" :name="'upah'"
+                        :type="'number'" class="mb-2" />
                 </div>
 
-                <div class="flex-1 px-4 border-gray-200 border-x-2">
+                <div class="flex-1 px-4 border-gray-200 biaya_packing border-x-2">
                     <h1 class="my-3 font-bold text-center">Biaya Packing</h1>
 
-                    <x-input :label="'Harga Box'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
-                    <x-input :label="'Box Hardware'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
-                    <x-input :label="'Assembling'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
-                    <x-input :label="'Stiker'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
-                    <x-input :label="'Hagtag'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
-                    <x-input :label="'Maintenance'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_packing()" :label="'Harga Box'" :desc="'Rp'" :name="'pack_box_price'"
+                        :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_packing()" :label="'Box Hardware'" :desc="'Rp'" :name="'pack_box_hardware'"
+                        :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_packing()" :label="'Assembling'" :desc="'Rp'" :name="'pack_assembling'"
+                        :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_packing()" :label="'Stiker'" :desc="'Rp'" :name="'pack_stiker'"
+                        :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_packing()" :label="'Hagtag'" :desc="'Rp'" :name="'pack_hagtag'"
+                        :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_packing()" :label="'Maintenance'" :desc="'Rp'" :name="'pack_maintenance'"
+                        :type="'number'" class="mb-3" />
                 </div>
 
-                <div class="flex-1 px-2">
+                <div class="flex-1 px-2 biaya_lain">
                     <h1 class="my-3 font-bold text-center">Biaya Lain-Lain</h1>
 
-                    <x-input :label="'Overhead Pabrik'" :desc="'Rp'" :name="''" :type="'number'" class="mb-3" />
-                    <x-input :label="'Listrik'" :desc="'Rp'" :name="''" :type="'number'"
-                        class="mb-3" />
-                    <x-input :label="'Pajak'" :desc="'Rp'" :name="''" :type="'number'"
-                        class="mb-3" />
-                    <x-input :label="'Export+Usaha'" :desc="'Rp'" :name="''" :type="'number'"
-                        class="mb-3" />
+                    <x-input oninput="set_total_lain()" :label="'Overhead Pabrik'" :desc="'Rp'" :name="'biaya_overhead_pabrik'"
+                        :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_lain()" :label="'Listrik'" :desc="'Rp'" :name="'biaya_listrik'"
+                        :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_lain()" :label="'Pajak'" :desc="'Rp'" :name="'biaya_pajak'"
+                        :type="'number'" class="mb-3" />
+                    <x-input oninput="set_total_lain()" :label="'Export+Usaha'" :desc="'Rp'" :name="'biaya_ekspor'"
+                        :type="'number'" class="mb-3" />
                 </div>
 
             </div>
 
             <div class="divider"></div>
 
-            <div class="flex w-full gap-2">
+            <div class="flex w-full gap-2 biaya_biaya">
                 <div class="flex-1 px-2">
-                    <x-input :label="'Total Produksi'" :desc="'Rp'" :name="''" :type="'number'"
+                    <x-input readonly :label="'Total Produksi'" :desc="'Rp'" :name="'total_production'" :type="'number'"
                         class="" />
                 </div>
                 <div class="flex-1 px-4">
-                    <x-input :label="'Total Packing'" :desc="'Rp'" :name="''" :type="'number'"
+                    <x-input readonly :label="'Total Packing'" :desc="'Rp'" :name="'pack_cost'" :type="'number'"
                         class="" />
                 </div>
                 <div class="flex-1 px-2">
-                    <x-input :label="'Total Lain-Lain'" :desc="'Rp'" :name="''" :type="'number'"
+                    <x-input readonly :label="'Total Lain-Lain'" :desc="'Rp'" :name="'total_other_cost'" :type="'number'"
                         class="" />
                 </div>
             </div>
@@ -275,6 +287,10 @@
 
             <div class="flex justify-end gap-3 mt-5">
                 <div class="w-52">
+                    <x-input-with-desc :desc="'Rp'" :label="'HPP'" :name="'hpp'" :type="'number'" />
+                </div>
+
+                <div class="w-52">
                     <x-input-with-desc :desc="'Rp'" :label="'Harga Jual'" :name="'sell_price'" :type="'number'" />
                 </div>
             </div>
@@ -282,6 +298,38 @@
 @endsection
 @push('script')
     <script>
+        function set_total_produksi() {
+            const el_biaya_produksi = document.querySelectorAll('.biaya_produksi input')
+            const biaya_produksi = Array.from(el_biaya_produksi)
+                .map(el => parseInt(el.value) || 0)
+                .reduce((acc, curr) => acc + curr)
+            const total_produksi = document.querySelector('input[name="total_production"]').value = biaya_produksi;
+
+            set_total();
+        }
+
+        function set_total_packing() {
+            const el_biaya_packing = document.querySelectorAll('.biaya_packing input')
+            const biaya_packing = Array.from(el_biaya_packing)
+                .map(el => parseInt(el.value) || 0)
+                .reduce((acc, curr) => acc + curr)
+            const total_packing = document.querySelector('input[name="pack_cost"]').value = biaya_packing;
+
+            set_total();
+        }
+
+        function set_total_lain() {
+            const el_biaya_lain = document.querySelectorAll('.biaya_lain input')
+            const biaya_lain = Array.from(el_biaya_lain)
+                .map(el => parseInt(el.value) || 0)
+                .reduce((acc, curr) => acc + curr)
+            const total_packing = document.querySelector('input[name="total_other_cost"]').value = biaya_lain;
+
+            set_total();
+        }
+
+
+
         function set_volume() {
             const packOuterLength = document.getElementById('pack_outer_length').value;
             const packOuterWidth = document.getElementById('pack_outer_width').value;
@@ -358,13 +406,13 @@
                 total += isNaN(subtotalValue) ? 0 : subtotalValue;
             })
 
-            let production_cost = parseInt(document.querySelector('#production_cost').value);
-            let other_cost = parseInt(document.querySelector('#other_cost').value);
-            let pack_cost = parseInt(document.querySelector('#pack_cost').value);
+            let production_cost = parseInt(document.querySelector('#total_production').value) || 0;
+            let other_cost = parseInt(document.querySelector('#total_other_cost').value) || 0;
+            let pack_cost = parseInt(document.querySelector('#pack_cost').value) || 0;
 
             total += production_cost + other_cost + pack_cost
 
-            document.querySelector('#total_bill').value = total;
+            document.querySelector('#hpp').value = total;
         }
     </script>
 @endpush
