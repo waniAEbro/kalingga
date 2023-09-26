@@ -46,8 +46,8 @@
                                     :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
                             </td>
                             <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
-                                    onchange="set_subtotal(this)" value="0"
-                                    class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                    onchange="set_subtotal(this)" value="0" step="0.001"
+                                    class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                             </td>
                             <td id="unit" class="p-2"></td>
                             <td id="price" class="p-2"></td>

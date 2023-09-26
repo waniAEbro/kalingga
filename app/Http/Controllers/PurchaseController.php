@@ -96,9 +96,9 @@ class PurchaseController extends Controller
     public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
         $purchase->update([
-            'status' => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
+            'status' => $purchase->remain_bill - $request->paid == 0 ? "closed"  : "open",
             'remain_bill' => $purchase->remain_bill - $request->paid,
-            'paid' => $request->paid,
+            'paid' => $request->paid + $purchase->paid,
         ]);
 
         $count = PurchaseHistory::where("purchase_id", $purchase->id)->count();

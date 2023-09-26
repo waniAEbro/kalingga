@@ -50,9 +50,7 @@
                     </tbody>
                 </table>
 
-                <div class="divider divider-vertical"></div>
-
-                <h1 class="mb-5 text-lg font-bold">History Pembayaran</h1>
+                <h1 class="my-5 text-lg font-bold">History Pembayaran</h1>
 
                 <div class="w-full">
                     <table class="w-full text-left">
@@ -69,11 +67,16 @@
                                 <tr class="border-b">
                                     <td class="p-2">{{ $i + 1 }}</td>
                                     <td class="p-2">{{ date('Y-m-d', strtotime($history->created_at)) }}</td>
-                                    <td class="p-2">{{ $history->payment }}</td>
+                                    <td class="p-2 bayar">{{ $history->payment }}</td>
                                     <td class="p-2">{{ $history->description }}</td>
                                 </tr>
                             @endforeach
-
+                            <tr class="border-b">
+                                <td class="p-2"></td>
+                                <td class="p-2 font-bold">Total</td>
+                                <td class="p-2 font-bold total_bayar"></td>
+                                <td class="p-2"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -81,7 +84,7 @@
                 <div class="flex justify-end w-full gap-5 mt-10">
                     <div class="w-40">
                         <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
-                            onInput="update_bill(this)" class="mb-3" />
+                            onInput="update_sisa(this)" class="mb-3" />
                     </div>
                     <div class="w-40">
                         <x-input :label="'Sisa'" :name="'remain_bill'" :placeholder="'Sisa'" :value="$purchase->remain_bill"
@@ -100,38 +103,7 @@
 @endsection
 @push('script')
     <script>
-        function set_number() {
-            const numbers = document.querySelectorAll('#number');
-            numbers.forEach((number, i) => number.innerText = i + 1)
-        }
-
-        function set_subtotal() {
-            const trs = document.querySelectorAll('#tr');
-
-            trs.forEach(tr => {
-                let quantity = tr.querySelector('#quantity').textContent;
-                let price = tr.querySelector('#price').textContent;
-                let subtotal = tr.querySelector('#subtotal');
-                subtotal.textContent = parseInt(price) * parseInt(quantity);
-            })
-
-            set_total();
-        }
-
-        function set_total() {
-            let subtotals = document.querySelectorAll('#subtotal');
-            let total = 0;
-            subtotals.forEach(subtotalElement => {
-                let subtotalValue = parseFloat(subtotalElement.textContent);
-                total += isNaN(subtotalValue) ? 0 : subtotalValue;
-
-                document.querySelector('#total_bill').value = total;
-
-                console.log(subtotalElement.textContent)
-            })
-        }
-
-        function update_bill(element) {
+        function update_sisa(element) {
             let sisa_sebelumnya = {!! $purchase->remain_bill !!}
 
             let total = document.querySelector('#total_bill').value || 0;
@@ -143,7 +115,14 @@
             document.querySelector('#remain_bill').value = sisa_sekarang;
         }
 
-        set_subtotal();
-        set_number();
+        function total_bayar() {
+            const bills = document.querySelectorAll('.bayar');
+
+            let total = Array.from(bills).map(bill => parseInt(bill.innerText)).reduce((acc, curr) => acc + curr)
+
+            document.querySelector('.total_bayar').innerText = total;
+        }
+
+        total_bayar()
     </script>
 @endpush
