@@ -105,7 +105,7 @@ class PurchaseController extends Controller
 
         PurchaseHistory::create([
             "purchase_id" => $purchase->id,
-            "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count++,
+            "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count + 1,
             "payment" => $request->paid
         ]);
 

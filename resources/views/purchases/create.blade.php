@@ -67,8 +67,7 @@
 
                 <div class="flex justify-end gap-3 mt-10">
                     <div class="w-40">
-                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
-                            readonly />
+                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'" readonly />
                     </div>
                     <div class="w-40">
                         <x-input :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :type="'number'"

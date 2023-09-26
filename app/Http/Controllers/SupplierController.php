@@ -30,6 +30,7 @@ class SupplierController extends Controller
      */
     public function store(StoreSupplierRequest $request): RedirectResponse
     {
+        // dd($request);
         Supplier::create([
             'name' => $request->name,
             'email' => $request->email,
