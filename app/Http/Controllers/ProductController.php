@@ -194,6 +194,10 @@ class ProductController extends Controller
      */
     public function destroy(product $product): RedirectResponse
     {
+        DB::table("component_product")->where("product_id", $product->id)->delete();
+        Pack::where("id", $product->pack_id)->delete();
+        ProductionCost::where("id", $product->productioncosts_id)->delete();
+        OtherCost::where("id", $product->othercosts_id)->delete();
         $product->delete();
         return redirect("/products");
     }

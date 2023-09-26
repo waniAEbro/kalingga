@@ -117,6 +117,8 @@ class PurchaseController extends Controller
      */
     public function destroy(Purchase $purchase)
     {
+        DB::table("component_purchase")->where("purchase_id", $purchase->id)->delete();
+        PurchaseHistory::where("purchase_id", $purchase->id)->delete();
         $purchase->delete();
         return redirect("/purchases");
     }
