@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use App\Models\Component;
+use App\Models\PurchaseHistory;
+use App\Models\ComponentPurchase;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
-use App\Models\ComponentPurchase;
 
 class PurchaseController extends Controller
 {
@@ -38,7 +40,7 @@ class PurchaseController extends Controller
     public function store(StorePurchaseRequest $request): RedirectResponse
     {
         // dd($request->due_date);
-        
+
         $purchase = Purchase::create([
             'supplier_id' => $request->supplier_id,
             'purchase_date' => $request->purchase_date,
@@ -57,6 +59,12 @@ class PurchaseController extends Controller
                 "quantity" => $request->quantity[$index],
             ]);
         }
+
+        PurchaseHistory::create([
+            "purchase_id" => $purchase->id,
+            "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
+            "payment" => $request->paid
+        ]);
 
         return redirect("/purchases");
     }
@@ -89,8 +97,16 @@ class PurchaseController extends Controller
     {
         $purchase->update([
             'status' => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
-            'remain_bill' => $request->total_bill - $request->paid,
+            'remain_bill' => $purchase->remain_bill - $request->paid,
             'paid' => $request->paid,
+        ]);
+
+        $count = PurchaseHistory::where("purchase_id", $purchase->id)->count();
+
+        PurchaseHistory::create([
+            "purchase_id" => $purchase->id,
+            "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count++,
+            "payment" => $request->paid
         ]);
 
         return redirect("/purchases");

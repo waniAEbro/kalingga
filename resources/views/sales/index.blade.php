@@ -1,3 +1,4 @@
+@dd($sales)
 @extends('layouts.layout')
 
 @section('content')

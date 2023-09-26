@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Models\Product;
 use App\Models\Customer;
+use App\Models\Warehouse;
 use App\Models\Production;
-use Illuminate\Support\Carbon;
+use App\Models\SaleHistory;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
-use App\Models\Warehouse;
 
 class SaleController extends Controller
 {
@@ -65,8 +64,6 @@ class SaleController extends Controller
         $productions = [];
 
         foreach ($products as $product) {
-            $data_productions = Production::get();
-
             $productions[] = Production::create([
                 "code" => $customer->code . $product->quantity . "00",
                 "product_id" => $product->product_id,
@@ -87,6 +84,12 @@ class SaleController extends Controller
                 "quantity" => 0
             ]);
         }
+
+        SaleHistory::create([
+            "sale_id" => $sale->id,
+            "description" => $sale->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
+            "payment" => $request->paid
+        ]);
 
         return redirect("/sales");
     }
@@ -114,8 +117,16 @@ class SaleController extends Controller
     {
         $sale->update([
             'status' => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
-            'remain_bill' => $request->total_bill - $request->paid,
+            'remain_bill' => $sale->remain_bill - $request->paid,
             'paid' => $request->paid,
+        ]);
+
+        $count = SaleHistory::where("sale_id", $sale->id)->count();
+
+        SaleHistory::create([
+            "sale_id" => $sale->id,
+            "description" => $sale->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count++,
+            "payment" => $request->paid
         ]);
 
         return redirect("/sales");
