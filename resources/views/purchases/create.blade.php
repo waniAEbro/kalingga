@@ -4,13 +4,13 @@
     <h1 class="text-lg font my-7 font-[500]">Create Purchases</h1>
 
     <x-create-input-field :action="'purchases'" :width="'w-full'">
-        <div class="flex gap-5">
+        <div class="flex gap-5 text-sm">
             <div>
                 <label for="purchase_date" class="block text-sm">Purchase Date</label>
-                <x-input type="date" :name="'purchase_date'" class="mb-3" />
+                <x-input type="date" :name="'purchase_date'" class="mb-3" required />
 
                 <label for="due_date" class="block text-sm">Due Date</label>
-                <x-input type="date" :name="'due_date'" class="mb-3" />
+                <x-input type="date" :name="'due_date'" class="mb-3" required />
 
                 <label for="customer_id" class="block text-sm">Supplier</label>
                 <div class="w-40 mt-2 mb-3">
@@ -20,7 +20,7 @@
                 <x-input :name="'supplier_address'" :label="'Supplier Address'" readonly class="mb-3 bg-slate-100" />
                 <x-input :name="'supplier_email'" :label="'Supplier Email'" readonly class="mb-3 bg-slate-100" />
                 <x-input :name="'supplier_phone'" :label="'Supplier Phone'" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'code'" :type="'text'" :label="'Code'" class="mb-3" />
+                <x-input :name="'code'" :type="'text'" :label="'Code'" class="mb-3" required />
             </div>
 
             <div class="divider divider-horizontal"></div>
@@ -45,7 +45,7 @@
                                 <x-ngetes x-on:click="getComponent(purchase); $nextTick(); set_subtotal($refs.quantity)"
                                     :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
                             </td>
-                            <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
+                            <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]" required
                                     onchange="set_subtotal(this)" value="0" step="0.001"
                                     class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                             </td>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="w-40">
                         <x-input :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :type="'number'"
-                            oninput="update_bill(this)" />
+                            oninput="batasBayar(this)" required />
                     </div>
                 </div>
             </div>
@@ -86,10 +86,16 @@
             const supplier = suppliers.find(supplier => supplier.id == supplierId.value)
             // suppliers.forEach(supplier => console.log(supplier.id))
             // console.log(supplier)
+            if (supplier) {
+                const supplierAddress = document.getElementById('supplier_address').value = supplier.address;
+                const supplierEmail = document.getElementById('supplier_email').value = supplier.email;
+                const supplierPhone = document.getElementById('supplier_phone').value = supplier.phone;
 
-            const supplierAddress = document.getElementById('supplier_address').value = supplier.address;
-            const supplierEmail = document.getElementById('supplier_email').value = supplier.email;
-            const supplierPhone = document.getElementById('supplier_phone').value = supplier.phone;
+            } else {
+                const supplierAddress = document.getElementById('supplier_address').value = '';
+                const supplierEmail = document.getElementById('supplier_email').value = '';
+                const supplierPhone = document.getElementById('supplier_phone').value = '';
+            }
         }
 
         function getComponent(tr) {
@@ -100,7 +106,7 @@
             if (componentId.value) {
                 const component = components.find(component => component.id == componentId.value)
                 const unit = tr.querySelector('#unit').innerText = component.unit;
-                const price = tr.querySelector('#price').innerText = component.price_per_unit_buy;
+                const price = tr.querySelector('#price').innerText = toRupiah(component.price_per_unit_buy);
             } else {
                 const unit = tr.querySelector('#unit').innerText = '';
                 const price = tr.querySelector('#price').innerText = '';
@@ -143,10 +149,11 @@
         }
 
         function set_subtotal(element) {
+            element.value < 0 ? element.value = 0 : element.value;
             let tr = element.parentElement.parentElement;
-            let price = tr.querySelector('#price').textContent;
+            let price = tr.querySelector('#price').textContent.replace(/\D/g, '');
             let subtotal = tr.querySelector('#subtotal');
-            subtotal.textContent = price * element.value;
+            subtotal.textContent = toRupiah(price * element.value);
 
             set_total();
         }
@@ -155,11 +162,18 @@
             let subtotals = document.querySelectorAll('#subtotal');
             let total = 0;
             subtotals.forEach(subtotalElement => {
-                let subtotalValue = parseFloat(subtotalElement.textContent);
+                let subtotalValue = parseFloat(subtotalElement.textContent.replace(/\D/g, ''));
                 total += isNaN(subtotalValue) ? 0 : subtotalValue;
 
                 document.querySelector('#total_bill').value = total;
             })
+        }
+
+        function batasBayar(bayarEl) {
+            const total = parseInt(document.querySelector('#total_bill').value);
+            const bayar = parseInt(bayarEl.value);
+
+            bayarEl.value = bayar > total ? total : bayar
         }
     </script>
 @endpush

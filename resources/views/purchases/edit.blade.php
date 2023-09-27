@@ -4,8 +4,8 @@
     {{-- @dd($purchase->histories[0]->created_at) --}}
     <h1 class="text-lg font my-7 font-[500]">Edit Purchases</h1>
 
-    <x-edit-input-field :action="'purchases'" :items="$purchase" :width="'w-full'">
-        <div class="flex gap-5">
+    <x-edit-input-field :action="'purchases'" :items="$purchase" :width="'w-full'" :sisa="$purchase->remain_bill">
+        <div class="flex gap-5 text-sm">
             <div>
                 <x-input type="date" :name="'purchase_date'" :label="'Purchase Date'" :value="$purchase->purchase_date" readonly
                     class="mb-3 bg-slate-100" />
@@ -32,21 +32,32 @@
                             <th class="p-2">Jumlah</th>
                             <th class="p-2">Unit</th>
                             <th class="p-2">Harga Per Produk</th>
-                            <th class="p-2">Total</th>
+                            <th class="p-2">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody id="purchaseBody">
                         @foreach ($purchase->components as $i => $cs)
-                            <tr id="tr" x-data="{ subtotal: 0, unit: 0, price: 0 }" class="border-b">
+                            <tr id="tr" x-data="" class="border-b">
                                 <td id="number" class="p-2">{{ $i + 1 }}</td>
                                 <td class="w-40 p-2">{{ $cs->name }}</td>
                                 <td id="quantity" class="p-2" x-ref="quantity">{{ $cs->pivot->quantity }}</td>
                                 <td id="unit" class="p-2">{{ $cs->unit }}</td>
-                                <td id="price" x-ref="price" class="p-2">{{ $cs->price_per_unit_buy }}</td>
-                                <td id="subtotal" class="p-2">
-                                </td>
+                                <td id="price" x-ref="price" class="p-2 rupiah">{{ $cs->price_per_unit_buy }}</td>
+                                <td id="subtotal"
+                                    x-text="toRupiah(parseInt($refs.quantity.innerText) * parseInt($refs.price.innerText.replace(/\D/g, '')))"
+                                    class="p-2"></td>
                             </tr>
                         @endforeach
+                        @if (!$purchase->remain_bill)
+                            <tr id="tr" x-data="" class="border-b">
+                                <td id="number" class="p-2"></td>
+                                <td class="w-40 p-2"></td>
+                                <td id="quantity" class="p-2" x-ref="quantity"></td>
+                                <td id="unit" class="p-2"></td>
+                                <td id="price" x-ref="price" class="p-2 font-bold">Total</td>
+                                <td class="p-2 font-bold total_bayar"></td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
 
@@ -67,7 +78,7 @@
                                 <tr class="border-b">
                                     <td class="p-2">{{ $i + 1 }}</td>
                                     <td class="p-2">{{ date('Y-m-d', strtotime($history->created_at)) }}</td>
-                                    <td class="p-2 bayar">{{ $history->payment }}</td>
+                                    <td class="p-2 bayar rupiah">{{ $history->payment }}</td>
                                     <td class="p-2">{{ $history->description }}</td>
                                 </tr>
                             @endforeach
@@ -82,21 +93,21 @@
                 </div>
 
                 <div class="flex justify-end w-full gap-5 mt-10">
-                    <div class="w-40">
-                        <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
-                            onInput="update_sisa(this)" class="mb-3" />
-                    </div>
-                    <div class="w-40">
-                        <x-input :label="'Sisa'" :name="'remain_bill'" :placeholder="'Sisa'" :value="$purchase->remain_bill"
-                            :type="'number'" class="mb-3" readonly />
-                    </div>
-                    <div class="w-40">
-                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total'" :value="$purchase->total_bill"
-                            :type="'number'" readonly />
-                    </div>
+                    @if ($purchase->remain_bill)
+                        <div class="w-40">
+                            <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
+                                onInput="update_sisa(this)" class="mb-3" required />
+                        </div>
+                        <div class="w-40">
+                            <x-input :label="'Sisa'" :name="'remain_bill'" :placeholder="'Sisa'" :value="$purchase->remain_bill"
+                                :type="'number'" class="mb-3" readonly />
+                        </div>
+                        <div class="w-40">
+                            <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total'" :value="$purchase->total_bill"
+                                :type="'number'" readonly />
+                        </div>
+                    @endif
                 </div>
-
-
             </div>
         </div>
     </x-edit-input-field>
@@ -118,9 +129,10 @@
         function total_bayar() {
             const bills = document.querySelectorAll('.bayar');
 
-            let total = Array.from(bills).map(bill => parseInt(bill.innerText)).reduce((acc, curr) => acc + curr)
+            let total = Array.from(bills).map(bill => parseInt(bill.innerText.replace(/\D/g, ''))).reduce((acc, curr) =>
+                acc + curr)
 
-            document.querySelector('.total_bayar').innerText = total;
+            Array.from(document.querySelectorAll('.total_bayar')).map(el => el.innerText = toRupiah(total));
         }
 
         total_bayar()

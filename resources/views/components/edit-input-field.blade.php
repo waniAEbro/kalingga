@@ -1,4 +1,4 @@
-@props(['action', 'items', 'width' => 'w-[490px]'])
+@props(['action', 'items', 'width' => 'w-[490px]', 'sisa' => false])
 @push('head')
     <style>
         .save {
@@ -16,11 +16,17 @@
         @method('put')
 
         {{ $slot }}
-
-        <div class="absolute flex gap-2 bottom-4 right-4">
-            <a href="/{{ $action }}"
-                class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Cancel</a>
-            <button type="submit" class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save">Save</button>
-        </div>
+        @if (!$sisa)
+            <div class="absolute flex gap-2 bottom-4 right-4">
+                <a href="/{{ $action }}"
+                    class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Back</a>
+            </div>
+        @else
+            <div class="absolute flex gap-2 bottom-4 right-4">
+                <a href="/{{ $action }}"
+                    class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Cancel</a>
+                <button type="submit" class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save">Save</button>
+            </div>
+        @endif
     </form>
 </div>

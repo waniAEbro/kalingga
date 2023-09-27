@@ -17,7 +17,7 @@
                     <x-ngetes :dataLists="$customers->toArray()" :name="'customer_id'" :id="'customer_id'" />
                 </div>
 
-                <x-input :name="'code'" :type="'number'" :label="'Code'" class="mb-3" required />
+                <x-input :name="'code'" :type="'text'" :label="'Code'" class="mb-3" required />
             </div>
 
             <div class="divider divider-horizontal"></div>

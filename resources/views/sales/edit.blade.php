@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="text-lg font my-7 font-[500]">Edit Sales</h1>
 
-    <x-edit-input-field :action="'sales'" :items="$sales" :width="'w-full'">
+    <x-edit-input-field :action="'sales'" :items="$sales" :width="'w-full'" :sisa="$sales->remain_bill">
         <div class="flex gap-5">
             <div>
                 <x-input type="date" :name="'sale_date'" :label="'Sale Date'" :value="$sales->sale_date" readonly
@@ -35,14 +35,25 @@
                     </thead>
                     <tbody id="salesBody">
                         @foreach ($sales->product as $product)
-                            <tr id="tr" x-data="{ subtotal: 0, unit: 0, price: 0 }" class="border-b">
+                            <tr id="tr" x-data="" class="border-b">
                                 <td id="number" class="p-2"></td>
                                 <td class="w-40 p-2">{{ $product->name }}</td>
                                 <td id="quantity" class="p-2" x-ref="quantity">{{ $product->pivot->quantity }}</td>
                                 <td id="price" x-ref="price" class="p-2 rupiah">{{ $product->sell_price }}</td>
-                                <td class="p-2 rupiah">{{ $sales->total_bill }}</td>
+                                <td class="p-2 rupiah"
+                                    x-text="toRupiah(parseInt($refs.quantity.innerText) * parseInt($refs.price.innerText.replace(/\D/g, '')))">
+                                    {{ $sales->total_bill }}</td>
                             </tr>
                         @endforeach
+                        @if (!$sales->remain_bill)
+                            <tr id="tr" x-data="" class="border-b">
+                                <td id="number" class="p-2"></td>
+                                <td class="w-40 p-2"></td>
+                                <td id="quantity" class="p-2" x-ref="quantity"></td>
+                                <td id="price" x-ref="price" class="p-2 font-bold">Total</td>
+                                <td class="p-2 font-bold total_bayar"></td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
 
@@ -78,18 +89,20 @@
                 </div>
 
                 <div class="flex justify-end w-full gap-5 mt-10">
-                    <div class="w-40">
-                        <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
-                            onInput="update_sisa(this)" class="mb-3" />
-                    </div>
-                    <div class="w-40">
-                        <x-input :label="'Sisa'" :name="'remain_bill'" :placeholder="'Sisa'" :value="$sales->remain_bill"
-                            :type="'number'" class="mb-3" readonly />
-                    </div>
-                    <div class="w-40">
-                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total'" :value="$sales->total_bill"
-                            :type="'number'" readonly />
-                    </div>
+                    @if ($sales->remain_bill)
+                        <div class="w-40">
+                            <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
+                                onInput="update_sisa(this)" class="mb-3" required />
+                        </div>
+                        <div class="w-40">
+                            <x-input :label="'Sisa'" :name="'remain_bill'" :placeholder="'Sisa'" :value="$sales->remain_bill"
+                                :type="'number'" class="mb-3" readonly />
+                        </div>
+                        <div class="w-40">
+                            <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total'" :value="$sales->total_bill"
+                                :type="'number'" readonly />
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -115,7 +128,7 @@
             let total = Array.from(bills).map(bill => parseInt(bill.innerText.replace(/\D/g, ''))).reduce((acc, curr) =>
                 acc + curr)
 
-            document.querySelector('.total_bayar').innerText = toRupiah(total);
+            Array.from(document.querySelectorAll('.total_bayar')).map(el => el.innerText = toRupiah(total));
         }
 
         total_bayar()
