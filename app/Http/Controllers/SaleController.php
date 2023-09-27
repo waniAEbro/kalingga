@@ -35,12 +35,13 @@ class SaleController extends Controller
      */
     public function store(StoreSaleRequest $request)
     {
+        // dd($request);
         // dd($request->product_id, $request->quantity, $request->customer_name, $request->total_bill, $request->paid);
         $sale = Sale::create([
             'customer_id' => $request->customer_id,
             'sale_date' => $request->sale_date,
             'due_date' => $request->due_date,
-            'status' => $request->total_bill - $request->paid == 0 ? "close" : "open",
+            'status' => $request->total_bill - $request->paid == 0 ? "closed" : "open",
             'total_bill' => $request->total_bill,
             'paid' => $request->paid,
             "remain_bill" => $request->total_bill - $request->paid,
@@ -115,9 +116,10 @@ class SaleController extends Controller
      */
     public function update(UpdateSaleRequest $request, Sale $sale)
     {
+        // dd($request);
         $sale->update([
-            'status' => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
-            'remain_bill' => $sale->remain_bill - $request->paid,
+            'status' => $request->remain_bill == 0 ? "closed"  : "open",
+            'remain_bill' => $request->remain_bill,
             'paid' => $request->paid,
         ]);
 
@@ -125,7 +127,7 @@ class SaleController extends Controller
 
         SaleHistory::create([
             "sale_id" => $sale->id,
-            "description" => $sale->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count++,
+            "description" => $sale->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count+1,
             "payment" => $request->paid
         ]);
 
@@ -141,7 +143,7 @@ class SaleController extends Controller
         $production_sale = DB::table("production_sale")->where("sale_id", $sale->id)->get();
         foreach ($production_sale as $production) {
             Warehouse::where("production_id", $production->production_id)->delete();
-            $production->delete();
+            DB::table("production_sale")->where("id", $production->production_id)->delete();
             Production::find($production->production_id)->delete();
         }
         SaleHistory::where("sale_id", $sale->id)->delete();

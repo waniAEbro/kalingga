@@ -20,14 +20,16 @@
 
             <div class="divider divider-horizontal"></div>
 
-            <div class="w-full">
+            <div class="w-full text-sm">
+                <h1 class="mb-5 text-lg font-bold">Produk</h1>
+
                 <table class="w-full text-left">
                     <thead>
                         <tr class="border-b-2">
                             <th class="p-2">#</th>
-                            <th class="p-2">Product</th>
-                            <th class="p-2">Amount</th>
-                            <th class="p-2">Price per Product</th>
+                            <th class="p-2">Produk</th>
+                            <th class="p-2">Jumlah</th>
+                            <th class="p-2">Harga Per Produk</th>
                             <th class="p-2">Total</th>
                         </tr>
                     </thead>
@@ -37,21 +39,56 @@
                                 <td id="number" class="p-2"></td>
                                 <td class="w-40 p-2">{{ $product->name }}</td>
                                 <td id="quantity" class="p-2" x-ref="quantity">{{ $product->pivot->quantity }}</td>
-                                <td id="price" x-ref="price" class="p-2">{{ $product->sell_price }}</td>
-                                <td id="subtotal" class="p-2"></td>
+                                <td id="price" x-ref="price" class="p-2 rupiah">{{ $product->sell_price }}</td>
+                                <td class="p-2 rupiah">{{ $sales->total_bill }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
 
-                <div class="flex justify-end gap-3 mt-10">
+                <h1 class="my-5 text-lg font-bold">History Pembayaran</h1>
+
+                <div class="w-full">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b-2">
+                                <th class="p-2">#</th>
+                                <th class="p-2">Tanggal</th>
+                                <th class="p-2">Bayar</th>
+                                <th class="p-2">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($sales->histories as $i => $history)
+                                <tr class="border-b">
+                                    <td class="p-2">{{ $i + 1 }}</td>
+                                    <td class="p-2">{{ date('Y-m-d', strtotime($history->created_at)) }}</td>
+                                    <td class="p-2 bayar rupiah">{{ $history->payment }}</td>
+                                    <td class="p-2">{{ $history->description }}</td>
+                                </tr>
+                            @endforeach
+                            <tr class="border-b">
+                                <td class="p-2"></td>
+                                <td class="p-2 font-bold">Total</td>
+                                <td class="p-2 font-bold total_bayar rupiah"></td>
+                                <td class="p-2"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex justify-end w-full gap-5 mt-10">
                     <div class="w-40">
-                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
-                            readonly />
+                        <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
+                            onInput="update_sisa(this)" class="mb-3" />
                     </div>
                     <div class="w-40">
-                        <x-input :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :value="$sales->paid"
-                            :type="'number'" onInput="update_bill(this)" />
+                        <x-input :label="'Sisa'" :name="'remain_bill'" :placeholder="'Sisa'" :value="$sales->remain_bill"
+                            :type="'number'" class="mb-3" readonly />
+                    </div>
+                    <div class="w-40">
+                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total'" :value="$sales->total_bill"
+                            :type="'number'" readonly />
                     </div>
                 </div>
             </div>
@@ -60,45 +97,27 @@
 @endsection
 @push('script')
     <script>
-        function set_number() {
-            const numbers = document.querySelectorAll('#number');
-            numbers.forEach((number, i) => number.innerText = i + 1)
+        function update_sisa(element) {
+            let sisa_sebelumnya = {!! $sales->remain_bill !!}
+
+            let total = document.querySelector('#total_bill').value || 0;
+            let sisa_sekarang = sisa_sebelumnya - element.value;
+
+            if (element.value > sisa_sebelumnya) element.value = sisa_sebelumnya
+
+            sisa_sekarang = sisa_sebelumnya - element.value;
+            document.querySelector('#remain_bill').value = sisa_sekarang;
         }
 
-        function set_subtotal() {
-            const trs = document.querySelectorAll('#tr');
+        function total_bayar() {
+            const bills = document.querySelectorAll('.bayar');
 
-            trs.forEach(tr => {
-                let quantity = tr.querySelector('#quantity').textContent;
-                let price = tr.querySelector('#price').textContent;
-                let subtotal = tr.querySelector('#subtotal');
-                subtotal.textContent = parseInt(price) * parseInt(quantity);
-            })
+            let total = Array.from(bills).map(bill => parseInt(bill.innerText.replace(/\D/g, ''))).reduce((acc, curr) =>
+                acc + curr)
 
-            set_total();
+            document.querySelector('.total_bayar').innerText = toRupiah(total);
         }
 
-        function set_total() {
-            let subtotals = document.querySelectorAll('#subtotal');
-            let total = 0;
-            subtotals.forEach(subtotalElement => {
-                let subtotalValue = parseFloat(subtotalElement.textContent);
-                total += isNaN(subtotalValue) ? 0 : subtotalValue;
-
-                document.querySelector('#total_bill').value = total;
-            })
-        }
-
-        function update_bill(element) {
-            let total = document.querySelector('#total_bill').value;
-            if (parseInt(element.value) >= parseInt(total)) {
-                element.value = total
-            } else if (parseInt(element.value) <= 0) {
-                element.value = 0
-            }
-        }
-
-        set_number();
-        set_subtotal();
+        total_bayar()
     </script>
 @endpush

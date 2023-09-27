@@ -7,22 +7,22 @@
         <div class="flex gap-5">
             <div>
                 <label for="sale_date" class="block text-sm">Sale Date</label>
-                <x-input type="date" :name="'sale_date'" class="mb-3" />
+                <x-input type="date" :name="'sale_date'" class="mb-3" required />
 
                 <label for="due_date" class="block text-sm">Due Date</label>
-                <x-input type="date" :name="'due_date'" class="mb-3" />
+                <x-input type="date" :name="'due_date'" class="mb-3" required />
 
                 <label for="customer_id" class="block text-sm">Customer</label>
                 <div class="w-40 mt-2 mb-3">
                     <x-ngetes :dataLists="$customers->toArray()" :name="'customer_id'" :id="'customer_id'" />
                 </div>
 
-                <x-input :name="'code'" :type="'text'" :label="'Code'" class="mb-3" />
+                <x-input :name="'code'" :type="'number'" :label="'Code'" class="mb-3" required />
             </div>
 
             <div class="divider divider-horizontal"></div>
 
-            <div class="w-full">
+            <div class="w-full text-sm">
                 <table class="w-full text-left">
                     <thead>
                         <tr class="border-b-2">
@@ -42,10 +42,10 @@
                                     :dataLists="$products->toArray()" :name="'product_id[]'" :id="'product_id'" />
                             </td>
                             <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
-                                    onchange="set_subtotal(this)" value="0"
+                                    onchange="set_subtotal(this)" value="0" required
                                     class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                             </td>
-                            <td id="price" class="p-2"></td>
+                            <td id="price" class="p-"></td>
                             <td id="subtotal" class="p-2"></td>
                             <td class="p-2">
                                 <button type="button" x-on:click="sale.remove(); set_total(); set_number()"
@@ -62,12 +62,11 @@
 
                 <div class="flex justify-end gap-3 mt-10">
                     <div class="w-40">
-                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'"
-                            readonly />
+                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'" readonly />
                     </div>
                     <div class="w-40">
                         <x-input :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :type="'number'"
-                            onInput="update_bill(this)" />
+                            onInput="update_bill(this)" required />
                     </div>
                 </div>
             </div>
@@ -84,7 +83,7 @@
 
             if (productId.value) {
                 const product = products.find(product => product.id == productId.value)
-                const price = tr.querySelector('#price').innerText = product.sell_price;
+                const price = tr.querySelector('#price').innerText = toRupiah(product.sell_price);
             } else {
                 const unit = tr.querySelector('#unit').innerText = '';
                 const price = tr.querySelector('#price').innerText = '';
@@ -126,10 +125,12 @@
         }
 
         function set_subtotal(element) {
+            element.value <= 0 ? element.value = 0 : element.value;
+
             let tr = element.parentElement.parentElement;
-            let price = tr.querySelector('#price').textContent;
+            let price = tr.querySelector('#price').textContent.replace(/\D/g, '');
             let subtotal = tr.querySelector('#subtotal');
-            subtotal.textContent = price * element.value;
+            subtotal.textContent = toRupiah(price * element.value);
 
             set_total();
         }
@@ -138,7 +139,7 @@
             let subtotals = document.querySelectorAll('#subtotal');
             let total = 0;
             subtotals.forEach(subtotalElement => {
-                let subtotalValue = parseFloat(subtotalElement.textContent);
+                let subtotalValue = parseFloat(subtotalElement.textContent.replace(/\D/g, ''));
                 total += isNaN(subtotalValue) ? 0 : subtotalValue;
 
                 document.querySelector('#total_bill').value = total;

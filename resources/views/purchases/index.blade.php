@@ -72,7 +72,6 @@
 
                             </form>
                         @else
-                            Sudah lunas
                         @endif
                     </div>
 
