@@ -5,7 +5,7 @@
     <span class="inline-block w-full rounded-md shadow-sm" @click="toggle(); $nextTick(() => $refs.filterinput.focus());">
         <button type="button"
             class="relative z-0 w-full py-2 pl-3 pr-10 text-left transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md cursor-default focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5">
-            <span class="block truncate" x-text="selectedlabel ?? 'Please Select'"></span>
+            <span class="block truncate show" x-text="selectedlabel ?? 'Please Select'"></span>
 
             <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                 <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="none" stroke="currentColor">

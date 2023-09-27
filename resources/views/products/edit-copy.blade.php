@@ -80,7 +80,7 @@
                         <tr x-data="{ purchase: $el }" class="border-b">
                             <td id="number" class="p-2"></td>
                             <td class="w-40 p-2">
-                                <x-ngetes :value="$cp->id" :label="$cp->name"
+                                <x-select :value="$cp->id" :label="$cp->name"
                                     x-on:click="getComponent(purchase); $nextTick(); set_subtotal($refs.quantity)"
                                     :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
                             </td>
@@ -148,7 +148,7 @@
                 purchaseRow.innerHTML = `
                                         <td id="number" class="p-2"></td>
                                         <td class="w-40 p-2">
-                                            <x-ngetes x-on:click="getComponent(purchase); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
+                                            <x-select x-on:click="getComponent(purchase); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"

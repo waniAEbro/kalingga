@@ -16,7 +16,7 @@
                         <th class="p-2 text-sm">Jumlah</th>
                         <th class="p-2 text-sm">Unit</th>
                         <th class="p-2 text-sm">Harga Per Produk</th>
-                        <th class="p-2 text-sm">Total</th>
+                        <th class="p-2 text-sm">Subtotal</th>
                         <th class="p-2 text-sm"></th>
                     </tr>
                 </thead>
@@ -25,7 +25,7 @@
                         <tr x-data="{ purchase: $el }" class="border-b">
                             <td id="number" class="p-2"></td>
                             <td class="w-40 p-2">
-                                <x-ngetes :value="$cp->id" :label="$cp->name"
+                                <x-select :value="$cp->id" :label="$cp->name"
                                     x-on:click="getComponent(purchase); $nextTick(); set_subtotal($refs.quantity)"
                                     :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
                             </td>
@@ -34,7 +34,7 @@
                                     class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                             </td>
                             <td id="unit" class="p-2">{{ $cp->unit }}</td>
-                            <td id="price" class="p-2">
+                            <td id="price" class="p-2 rupiah">
                                 {{ $cp->price_per_unit_sell }} </td>
                             <td id="subtotal" class="p-2"></td>
                             <td class="p-2">
@@ -260,7 +260,7 @@
                     if (componentId.value) {
                         const component = components.find(component => component.id == componentId.value)
                         const unit = tr.querySelector('#unit').innerText = component.unit;
-                        const price = tr.querySelector('#price').innerText = component.price_per_unit_buy;
+                        const price = tr.querySelector('#price').innerText = toRupiah(component.price_per_unit_buy);
                     } else {
                         const unit = tr.querySelector('#unit').innerText = '';
                         const price = tr.querySelector('#price').innerText = '';
@@ -280,12 +280,12 @@
                     productRow.innerHTML = `
                                         <td id="number" class="p-2"></td>
                                         <td class="w-40 p-2">
-                                            <x-ngetes x-on:click="getComponent(productEl); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
+                                            <x-select x-on:click="getComponent(productEl); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"
                                                 onchange="set_subtotal(this)" value="0"
-                                                class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                                class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         </td>
                                         <td id="unit" class="p-2"></td>
                                         <td id="price" class="p-2"></td>
@@ -293,7 +293,7 @@
                                         <td class="p-2">
                                             <button type="button" x-on:click="productEl.remove(); set_total(); set_number()"
                                                 class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
-                                                    class="p-2 text-r0 material-symbols-outlined">delete</span></button>
+                                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
                                     `;
 
@@ -302,9 +302,9 @@
 
                 function set_subtotal(element) {
                     let tr = element.parentElement.parentElement;
-                    let price = tr.querySelector('#price').textContent;
+                    let price = tr.querySelector('#price').textContent.replace(/\D/g, '');
                     let subtotal = tr.querySelector('#subtotal');
-                    subtotal.textContent = price * element.value;
+                    subtotal.textContent = toRupiah((parseInt(price) * parseInt(element.value)) || 0);
 
                     set_total();
                 }
@@ -313,7 +313,7 @@
                     let subtotals = document.querySelectorAll('#subtotal');
                     let total = 0;
                     subtotals.forEach(subtotalElement => {
-                        let subtotalValue = parseFloat(subtotalElement.textContent);
+                        let subtotalValue = parseFloat(subtotalElement.textContent.replace(/\D/g, ''));
                         total += isNaN(subtotalValue) ? 0 : subtotalValue;
                     })
 

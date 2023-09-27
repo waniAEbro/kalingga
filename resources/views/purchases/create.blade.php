@@ -14,7 +14,7 @@
 
                 <label for="customer_id" class="block text-sm">Supplier</label>
                 <div class="w-40 mt-2 mb-3">
-                    <x-ngetes x-on:click="getSupplier" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'" />
+                    <x-select x-on:click="getSupplier" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'" />
                 </div>
 
                 <x-input :name="'supplier_address'" :label="'Supplier Address'" readonly class="mb-3 bg-slate-100" />
@@ -42,7 +42,7 @@
                         <tr x-data="{ purchase: $el }" class="border-b">
                             <td id="number" class="p-2"></td>
                             <td class="w-40 p-2">
-                                <x-ngetes x-on:click="getComponent(purchase); $nextTick(); set_subtotal($refs.quantity)"
+                                <x-select x-on:click="getComponent(purchase); $nextTick(); set_subtotal($refs.quantity)"
                                     :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
                             </td>
                             <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]" required
@@ -128,7 +128,7 @@
             purchaseRow.innerHTML = `
                                         <td id="number" class="p-2"></td>
                                         <td class="w-40 p-2">
-                                            <x-ngetes x-on:click="getComponent(purchase); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
+                                            <x-select x-on:click="getComponent(purchase); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"

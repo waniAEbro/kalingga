@@ -14,7 +14,7 @@
 
                 <label for="customer_id" class="block text-sm">Customer</label>
                 <div class="w-40 mt-2 mb-3">
-                    <x-ngetes :dataLists="$customers->toArray()" :name="'customer_id'" :id="'customer_id'" />
+                    <x-select :dataLists="$customers->toArray()" :name="'customer_id'" :id="'customer_id'" />
                 </div>
 
                 <x-input :name="'code'" :type="'text'" :label="'Code'" class="mb-3" required />
@@ -38,7 +38,7 @@
                         <tr x-data="{ sale: $el }" class="border-b">
                             <td id="number" class="p-2"></td>
                             <td class="w-40 p-2">
-                                <x-ngetes x-on:click="getProduct(sale); $nextTick(); set_subtotal($refs.quantity)"
+                                <x-select x-on:click="getProduct(sale); $nextTick(); set_subtotal($refs.quantity)"
                                     :dataLists="$products->toArray()" :name="'product_id[]'" :id="'product_id'" />
                             </td>
                             <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
@@ -105,7 +105,7 @@
             saleRow.innerHTML = `
                                     <td id="number" class="p-2"></td>
                                     <td class="w-40 p-2">
-                                        <x-ngetes x-on:click="getProduct(sale); $nextTick(); set_subtotal($refs.quantity)"
+                                        <x-select x-on:click="getProduct(sale); $nextTick(); set_subtotal($refs.quantity)"
                                             :dataLists="$products->toArray()" :name="'product_id[]'" :id="'product_id'" />
                                     </td>
                                     <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
@@ -125,8 +125,6 @@
         }
 
         function set_subtotal(element) {
-            element.value <= 0 ? element.value = 0 : element.value;
-
             let tr = element.parentElement.parentElement;
             let price = tr.querySelector('#price').textContent.replace(/\D/g, '');
             let subtotal = tr.querySelector('#subtotal');

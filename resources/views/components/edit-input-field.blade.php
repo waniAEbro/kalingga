@@ -1,4 +1,4 @@
-@props(['action', 'items', 'width' => 'w-[490px]', 'sisa' => false])
+@props(['action', 'items', 'width' => 'w-[490px]', 'sisa' => true])
 @push('head')
     <style>
         .save {
