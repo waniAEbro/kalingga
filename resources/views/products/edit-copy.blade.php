@@ -85,12 +85,12 @@
                                     :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
                             </td>
                             <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"
-                                    onchange="set_subtotal(this)" value="{{ $cp->pivot->quantity }}"
+                                    oninput="set_subtotal(this)" value="{{ $cp->pivot->quantity }}"
                                     class="input_quantity w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                             </td>
                             <td id="unit" class="p-2">{{ $cp->unit }}</td>
                             <td id="price" class="p-2">
-                                {{ $cp->price_per_unit_sell }} </td>
+                                {{ $cp->price_per_unit }} </td>
                             <td id="subtotal" class="p-2"></td>
                             <td class="p-2">
                                 <button type="button"
@@ -126,7 +126,7 @@
                 if (componentId.value) {
                     const component = components.find(component => component.id == componentId.value)
                     const unit = tr.querySelector('#unit').innerText = component.unit;
-                    const price = tr.querySelector('#price').innerText = component.price_per_unit_buy;
+                    const price = tr.querySelector('#price').innerText = component.price_per_unit;
                 } else {
                     const unit = tr.querySelector('#unit').innerText = '';
                     const price = tr.querySelector('#price').innerText = '';
@@ -152,7 +152,7 @@
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"
-                                                onchange="set_subtotal(this)" value="0"
+                                                oninput="set_subtotal(this)" value="0"
                                                 class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         </td>
                                         <td id="unit" class="p-2"></td>

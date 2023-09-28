@@ -15,15 +15,15 @@ class Production extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["product", "sales"];
+    protected $with = ["product", "sale"];
 
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, "product_id", "id");
     }
 
-    public function sales(): BelongsToMany
+    public function sale(): BelongsTo
     {
-        return $this->belongsToMany(Sale::class);
+        return $this->belongsTo(Sale::class);
     }
 }

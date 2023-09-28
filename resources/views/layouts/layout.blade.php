@@ -79,13 +79,14 @@
     }
 
     function toRupiah(number) {
-        var rupiah = '';
-        var numberrev = number.toString().split('').reverse().join('');
-        for (var i = 0; i < numberrev.length; i++) {
-            if (i % 3 == 0) rupiah += numberrev.substr(i, 3) + '.';
-        }
-        return 'Rp' + rupiah.split('', rupiah.length - 1).reverse().join('');
+        let rupiahFormat = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+        }).format(number);
+        return rupiahFormat
     }
+
+
 
     function update_bill(element) {
         let total = document.querySelector('#total_bill').value;

@@ -65,8 +65,9 @@
                 },
                 select: function(value, key) {
                     if (this.selectedkey == key) {
-                        this.selectedlabel = null;
+                        this.selectedlabel = "Please Select";
                         this.selectedkey = null;
+                        this.state = false;
                     } else {
                         this.selectedlabel = value;
                         this.selectedkey = key;

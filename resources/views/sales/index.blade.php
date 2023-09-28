@@ -89,7 +89,11 @@
         }
 
         function set_lunas() {
-            let lunas = sales.reduce((total, data) => total + data.paid, 0)
+            let lunas = sales.reduce((total, data) => {
+                let paid = data.histories.reduce((acc, cur) => cur.payment + acc, 0)
+
+                return total + paid
+            }, 0)
 
             document.getElementById("pembayaran_lunas").innerText = toRupiah(lunas);
             console.log(toRupiah(lunas))

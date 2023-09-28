@@ -23,12 +23,12 @@
                     <tr x-data="{ productEl: $el }" class="border-b">
                         <td id="number" class="p-2"></td>
                         <td class="w-40 p-2">
-                            <x-select x-on:click="getComponent(productEl); $nextTick(); set_subtotal($refs.quantity)"
-                                :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
+                            <x-select x-on:click="getComponent(productEl); $nextTick();" :dataLists="$components->toArray()" :name="'component_id[]'"
+                                :id="'component_id'" />
                         </td>
                         <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"
                                 min="0" oninput="set_subtotal(this)" value="0"
-                                class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                class="w-20 px-2 py-2 text-sm transition-all duration-100 border input_quantity rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                         </td>
                         <td id="unit" class="p-2"></td>
                         <td id="price" class="p-2"></td>
@@ -235,17 +235,19 @@
 
 
         function getComponent(tr) {
-
             let components = {!! $components !!};
             const componentId = tr.querySelector('#component_id');
 
             if (componentId.value) {
                 const component = components.find(component => component.id == componentId.value)
-                const unit = tr.querySelector('#unit').innerText = component.unit;
-                const price = tr.querySelector('#price').innerText = toRupiah(component.price_per_unit_buy);
+                tr.querySelector('#unit').innerText = component.unit;
+                tr.querySelector('#price').innerText = toRupiah(component.price_per_unit);
             } else {
-                const unit = tr.querySelector('#unit').innerText = '';
-                const price = tr.querySelector('#price').innerText = '';
+                tr.querySelector('#unit').innerText = '';
+                tr.querySelector('#price').innerText = '';
+                tr.querySelector('#subtotal').innerText = "";
+                tr.querySelector('.input_quantity').value = 0;
+                set_total()
             }
         }
 
@@ -286,9 +288,15 @@
 
         function set_subtotal(element) {
             let tr = element.parentElement.parentElement;
-            let price = tr.querySelector('#price').textContent.replace(/\D/g, '');
+            let price = tr.querySelector('#price').textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
+                '').replace(',', '.');
             let subtotal = tr.querySelector('#subtotal');
-            subtotal.textContent = toRupiah(parseInt(price) * parseInt(element.value));
+            subtotal.textContent = toRupiah(0)
+            if (price != "" && parseFloat(element.value) >= 0) {
+                subtotal.textContent = toRupiah(parseInt(price) * parseFloat(element.value));
+            } else {
+                subtotal.textContent = toRupiah(0);
+            }
 
             set_total();
         }
@@ -297,7 +305,10 @@
             let subtotals = document.querySelectorAll('#subtotal');
             let total = 0;
             subtotals.forEach(subtotalElement => {
-                let subtotalValue = parseFloat(subtotalElement.textContent.replace(/\D/g, ''));
+                let subtotalValue = parseFloat(subtotalElement.textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
+                    '').replace(',', '.'));
+                console.log(subtotalElement.textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
+                    '').replace(',', '.'))
                 total += isNaN(subtotalValue) ? 0 : subtotalValue;
             })
 

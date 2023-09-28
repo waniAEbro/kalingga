@@ -68,6 +68,7 @@ class SaleController extends Controller
             $productions[] = Production::create([
                 "code" => $customer->code . $product->quantity . "00",
                 "product_id" => $product->product_id,
+                "sale_id" => $sale->id,
                 "quantity_finished" => 0,
                 "quantity_not_finished" => $product->quantity,
                 "total_production" => $product->quantity,
@@ -75,11 +76,6 @@ class SaleController extends Controller
         }
 
         foreach ($productions as $production) {
-            DB::table("production_sale")->insert([
-                "production_id" => $production->id,
-                "sale_id" => $sale->id,
-            ]);
-
             Warehouse::create([
                 "production_id" => $production->id,
                 "quantity" => 0
@@ -127,7 +123,7 @@ class SaleController extends Controller
 
         SaleHistory::create([
             "sale_id" => $sale->id,
-            "description" => $sale->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count+1,
+            "description" => $sale->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count + 1,
             "payment" => $request->paid
         ]);
 
@@ -143,7 +139,6 @@ class SaleController extends Controller
         $production_sale = DB::table("production_sale")->where("sale_id", $sale->id)->get();
         foreach ($production_sale as $production) {
             Warehouse::where("production_id", $production->production_id)->delete();
-            DB::table("production_sale")->where("id", $production->production_id)->delete();
             Production::find($production->production_id)->delete();
         }
         SaleHistory::where("sale_id", $sale->id)->delete();

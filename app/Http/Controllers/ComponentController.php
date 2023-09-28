@@ -34,8 +34,7 @@ class ComponentController extends Controller
         // dd($request->selectfield);
         Component::create([
             "name" => $request->name,
-            "price_per_unit_sell" => $request->price_per_unit_sell,
-            "price_per_unit_buy" => $request->price_per_unit_buy,
+            "price_per_unit" => $request->price_per_unit,
             "unit" => $request->unit
         ]);
 
@@ -65,8 +64,7 @@ class ComponentController extends Controller
     {
         $component->update([
             "name" => $request->name,
-            "price_per_unit_sell" => $request->price_per_unit_sell,
-            "price_per_unit_buy" => $request->price_per_unit_buy,
+            "price_per_unit" => $request->price_per_unit,
             "unit" => $request->unit
         ]);
 

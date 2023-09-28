@@ -26,16 +26,16 @@
                             <td id="number" class="p-2"></td>
                             <td class="w-40 p-2">
                                 <x-select :value="$cp->id" :label="$cp->name"
-                                    x-on:click="getComponent(purchase); $nextTick(); set_subtotal($refs.quantity)"
-                                    :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
+                                    x-on:click="getComponent(purchase); $nextTick()" :dataLists="$components->toArray()" :name="'component_id[]'"
+                                    :id="'component_id'" />
                             </td>
                             <td class="p-2"><input step="0.001" x-ref="quantity" x-init="set_subtotal($el)" type="number"
-                                    name="quantity[]" onchange="set_subtotal(this)" value="{{ $cp->pivot->quantity }}"
+                                    name="quantity[]" oninput="set_subtotal(this)" value="{{ $cp->pivot->quantity }}"
                                     class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                             </td>
                             <td id="unit" class="p-2">{{ $cp->unit }}</td>
                             <td id="price" class="p-2 rupiah">
-                                {{ $cp->price_per_unit_sell }} </td>
+                                {{ $cp->price_per_unit }} </td>
                             <td id="subtotal" class="p-2"></td>
                             <td class="p-2">
                                 <button type="button"
@@ -260,10 +260,13 @@
                     if (componentId.value) {
                         const component = components.find(component => component.id == componentId.value)
                         const unit = tr.querySelector('#unit').innerText = component.unit;
-                        const price = tr.querySelector('#price').innerText = toRupiah(component.price_per_unit_buy);
+                        const price = tr.querySelector('#price').innerText = toRupiah(component.price_per_unit);
                     } else {
-                        const unit = tr.querySelector('#unit').innerText = '';
-                        const price = tr.querySelector('#price').innerText = '';
+                        tr.querySelector('#unit').innerText = '';
+                        tr.querySelector('#price').innerText = '';
+                        tr.querySelector('#subtotal').innerText = "";
+                        tr.querySelector('.input_quantity').value = 0;
+                        set_total()
                     }
                 }
 
@@ -284,7 +287,7 @@
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"
-                                                onchange="set_subtotal(this)" value="0"
+                                                oninput="set_subtotal(this)" value="0"
                                                 class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         </td>
                                         <td id="unit" class="p-2"></td>
@@ -302,9 +305,15 @@
 
                 function set_subtotal(element) {
                     let tr = element.parentElement.parentElement;
-                    let price = tr.querySelector('#price').textContent.replace(/\D/g, '');
+                    let price = tr.querySelector('#price').textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
+                        '').replace(',', '.');
                     let subtotal = tr.querySelector('#subtotal');
-                    subtotal.textContent = toRupiah((parseInt(price) * parseInt(element.value)) || 0);
+                    subtotal.textContent = toRupiah(0)
+                    if (price != "" && parseFloat(element.value) >= 0) {
+                        subtotal.textContent = toRupiah(parseInt(price) * parseFloat(element.value));
+                    } else {
+                        subtotal.textContent = toRupiah(0);
+                    }
 
                     set_total();
                 }
@@ -313,9 +322,12 @@
                     let subtotals = document.querySelectorAll('#subtotal');
                     let total = 0;
                     subtotals.forEach(subtotalElement => {
-                        let subtotalValue = parseFloat(subtotalElement.textContent.replace(/\D/g, ''));
+                        let subtotalValue = parseFloat(subtotalElement.textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
+                            '').replace(',', '.'));
                         total += isNaN(subtotalValue) ? 0 : subtotalValue;
                     })
+
+                    console.log(total)
 
                     let production_cost = parseInt(document.querySelector('#total_production').value) || 0;
                     let other_cost = parseInt(document.querySelector('#total_other_cost').value) || 0;

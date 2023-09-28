@@ -24,22 +24,22 @@ class ProductionController extends Controller
      */
     public function create()
     {
-        return view("productions.create");
+        // return view("productions.create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductionRequest $request): RedirectResponse
+    public function store(StoreProductionRequest $request)
     {
-        Production::create([
-            "product_id" => $request->product_id,
-            "quantity_finished" => $request->quantity_finished,
-            "quantity_not_finished" => $request->quantity_not_finished,
-            "total_product" => $request->total_product,
-        ]);
+        // Production::create([
+        //     "product_id" => $request->product_id,
+        //     "quantity_finished" => $request->quantity_finished,
+        //     "quantity_not_finished" => $request->quantity_not_finished,
+        //     "total_product" => $request->total_product,
+        // ]);
 
-        return redirect("/productions");
+        // return redirect("/productions");
     }
 
     /**
@@ -55,7 +55,7 @@ class ProductionController extends Controller
      */
     public function edit(Production $production): View
     {
-        return view("productions.edit", ["production" => Production::find($production->id)]);
+        return view("productions.edit", ["production" => $production]);
     }
 
     /**

@@ -46,7 +46,7 @@
                                     :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
                             </td>
                             <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]" required
-                                    onchange="set_subtotal(this)" value="0" step="0.001"
+                                    oninput="set_subtotal(this)" value="0" step="0.001"
                                     class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                             </td>
                             <td id="unit" class="p-2"></td>
@@ -106,7 +106,7 @@
             if (componentId.value) {
                 const component = components.find(component => component.id == componentId.value)
                 const unit = tr.querySelector('#unit').innerText = component.unit;
-                const price = tr.querySelector('#price').innerText = toRupiah(component.price_per_unit_buy);
+                const price = tr.querySelector('#price').innerText = toRupiah(component.price_per_unit);
             } else {
                 const unit = tr.querySelector('#unit').innerText = '';
                 const price = tr.querySelector('#price').innerText = '';
@@ -132,7 +132,7 @@
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
-                                                onchange="set_subtotal(this)" value="0"
+                                                oninput="set_subtotal(this)" value="0"
                                                 class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         </td>
                                         <td id="unit" class="p-2"></td>
@@ -151,7 +151,8 @@
         function set_subtotal(element) {
             element.value < 0 ? element.value = 0 : element.value;
             let tr = element.parentElement.parentElement;
-            let price = tr.querySelector('#price').textContent.replace(/\D/g, '');
+            let price = tr.querySelector('#price').textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
+                '').replace(',', '.');
             let subtotal = tr.querySelector('#subtotal');
             subtotal.textContent = toRupiah(price * element.value);
 
@@ -162,7 +163,8 @@
             let subtotals = document.querySelectorAll('#subtotal');
             let total = 0;
             subtotals.forEach(subtotalElement => {
-                let subtotalValue = parseFloat(subtotalElement.textContent.replace(/\D/g, ''));
+                let subtotalValue = parseFloat(subtotalElement.textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
+                    '').replace(',', '.'));
                 total += isNaN(subtotalValue) ? 0 : subtotalValue;
 
                 document.querySelector('#total_bill').value = total;

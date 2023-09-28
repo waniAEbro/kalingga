@@ -39,7 +39,7 @@
 
     <x-data-list :heads="[
         'No',
-        'Supplier ID',
+        'Supplier',
         'Purchase Date',
         'Due Date',
         'Status',
@@ -51,7 +51,7 @@
         @foreach ($purchases as $no => $purchase)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
                 <td class="p-4 rounded-l-lg">{{ $no + 1 }}</td>
-                <td class="p-4">{{ $purchase->supplier_id }}</td>
+                <td class="p-4">{{ $purchase->supplier->name }}</td>
                 <td class="p-4">{{ $purchase->purchase_date }}</td>
                 <td class="p-4">{{ $purchase->due_date }}</td>
                 <td class="p-4">{{ $purchase->status }}</td>
@@ -99,7 +99,11 @@
         }
 
         function set_lunas() {
-            let lunas = purchases.reduce((total, data) => total + data.paid, 0)
+            let lunas = purchases.reduce((total, data) => {
+                let paid = data.histories.reduce((acc, cur) => cur.payment + acc, 0)
+
+                return total + paid
+            }, 0)
 
             document.getElementById("pembayaran_lunas").innerText = toRupiah(lunas);
             console.log(toRupiah(lunas))

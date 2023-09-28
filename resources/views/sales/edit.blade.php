@@ -41,7 +41,8 @@
                                 <td id="quantity" class="p-2" x-ref="quantity">{{ $product->pivot->quantity }}</td>
                                 <td id="price" x-ref="price" class="p-2 rupiah">{{ $product->sell_price }}</td>
                                 <td class="p-2 rupiah"
-                                    x-text="toRupiah(parseInt($refs.quantity.innerText) * parseInt($refs.price.innerText.replace(/\D/g, '')))">
+                                    x-text="toRupiah(parseInt($refs.quantity.innerText) * parseInt($refs.price.innerText.replace(/[^0-9\.,]/g, '').replace(/[^0-9\.,]/g, '').replace(/\./g,
+                    '').replace(',', '.')))">
                                     {{ $sales->total_bill }}</td>
                             </tr>
                         @endforeach
@@ -125,7 +126,8 @@
         function total_bayar() {
             const bills = document.querySelectorAll('.bayar');
 
-            let total = Array.from(bills).map(bill => parseInt(bill.innerText.replace(/\D/g, ''))).reduce((acc, curr) =>
+            let total = Array.from(bills).map(bill => parseInt(bill.innerText.replace(/[^0-9\.,]/g, '').replace(/\./g,
+                '').replace(',', '.'))).reduce((acc, curr) =>
                 acc + curr)
 
             Array.from(document.querySelectorAll('.total_bayar')).map(el => el.innerText = toRupiah(total));

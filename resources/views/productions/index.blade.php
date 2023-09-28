@@ -9,7 +9,7 @@
                 <td class="p-4">{{ $production->product->name }}</td>
                 <td class="p-4">{{ $production->quantity_finished }}</td>
                 <td class="p-4">{{ $production->quantity_not_finished }}</td>
-                <td class="p-4">{{ $production->total_production }}</td>
+                <td class="p-4">{{ $production->sale->product->find($production->product_id)->pivot->quantity }}</td>
                 <td class="p-4 rounded-r-lg">
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                         <a href="/productions/{{ $production->id }}/edit"

@@ -29,9 +29,9 @@ class Sale extends Model
         return $this->belongsToMany(Product::class)->withPivot("quantity");
     }
 
-    public function productions(): BelongsToMany
+    public function productions(): HasMany
     {
-        return $this->belongsToMany(Production::class);
+        return $this->hasMany(Production::class);
     }
 
     public function histories(): HasMany
