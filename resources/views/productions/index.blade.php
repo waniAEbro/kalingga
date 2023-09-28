@@ -15,7 +15,7 @@
                         <a href="/productions/{{ $production->id }}/edit"
                             class="flex items-center gap-1 text-slate-600"><span class="text-lg"><ion-icon
                                     name="create-outline"></ion-icon></span>Edit</a>
-                        <form action="/productions/{{ $production->id }}">
+                        <form action="/productions/{{ $production->id }}" method="post">
                             @csrf
                             @method('delete')
                             <button class="flex items-center gap-1 text-red-700"><span class="text-lg"><ion-icon

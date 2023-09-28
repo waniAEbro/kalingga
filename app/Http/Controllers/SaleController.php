@@ -136,10 +136,10 @@ class SaleController extends Controller
     public function destroy(Sale $sale)
     {
         DB::table("product_sale")->where("sale_id", $sale->id)->delete();
-        $production_sale = DB::table("production_sale")->where("sale_id", $sale->id)->get();
-        foreach ($production_sale as $production) {
+        $productions = Production::where("sale_id", $sale->id)->get();
+        foreach ($productions as $production) {
             Warehouse::where("production_id", $production->production_id)->delete();
-            Production::find($production->production_id)->delete();
+            $production->delete();
         }
         SaleHistory::where("sale_id", $sale->id)->delete();
         $sale->delete();
