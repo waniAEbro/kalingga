@@ -66,7 +66,7 @@ class ProductionController extends Controller
         $production->update([
             "quantity_finished" => $request->quantity_finished,
             "quantity_not_finished" => $request->quantity_not_finished,
-            "code" => explode("-",$production->code)[0] . "-" .  $request->quantity_not_finished . "-" . $request->quantity_finished
+            "code" => implode("-", array_slice(explode("-", $production->code), 0, -2)) . "-" .  $request->quantity_not_finished . "-" . $request->quantity_finished
         ]);
 
         return redirect("/productions");
