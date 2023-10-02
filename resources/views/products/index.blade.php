@@ -4,11 +4,11 @@
     <x-data-list :heads="['No', 'Nama Produk', 'Kode Produk', 'Kode RFID', 'Harga Jual', 'Aksi']">
         @foreach ($products as $no => $product)
             <tr id="products" class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
-                <td class="p-4 rounded-l-lg">{{ $no + 1 }}</td>
-                <td class="p-4">{{ $product->name }}</td>
-                <td class="p-4">{{ $product->code }}</td>
-                <td class="p-4">{{ $product->rfid }}</td>
-                <td class="p-4 rupiah">{{ $product->sell_price }}</td>
+                <td class="p-4 border-r border-slate-200  rounded-l-lg">{{ $no + 1 }}</td>
+                <td class="p-4 break-words">{{ $product->name }}</td>
+                <td class="p-4 break-words">{{ $product->code }}</td>
+                <td class="p-4 break-words">{{ $product->rfid }}</td>
+                <td class="p-4 break-words rupiah">{{ $product->sell_price }}</td>
                 <td class="p-4 rounded-r-lg">
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                         <a href="/products/{{ $product->id }}/edit" class="flex items-center gap-1 text-slate-600"><span

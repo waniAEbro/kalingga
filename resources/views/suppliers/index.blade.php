@@ -4,11 +4,11 @@
     <x-data-list :heads="['No', 'Nama Pemasok', 'Email', 'No Hp', 'Alamat', 'Aksi']">
         @foreach ($suppliers as $no => $supplier)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
-                <td class="p-4 rounded-l-lg">{{ $no + 1 }}</td>
-                <td class="p-4">{{ $supplier->name }}</td>
-                <td class="p-4">{{ $supplier->email }}</td>
-                <td class="p-4">{{ $supplier->phone }}</td>
-                <td class="p-4">{{ $supplier->address }}</td>
+                <td class="p-4 border-r rounded-l-lg border-slate-200">{{ $no + 1 }}</td>
+                <td class="p-4 break-words">{{ $supplier->name }}</td>
+                <td class="p-4 break-words">{{ $supplier->email }}</td>
+                <td class="p-4 break-words">{{ $supplier->phone }}</td>
+                <td class="p-4 break-words">{{ $supplier->address }}</td>
                 <td class="p-4 rounded-r-lg">
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                         <a href="/suppliers/{{ $supplier->id }}/edit" class="flex items-center gap-1 text-slate-600"><span

@@ -4,12 +4,13 @@
     <x-data-list :heads="['No', 'Kode Produksi', 'Nama Produk', 'Belum Selesai', 'Selesai', 'Total Produksi', 'Aksi']" :isReadOnly="true">
         @foreach ($productions as $no => $production)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
-                <td class="p-4 rounded-l-lg">{{ $no + 1 }}</td>
-                <td class="p-4">{{ $production->code }}</td>
-                <td class="p-4">{{ $production->product->name }}</td>
-                <td class="p-4">{{ $production->quantity_not_finished }}</td>
-                <td class="p-4">{{ $production->quantity_finished }}</td>
-                <td class="p-4">{{ $production->sale->product->find($production->product_id)->pivot->quantity }}</td>
+                <td class="p-4 border-r border-slate-200  rounded-l-lg">{{ $no + 1 }}</td>
+                <td class="p-4 break-words">{{ $production->code }}</td>
+                <td class="p-4 break-words">{{ $production->product->name }}</td>
+                <td class="p-4 break-words">{{ $production->quantity_not_finished }}</td>
+                <td class="p-4 break-words">{{ $production->quantity_finished }}</td>
+                <td class="p-4 break-words">{{ $production->sale->product->find($production->product_id)->pivot->quantity }}
+                </td>
                 <td class="p-4 rounded-r-lg">
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                         <a href="/productions/{{ $production->id }}/edit"

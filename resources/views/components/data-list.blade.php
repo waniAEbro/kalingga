@@ -15,11 +15,14 @@
     </div>
 </div>
 
-<table class="w-full mt-5 border-separate border-spacing-y-3">
+<table class="w-full mt-5 border-separate table-fixed border-spacing-y-3">
     <thead>
         <tr class="text-center">
             @foreach ($heads as $head)
-                <th class="px-4 py-5 font-[500]">{{ $head }}</th>
+                <th
+                    class="px-4 py-5 font-[500] @if ($head == 'Aksi') w-[180px] @elseif ($head == 'No') w-14 @endif">
+                    {{ $head }}
+                </th>
             @endforeach
         </tr>
     </thead>

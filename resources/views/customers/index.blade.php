@@ -1,15 +1,15 @@
 @extends('layouts.layout')
 
 @section('content')
-    <x-data-list :heads="['No', 'Nama Pelanggan', 'Email', 'No Hp', 'Alamat', 'Kode Pelanggan']">
+    <x-data-list :heads="['No', 'Nama Pelanggan', 'Email', 'No Hp', 'Alamat', 'Kode Pelanggan', 'Aksi']">
         @foreach ($customers as $no => $customer)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
-                <td class="p-4 rounded-l-lg">{{ $no + 1 }}</td>
-                <td class="p-4">{{ $customer->name }}</td>
-                <td class="p-4">{{ $customer->email }}</td>
-                <td class="p-4">{{ $customer->phone }}</td>
-                <td class="p-4">{{ $customer->address }}</td>
-                <td class="p-4">{{ $customer->code }}</td>
+                <td class="p-4 border-r rounded-l-lg border-slate-200">{{ $no + 1 }}</td>
+                <td class="p-4 break-words">{{ $customer->name }}</td>
+                <td class="p-4 break-words">{{ $customer->email }}</td>
+                <td class="p-4 break-words">{{ $customer->phone }}</td>
+                <td class="p-4 break-words">{{ $customer->address }}</td>
+                <td class="p-4 break-words">{{ $customer->code }}</td>
                 <td class="p-4 rounded-r-lg">
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                         <a href="/customers/{{ $customer->id }}/edit" class="flex items-center gap-1 text-slate-600"><span
