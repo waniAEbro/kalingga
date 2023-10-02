@@ -2,16 +2,29 @@
 
 @section('content')
     {{-- @dd($warehouse[0]->production->product->name) --}}
-    <x-data-list :heads="['No', 'Product Name', 'RFID', 'Barcode', 'Quantity']" :isReadOnly="true">
-        @foreach ($warehouse as $no => $warehouse)
-            <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
-                <td class="p-4 border-r border-slate-200  rounded-l-lg">{{ $no + 1 }}</td>
-                <td class="p-4">{{ $warehouse->production->product->name }}</td>
-                <td class="p-4">{{ $warehouse->production->product->rfid }}</td>
-                <td class="p-4">{{ $warehouse->production->product->barcode }}</td>
-                <td class="p-4 rounded-r-lg">{{ $warehouse->quantity }}</td>
+    <x-data-list :isReadOnly="true">
+        <table class="w-full mt-5 border-separate table-fixed border-spacing-y-3">
+            <thead>
+                <tr class="text-center">
+                    <th class="px-4 py-5 font-[500] w-14">No</th>
+                    <th class="px-4 py-5 font-[500]">Nama Produk</th>
+                    <th class="px-4 py-5 font-[500]">Kode RFID</th>
+                    <th class="px-4 py-5 font-[500]">Barcode</th>
+                    <th class="px-4 py-5 font-[500]">Kuantitas</th>
+                </tr>
+            </thead>
+            <tbody class="text-center ">
+                @foreach ($warehouse as $no => $warehouse)
+                    <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
+                        <td class="p-4 border-r rounded-l-lg border-slate-200">{{ $no + 1 }}</td>
+                        <td class="p-4">{{ $warehouse->production->product->name }}</td>
+                        <td class="p-4">{{ $warehouse->production->product->rfid }}</td>
+                        <td class="p-4">{{ $warehouse->production->product->barcode }}</td>
+                        <td class="p-4 rounded-r-lg">{{ $warehouse->quantity }}</td>
 
-            </tr>
-        @endforeach
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </x-data-list>
 @endsection

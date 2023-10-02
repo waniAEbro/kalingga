@@ -38,41 +38,49 @@
         </div>
     </div>
 
-    <x-data-list :heads="[
-        'No',
-        'Pelanggan',
-        'Tanggal Penjualan',
-        'Tanggal Jatuh Tempo',
-        'Status',
-        'Sisa Bayar',
-        'Total Pembayaran',
-        'Aksi',
-    ]">
-        @foreach ($sales as $no => $sale)
-            <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
-                <td class="p-4 border-r rounded-l-lg border-slate-200">{{ $no + 1 }}</td>
-                <td class="p-4 break-words">{{ $sale->customer->name }}</td>
-                <td class="p-4 break-words">{{ $sale->sale_date }}</td>
-                <td class="p-4 break-words">{{ $sale->due_date }}</td>
-                <td class="p-4 break-words">{{ $sale->status }}</td>
-                <td class="p-4 break-words rupiah">{{ $sale->remain_bill }}</td>
-                <td class="p-4 break-words rupiah">{{ $sale->total_bill }}</td>
-                <td class="p-4 rounded-r-lg">
-                    <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
-                        <a href="/sales/{{ $sale->id }}/edit" class="flex items-center gap-1 text-slate-600"><span
-                                class="text-lg"><ion-icon name="create-outline"></ion-icon></span>Edit</a>
-                        <form action="/sales/{{ $sale->id }}" method="POST">
-                            @csrf
-                            @method('delete')
-                            <button class="flex items-center gap-1 text-red-700"><span class="text-lg"><ion-icon
-                                        name="trash-outline"></ion-icon></span>Delete</button>
+    <x-data-list>
+        <table class="w-full mt-5 border-separate table-fixed border-spacing-y-3">
+            <thead>
+                <tr class="text-center">
+                    <th class="px-4 py-5 font-[500] w-14">No</th>
+                    <th class="px-4 py-5 font-[500]">Pelanggan</th>
+                    <th class="px-4 py-5 font-[500]">Tanggal Penjualan</th>
+                    <th class="px-4 py-5 font-[500]">Tanggal Jatuh Tempo</th>
+                    <th class="px-4 py-5 font-[500] w-20">Status</th>
+                    <th class="px-4 py-5 font-[500]">Sisa Bayar</th>
+                    <th class="px-4 py-5 font-[500]">Total Pembayaran</th>
+                    <th class="px-4 py-5 font-[500] w-[180px]">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="text-center ">
+                @foreach ($sales as $no => $sale)
+                    <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
+                        <td class="p-4 border-r rounded-l-lg border-slate-200">{{ $no + 1 }}</td>
+                        <td class="p-4 break-words">{{ $sale->customer->name }}</td>
+                        <td class="p-4 break-words">{{ $sale->sale_date }}</td>
+                        <td class="p-4 break-words">{{ $sale->due_date }}</td>
+                        <td class="p-4 break-words">{{ $sale->status }}</td>
+                        <td class="p-4 break-words rupiah">{{ $sale->remain_bill }}</td>
+                        <td class="p-4 break-words rupiah">{{ $sale->total_bill }}</td>
+                        <td class="p-4 rounded-r-lg">
+                            <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
+                                <a href="/sales/{{ $sale->id }}/edit"
+                                    class="flex items-center gap-1 text-slate-600"><span class="text-lg"><ion-icon
+                                            name="create-outline"></ion-icon></span>Edit</a>
+                                <form action="/sales/{{ $sale->id }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="flex items-center gap-1 text-red-700"><span class="text-lg"><ion-icon
+                                                name="trash-outline"></ion-icon></span>Delete</button>
 
-                        </form>
-                    </div>
+                                </form>
+                            </div>
 
-                </td>
-            </tr>
-        @endforeach
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </x-data-list>
 @endsection
 @push('script')

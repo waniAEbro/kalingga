@@ -1,4 +1,4 @@
-@props(['heads', 'isReadOnly' => false])
+@props(['isReadOnly' => false])
 
 <div class="flex items-center justify-between">
     @if (!$isReadOnly)
@@ -14,21 +14,4 @@
         <span class="absolute text-xl right-3 top-2 text-slate-400"><ion-icon name="search-outline"></ion-icon></span>
     </div>
 </div>
-
-<table class="w-full mt-5 border-separate table-fixed border-spacing-y-3">
-    <thead>
-        <tr class="text-center">
-            @foreach ($heads as $head)
-                <th
-                    class="px-4 py-5 font-[500] @if ($head == 'Aksi') w-[180px] @elseif ($head == 'No') w-14 @elseif ($head == 'Status') w-20 @endif">
-                    {{ $head }}
-                </th>
-            @endforeach
-        </tr>
-    </thead>
-    <tbody class="text-center ">
-
-        {{ $slot }}
-
-    </tbody>
-</table>
+{{ $slot }}
