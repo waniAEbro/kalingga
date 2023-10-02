@@ -26,7 +26,7 @@
 
                 <li @click="select(value, key)" {{ $attributes }} :class="{ 'bg-gray-100': isselected(key) }"
                     class="relative py-1 pl-3 mb-1 text-gray-900 rounded-md cursor-pointer select-none pr-9 hover:bg-gray-100">
-                    <span x-text="value" class="block font-normal truncate"></span>
+                    <span x-text="value" x-bind:title="value" class="block font-normal truncate"></span>
 
                     <span x-show="isselected(key)"
                         class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-700">
