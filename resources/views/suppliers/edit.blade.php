@@ -6,7 +6,7 @@
     <x-edit-input-field :action="'suppliers'" :items="$suppliers" :width="'w-full'">
         <div class="flex w-full gap-3">
             <div class="flex-1">
-                <x-input :name="'name'" :label="'Supplier Name'" :placeholder="'name'" :value="$suppliers->name" :type="'text'"
+                <x-input :name="'name'" :label="'Nama Pemasok'" :placeholder="'name'" :value="$suppliers->name" :type="'text'"
                     class="mb-3" />
             </div>
             <div class="flex-1">
@@ -14,17 +14,17 @@
                     class="mb-3" />
             </div>
         </div>
-        <div class="flex gap-3 w-full my-3">
+        <div class="flex w-full gap-3 my-3">
             <div class="flex-1">
-                <x-input :name="'code'" :label="'Code'" :placeholder="'Code'" :value="$suppliers->code" class="mb-3" />
+                <x-input :name="'code'" :label="'Kode Pemasok'" :placeholder="'Code'" :value="$suppliers->code" class="mb-3" />
             </div>
             <div class="flex-1">
-                <x-input :name="'phone'" :label="'Phone'" :placeholder="'phone'" :value="$suppliers->phone" class="mb-3" />
+                <x-input :name="'phone'" :label="'No Hp'" :placeholder="'phone'" :value="$suppliers->phone" class="mb-3" />
             </div>
         </div>
-        <div class="flex gap-3 w-full my-3">
+        <div class="flex w-full gap-3 my-3">
             <div class="flex-1">
-                <x-input-textarea :name="'address'" :label="'Address'" :placeholder="'address'" :value="$suppliers->address" />
+                <x-input-textarea :name="'address'" :label="'Alamat'" :placeholder="'address'" :value="$suppliers->address" />
             </div>
         </div>
     </x-edit-input-field>

@@ -6,15 +6,15 @@
     <x-edit-input-field :action="'sales'" :items="$sales" :width="'w-full'" :sisa="$sales->remain_bill">
         <div class="flex gap-5">
             <div>
-                <x-input type="date" :name="'sale_date'" :label="'Sale Date'" :value="$sales->sale_date" readonly
+                <x-input type="date" :name="'sale_date'" :label="'Tanggal Penjualan'" :value="$sales->sale_date" readonly
                     class="mb-3 bg-slate-100" />
-                <x-input type="date" :name="'due_date'" :label="'Due Date'" :value="$sales->due_date" readonly
+                <x-input type="date" :name="'due_date'" :label="'Tanggal Jatuh Tempo'" :value="$sales->due_date" readonly
                     class="mb-3 bg-slate-100" />
-                <x-input :name="'customer_name'" :label="'Customer Name'" :value="$sales->customer->name" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'customer_address'" :label="'Customer Address'" :value="$sales->customer->address" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'customer_email'" :label="'Customer Email'" :value="$sales->customer->email" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'customer_phone'" :label="'Customer Phone'" :value="$sales->customer->phone" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'code'" :type="'text'" :label="'Code'" :value="$sales->code" readonly
+                <x-input :name="'customer_name'" :label="'Nama Pelanggan'" :value="$sales->customer->name" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'customer_address'" :label="'Alamat Pelanggan'" :value="$sales->customer->address" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'customer_email'" :label="'Email Pelanggan'" :value="$sales->customer->email" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'customer_phone'" :label="'No Hp Pelanggan'" :value="$sales->customer->phone" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'code'" :type="'text'" :label="'Kode Penjualan'" :value="$sales->code" readonly
                     class="bg-slate-100" />
             </div>
 
@@ -30,7 +30,7 @@
                             <th class="p-2">Produk</th>
                             <th class="p-2">Jumlah</th>
                             <th class="p-2">Harga Per Produk</th>
-                            <th class="p-2">Total</th>
+                            <th class="p-2">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody id="salesBody">

@@ -39,14 +39,14 @@
 
     <x-data-list :heads="[
         'No',
-        'Supplier',
-        'Purchase Date',
-        'Due Date',
+        'Pemasok',
+        'Tanggal Pembelian',
+        'Tanggal Jatuh Tempo',
         'Status',
-        'Remaining Bill',
-        'Total Bill',
-        'Paid',
-        'Action',
+        'Sisa Bayar',
+        'Total Pembayaran',
+        'Sudah dibayar',
+        'Aksi',
     ]">
         @foreach ($purchases as $no => $purchase)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">

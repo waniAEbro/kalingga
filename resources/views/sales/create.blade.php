@@ -6,18 +6,21 @@
     <x-create-input-field :action="'sales'" :width="'w-full'">
         <div class="flex gap-5">
             <div>
-                <label for="sale_date" class="block text-sm">Sale Date</label>
+                <label for="sale_date" class="block text-sm">Tanggal Penjualan</label>
                 <x-input type="date" :name="'sale_date'" class="mb-3" required />
 
-                <label for="due_date" class="block text-sm">Due Date</label>
+                <label for="due_date" class="block text-sm">Tanggal Jatuh Tempo</label>
                 <x-input type="date" :name="'due_date'" class="mb-3" required />
 
-                <label for="customer_id" class="block text-sm">Customer</label>
+                <label for="customer_id" class="block text-sm">Pelanggan</label>
                 <div class="w-40 mt-2 mb-3">
-                    <x-select :dataLists="$customers->toArray()" :name="'customer_id'" :id="'customer_id'" />
+                    <x-select x-on:click="getCustomer" :dataLists="$customers->toArray()" :name="'customer_id'" :id="'customer_id'" />
                 </div>
 
-                <x-input :name="'code'" :type="'text'" :label="'Code'" class="mb-3" required />
+                <x-input :name="'customer_address'" :label="'Alamat Pelanggan'" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'customer_email'" :label="'Email Pelanggan'" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'customer_phone'" :label="'No Hp Pelanggan'" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'code'" :type="'text'" :label="'Kode Penjualan'" class="mb-3" required />
             </div>
 
             <div class="divider divider-horizontal"></div>
@@ -27,10 +30,10 @@
                     <thead>
                         <tr class="border-b-2">
                             <th class="p-2">#</th>
-                            <th class="p-2">Product</th>
-                            <th class="p-2">Amount</th>
-                            <th class="p-2">Price per Product</th>
-                            <th class="p-2">Total</th>
+                            <th class="p-2">Produk</th>
+                            <th class="p-2">Jumlah</th>
+                            <th class="p-2">Harga Per Produk</th>
+                            <th class="p-2">Subtotal</th>
                             <th class="p-2"></th>
                         </tr>
                     </thead>
@@ -62,10 +65,10 @@
 
                 <div class="flex justify-end gap-3 mt-10">
                     <div class="w-40">
-                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bill'" :type="'number'" readonly />
+                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bayar'" :type="'number'" readonly />
                     </div>
                     <div class="w-40">
-                        <x-input :label="'Paid'" :name="'paid'" :placeholder="'Paid'" :type="'number'"
+                        <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
                             onInput="update_bill(this)" required />
                     </div>
                 </div>
@@ -76,6 +79,25 @@
 
 @push('script')
     <script>
+        function getCustomer() {
+            let customers = {!! $customers !!}
+            const customerId = document.getElementById('customer_id')
+            const customer = customers.find(customer => customer.id == customerId.value)
+            // customers.forEach(customer => console.log(customer.id))
+            // console.log(customer)
+            if (customer) {
+                const customerAddress = document.getElementById('customer_address').value = customer.address;
+                const customerEmail = document.getElementById('customer_email').value = customer.email;
+                const customerPhone = document.getElementById('customer_phone').value = customer.phone;
+
+            } else {
+                const customerAddress = document.getElementById('customer_address').value = '';
+                const customerEmail = document.getElementById('customer_email').value = '';
+                const customerPhone = document.getElementById('customer_phone').value = '';
+            }
+        }
+
+
         function getProduct(tr) {
 
             let products = {!! $products !!};

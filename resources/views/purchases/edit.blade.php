@@ -7,15 +7,15 @@
     <x-edit-input-field :action="'purchases'" :items="$purchase" :width="'w-full'" :sisa="$purchase->remain_bill">
         <div class="flex gap-5 text-sm">
             <div>
-                <x-input type="date" :name="'purchase_date'" :label="'Purchase Date'" :value="$purchase->purchase_date" readonly
+                <x-input type="date" :name="'purchase_date'" :label="'Tanggal Pembelian'" :value="$purchase->purchase_date" readonly
                     class="mb-3 bg-slate-100" />
-                <x-input type="date" :name="'due_date'" :label="'Due Date'" :value="$purchase->due_date" readonly
+                <x-input type="date" :name="'due_date'" :label="'Tanggal Jatuh Tempo'" :value="$purchase->due_date" readonly
                     class="mb-3 bg-slate-100" />
-                <x-input :name="'supplier_name'" :label="'Supplier Name'" :value="$purchase->supplier->name" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'supplier_address'" :label="'Supplier Address'" :value="$purchase->supplier->address" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'supplier_email'" :label="'Supplier Email'" :value="$purchase->supplier->email" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'supplier_phone'" :label="'Supplier Phone'" :value="$purchase->supplier->phone" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'code'" :type="'text'" :label="'Code'" :value="$purchase->code" readonly
+                <x-input :name="'supplier_name'" :label="'Nama Pemasok'" :value="$purchase->supplier->name" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'supplier_address'" :label="'Alamat Pemasok'" :value="$purchase->supplier->address" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'supplier_email'" :label="'Email Pemasok'" :value="$purchase->supplier->email" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'supplier_phone'" :label="'No Hp Pemasok'" :value="$purchase->supplier->phone" readonly class="mb-3 bg-slate-100" />
+                <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" :value="$purchase->code" readonly
                     class="bg-slate-100" />
             </div>
 

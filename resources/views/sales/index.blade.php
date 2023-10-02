@@ -38,7 +38,16 @@
         </div>
     </div>
 
-    <x-data-list :heads="['No', 'Date', 'Customer', 'Due Date', 'Status', 'Remaining Bill', 'Total', 'Action']">
+    <x-data-list :heads="[
+        'No',
+        'Tanggal Penjualan',
+        'Pelanggan',
+        'Tanggal Jatuh Tempo',
+        'Status',
+        'Sisa Bayar',
+        'Total Pembayaran',
+        'Aksi',
+    ]">
         @foreach ($sales as $no => $sale)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
                 <td class="p-4 rounded-l-lg">{{ $no + 1 }}</td>
