@@ -70,7 +70,7 @@
 
                 <h1 class="my-3 font-bold">Kode</h1>
                 <div class="flex w-full gap-3">
-                    <x-input-with-desc :value="$product->rfid" :desc="'RFID'" :name="'rfid'" :type="'number'" />
+                    <x-input-with-desc :value="$product->rfid" :desc="'RFID'" :name="'rfid'" />
                     <x-input-with-desc :value="$product->code" :desc="'Produk'" :name="'code'" :type="'text'" />
                     <x-input-with-desc :value="$product->barcode" :desc="'Barcode'" :name="'barcode'" :type="'number'" />
                 </div>

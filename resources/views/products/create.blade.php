@@ -28,7 +28,7 @@
                         </td>
                         <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"
                                 min="0" oninput="set_subtotal(this)" value="0"
-                                class="w-20 px-2 py-2 text-sm transition-all duration-100 border input_quantity rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                         </td>
                         <td id="unit" class="p-2"></td>
                         <td id="price" class="p-2"></td>
@@ -65,7 +65,7 @@
 
                 <h1 class="my-3 font-bold">Kode</h1>
                 <div class="flex w-full gap-3">
-                    <x-input-with-desc :desc="'RFID'" :name="'rfid'" :type="'number'" />
+                    <x-input-with-desc :desc="'RFID'" :name="'rfid'" />
                     <x-input-with-desc :desc="'Produk'" :name="'code'" :type="'text'" />
                     <x-input-with-desc :desc="'Barcode'" :name="'barcode'" :type="'number'" />
                 </div>
