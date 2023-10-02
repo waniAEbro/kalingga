@@ -11,7 +11,7 @@
                     <th class="px-4 py-5 font-[500]">Belum Selesai</th>
                     <th class="px-4 py-5 font-[500]">Selesai</th>
                     <th class="px-4 py-5 font-[500]">Total Produksi</th>
-                    <th class="px-4 py-5 font-[500] w-[180px]">Aksi</th>
+                    <th class="px-4 py-5 font-[500] w-[200px]">Aksi</th>
                 </tr>
             </thead>
             <tbody class="text-center ">

@@ -10,7 +10,7 @@
                     <th class="px-4 py-5 font-[500]">Kode Produk</th>
                     <th class="px-4 py-5 font-[500]">Kode RFID</th>
                     <th class="px-4 py-5 font-[500]">Harga Jual</th>
-                    <th class="px-4 py-5 font-[500] w-[180px]">Aksi</th>
+                    <th class="px-4 py-5 font-[500] w-[200px]">Aksi</th>
                 </tr>
             </thead>
             <tbody class="text-center ">

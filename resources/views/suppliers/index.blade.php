@@ -10,7 +10,7 @@
                     <th class="px-4 py-5 font-[500]">Email</th>
                     <th class="px-4 py-5 font-[500]">No Hp</th>
                     <th class="px-4 py-5 font-[500]">Alamat</th>
-                    <th class="px-4 py-5 font-[500] w-[180px]">Aksi</th>
+                    <th class="px-4 py-5 font-[500] w-[200px]">Aksi</th>
                 </tr>
             </thead>
             <tbody class="text-center ">

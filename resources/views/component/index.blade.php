@@ -9,7 +9,7 @@
                     <th class="px-4 py-5 font-[500]">Nama Komponen</th>
                     <th class="px-4 py-5 font-[500]">Unit</th>
                     <th class="px-4 py-5 font-[500]">Harga Per Unit</th>
-                    <th class="px-4 py-5 font-[500] w-[180px]">Aksi</th>
+                    <th class="px-4 py-5 font-[500] w-[200px]">Aksi</th>
                 </tr>
             </thead>
             <tbody class="text-center ">

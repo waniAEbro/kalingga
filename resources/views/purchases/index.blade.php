@@ -48,7 +48,7 @@
                     <th class="px-4 py-5 font-[500] w-20">Status</th>
                     <th class="px-4 py-5 font-[500]">Sisa Bayar</th>
                     <th class="px-4 py-5 font-[500]">Total Pembayaran</th>
-                    <th class="px-4 py-5 font-[500] w-[180px]">Aksi</th>
+                    <th class="px-4 py-5 font-[500] w-[200px]">Aksi</th>
                 </tr>
             </thead>
             <tbody class="text-center ">
