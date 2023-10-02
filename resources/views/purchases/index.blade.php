@@ -45,19 +45,17 @@
         'Status',
         'Sisa Bayar',
         'Total Pembayaran',
-        'Sudah dibayar',
         'Aksi',
     ]">
         @foreach ($purchases as $no => $purchase)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
-                <td class="p-4 border-r border-slate-200  rounded-l-lg">{{ $no + 1 }}</td>
+                <td class="p-4 border-r rounded-l-lg border-slate-200">{{ $no + 1 }}</td>
                 <td class="p-4 break-words">{{ $purchase->supplier->name }}</td>
                 <td class="p-4 break-words">{{ $purchase->purchase_date }}</td>
                 <td class="p-4 break-words">{{ $purchase->due_date }}</td>
                 <td class="p-4 break-words">{{ $purchase->status }}</td>
                 <td class="p-4 break-words rupiah">{{ $purchase->remain_bill }}</td>
                 <td class="p-4 break-words rupiah">{{ $purchase->total_bill }}</td>
-                <td class="p-4 break-words rupiah">{{ $purchase->paid }}</td>
                 <td class="p-4 rounded-r-lg">
                     <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                         <a href="/purchases/{{ $purchase->id }}/edit" class="flex items-center gap-1 text-slate-600"><span

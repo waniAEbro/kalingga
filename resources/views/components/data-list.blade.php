@@ -20,7 +20,7 @@
         <tr class="text-center">
             @foreach ($heads as $head)
                 <th
-                    class="px-4 py-5 font-[500] @if ($head == 'Aksi') w-[180px] @elseif ($head == 'No') w-14 @endif">
+                    class="px-4 py-5 font-[500] @if ($head == 'Aksi') w-[180px] @elseif ($head == 'No') w-14 @elseif ($head == 'Status') w-20 @endif">
                     {{ $head }}
                 </th>
             @endforeach

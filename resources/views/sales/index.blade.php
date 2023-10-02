@@ -40,8 +40,8 @@
 
     <x-data-list :heads="[
         'No',
-        'Tanggal Penjualan',
         'Pelanggan',
+        'Tanggal Penjualan',
         'Tanggal Jatuh Tempo',
         'Status',
         'Sisa Bayar',
@@ -51,8 +51,8 @@
         @foreach ($sales as $no => $sale)
             <tr class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
                 <td class="p-4 border-r rounded-l-lg border-slate-200">{{ $no + 1 }}</td>
-                <td class="p-4 break-words">{{ $sale->sale_date }}</td>
                 <td class="p-4 break-words">{{ $sale->customer->name }}</td>
+                <td class="p-4 break-words">{{ $sale->sale_date }}</td>
                 <td class="p-4 break-words">{{ $sale->due_date }}</td>
                 <td class="p-4 break-words">{{ $sale->status }}</td>
                 <td class="p-4 break-words rupiah">{{ $sale->remain_bill }}</td>
