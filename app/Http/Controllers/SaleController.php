@@ -65,8 +65,9 @@ class SaleController extends Controller
         $productions = [];
 
         foreach ($products as $product) {
+            $production_count = DB::table("productions")->join("sales", "productions.sale_id", "=", "sales.id")->where("sales.customer_id", $request->customer_id)->select("productions.*")->count();
             $productions[] = Production::create([
-                "code" => $customer->code . $product->quantity . "00",
+                "code" => $customer->code . $production_count + 1 . "-" . $product->quantity . "-" . "00",
                 "product_id" => $product->product_id,
                 "sale_id" => $sale->id,
                 "quantity_finished" => 0,

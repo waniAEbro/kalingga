@@ -22,7 +22,7 @@
         </div>
         <div class="flex w-full gap-3 my-3">
             <div class="flex-1">
-                <x-input-textarea :name="'Alamat'" :label="'Address'" :placeholder="'address'" />
+                <x-input-textarea :name="'address'" :label="'Alamat'" :placeholder="'address'" />
             </div>
         </div>
     </x-create-input-field>
