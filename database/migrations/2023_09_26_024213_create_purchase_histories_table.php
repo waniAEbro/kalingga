@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('purchase_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId("purchase_id")->constrained("purchases")->onDelete("cascade");
-            $table->string("description");
-            $table->integer("payment");
+            $table->text("description");
+            $table->bigInteger("payment");
             $table->timestamps();
         });
     }

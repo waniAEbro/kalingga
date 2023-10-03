@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('other_costs', function (Blueprint $table) {
             $table->id();
-            $table->integer("biaya_overhead_pabrik");
-            $table->integer("biaya_listrik");
-            $table->integer("biaya_pajak");
-            $table->integer("biaya_ekspor");
-            $table->integer("total");
+            $table->bigInteger("biaya_overhead_pabrik");
+            $table->bigInteger("biaya_listrik");
+            $table->bigInteger("biaya_pajak");
+            $table->bigInteger("biaya_ekspor");
+            $table->bigInteger("total");
             $table->timestamps();
         });
     }

@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('production_costs', function (Blueprint $table) {
             $table->id();
-            $table->integer("total_production");
-            $table->integer("price_perakitan");
-            $table->integer("price_perakitan_prj");
-            $table->integer("price_grendo");
-            $table->integer("price_obat");
-            $table->integer("upah");
+            $table->bigInteger("total_production");
+            $table->bigInteger("price_perakitan");
+            $table->bigInteger("price_perakitan_prj");
+            $table->bigInteger("price_grendo");
+            $table->bigInteger("price_obat");
+            $table->bigInteger("upah");
             $table->timestamps();
         });
     }

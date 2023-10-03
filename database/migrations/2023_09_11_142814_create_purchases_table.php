@@ -16,11 +16,11 @@ return new class extends Migration
             $table->foreignId("supplier_id")->constrained("suppliers")->onDelete("cascade");
             $table->date("purchase_date");
             $table->date("due_date");
-            $table->string("status");
-            $table->integer("remain_bill");
-            $table->integer("total_bill");
-            $table->integer("paid");
-            $table->string("code");
+            $table->text("status");
+            $table->bigInteger("remain_bill");
+            $table->bigInteger("total_bill");
+            $table->bigInteger("paid");
+            $table->text("code");
             $table->timestamps();
         });
     }

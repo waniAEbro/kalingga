@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('components', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("price_per_unit");
-            $table->string("unit");
+            $table->text("name");
+            $table->text("price_per_unit");
+            $table->text("unit");
             $table->timestamps();
         });
     }

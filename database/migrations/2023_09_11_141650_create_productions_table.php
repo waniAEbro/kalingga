@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('productions', function (Blueprint $table) {
             $table->id();
-            $table->string("code");
+            $table->text("code");
             $table->foreignId("product_id")->constrained("products")->onDelete("cascade");
             $table->foreignId("sale_id")->constrained("sales")->onDelete("cascade");
-            $table->integer("quantity_finished");
-            $table->integer("quantity_not_finished");
+            $table->bigInteger("quantity_finished");
+            $table->bigInteger("quantity_not_finished");
             $table->timestamps();
         });
     }
