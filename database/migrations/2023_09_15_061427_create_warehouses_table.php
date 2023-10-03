@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('warehouses', function (Blueprint $table) {
             $table->id();
             $table->foreignId("production_id")->constrained("productions")->onDelete("cascade");
-            $table->integer("quantity");
+            $table->bigInteger("quantity");
             $table->timestamps();
         });
     }

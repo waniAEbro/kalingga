@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string("code");
-            $table->string("name");
-            $table->string("rfid");
-            $table->integer("sell_price");
+            $table->text("code");
+            $table->text("name");
+            $table->text("rfid");
+            $table->bigInteger("sell_price");
             $table->double("length");
             $table->double("width");
             $table->double("height");
-            $table->string("logo");
-            $table->string("barcode");
+            $table->text("logo");
+            $table->text("barcode");
             $table->foreignId("pack_id")->constrained("packs")->onDelete("cascade");
             $table->foreignId("productioncosts_id")->constrained("production_costs")->onDelete("cascade");
             $table->foreignId("othercosts_id")->constrained("other_costs")->onDelete("cascade");

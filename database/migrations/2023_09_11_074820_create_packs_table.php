@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('packs', function (Blueprint $table) {
             $table->id();
-            $table->integer("cost");
+            $table->bigInteger("cost");
             $table->double("outer_length");
             $table->double("outer_width");
             $table->double("outer_height");
@@ -22,12 +22,12 @@ return new class extends Migration
             $table->double("inner_height");
             $table->double("nw");
             $table->double("gw");
-            $table->integer("box_price");
-            $table->integer("box_hardware");
-            $table->integer("assembling");
-            $table->integer("stiker");
-            $table->integer("hagtag");
-            $table->integer("maintenance");
+            $table->bigInteger("box_price");
+            $table->bigInteger("box_hardware");
+            $table->bigInteger("assembling");
+            $table->bigInteger("stiker");
+            $table->bigInteger("hagtag");
+            $table->bigInteger("maintenance");
             $table->timestamps();
         });
     }
