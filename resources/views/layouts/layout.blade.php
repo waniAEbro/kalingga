@@ -100,6 +100,22 @@
     document.querySelectorAll(".rupiah").forEach(element => {
         element.innerText = toRupiah(element.innerText)
     });
+
+    function searching() {
+        let ketemu = []
+        let cari = "sembarang"
+        let semua_daftar_item = document.querySelectorAll('#daftar-item');
+        semua_daftar_item.forEach(element => {
+            element.querySelectorAll("td").forEach(elm => {
+                if (elm.innerText.includes(cari)) {
+                    ketemu.push(element)
+                }
+            })
+        })
+        console.log(ketemu)
+    }
+
+    searching()
 </script>
 @stack('script')
 
