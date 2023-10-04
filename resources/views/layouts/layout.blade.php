@@ -101,21 +101,26 @@
         element.innerText = toRupiah(element.innerText)
     });
 
-    function searching() {
+    function searching(cari) {
         let ketemu = []
-        let cari = "sembarang"
+        // let cari = "sd"
+        console.log(cari)
         let semua_daftar_item = document.querySelectorAll('#daftar-item');
         semua_daftar_item.forEach(element => {
+            let apakahDicari = false
+            element.classList.remove('hidden');
+
             element.querySelectorAll("td").forEach(elm => {
-                if (elm.innerText.includes(cari)) {
-                    ketemu.push(element)
+                if (elm.innerText.toLowerCase().includes(cari.toLowerCase())) {
+                    apakahDicari = true;
                 }
             })
-        })
-        console.log(ketemu)
-    }
 
-    searching()
+            if (!apakahDicari) {
+                element.classList.add('hidden');
+            }
+        })
+    }
 </script>
 @stack('script')
 

@@ -13,9 +13,9 @@
                     <th class="px-4 py-5 font-[500] w-[200px]">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="text-center ">
+            <tbody id="body" class="text-center ">
                 @foreach ($products as $no => $product)
-                    <tr id="products" class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
+                    <tr id="daftar-item" id="products" class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
                         <td class="p-4 border-r rounded-l-lg border-slate-200">{{ $no + 1 }}</td>
                         <td class="p-4 break-words">{{ $product->name }}</td>
                         <td class="p-4 break-words">{{ $product->code }}</td>
