@@ -31,6 +31,14 @@ Route::get('/index', function () {
     return view('index');
 });
 
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/register', function () {
+    return view('register');
+});
+
 Route::resource("products", ProductController::class);
 Route::resource("components", ComponentController::class);
 Route::resource("categories", CategoryController::class);

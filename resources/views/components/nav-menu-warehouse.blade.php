@@ -16,6 +16,7 @@
         if (warehouse.classList.contains('active-warehouse') && (document.documentElement.scrollHeight > 687)) {
             warehouse.classList.remove('active-warehouse');
             warehouse.classList.add('active');
+            console.log('scroll height > 687')
         }
     </script>
 @endpush

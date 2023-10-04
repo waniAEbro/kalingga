@@ -27,4 +27,5 @@
             </tbody>
         </table>
     </x-data-list>
+    <div class="h-[900px] xl:h-1 w-10 bg-yellow-400"></div>
 @endsection
