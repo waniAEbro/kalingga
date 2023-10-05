@@ -223,7 +223,7 @@
 
 
             let data = pagination(state.querySet, state.page, state.rows)
-            pageButtons(data.pages, data.trimStart)
+            state.querySet.length && pageButtons(data.pages, data.trimStart)
 
             let myList = data.querySet
 
