@@ -17,7 +17,7 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        return view("warehouse.index", ["warehouse" => Warehouse::get()]);
+        return view("warehouse.index", ["warehouse" => Warehouse::all()]);
     }
 
     /**
