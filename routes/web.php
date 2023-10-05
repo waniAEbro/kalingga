@@ -39,6 +39,10 @@ Route::get('/register', function () {
     return view('register');
 });
 
+Route::get('/datatable', function () {
+    return view('datatable');
+});
+
 Route::resource("products", ProductController::class);
 Route::resource("components", ComponentController::class);
 Route::resource("categories", CategoryController::class);

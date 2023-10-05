@@ -17,7 +17,7 @@
             <x-nav-menu :menuName="'Pelanggan'" :menuUrl="'Customers'" :menuIcon="'person'" />
             <x-nav-menu :menuName="'Penjualan'" :menuUrl="'Sales'" :menuIcon="'cash'" />
             <x-nav-menu :menuName="'Pembelian'" :menuUrl="'Purchases'" :menuIcon="'bag-check'" />
-            <x-nav-menu-warehouse :menuName="'Gudang'" :menuUrl="'Warehouse'" :menuIcon="'grid'" />
+            <x-nav-menu :menuName="'Gudang'" :menuUrl="'Warehouse'" :menuIcon="'grid'" />
 
         </div>
     </div>

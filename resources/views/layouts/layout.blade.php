@@ -78,16 +78,6 @@
         }
     }
 
-    function toRupiah(number) {
-        let rupiahFormat = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-        }).format(number);
-        return rupiahFormat
-    }
-
-
-
     function update_bill(element) {
         let total = document.querySelector('#total_bill').value;
         if (parseInt(element.value) >= parseInt(total)) {
@@ -101,26 +91,16 @@
         element.innerText = toRupiah(element.innerText)
     });
 
-    function searching(cari) {
-        let ketemu = []
-        // let cari = "sd"
-        console.log(cari)
-        let semua_daftar_item = document.querySelectorAll('#daftar-item');
-        semua_daftar_item.forEach(element => {
-            let apakahDicari = false
-            element.classList.remove('hidden');
+    // function searching(cari) {
+    //     document.querySelectorAll('#daftar-item').forEach(element => {
+    //         let apakahDicari = false
 
-            element.querySelectorAll("td").forEach(elm => {
-                if (elm.innerText.toLowerCase().includes(cari.toLowerCase())) {
-                    apakahDicari = true;
-                }
-            })
+    //         element.querySelectorAll("td")
+    //             .forEach(e => e.innerText.toLowerCase().includes(cari.toLowerCase()) && (apakahDicari = true))
 
-            if (!apakahDicari) {
-                element.classList.add('hidden');
-            }
-        })
-    }
+    //         apakahDicari ? element.classList.remove('hidden') : element.classList.add('hidden');
+    //     })
+    // }
 </script>
 @stack('script')
 
