@@ -63,8 +63,17 @@
 @endsection
 @push('script')
     <script>
-        let sales = {!! $sales !!}
+        // let ngetes = [{
+        //     nama,
+        //     orang,
+        //     tolol: {
+        //         kocak,
+        //         apalah,
+        //         entahlah: ['aku', 'bingung', 'kocak']
+        //     }
+        // }]
 
+        let sales = {!! $sales !!}
 
         let state = {
             'querySet': sales,
@@ -84,6 +93,27 @@
         document.querySelectorAll(".rupiah").forEach(element => {
             element.innerText = toRupiah(element.innerText)
         });
+
+        function search(query) {
+            query = query.toLowerCase();
+            state.querySet = [];
+            // const results = [];
+
+            for (const sale of sales) {
+                if (
+                    sale.customer.name.toLowerCase().includes(query) ||
+                    String(sale.sale_date).toLowerCase().includes(query) ||
+                    String(sale.due_date).toLowerCase().includes(query) ||
+                    sale.status.toLowerCase().includes(query) ||
+                    String(sale.remain_bill).toLowerCase().includes(query) ||
+                    String(sale.total_bill).toLowerCase().includes(query)
+                ) {
+                    state.querySet.push(sale);
+                }
+            }
+            buildTable();
+            console.log(state.querySet)
+        }
 
         function set_belum_selesai() {
             let filteredData = sales.filter(item => {
@@ -217,8 +247,7 @@
             buildTable();
         }
 
-
-        function buildTable() {
+        function buildTable(querySet = state.querySet) {
             let table = document.getElementById('table-body');
 
 

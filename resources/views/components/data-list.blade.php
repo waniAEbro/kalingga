@@ -9,7 +9,7 @@
     <div class="relative">
         <input type="text"
             class="py-2 focus:outline-4 focus:outline focus:outline-[#C2D4D3] outline-none focus:outline-offset-0 pl-4 font-[500] pr-4 rounded-full w-52 transition-all ease-in-out focus:w-72 text-sm bg-[#DEE5ED]"
-            placeholder="Search...">
+            placeholder="Search..." oninput="search(this.value)">
         <span class="absolute text-xl right-3.5 top-2 text-slate-600"><ion-icon name="search-outline"></ion-icon></span>
     </div>
 </div>
