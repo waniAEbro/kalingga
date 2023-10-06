@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\WarehouseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post("/stockin", [WarehouseController::class, "stockin"]);
 Route::post("/stockout", [WarehouseController::class, "stockout"]);
+Route::get("/components/getdata", [ComponentController::class, "getData"]);

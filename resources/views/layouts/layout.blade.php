@@ -6,21 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{-- <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.7.4/dist/full.css" rel="stylesheet" type="text/css" />
-
-    <style type="text/tailwindcss">
-        @layer components {
-            .active {
-                @apply pl-5 flex gap-4 w-[86px] transition-all min-[1000px]:w-[224px] items-center text-[#064E3B] bg-[#F1F5F9] before:bg-transparent before:h-10 before:w-10 before:right-0 before:bottom-[100%] before:shadow-[20px_20px_0_#F1F5F9] before:rounded-full before:absolute relative py-1 mb-2 rounded-l-full after:h-10 after:absolute after:w-10 after:bg-transparent after:right-0 after:top-[100%] after:shadow-[20px_-20px_0_#F1F5F9] after:rounded-full;
-            }
-
-            .active-warehouse {
-                @apply pl-5 flex w-[86px] transition-all min-[1000px]:w-[224px] gap-4 items-center text-[#064E3B] bg-[#F1F5F9] before:bg-transparent before:h-10 before:w-10 before:right-0 before:bottom-[100%] before:shadow-[20px_20px_0_#F1F5F9] before:rounded-full before:absolute relative py-1 mb-2 rounded-l-full after:w-5 after:h-5 after:absolute after:-right-1 after:bottom-0 after:bg-[#F1F5F9];
-            }
-        }
-    </style> --}}
-
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -53,7 +39,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
-
 </body>
 <script>
     const setup = () => {
@@ -99,133 +84,164 @@
         element.innerText = toRupiah(element.innerText)
     });
 
-    function searching(cari) {
-        let data = []
-        document.querySelectorAll('#daftar-item').forEach(element => {
-            let apakahDicari = false
+    const state = {
+        allData: [],
+        data: [],
+        currentData: [],
+        columnName: [],
+        columnQuery: [],
+        page: 1,
+        rows: 5,
+        window: 5,
+        menu: ""
+    }
 
-            element.querySelectorAll("td")
-                .forEach(e => e.innerText.toLowerCase().includes(cari.toLowerCase()) && (apakahDicari = true))
-
-            if (apakahDicari) {
-                element.classList.remove('hidden')
-                data.push(state.data.find(el => el.id == element.querySelector('.id-item').innerText))
-            } else {
-                element.classList.add('hidden');
+    function searching(text = "") {
+        let found = []
+        state.allData.forEach(data => {
+            let isFound = false
+            state.columnQuery.forEach(columnQuery => {
+                const query = "data." + columnQuery
+                if (eval(query).toLowerCase().includes(text.toLowerCase())) {
+                    isFound = true
+                }
+            })
+            if (isFound) {
+                found.push(data)
             }
         })
-        state.querySet = data
+
+        state.data = found
         state.page = 1
-        console.log(state.page)
+
+        paginate()
+        pageNumber()
         buildTable()
     }
 
-    let state = {
-        'querySet': [],
-        "data": [],
-        'page': 1,
-        'rows': 2,
-        'window': 2,
-        'no': 1
+    function buildHeader() {
+        const thead = document.createElement("thead")
+        const tr = document.createElement("tr")
+        tr.classList.add("text-center")
+        state.columnName.forEach(columnName => {
+            const th = document.createElement("th")
+            th.classList.add("px-4", "py-5", "font-[500]")
+            th.innerText = columnName
+            tr.appendChild(th)
+        })
+        thead.appendChild(tr)
+        return thead
     }
-
-    function pagination(querySet, page, rows) {
-
-        let trimStart = (page - 1) * rows
-        let trimEnd = trimStart + rows
-
-        let trimmedData = querySet.slice(trimStart, trimEnd)
-
-        let pages = Math.ceil(querySet.length / rows);
-
-        return {
-            'querySet': trimmedData,
-            'pages': pages,
-            'trimStart': trimStart
-        }
-    }
-
-    function pageButtons(pages, trimStart) {
-        let wrapper = document.getElementById('pagination-wrapper')
-        document.getElementById('info-pagination').innerText =
-            `Showing ${trimStart + 1} to ${((trimStart + 5) > state.querySet.length) ? state.querySet.length : trimStart + 5} of ${state.querySet.length} entries`;
-
-        wrapper.innerHTML = ``
-        console.log('Pages:', pages)
-
-        let maxLeft = (state.page - Math.floor(state.window / 2))
-        let maxRight = (state.page + Math.floor(state.window / 2))
-
-        if (maxLeft < 1) {
-            maxLeft = 1
-            maxRight = state.window
-        }
-
-        if (maxRight > pages) {
-            maxLeft = pages - (state.window - 1)
-
-            if (maxLeft < 1) {
-                maxLeft = 1
-            }
-            maxRight = pages
-        }
-
-        for (let page = maxLeft; page <= maxRight; page++) {
-            if (page == state.page) {
-                wrapper.innerHTML +=
-                    `<button value="${page}" onclick="pindahHalaman(this.value)" class="px-4 flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] hover:bg-gray-50 focus:bg-gray-100 rounded">${page}</button>`
-            } else {
-                wrapper.innerHTML +=
-                    `<button value="${page}" onclick="pindahHalaman(this.value)" class="flex items-center px-4 transition-all rounded hover:bg-gray-50 focus:bg-gray-100">${page}</button>`
-            }
-        }
-
-        if (state.page != 1) {
-            wrapper.innerHTML =
-                `<button value="${state.page - 1}" onclick="pindahHalaman(this.value)" class="flex items-center px-4 py-2 rounded hover:bg-gray-50 focus:bg-gray-100"><span class="material-symbols-outlined" style="font-size: 16px">keyboard_arrow_left</span></button>` +
-                wrapper.innerHTML
-
-            wrapper.innerHTML =
-                `<button value="${1}" onclick="pindahHalaman(this.value)" class="flex items-center px-4 py-2 rounded hover:bg-gray-50 focus:bg-gray-100"><span class="material-symbols-outlined"
-                style="font-size: 16px">keyboard_double_arrow_left</span></button>` +
-                wrapper.innerHTML
-        }
-
-        if (state.page != pages && pages != 0) {
-            wrapper.innerHTML +=
-                `<button value="${state.page + 1}" onclick="pindahHalaman(this.value)" class="flex items-center px-4 py-2 rounded hover:bg-gray-50 focus:bg-gray-100"><span class="material-symbols-outlined" style="font-size: 16px">keyboard_arrow_right</span></button>`
-
-            wrapper.innerHTML +=
-                `<button value="${pages}" onclick="pindahHalaman(this.value)" class="flex items-center px-4 py-2 rounded hover:bg-gray-50 focus:bg-gray-100"><span class="material-symbols-outlined"
-                style="font-size: 16px">keyboard_double_arrow_right</span></button>`
-        }
-
-    }
-
-    function pindahHalaman(value) {
-        state.page = Number(value);
-        buildTable();
-    }
-
 
     function buildTable() {
-        let table = document.getElementById('table-body');
-
-
-        let data = pagination(state.querySet, state.page, state.rows)
-
-        pageButtons(data.pages, data.trimStart)
-
-        let myList = data.querySet
-
-        let ids = document.querySelectorAll(".id-item")
-        let idsArray = Array.from(ids)
-        ids.forEach(id => id.parentElement.classList.add("hidden"))
-
-        myList.forEach(list => {
-            let index = idsArray.indexOf(idsArray.find(el => el.innerText == list.id))
-            ids[index].parentElement.classList.remove("hidden")
+        if (document.querySelector("#table-body")) {
+            document.querySelector("#table-body").remove()
+        }
+        let tbody = document.createElement("tbody")
+        tbody.classList.add("text-center")
+        tbody.id = "table-body"
+        state.currentData.forEach((data, index) => {
+            const tr = document.createElement("tr")
+            tr.classList.add("text-sm", "bg-white",
+                "drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]")
+            tr.id = "daftar-item"
+            tr.innerHTML += `<td class="p-4 rounded-l-lg"><div class="flex items-center justify-center gap-3 border-r h-7 border-slate-200">
+                ${state.page * state.rows - state.rows + index + 1}
+                </td>`
+            state.columnQuery.forEach(columnQuery => {
+                const query = "data." + columnQuery
+                const td = document.createElement("td")
+                td.classList.add("p-4", "break-words")
+                td.innerText = eval(query)
+                tr.appendChild(td)
+            })
+            tr.innerHTML += `<td class="p-4 rounded-r-lg">
+            <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
+                <a href="/${state.menu}/${ data.id }/edit"
+                                    class="flex items-center gap-1 text-slate-600"><span class="text-lg"><ion-icon
+                                            name="create-outline"></ion-icon></span>Edit</a>
+                                            <form action="/${state.menu}/${ data.id }" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="flex items-center gap-1 text-red-700"><span
+                                            class="text-lg"><ion-icon name="trash-outline"></ion-icon></span>Hapus</button>
+                                </form>
+                            </div></td>`
+            tbody.appendChild(tr)
         })
+        document.querySelector(".table-fixed").appendChild(tbody)
+    }
+
+    function paginate() {
+        let trimStart = (state.page - 1) * state.rows
+        let trimEnd = trimStart + state.rows
+
+        let trimmedData = state.data.slice(trimStart, trimEnd)
+
+        state.currentData = trimmedData
+    }
+
+    function pageNumber() {
+        document.querySelector("#pagination-wrapper").innerHTML = ""
+        let pages = Math.ceil(state.data.length / state.rows);
+        if (state.page >= 4) {
+            const button1 = document.createElement('button')
+            const button2 = document.createElement('button')
+            button1.innerText = 1
+            button2.innerText = "..."
+            button1.classList.add("bg-gray-200", "hover:bg-gray-400", "text-gray-800", "font-bold", "py-2", "px-4",
+                "rounded-full", "focus:outline-none", "focus:ring-2", "focus:ring-gray-600",
+                "focus:ring-opacity-50")
+            button2.classList.add("bg-gray-400", "rounded-full", "py-2", "px-4", "text-white", "font-bold")
+            button1.addEventListener("click", function(e) {
+                state.page = parseInt(e.currentTarget.innerText)
+                paginate()
+                pageNumber()
+                buildTable()
+            })
+            document.querySelector("#pagination-wrapper").appendChild(button1)
+            document.querySelector("#pagination-wrapper").appendChild(button2)
+        }
+        for (i = state.page - 2; i < state.page + state.window && i <= pages; i++) {
+            if (i > 0) {
+                const button = document.createElement('button')
+                button.innerText = i
+                if (i == state.page) {
+                    button.classList.add("bg-gray-400", "rounded-full", "py-2", "px-4", "text-white", "font-bold")
+                } else {
+                    button.classList.add("bg-gray-200", "hover:bg-gray-400", "text-gray-800", "font-bold", "py-2",
+                        "px-4",
+                        "rounded-full", "focus:outline-none", "focus:ring-2", "focus:ring-gray-600",
+                        "focus:ring-opacity-50"
+                    )
+                    button.addEventListener("click", function(e) {
+                        state.page = parseInt(e.currentTarget.innerText)
+                        paginate()
+                        pageNumber()
+                        buildTable()
+                    })
+                }
+                document.querySelector("#pagination-wrapper").appendChild(button)
+            }
+        }
+        if (state.page < pages - 4) {
+            const button1 = document.createElement('button')
+            const button2 = document.createElement('button')
+            button1.innerText = pages
+            button2.innerText = "..."
+            button1.classList.add("bg-gray-200", "hover:bg-gray-400", "text-gray-800", "font-bold", "py-2", "px-4",
+                "rounded-full", "focus:outline-none", "focus:ring-2", "focus:ring-gray-600",
+                "focus:ring-opacity-50")
+            button2.classList.add("bg-gray-400", "rounded-full", "py-2", "px-4", "text-white", "font-bold")
+            button1.addEventListener("click", function(e) {
+                state.page = parseInt(e.currentTarget.innerText)
+                paginate()
+                pageNumber()
+                buildTable()
+            })
+            document.querySelector("#pagination-wrapper").appendChild(button2)
+            document.querySelector("#pagination-wrapper").appendChild(button1)
+        }
     }
 </script>
 @stack('script')

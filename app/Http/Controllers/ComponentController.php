@@ -15,7 +15,12 @@ class ComponentController extends Controller
      */
     public function index(): View
     {
-        return view("component.index", ["components" => Component::get()]);
+        return view("component.index");
+    }
+
+    public function getData()
+    {
+        return response()->json(Component::get());
     }
 
     /**
