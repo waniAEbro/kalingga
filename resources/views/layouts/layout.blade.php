@@ -100,7 +100,6 @@
     });
 
     function searching(cari) {
-        console.log(document.querySelectorAll('#daftar-item'))
         let data = []
         document.querySelectorAll('#daftar-item').forEach(element => {
             let apakahDicari = false
@@ -117,6 +116,7 @@
         })
         state.querySet = data
         state.page = 1
+        console.log(state.page)
         buildTable()
     }
 
@@ -125,7 +125,7 @@
         "data": [],
         'page': 1,
         'rows': 2,
-        'window': 5,
+        'window': 2,
         'no': 1
     }
 
@@ -191,7 +191,7 @@
                 wrapper.innerHTML
         }
 
-        if (state.page != pages) {
+        if (state.page != pages && pages != 0) {
             wrapper.innerHTML +=
                 `<button value="${state.page + 1}" onclick="pindahHalaman(this.value)" class="flex items-center px-4 py-2 rounded hover:bg-gray-50 focus:bg-gray-100"><span class="material-symbols-outlined" style="font-size: 16px">keyboard_arrow_right</span></button>`
 
@@ -213,7 +213,8 @@
 
 
         let data = pagination(state.querySet, state.page, state.rows)
-        state.querySet.length && pageButtons(data.pages, data.trimStart)
+
+        pageButtons(data.pages, data.trimStart)
 
         let myList = data.querySet
 
