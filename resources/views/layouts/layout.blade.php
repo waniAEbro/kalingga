@@ -102,7 +102,7 @@
             let isFound = false
             state.columnQuery.forEach(columnQuery => {
                 const query = "data." + columnQuery
-                if (eval(query).toLowerCase().includes(text.toLowerCase())) {
+                if (eval(query).toString().toLowerCase().includes(text.toLowerCase())) {
                     isFound = true
                 }
             })
