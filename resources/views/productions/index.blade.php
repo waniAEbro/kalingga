@@ -19,7 +19,7 @@
             "Aksi"
         ]
         state.columnQuery = ["code", "product.name", "quantity_not_finished", "quantity_finished",
-            "sale.product.find(el => el.id == data.product_id).pivot.quantity)"
+            "sale.product.find(el => el.id == data.product_id).pivot.quantity"
         ]
         state.menu = "productions"
 
