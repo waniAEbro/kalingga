@@ -52,11 +52,19 @@
 
 @push('script')
     <script>
+        state.columnName = ["Nomor", "Nama Customer", "Email", "Nomor Telepon", "Alamat", "Kode", "Aksi"]
+        state.columnQuery = ["name", "email", "phone", "address", "code"]
+        state.menu = "suppliers"
+
+        document.querySelector(".table-fixed").appendChild(buildHeader())
+
         const suppliers = {!! $suppliers !!}
 
-        state.querySet = suppliers
         state.data = suppliers
+        state.allData = suppliers
 
+        paginate()
+        pageNumber()
         buildTable()
     </script>
 @endpush

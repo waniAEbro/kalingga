@@ -22,4 +22,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post("/stockin", [WarehouseController::class, "stockin"]);
 Route::post("/stockout", [WarehouseController::class, "stockout"]);
-Route::get("/components/getdata", [ComponentController::class, "getData"]);

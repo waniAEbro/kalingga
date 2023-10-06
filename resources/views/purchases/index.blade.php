@@ -40,45 +40,6 @@
     <x-data-list>
         <div class="h-[580px] relative">
             <table class="w-full mt-5 border-separate table-fixed border-spacing-y-3">
-                <thead>
-                    <tr class="text-center">
-                        <th class="px-4 py-5 font-[500] w-14">No</th>
-                        <th class="px-4 py-5 font-[500]">Pemasok</th>
-                        <th class="px-4 py-5 font-[500]">Tanggal Pembelian</th>
-                        <th class="px-4 py-5 font-[500]">Tanggal Jatuh Tempo</th>
-                        <th class="px-4 py-5 font-[500] w-20">Status</th>
-                        <th class="px-4 py-5 font-[500]">Sisa Bayar</th>
-                        <th class="px-4 py-5 font-[500]">Total Pembayaran</th>
-                        <th class="px-4 py-5 font-[500] w-[200px]">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body" class="text-center ">
-                    @foreach ($purchases as $no => $purchase)
-                        <tr id="daftar-item" class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
-                            <td class="id-item hidden">{{ $purchase->id }}</td>
-                            <td class="p-4 border-r rounded-l-lg border-slate-200">{{ $no + 1 }}</td>
-                            <td class="p-4 break-words">{{ $purchase->supplier->name }}</td>
-                            <td class="p-4 break-words">{{ $purchase->purchase_date }}</td>
-                            <td class="p-4 break-words">{{ $purchase->due_date }}</td>
-                            <td class="p-4 break-words">{{ $purchase->status }}</td>
-                            <td class="p-4 break-words rupiah">{{ $purchase->remain_bill }}</td>
-                            <td class="p-4 break-words rupiah">{{ $purchase->total_bill }}</td>
-                            <td class="p-4 rounded-r-lg">
-                                <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
-                                    <a href="/purchases/{{ $purchase->id }}/edit"
-                                        class="flex items-center gap-1 text-slate-600"><span class="text-lg"><ion-icon
-                                                name="create-outline"></ion-icon></span>Edit</a>
-                                    <form action="/purchases/{{ $purchase->id }}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="flex items-center gap-1 text-red-700"><span class="text-lg"><ion-icon
-                                                    name="trash-outline"></ion-icon></span>Delete</button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
             </table>
             <div id="pagination-wrapper" class="absolute bottom-0 flex h-10 gap-2 my-5 text-sm"></div>
         </div>
@@ -86,11 +47,21 @@
 @endsection
 @push('script')
     <script>
-        let purchases = {!! $purchases !!}
+        state.columnName = ["Nomor", "Nama Supplier", "Tangggal Transaksi", "Jatuh Tempo", "Status", "Sisa Stansaksi",
+            "Total Transaksi", "Aksi"
+        ]
+        state.columnQuery = ["supplier.name", "emailpurchase_date", "due_date", "status", "remain_bill", "total_bill"]
+        state.menu = "purchases"
 
-        state.setQuery = purchases
+        document.querySelector(".table-fixed").appendChild(buildHeader())
+
+        const purchases = {!! $purchases !!}
+
         state.data = purchases
+        state.allData = purchases
 
+        paginate()
+        pageNumber()
         buildTable()
 
         set_belum_selesai()

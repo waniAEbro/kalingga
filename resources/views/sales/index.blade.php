@@ -41,45 +41,6 @@
     <x-data-list>
         <div class="h-[580px] relative">
             <table class="w-full mt-5 border-separate table-fixed border-spacing-y-3">
-                <thead>
-                    <tr class="text-center">
-                        <th class="px-4 py-5 font-[500] w-14">No</th>
-                        <th class="px-4 py-5 font-[500]">Pelanggan</th>
-                        <th class="px-4 py-5 font-[500]">Tanggal Penjualan</th>
-                        <th class="px-4 py-5 font-[500]">Tanggal Jatuh Tempo</th>
-                        <th class="px-4 py-5 font-[500] w-20">Status</th>
-                        <th class="px-4 py-5 font-[500]">Sisa Bayar</th>
-                        <th class="px-4 py-5 font-[500]">Total Pembayaran</th>
-                        <th class="px-4 py-5 font-[500] w-[200px]">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body" class="text-center ">
-                    @foreach ($sales as $no => $sale)
-                        <tr id="daftar-item" class="text-sm bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]">
-                            <td class="id-item hidden">{{ $sale->id }}</td>
-                            <td class="p-4 border-r rounded-l-lg border-slate-200">{{ $no + 1 }}</td>
-                            <td class="p-4 break-words">{{ $sale->customer->name }}</td>
-                            <td class="p-4 break-words">{{ $sale->sale_date }}</td>
-                            <td class="p-4 break-words">{{ $sale->due_date }}</td>
-                            <td class="p-4 break-words">{{ $sale->status }}</td>
-                            <td class="p-4 break-words rupiah">{{ $sale->remain_bill }}</td>
-                            <td class="p-4 break-words rupiah">{{ $sale->total_bill }}</td>
-                            <td class="p-4 rounded-r-lg">
-                                <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
-                                    <a href="/sales/{{ $sale->id }}/edit"
-                                        class="flex items-center gap-1 text-slate-600"><span class="text-lg"><ion-icon
-                                                name="create-outline"></ion-icon></span>Edit</a>
-                                    <form action="/sales/{{ $sale->id }}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="flex items-center gap-1 text-red-700"><span class="text-lg"><ion-icon
-                                                    name="trash-outline"></ion-icon></span>Delete</button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
             </table>
             <div id="pagination-wrapper" class="absolute bottom-0 flex h-10 gap-2 my-5 text-sm"></div>
         </div>
@@ -87,11 +48,21 @@
 @endsection
 @push('script')
     <script>
-        let sales = {!! $sales !!}
+        state.columnName = ["Nomor", "Nama Customer", "Tanggal Transaksi", "Jatuh Tempo", "Status", "Sisa Transaksi",
+            "Total Transaksi", "Aksi"
+        ]
+        state.columnQuery = ["customer.name", "sale_date", "due_date", "status", "remain_bill", "total_bill"]
+        state.menu = "sales"
 
-        state.querySet = sales
+        document.querySelector(".table-fixed").appendChild(buildHeader())
+
+        const sales = {!! $sales !!}
+
         state.data = sales
+        state.allData = sales
 
+        paginate()
+        pageNumber()
         buildTable()
 
         let currentDate = new Date();
@@ -144,14 +115,6 @@
 
             document.getElementById("pembayaran_jatuh_tempo").innerText = toRupiah(jatuh_tempo);
             console.log(toRupiah(jatuh_tempo))
-        }
-
-        function toRupiah(number) {
-            let rupiahFormat = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-            }).format(number);
-            return rupiahFormat
         }
     </script>
 @endpush

@@ -34,11 +34,19 @@
 
 @push('script')
     <script>
-        const warehouse = {!! $warehouse !!}
+        state.columnName = ["Nomor", "Nama Produk", "RFID", "Barcode", "Jumlah", "Aksi"]
+        state.columnQuery = ["production.product.name", "production.product.rfid", "production.product.barcode", "quantity"]
+        state.menu = "warehouse"
 
-        state.querySet = warehouse
-        state.data = warehouse
+        document.querySelector(".table-fixed").appendChild(buildHeader())
 
+        const warehouses = {!! $warehouses !!}
+
+        state.data = warehouses
+        state.allData = warehouses
+
+        paginate()
+        pageNumber()
         buildTable()
     </script>
 @endpush
