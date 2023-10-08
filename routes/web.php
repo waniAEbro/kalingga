@@ -26,11 +26,11 @@ use App\Models\Warehouse;
 
 Route::get('/', function () {
     return view('index');
-})->middleware('login');
+})->middleware('login.check');
 
 Route::get('/index', function () {
     return view('index');
-})->middleware('login');
+})->middleware('login.check');
 
 // Route::get('/login', function () {
 //     return view('login');
@@ -48,16 +48,20 @@ Route::get('/register', [LoginController::class, 'register']);
 Route::post('/register/user', [LoginController::class, 'create']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::get('/datatable', function () {
-    return view('datatable');
+
+
+Route::middleware(['login.check'])->group(function(){
+    Route::resource("products", ProductController::class);
+    Route::resource("components", ComponentController::class);
+    Route::resource("categories", CategoryController::class);
+    Route::resource("sales", SaleController::class);
+    Route::resource("suppliers", SupplierController::class);
+    Route::resource("purchases", PurchaseController::class);
+    Route::resource("productions", ProductionController::class);
+    Route::resource("customers", CustomerController::class);
+    Route::resource("warehouse", WarehouseController::class);
+    Route::get('/datatable', function () {
+        return view('datatable');
+    });
 });
 
-Route::resource("products", ProductController::class);
-Route::resource("components", ComponentController::class);
-Route::resource("categories", CategoryController::class);
-Route::resource("sales", SaleController::class);
-Route::resource("suppliers", SupplierController::class);
-Route::resource("purchases", PurchaseController::class);
-Route::resource("productions", ProductionController::class);
-Route::resource("customers", CustomerController::class);
-Route::resource("warehouse", WarehouseController::class);
