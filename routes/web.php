@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductionController;
@@ -25,19 +26,27 @@ use App\Models\Warehouse;
 
 Route::get('/', function () {
     return view('index');
-});
+})->middleware('login');
 
 Route::get('/index', function () {
     return view('index');
-});
+})->middleware('login');
 
-Route::get('/login', function () {
-    return view('login');
-});
+// Route::get('/login', function () {
+//     return view('login');
+// });
 
-Route::get('/register', function () {
-    return view('register');
-});
+// Route::get('/register', function () {
+//     return view('register');
+// });
+
+// Route::get('/', [LoginController::class, 'index']);
+
+Route::get('/login', [LoginController::class, 'index']);
+Route::post('/login/user', [LoginController::class, 'login']);
+Route::get('/register', [LoginController::class, 'register']);
+Route::post('/register/user', [LoginController::class, 'create']);
+Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/datatable', function () {
     return view('datatable');
