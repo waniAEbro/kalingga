@@ -36,10 +36,12 @@
         <x-main>
             @yield('content')
         </x-main>
-        {{-- <div class="absolute top-0 z-10 w-full h-full bg-black opacity-50"></div> --}}
-        {{-- <div id="modal"
-            class="absolute z-20 translate-x-1/2 -translate-y-1/2 bg-white top-1/3 right-1/2 w-52 h-52 rounded-xl">
-        </div> --}}
+
+        <div id="modal-background" onclick="hideModal()"
+            class="absolute hidden top-0 z-10 w-full h-full bg-black opacity-50"></div>
+        <div id="modal"
+            class="absolute -z-20 translate-x-1/2 -translate-y-1/2 bg-white top-1/3 right-1/2 rounded-xl transition-opacity duration-300 opacity-0">
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
@@ -132,6 +134,8 @@
             th.classList.add("px-4", "py-5", "font-[500]")
             th.innerText = columnName
             tr.appendChild(th)
+            if (columnName === "Aksi") th.classList.add('w-52')
+            if (columnName === "Nomor") th.classList.add('w-28')
         })
         thead.appendChild(tr)
         return thead
@@ -146,9 +150,10 @@
         tbody.id = "table-body"
         state.currentData.forEach((data, index) => {
             const tr = document.createElement("tr")
-            tr.classList.add("cursor-pointer", "text-sm", "bg-white",
-                "drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]")
-            tr.id = "daftar-item"
+            tr.classList.add("cursor-pointer", "text-sm", "bg-white", "hover:scale-[1.01]", "transition-all",
+                "overflow-hidden", "drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]")
+            tr.id = "daftar-item";
+            tr.height = "30px";
             tr.innerHTML += `<td class="p-4 rounded-l-lg"><div class="flex items-center justify-center gap-3 border-r h-7 border-slate-200">
                 ${state.page * state.rows - state.rows + index + 1}
                 </td>`
@@ -157,14 +162,12 @@
                 const td = document.createElement("td")
                 td.classList.add("p-4", "break-words")
                 td.innerText = eval(query)
+
                 tr.appendChild(td)
             })
             tr.innerHTML += `
-            <td class="p-4 rounded-r-lg">
+            <td onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
                 <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
-                    <button onclick="show(${ data.id })" class="flex items-center gap-1 text-slate-600">
-                        <span class="text-lg"><ion-icon name="eye-outline"></ion-icon></span>Show
-                    </button>
                     <a href="/${state.menu}/${ data.id }/edit" class="flex items-center gap-1 text-slate-600">
                         <span class="text-lg"><ion-icon name="create-outline"></ion-icon></span>Edit
                     </a>
@@ -176,24 +179,16 @@
                     </form>
                 </div>
             </td>`
-            tr.addEventListener("click", () => {
-                show('halo')
+            tr.addEventListener("click", (event) => {
+                show(data.id)
             })
             tbody.appendChild(tr)
         })
         document.querySelector(".table-fixed").appendChild(tbody)
     }
 
-    function show(id) {
-        // let damn = state.allData.find(data => {
-        //     console.log(data)
-        //     return data.id === id
-        // });
-
-        // const modal = document.querySelector('#modal');
-
-        // modal.innerHTML = `id`
-        console.log("halo")
+    function stopPropagation(event) {
+        event.stopPropagation();
     }
 
     function paginate() {
@@ -266,6 +261,17 @@
             document.querySelector("#pagination-wrapper").appendChild(button2)
             document.querySelector("#pagination-wrapper").appendChild(button1)
         }
+    }
+
+    function hideModal() {
+        const modal = document.querySelector("#modal");
+        document.querySelector("#modal-background").classList.add("hidden");
+
+        modal.classList.remove('opacity-100', 'z-20');
+        modal.classList.add('opacity-0', '-z-20');
+
+        // modal.classList.remove('z-20');
+        // modal.classList.add('-z-20');
     }
 </script>
 @stack('script')
