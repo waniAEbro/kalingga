@@ -6,8 +6,23 @@
                     <ul id="breadcrumbs"></ul>
                 </div>
 
-                <div class="flex justify-between gap-5">
+                <div x-data="{ open: false }" x-on:click="open = !open" x-cloak
+                    class="font-[500] hover:cursor-pointer relative text-white">
                     <div class="bg-yellow-400 rounded-full w-9 h-9"></div>
+
+                    <div x-show="open" x-transition:enter.duration.300ms x-transition:leave.duration.300ms
+                        class="w-52 rounded-lg absolute z-10 top-12 right-0 bg-[#053E2F] hover:cursor-default">
+                        <div class="p-4 border-b border-[#064e3be8]">
+                            <div class="text-sm">Rasikh</div>
+                            <div class="text-xs text-[#AABEB8]">rasikh@gmail.com</div>
+                        </div>
+                        <div class="p-2">
+                            <div class="flex items-center gap-3 hover:cursor-pointer p-2 hover:bg-[#12483A] rounded">
+                                <ion-icon class="text-sm text-white" name="exit-outline"></ion-icon>
+                                <div class="text-sm">Logout</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

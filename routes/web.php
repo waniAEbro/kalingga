@@ -60,8 +60,7 @@ Route::middleware(['login.check'])->group(function(){
     Route::resource("productions", ProductionController::class);
     Route::resource("customers", CustomerController::class);
     Route::resource("warehouse", WarehouseController::class);
-    Route::get('/datatable', function () {
-        return view('datatable');
-    });
+    Route::get('/datatable', function () { return view('datatable'); });
+    Route::get('/dashboard', function() { return view('dashboard'); });
 });
 
