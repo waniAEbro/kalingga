@@ -38,6 +38,48 @@ class ProductController extends Controller
      */
     public function store(StoreproductRequest $request): RedirectResponse
     {
+        $request->validate([
+            'outer_length' => 'required',
+            'outer_width' => 'required',
+            'outer_height' => 'required',
+            'inner_length' => 'required',
+            'inner_width' => 'required',
+            'inner_height' => 'required',
+            'nw' => 'required',
+            'gw' => 'required',
+            'box_price' => 'required',
+            'box_hardware' => 'required',
+            'assembling' => 'required',
+            'stiker' => 'required',
+            'hagtag' => 'required',
+            'maintenance' => 'required',
+
+            'price_perakitan' => 'required',
+            'price_perakitan_prj' => 'required',
+            'price_grendo' => 'required',
+            'price_obat' => 'required',
+            'upah' => 'required',
+
+            'biaya_overhead_pabrik' => 'required',
+            'biaya_listrik' => 'required',
+            'biaya_pajak' => 'required',
+            'biaya_ekspor' => 'required',
+
+            'name' => 'required',
+            'code' => 'required',
+            'rfid' => 'required',
+            'logo' => 'required',
+            'other_cost' => 'required',
+            'production_cost' => 'required',
+            'lenght' => 'required',
+            'width' => 'required',
+            'height' => 'required',
+            'sell_price' => 'required',
+            'barcode' => 'required',
+        ],[
+
+        ]);
+
         $pack = Pack::create([
             "cost" => $request->pack_cost,
             "outer_length" => $request->pack_outer_length,
