@@ -22,7 +22,7 @@
                 <label for="quantity_finished" class="block text-sm">Jumlah Sudah Selesai</label>
                 <input type="number" value="{{ $production->quantity_finished }}" name="quantity_finished"
                     oninput="set_finished(this)" value="0" required id="quantity_finished"
-                    class="py-2 px-3 w-full mt-2 rounded text-sm border outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300 transition-all duration-100">
+                    class="w-full px-3 py-2 mt-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
             </div>
             <div class="flex-1">
                 <x-input :value="$production->quantity_not_finished" :label="'Jumlah Belum Selesai'" :name="'quantity_not_finished'" readonly />

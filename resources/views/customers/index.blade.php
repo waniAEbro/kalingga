@@ -39,9 +39,9 @@
 
             modal.innerHTML = `
                 <div class="w-[400px] px-[18px] py-[24px] text-gray-700">
-                    <div class="flex justify-between relative">
-                        <div class="text-lg font-bold">Component Details</div>
-                        <div onclick="hideModal()" class="absolute top-0 right-0 p-1 transition-all cursor-pointer hover:bg-slate-200 bg-slate-100 rounded-full flex justify-center items-center">
+                    <div class="relative flex justify-between">
+                        <div class="text-lg font-bold">Detail Pelanggan</div>
+                        <div onclick="hideModal()" class="absolute top-0 right-0 flex items-center justify-center p-1 transition-all rounded-full cursor-pointer hover:bg-slate-200 bg-slate-100">
                             <ion-icon size="small" name="close-outline"></ion-icon>    
                         </div>
                     </div>
@@ -49,25 +49,25 @@
                     <div class="divider"></div>
         
                     <div>
-                        <div class="grid grid-cols-[0.7fr_1.3fr] mb-3">
-                            <div class="mb-3 font-bold">Nama</div>
-                            <div class="mb-3">: ${customer.name}</div>
+                        <div class="grid grid-cols-[0.7fr_1.3fr] mb-1">
+                            <div class="font-bold ">Nama</div>
+                            <div class="">: ${customer.name}</div>
                         </div>
-                        <div class="grid grid-cols-[0.7fr_1.3fr] mb-3">
-                            <div class="mb-3 font-bold">Email</div>
-                            <div class="mb-3">: ${customer.email}</div>
+                        <div class="grid grid-cols-[0.7fr_1.3fr] mb-1">
+                            <div class="font-bold ">Email</div>
+                            <div class="">: ${customer.email}</div>
                         </div>
-                        <div class="grid grid-cols-[0.7fr_1.3fr] mb-3">
-                            <div class="mb-3 font-bold">No Hp</div>
-                            <div class="mb-3">: ${customer.phone}</div>
+                        <div class="grid grid-cols-[0.7fr_1.3fr] mb-1">
+                            <div class="font-bold ">No Hp</div>
+                            <div class="">: ${customer.phone}</div>
                         </div>
-                        <div class="grid grid-cols-[0.7fr_1.3fr] mb-3">
-                            <div class="mb-3 font-bold">Kode Pelanggan</div>
-                            <div class="mb-3">: ${customer.code}</div>
+                        <div class="grid grid-cols-[0.7fr_1.3fr] mb-1">
+                            <div class="font-bold ">Kode Pelanggan</div>
+                            <div class="">: ${customer.code}</div>
                         </div>
                         <div class="grid grid-cols-[0.7fr_1.3fr]">
-                            <div class="mb-3 font-bold">Alamat</div>
-                            <div class="mb-3">: ${customer.address}</div>
+                            <div class="font-bold ">Alamat</div>
+                            <div class="">: ${customer.address}</div>
                         </div>
                     </div>
                 </div>

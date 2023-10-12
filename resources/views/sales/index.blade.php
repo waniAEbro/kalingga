@@ -258,7 +258,7 @@
 
                         <div class="grid grid-cols-[0.9fr_1.1fr] w-[280px] text-xs mb-1">
                             <div class="flex justify-between">
-                                <div class="font-bold">sisa</div>
+                                <div class="font-bold">Sisa</div>
                                 <div class="whitespace-pre">: </div>
                             </div>
                             <div>${toRupiah(sale.remain_bill)}</div>
@@ -302,7 +302,7 @@
                     </div>
                 </div>
 
-                <div class="py-[20px] px-[30px] w-full border-t-2 border-gray-200 flex justify-end items-center">
+                <div class="py-[20px] px-[30px] w-full flex justify-end items-center">
                     <div onclick="hideModal()" class="py-2 px-5 cursor-pointer border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Kembali</div>
                 </div>
             </div>
