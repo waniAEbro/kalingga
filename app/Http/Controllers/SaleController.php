@@ -37,6 +37,18 @@ class SaleController extends Controller
     {
         // dd($request);
         // dd($request->product_id, $request->quantity, $request->customer_name, $request->total_bill, $request->paid);
+        $request->validate([
+            'supplier_id' => 'required',
+            'purchase_date' => 'required',
+            'due_date' => 'required',
+            'code' => 'required',
+        ],[
+            'supplier_id.required' => 'ID Supplier tidak boleh kosong',
+            'purchase_date.required' => 'Tanggal Pembelian tidak boleh kosong',
+            'due_date.required' => 'Tanggal Jatuh Tempo tidak boleh kosong',
+            'code.required' => 'Kode tidak boleh kosong',
+        ]);
+
         $sale = Sale::create([
             'customer_id' => $request->customer_id,
             'sale_date' => $request->sale_date,
@@ -114,6 +126,12 @@ class SaleController extends Controller
     public function update(UpdateSaleRequest $request, Sale $sale)
     {
         // dd($request);
+        $request->validate([
+            'paid' => 'required',
+        ],[
+            'paid.required' => 'Paid tidak boleh kosong',
+        ]);
+
         $sale->update([
             'status' => $request->remain_bill == 0 ? "closed"  : "open",
             'remain_bill' => $request->remain_bill,
