@@ -41,6 +41,18 @@ class PurchaseController extends Controller
     {
         // dd($request->due_date);
 
+        $request->validate([
+            'supplier_id' => 'required',
+            'purchase_date' => 'required',
+            'due_date' => 'required',
+            'code' => 'required',
+        ],[
+            'supplier_id.required' => 'ID Supplier tidak boleh kosong',
+            'purchase_date.required' => 'Tanggal Pembelian tidak boleh kosong',
+            'due_date.required' => 'Tanggal Jatuh Tempo tidak boleh kosong',
+            'code.required' => 'Kode tidak boleh kosong',
+        ]);
+
         $purchase = Purchase::create([
             'supplier_id' => $request->supplier_id,
             'purchase_date' => $request->purchase_date,
@@ -95,6 +107,12 @@ class PurchaseController extends Controller
      */
     public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
+        $request->validate([
+            'paid' => 'required',
+        ],[
+            'paid.required' => 'Paid tidak boleh kosong',
+        ]);
+
         $purchase->update([
             'status' => $purchase->remain_bill - $request->paid == 0 ? "closed"  : "open",
             'remain_bill' => $purchase->remain_bill - $request->paid,

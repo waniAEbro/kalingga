@@ -14,7 +14,7 @@
 
                 <label for="supplier_id" class="block text-sm">Pemasok</label>
                 <div class="w-40 mt-2 mb-3">
-                    <x-select x-on:click="getSupplier" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'" />
+                    <x-select x-on:click="getSupplier" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'" required />
                 </div>
 
                 <x-input :name="'supplier_address'" :label="'Alamat Pemasok'" readonly class="mb-3 bg-slate-100" />
