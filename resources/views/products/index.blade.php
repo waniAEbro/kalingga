@@ -36,14 +36,6 @@
             modal.classList.remove('opacity-0', '-z-20');
             modal.classList.add('opacity-100', 'z-20');
 
-            // let components_lists = `<tr>
-        //                         <td class="py-2 px-4">1</td>
-        //                         <td class="py-2 px-4">sadasd</td>
-        //                         <td class="py-2 px-4">2</td>
-        //                         <td class="py-2 px-4">v</td>
-        //                         <td class="py-2 px-4">1321312</td>
-        //                         <td class="py-2 px-4">1231231</td>
-        //                     </tr>`;
             let components_lists = '';
             let components_price = 0;
             product.components.forEach((cp, i) => {
@@ -51,22 +43,22 @@
                 console.log(components_price)
 
                 components_lists += `<tr>
-                                <td class="py-2 px-4">${i+1}</td>
-                                <td class="py-2 px-4">${cp.name}</td>
-                                <td class="py-2 px-4">${cp.pivot.quantity}</td>
-                                <td class="py-2 px-4">${cp.unit}</td>
-                                <td class="py-2 px-4">${toRupiah(cp.price_per_unit)}</td>
-                                <td class="py-2 px-4">${toRupiah(cp.price_per_unit*cp.pivot.quantity)}</td>
+                                <td class="px-4 py-2">${i+1}</td>
+                                <td class="px-4 py-2">${cp.name}</td>
+                                <td class="px-4 py-2">${cp.pivot.quantity}</td>
+                                <td class="px-4 py-2">${cp.unit}</td>
+                                <td class="px-4 py-2">${toRupiah(cp.price_per_unit)}</td>
+                                <td class="px-4 py-2">${toRupiah(cp.price_per_unit*cp.pivot.quantity)}</td>
                             </tr>`;
             })
 
-            components_lists += `<tr class="border-y-2 border-gray-200">
-                            <td class="py-2 px-4"></td>
-                            <td class="py-2 px-4"></td>
-                            <td class="py-2 px-4"></td>
-                            <td class="py-2 px-4"></td>
-                            <td class="py-2 px-4 font-bold">Total</td>
-                            <td class="py-2 px-4 font-bold">${toRupiah(components_price)}</td>
+            components_lists += `<tr class="border-gray-200 border-y-2">
+                            <td class="px-4 py-2"></td>
+                            <td class="px-4 py-2"></td>
+                            <td class="px-4 py-2"></td>
+                            <td class="px-4 py-2"></td>
+                            <td class="px-4 py-2 font-bold">Total</td>
+                            <td class="px-4 py-2 font-bold">${toRupiah(components_price)}</td>
                         </tr>`
 
             let total_produksi = toRupiah(product.production_costs.price_perakitan + product.production_costs
@@ -91,14 +83,14 @@
             <div class="w-[960px] bg-white rounded-xl text-gray-800">
                 <div class="py-[20px] px-[30px] w-full relative border-b-2 border-gray-200 flex justify-between items-center">
                     <div class="text-xl font-bold">Detail Produk</div>
-                    <div onclick="hideModal()" class="text-2xl right-5 cursor-pointer flex absolute p-1 hover:bg-slate-100 transition-all rounded-full items-center"><ion-icon name="close-outline"></ion-icon>
+                    <div onclick="hideModal()" class="absolute flex items-center p-1 text-2xl transition-all rounded-full cursor-pointer right-5 hover:bg-slate-100"><ion-icon name="close-outline"></ion-icon>
                     </div>
                 </div>
 
                 <div class="px-[30px] py-[34px] w-full h-[500px] overflow-y-scroll overscroll-none">
                     <div class="flex justify-between gap-5">
                         <div>
-                            <div class="font-bold mb-2">Produk</div>
+                            <div class="mb-2 font-bold">Produk</div>
 
                             <div class="grid grid-cols-[1fr_1fr] w-[150px] mb-1 text-xs">
                                 <div class="flex justify-between">
@@ -116,7 +108,7 @@
                                 <div>${product.logo}</div>
                             </div>
 
-                            <div class="font-bold text-xs mb-1">Kode</div>
+                            <div class="mb-1 text-xs font-bold">Kode</div>
 
                             <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
                                 <div class="flex justify-between">
@@ -142,7 +134,7 @@
                                 <div>${product.code}</div>
                             </div>
 
-                            <div class="font-bold text-xs mb-1">Dimensi</div>
+                            <div class="mb-1 text-xs font-bold">Dimensi</div>
 
                             <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
                                 <div class="flex justify-between">
@@ -170,9 +162,9 @@
                         </div>
 
                         <div>
-                            <div class="font-bold mb-2">Pack</div>
+                            <div class="mb-2 font-bold">Pack</div>
 
-                            <div class="font-bold text-xs mb-1">Dimensi Dalam</div>
+                            <div class="mb-1 text-xs font-bold">Dimensi Dalam</div>
 
                             <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
                                 <div class="flex justify-between">
@@ -198,7 +190,7 @@
                                 <div>${product.pack.inner_height} cm</div>
                             </div>
 
-                            <div class="font-bold text-xs mb-1">Dimensi Luar</div>
+                            <div class="mb-1 text-xs font-bold">Dimensi Luar</div>
 
                             <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
                                 <div class="flex justify-between">
@@ -232,7 +224,7 @@
                                 <div>${product.pack.outer_length*product.pack.outer_width*product.pack.outer_length} cm</div>
                             </div>
 
-                            <div class="font-bold text-xs mb-1">Berat</div>
+                            <div class="mb-1 text-xs font-bold">Berat</div>
 
                             <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
                                 <div class="flex justify-between">
@@ -252,17 +244,17 @@
                         </div>
 
                         <div>
-                            <div class="font-bold mb-3">Komponen</div>
+                            <div class="mb-3 font-bold">Komponen</div>
 
-                            <table class="table-fixed w-full text-xs">
-                                <thead class="border-y-2 border-gray-200">
+                            <table class="w-full text-xs table-fixed">
+                                <thead class="border-gray-200 border-y-2">
                                     <tr>
-                                        <th class="py-2 px-4 w-10">No</th>
-                                        <th class="py-2 px-4 text-start w-20">Komponen</th>
-                                        <th class="py-2 px-4 text-start w-20">Jumlah</th>
-                                        <th class="py-2 px-4 text-start w-10">Unit</th>
-                                        <th class="py-2 px-4 text-start">Harga per Satuan</th>
-                                        <th class="py-2 px-4 text-start">Subtotal</th>
+                                        <th class="w-10 px-4 py-2">No</th>
+                                        <th class="w-20 px-4 py-2 text-start">Komponen</th>
+                                        <th class="w-20 px-4 py-2 text-start">Jumlah</th>
+                                        <th class="w-10 px-4 py-2 text-start">Unit</th>
+                                        <th class="px-4 py-2 text-start">Harga per Satuan</th>
+                                        <th class="px-4 py-2 text-start">Subtotal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -274,43 +266,43 @@
 
                     <div class="grid grid-cols-3 gap-3 mt-8">
                         <div>
-                            <div class="font-bold mb-3">Biaya Produksi</div>
+                            <div class="mb-3 font-bold">Biaya Produksi</div>
 
-                            <table class="table-fixed w-full text-xs">
-                                <thead class="border-y-2 border-gray-200">
+                            <table class="w-full text-xs table-fixed">
+                                <thead class="border-gray-200 border-y-2">
                                     <tr>
-                                        <th class="py-2 px-4 text-start">Deskripsi</th>
-                                        <th class="py-2 px-4 text-start">Harga</th>
+                                        <th class="px-4 py-2 text-start">Deskripsi</th>
+                                        <th class="px-4 py-2 text-start">Harga</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="py-2 px-4">Harga Perakitan</td>
-                                        <td class="py-2 px-4">${toRupiah(product.production_costs.price_perakitan)}</td>
+                                        <td class="px-4 py-2">Harga Perakitan</td>
+                                        <td class="px-4 py-2">${toRupiah(product.production_costs.price_perakitan)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4">Harga Perakitan PRJ</td>
-                                        <td class="py-2 px-4">${toRupiah(product.production_costs.price_perakitan_prj)}</td>
+                                        <td class="px-4 py-2">Harga Perakitan PRJ</td>
+                                        <td class="px-4 py-2">${toRupiah(product.production_costs.price_perakitan_prj)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4">Harga Grendo</td>
-                                        <td class="py-2 px-4">${toRupiah(product.production_costs.price_grendo)}</td>
+                                        <td class="px-4 py-2">Harga Grendo</td>
+                                        <td class="px-4 py-2">${toRupiah(product.production_costs.price_grendo)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4">Harga Obat</td>
-                                        <td class="py-2 px-4">${toRupiah(product.production_costs.price_obat)}</td>
+                                        <td class="px-4 py-2">Harga Obat</td>
+                                        <td class="px-4 py-2">${toRupiah(product.production_costs.price_obat)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4">Upah</td>
-                                        <td class="py-2 px-4">${toRupiah(product.production_costs.upah)}</td>
+                                        <td class="px-4 py-2">Upah</td>
+                                        <td class="px-4 py-2">${toRupiah(product.production_costs.upah)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4 text-transparent">d</td>
-                                        <td class="py-2 px-4"></td>
+                                        <td class="px-4 py-2 text-transparent">d</td>
+                                        <td class="px-4 py-2"></td>
                                     </tr>
-                                    <tr class="border-y-2 border-gray-200">
-                                        <td class="py-2 px-4 font-bold">Total</td>
-                                        <td class="py-2 px-4 font-bold">${total_produksi}</td>
+                                    <tr class="border-gray-200 border-y-2">
+                                        <td class="px-4 py-2 font-bold">Total</td>
+                                        <td class="px-4 py-2 font-bold">${total_produksi}</td>
                                     </tr>
 
                                 </tbody>
@@ -318,43 +310,43 @@
                         </div>
 
                         <div>
-                            <div class="font-bold mb-3">Biaya Packing</div>
+                            <div class="mb-3 font-bold">Biaya Packing</div>
 
-                            <table class="table-fixed w-full text-xs">
-                                <thead class="border-y-2 border-gray-200">
+                            <table class="w-full text-xs table-fixed">
+                                <thead class="border-gray-200 border-y-2">
                                     <tr>
-                                        <th class="py-2 px-4 text-start">Deskripsi</th>
-                                        <th class="py-2 px-4 text-start">Harga</th>
+                                        <th class="px-4 py-2 text-start">Deskripsi</th>
+                                        <th class="px-4 py-2 text-start">Harga</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="py-2 px-4">Harga Box</td>
-                                        <td class="py-2 px-4">${toRupiah(product.pack.box_price)}</td>
+                                        <td class="px-4 py-2">Harga Box</td>
+                                        <td class="px-4 py-2">${toRupiah(product.pack.box_price)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4">Box Hardware</td>
-                                        <td class="py-2 px-4">${toRupiah(product.pack.box_hardware)}</td>
+                                        <td class="px-4 py-2">Box Hardware</td>
+                                        <td class="px-4 py-2">${toRupiah(product.pack.box_hardware)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4">Assembling</td>
-                                        <td class="py-2 px-4">${toRupiah(product.pack.assembling)}</td>
+                                        <td class="px-4 py-2">Assembling</td>
+                                        <td class="px-4 py-2">${toRupiah(product.pack.assembling)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4">Stiker</td>
-                                        <td class="py-2 px-4">${toRupiah(product.pack.stiker)}</td>
+                                        <td class="px-4 py-2">Stiker</td>
+                                        <td class="px-4 py-2">${toRupiah(product.pack.stiker)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4">Hagtag</td>
-                                        <td class="py-2 px-4">${toRupiah(product.pack.hagtag)}</td>
+                                        <td class="px-4 py-2">Hagtag</td>
+                                        <td class="px-4 py-2">${toRupiah(product.pack.hagtag)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4">Maintenance</td>
-                                        <td class="py-2 px-4">${toRupiah(product.pack.maintenance)}</td>
+                                        <td class="px-4 py-2">Maintenance</td>
+                                        <td class="px-4 py-2">${toRupiah(product.pack.maintenance)}</td>
                                     </tr>
-                                    <tr class="border-y-2 border-gray-200">
-                                        <td class="py-2 px-4 font-bold">Total</td>
-                                        <td class="py-2 px-4 font-bold">${total_packing}</td>
+                                    <tr class="border-gray-200 border-y-2">
+                                        <td class="px-4 py-2 font-bold">Total</td>
+                                        <td class="px-4 py-2 font-bold">${total_packing}</td>
                                     </tr>
 
                                 </tbody>
@@ -362,43 +354,43 @@
                         </div>
 
                         <div>
-                            <div class="font-bold mb-3">Biaya Lain-Lain</div>
+                            <div class="mb-3 font-bold">Biaya Lain-Lain</div>
 
-                            <table class="table-fixed w-full text-xs">
-                                <thead class="border-y-2 border-gray-200">
+                            <table class="w-full text-xs table-fixed">
+                                <thead class="border-gray-200 border-y-2">
                                     <tr>
-                                        <th class="py-2 px-4 text-start">Deskripsi</th>
-                                        <th class="py-2 px-4 text-start">Harga</th>
+                                        <th class="px-4 py-2 text-start">Deskripsi</th>
+                                        <th class="px-4 py-2 text-start">Harga</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="py-2 px-4">Overhead Pabrik</td>
-                                        <td class="py-2 px-4">${toRupiah(product.other_costs.biaya_overhead_pabrik)}</td>
+                                        <td class="px-4 py-2">Overhead Pabrik</td>
+                                        <td class="px-4 py-2">${toRupiah(product.other_costs.biaya_overhead_pabrik)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4">Listrik</td>
-                                        <td class="py-2 px-4">${toRupiah(product.other_costs.biaya_listrik)}</td>
+                                        <td class="px-4 py-2">Listrik</td>
+                                        <td class="px-4 py-2">${toRupiah(product.other_costs.biaya_listrik)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4">Pajak</td>
-                                        <td class="py-2 px-4">${toRupiah(product.other_costs.biaya_pajak)}</td>
+                                        <td class="px-4 py-2">Pajak</td>
+                                        <td class="px-4 py-2">${toRupiah(product.other_costs.biaya_pajak)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4">Export+Usaha</td>
-                                        <td class="py-2 px-4">${toRupiah(product.other_costs.biaya_ekspor)}</td>
+                                        <td class="px-4 py-2">Export+Usaha</td>
+                                        <td class="px-4 py-2">${toRupiah(product.other_costs.biaya_ekspor)}</td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4 text-transparent">d</td>
-                                        <td class="py-2 px-4"></td>
+                                        <td class="px-4 py-2 text-transparent">d</td>
+                                        <td class="px-4 py-2"></td>
                                     </tr>
                                     <tr>
-                                        <td class="py-2 px-4 text-transparent">d</td>
-                                        <td class="py-2 px-4"></td>
+                                        <td class="px-4 py-2 text-transparent">d</td>
+                                        <td class="px-4 py-2"></td>
                                     </tr>
-                                    <tr class="border-y-2 border-gray-200">
-                                        <td class="py-2 px-4 font-bold">Total</td>
-                                        <td class="py-2 px-4 font-bold">${total_lain_lain}</td>
+                                    <tr class="border-gray-200 border-y-2">
+                                        <td class="px-4 py-2 font-bold">Total</td>
+                                        <td class="px-4 py-2 font-bold">${total_lain_lain}</td>
                                     </tr>
 
                                 </tbody>
@@ -406,10 +398,10 @@
                         </div>
                     </div>
 
-                    <div class="mt-8 w-full text-xs flex justify-end">
+                    <div class="flex justify-end w-full mt-8 text-xs">
                         <div class="w-60">
-                            <div class="font-bold mb-2 grid grid-cols-2 w-full">HPP<span>: ${hpp}</span></div>
-                            <div class="font-bold grid grid-cols-2 w-full">Harga Jual<span>: ${toRupiah(product.sell_price)}</span></div>
+                            <div class="grid w-full grid-cols-2 mb-2 font-bold">HPP<span>: ${hpp}</span></div>
+                            <div class="grid w-full grid-cols-2 font-bold">Harga Jual<span>: ${toRupiah(product.sell_price)}</span></div>
                         </div>
                     </div>
                 </div>
