@@ -56,7 +56,7 @@
                         </div>
                         <div class="grid grid-cols-[0.7fr_1.3fr] mb-1">
                             <div class="font-bold ">Email</div>
-                            <div class="">: ${supplier.email}</div>
+                            <div class="break-all">: ${supplier.email}</div>
                         </div>
                         <div class="grid grid-cols-[0.7fr_1.3fr] mb-1">
                             <div class="font-bold ">No Hp</div>
