@@ -19,7 +19,7 @@
                         <div class="p-2">
                             <div class="flex items-center gap-3 hover:cursor-pointer p-2 hover:bg-[#12483A] rounded">
                                 <ion-icon class="text-sm text-white" name="exit-outline"></ion-icon>
-                                <div class="text-sm">Logout</div>
+                                <div class="text-sm"><a href="/logout">Logout</a></div>
                             </div>
                         </div>
                     </div>
