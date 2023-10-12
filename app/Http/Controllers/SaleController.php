@@ -38,13 +38,13 @@ class SaleController extends Controller
         // dd($request);
         // dd($request->product_id, $request->quantity, $request->customer_name, $request->total_bill, $request->paid);
         $request->validate([
-            'supplier_id' => 'required',
-            'purchase_date' => 'required',
+            'customer_id' => 'required',
+            'sale_date' => 'required',
             'due_date' => 'required',
             'code' => 'required',
         ],[
-            'supplier_id.required' => 'ID Supplier tidak boleh kosong',
-            'purchase_date.required' => 'Tanggal Pembelian tidak boleh kosong',
+            'customer_id.required' => 'ID Customer tidak boleh kosong',
+            'sale_date.required' => 'Tanggal Pembelian tidak boleh kosong',
             'due_date.required' => 'Tanggal Jatuh Tempo tidak boleh kosong',
             'code.required' => 'Kode tidak boleh kosong',
         ]);
