@@ -32,6 +32,17 @@ class ComponentController extends Controller
     public function store(StorecomponentRequest $request): RedirectResponse
     {
         // dd($request->selectfield);
+
+        $request->validate([
+            'name' => 'required',
+            'price_per_unit' => 'required',
+            'unit' => 'required'
+        ],[
+            'name.required' => 'Nama tidak boleh kosong',
+            'price_per_unit.required' => 'Harga tidak boleh kosong',
+            'unit.required' => 'Satuan unit tidak boleh kosong',
+        ]);
+
         Component::create([
             "name" => $request->name,
             "price_per_unit" => $request->price_per_unit,
@@ -62,6 +73,16 @@ class ComponentController extends Controller
      */
     public function update(UpdatecomponentRequest $request, component $component): RedirectResponse
     {
+        $request->validate([
+            'name' => 'required',
+            'price_per_unit' => 'required',
+            'unit' => 'required'
+        ],[
+            'name.required' => 'Nama tidak boleh kosong',
+            'price_per_unit.required' => 'Harga tidak boleh kosong',
+            'unit.required' => 'Satuan unit tidak boleh kosong',
+        ]);
+
         $component->update([
             "name" => $request->name,
             "price_per_unit" => $request->price_per_unit,
