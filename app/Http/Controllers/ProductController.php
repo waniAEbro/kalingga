@@ -158,7 +158,7 @@ class ProductController extends Controller
             "biaya_listrik" => $request->biaya_listrik,
             "biaya_pajak" => $request->biaya_pajak,
             "biaya_ekspor" => $request->biaya_ekspor,
-            "total" => $request->total,
+            "total" => $request->total_other_cost,
         ]);
 
         $product->update([

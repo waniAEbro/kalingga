@@ -165,8 +165,6 @@
                         :name="'biaya_pajak'" :type="'number'" class="mb-3" />
                     <x-input :value="$product->other_costs->biaya_ekspor" oninput="set_total_lain()" :label="'Export+Usaha'" :desc="'Rp'"
                         :name="'biaya_ekspor'" :type="'number'" class="mb-3" />
-                    <x-input :value="$product->other_costs->total" oninput="set_total_lain()" :label="'Total'" :desc="'Rp'"
-                        :name="'total'" :type="'number'" class="mb-3" />
                 </div>
 
             </div>
@@ -201,86 +199,86 @@
                 </div>
             </div>
             </x-create-input-field>
-@endsection
-@push('script')
-    <script>
-        set_number();
-        set_volume();
-        set_total_produksi();
-        set_total_packing();
-        set_total_lain();
-        // set_subtotal();
+        @endsection
+        @push('script')
+            <script>
+                set_number();
+                set_volume();
+                set_total_produksi();
+                set_total_packing();
+                set_total_lain();
+                // set_subtotal();
 
-        function set_total_produksi() {
-            const el_biaya_produksi = document.querySelectorAll('.biaya_produksi input')
-            const biaya_produksi = Array.from(el_biaya_produksi)
-                .map(el => parseInt(el.value) || 0)
-                .reduce((acc, curr) => acc + curr)
-            const total_produksi = document.querySelector('input[name="total_production"]').value = biaya_produksi;
+                function set_total_produksi() {
+                    const el_biaya_produksi = document.querySelectorAll('.biaya_produksi input')
+                    const biaya_produksi = Array.from(el_biaya_produksi)
+                        .map(el => parseInt(el.value) || 0)
+                        .reduce((acc, curr) => acc + curr)
+                    const total_produksi = document.querySelector('input[name="total_production"]').value = biaya_produksi;
 
-            set_total();
-        }
+                    set_total();
+                }
 
-        function set_total_packing() {
-            const el_biaya_packing = document.querySelectorAll('.biaya_packing input')
-            const biaya_packing = Array.from(el_biaya_packing)
-                .map(el => parseInt(el.value) || 0)
-                .reduce((acc, curr) => acc + curr)
-            const total_packing = document.querySelector('input[name="pack_cost"]').value = biaya_packing;
+                function set_total_packing() {
+                    const el_biaya_packing = document.querySelectorAll('.biaya_packing input')
+                    const biaya_packing = Array.from(el_biaya_packing)
+                        .map(el => parseInt(el.value) || 0)
+                        .reduce((acc, curr) => acc + curr)
+                    const total_packing = document.querySelector('input[name="pack_cost"]').value = biaya_packing;
 
-            set_total();
-        }
+                    set_total();
+                }
 
-        function set_total_lain() {
-            const el_biaya_lain = document.querySelectorAll('.biaya_lain input')
-            const biaya_lain = Array.from(el_biaya_lain)
-                .map(el => parseInt(el.value) || 0)
-                .reduce((acc, curr) => acc + curr)
-            const total_packing = document.querySelector('input[name="total_other_cost"]').value = biaya_lain;
+                function set_total_lain() {
+                    const el_biaya_lain = document.querySelectorAll('.biaya_lain input')
+                    const biaya_lain = Array.from(el_biaya_lain)
+                        .map(el => parseInt(el.value) || 0)
+                        .reduce((acc, curr) => acc + curr)
+                    const total_packing = document.querySelector('input[name="total_other_cost"]').value = biaya_lain;
 
-            set_total();
-        }
-
-
-
-        function set_volume() {
-            const packOuterLength = document.getElementById('pack_outer_length').value;
-            const packOuterWidth = document.getElementById('pack_outer_width').value;
-            const packOuterHeight = document.getElementById('pack_outer_height').value;
-            const volume = document.getElementById('volume').value = packOuterHeight * packOuterLength * packOuterWidth;
-
-        }
+                    set_total();
+                }
 
 
-        function getComponent(tr) {
 
-            let components = {!! $components !!};
-            const componentId = tr.querySelector('#component_id');
+                function set_volume() {
+                    const packOuterLength = document.getElementById('pack_outer_length').value;
+                    const packOuterWidth = document.getElementById('pack_outer_width').value;
+                    const packOuterHeight = document.getElementById('pack_outer_height').value;
+                    const volume = document.getElementById('volume').value = packOuterHeight * packOuterLength * packOuterWidth;
 
-            if (componentId.value) {
-                const component = components.find(component => component.id == componentId.value)
-                const unit = tr.querySelector('#unit').innerText = component.unit;
-                const price = tr.querySelector('#price').innerText = toRupiah(component.price_per_unit);
-            } else {
-                tr.querySelector('#unit').innerText = '';
-                tr.querySelector('#price').innerText = '';
-                tr.querySelector('#subtotal').innerText = "";
-                tr.querySelector('.input_quantity').value = 0;
-                set_total()
-            }
-        }
+                }
 
-        function set_number() {
-            const numbers = document.querySelectorAll('#number');
-            numbers.forEach((number, i) => number.innerText = i + 1)
-        }
 
-        function addNew() {
-            const productBody = document.getElementById('productBody');
-            const productRow = document.createElement('tr');
-            productRow.setAttribute('x-data', '{ productEl: $el }')
-            productRow.className = 'border-b';
-            productRow.innerHTML = `
+                function getComponent(tr) {
+
+                    let components = {!! $components !!};
+                    const componentId = tr.querySelector('#component_id');
+
+                    if (componentId.value) {
+                        const component = components.find(component => component.id == componentId.value)
+                        const unit = tr.querySelector('#unit').innerText = component.unit;
+                        const price = tr.querySelector('#price').innerText = toRupiah(component.price_per_unit);
+                    } else {
+                        tr.querySelector('#unit').innerText = '';
+                        tr.querySelector('#price').innerText = '';
+                        tr.querySelector('#subtotal').innerText = "";
+                        tr.querySelector('.input_quantity').value = 0;
+                        set_total()
+                    }
+                }
+
+                function set_number() {
+                    const numbers = document.querySelectorAll('#number');
+                    numbers.forEach((number, i) => number.innerText = i + 1)
+                }
+
+                function addNew() {
+                    const productBody = document.getElementById('productBody');
+                    const productRow = document.createElement('tr');
+                    productRow.setAttribute('x-data', '{ productEl: $el }')
+                    productRow.className = 'border-b';
+                    productRow.innerHTML = `
                                 <td id="number" class="p-2"></td>
                                 <td class="w-40 p-2">
                                     <x-select x-on:click="getComponent(productEl); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
@@ -300,42 +298,42 @@
                                 </td>
                             `;
 
-            productBody.appendChild(productRow);
-        }
+                    productBody.appendChild(productRow);
+                }
 
-        function set_subtotal(element) {
-            let tr = element.parentElement.parentElement;
-            let price = tr.querySelector('#price').textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
-                '').replace(',', '.');
-            let subtotal = tr.querySelector('#subtotal');
-            subtotal.textContent = toRupiah(0)
-            if (price != "" && parseFloat(element.value) >= 0) {
-                subtotal.textContent = toRupiah(parseInt(price) * parseFloat(element.value));
-            } else {
-                subtotal.textContent = toRupiah(0);
-            }
+                function set_subtotal(element) {
+                    let tr = element.parentElement.parentElement;
+                    let price = tr.querySelector('#price').textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
+                        '').replace(',', '.');
+                    let subtotal = tr.querySelector('#subtotal');
+                    subtotal.textContent = toRupiah(0)
+                    if (price != "" && parseFloat(element.value) >= 0) {
+                        subtotal.textContent = toRupiah(parseInt(price) * parseFloat(element.value));
+                    } else {
+                        subtotal.textContent = toRupiah(0);
+                    }
 
-            set_total();
-        }
+                    set_total();
+                }
 
-        function set_total() {
-            let subtotals = document.querySelectorAll('#subtotal');
-            let total = 0;
-            subtotals.forEach(subtotalElement => {
-                let subtotalValue = parseFloat(subtotalElement.textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
-                    '').replace(',', '.'));
-                total += isNaN(subtotalValue) ? 0 : subtotalValue;
-            })
+                function set_total() {
+                    let subtotals = document.querySelectorAll('#subtotal');
+                    let total = 0;
+                    subtotals.forEach(subtotalElement => {
+                        let subtotalValue = parseFloat(subtotalElement.textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
+                            '').replace(',', '.'));
+                        total += isNaN(subtotalValue) ? 0 : subtotalValue;
+                    })
 
-            console.log(total)
+                    console.log(total)
 
-            let production_cost = parseInt(document.querySelector('#total_production').value) || 0;
-            let other_cost = parseInt(document.querySelector('#total_other_cost').value) || 0;
-            let pack_cost = parseInt(document.querySelector('#pack_cost').value) || 0;
+                    let production_cost = parseInt(document.querySelector('#total_production').value) || 0;
+                    let other_cost = parseInt(document.querySelector('#total_other_cost').value) || 0;
+                    let pack_cost = parseInt(document.querySelector('#pack_cost').value) || 0;
 
-            total += production_cost + other_cost + pack_cost
+                    total += production_cost + other_cost + pack_cost
 
-            document.querySelector('#hpp').value = total;
-        }
-    </script>
-@endpush
+                    document.querySelector('#hpp').value = total;
+                }
+            </script>
+        @endpush

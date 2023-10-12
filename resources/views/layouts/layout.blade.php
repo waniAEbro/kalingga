@@ -38,9 +38,366 @@
         </x-main>
 
         <div id="modal-background" onclick="hideModal()"
-            class="absolute hidden top-0 z-10 w-full h-full bg-black opacity-50"></div>
+            class="absolute hidden top-0 z-10 w-full h-full bg-black opacity-50">
+        </div>
         <div id="modal"
-            class="absolute -z-20 translate-x-1/2 -translate-y-1/2 bg-white top-1/3 right-1/2 rounded-xl transition-opacity duration-300 opacity-0">
+            class="absolute text-[#161414] -z-20 translate-x-1/2 -translate-y-1/2 bg-white top-1/2 right-1/2 rounded-xl transition-opacity duration-300 opacity-0">
+            {{-- <div class="w-[960px] bg-white rounded-xl">
+                <div class="py-[20px] px-[30px] w-full border-b-2 border-[#A59898] flex justify-between items-center">
+                    <div class="text-xl font-bold">Detail Produk</div>
+                    <div class="text-2xl flex items-center"><ion-icon name="close-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="px-[30px] py-[34px] w-full h-[500px] overflow-y-scroll overscroll-none">
+                    <div class="flex justify-between gap-5">
+                        <div>
+                            <div class="font-bold mb-2">Produk</div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] mb-1 text-xs">
+                                <div class="flex justify-between">
+                                    <div class="font-bold">Nama</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>Kursi Goyang</div>
+                            </div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs mb-1">
+                                <div class="flex justify-between">
+                                    <div class="font-bold">Logo</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>Sunyard</div>
+                            </div>
+
+                            <div class="font-bold text-xs mb-1">Kode</div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>Barcode</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>939393</div>
+                            </div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>RFID</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>939393</div>
+                            </div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>Produk</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>939393</div>
+                            </div>
+
+                            <div class="font-bold text-xs mb-1">Dimensi</div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>Panjang</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>2 cm</div>
+                            </div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>Lebar</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>2 cm</div>
+                            </div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>Tinggi</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>2 cm</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="font-bold mb-2">Pack</div>
+
+                            <div class="font-bold text-xs mb-1">Dimensi Dalam</div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>Panjang</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>2 cm</div>
+                            </div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>Lebar</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>2 cm</div>
+                            </div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>Tinggi</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>2 cm</div>
+                            </div>
+
+                            <div class="font-bold text-xs mb-1">Dimensi Luar</div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>Panjang</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>2 cm</div>
+                            </div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>Lebar</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>2 cm</div>
+                            </div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>Tinggi</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>2 cm</div>
+                            </div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>Volume</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>2 cm</div>
+                            </div>
+
+                            <div class="font-bold text-xs mb-1">Berat</div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>NW</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>2 kg</div>
+                            </div>
+
+                            <div class="grid grid-cols-[1fr_1fr] w-[150px] text-xs ml-3 mb-1">
+                                <div class="flex justify-between">
+                                    <div>GW</div>
+                                    <div class="whitespace-pre">: </div>
+                                </div>
+                                <div>2 kg</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="font-bold mb-3">Komponen</div>
+
+                            <table class="table-fixed w-full text-xs">
+                                <thead class="border-y-2 border-[#A59898]">
+                                    <tr>
+                                        <th class="py-2 px-4 w-10">No</th>
+                                        <th class="py-2 px-4 text-start w-20">Komponen</th>
+                                        <th class="py-2 px-4 text-start w-20">Jumlah</th>
+                                        <th class="py-2 px-4 text-start w-10">Unit</th>
+                                        <th class="py-2 px-4 text-start">Harga per Satuan</th>
+                                        <th class="py-2 px-4 text-start">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="py-2 px-4">1</td>
+                                        <td class="py-2 px-4">Kayu</td>
+                                        <td class="py-2 px-4">1</td>
+                                        <td class="py-2 px-4">m</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">2</td>
+                                        <td class="py-2 px-4">Kayu</td>
+                                        <td class="py-2 px-4">1</td>
+                                        <td class="py-2 px-4">m</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr class="border-y-2 border-[#A59898]">
+                                        <td class="py-2 px-4"></td>
+                                        <td class="py-2 px-4"></td>
+                                        <td class="py-2 px-4"></td>
+                                        <td class="py-2 px-4"></td>
+                                        <td class="py-2 px-4 font-bold">Total</td>
+                                        <td class="py-2 px-4 font-bold">Rp 4.000,00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3 mt-8">
+                        <div>
+                            <div class="font-bold mb-3">Biaya Produksi</div>
+
+                            <table class="table-fixed w-full text-xs">
+                                <thead class="border-y-2 border-[#A59898]">
+                                    <tr>
+                                        <th class="py-2 px-4 text-start">Deskripsi</th>
+                                        <th class="py-2 px-4 text-start">Harga</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="py-2 px-4">Harga Perakitan</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">Harga Perakitan PRJ</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">Harga Grendo</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">Harga Obat</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">Upah</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4 text-transparent">d</td>
+                                        <td class="py-2 px-4"></td>
+                                    </tr>
+                                    <tr class="border-y-2 border-[#A59898]">
+                                        <td class="py-2 px-4 font-bold">Total</td>
+                                        <td class="py-2 px-4 font-bold">Rp 4.000,00</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div>
+                            <div class="font-bold mb-3">Biaya Packing</div>
+
+                            <table class="table-fixed w-full text-xs">
+                                <thead class="border-y-2 border-[#A59898]">
+                                    <tr>
+                                        <th class="py-2 px-4 text-start">Deskripsi</th>
+                                        <th class="py-2 px-4 text-start">Harga</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="py-2 px-4">Harga Box</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">Box Hardware</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">Assembling</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">Stiker</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">Hagtag</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">Maintenance</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr class="border-y-2 border-[#A59898]">
+                                        <td class="py-2 px-4 font-bold">Total</td>
+                                        <td class="py-2 px-4 font-bold">Rp 4.000,00</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div>
+                            <div class="font-bold mb-3">Biaya Lain-Lain</div>
+
+                            <table class="table-fixed w-full text-xs">
+                                <thead class="border-y-2 border-[#A59898]">
+                                    <tr>
+                                        <th class="py-2 px-4 text-start">Deskripsi</th>
+                                        <th class="py-2 px-4 text-start">Harga</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="py-2 px-4">Overhead Pabrik</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">Listrik</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">Pajak</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4">Export+Usaha</td>
+                                        <td class="py-2 px-4">Rp 4.000,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4 text-transparent">d</td>
+                                        <td class="py-2 px-4"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-4 text-transparent">d</td>
+                                        <td class="py-2 px-4"></td>
+                                    </tr>
+                                    <tr class="border-y-2 border-[#A59898]">
+                                        <td class="py-2 px-4 font-bold">Total</td>
+                                        <td class="py-2 px-4 font-bold">Rp 4.000,00</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 w-full text-xs flex justify-end">
+                        <div class="w-40">
+                            <div class="font-bold mb-2 flex justify-between">HPP<span>: Rp 4.000,00</span>
+                            </div>
+                            <div class="font-bold flex justify-between">Harga Jual<span>:
+                                    Rp 4.000,00</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-[20px] px-[30px] w-full border-t-2 border-[#A59898] flex justify-end items-center">
+                    <div class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Kembali</div>
+                </div>
+            </div> --}}
+
         </div>
     </div>
 
@@ -154,7 +511,7 @@
                 "overflow-hidden", "drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]")
             tr.id = "daftar-item";
             tr.height = "30px";
-            tr.innerHTML += `<td class="p-4 rounded-l-lg"><div class="flex items-center justify-center gap-3 border-r h-7 border-slate-200">
+            tr.innerHTML += `<td class="py-2 px-4" class="p-4 rounded-l-lg"><div class="flex items-center justify-center gap-3 border-r h-7 border-slate-200">
                 ${state.page * state.rows - state.rows + index + 1}
                 </td>`
             state.columnQuery.forEach(columnQuery => {
@@ -166,7 +523,7 @@
                 tr.appendChild(td)
             })
             tr.innerHTML += `
-            <td onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
+            <td class="py-2 px-4" onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
                 <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                     <a href="/${state.menu}/${ data.id }/edit" class="flex items-center gap-1 text-slate-600">
                         <span class="text-lg"><ion-icon name="create-outline"></ion-icon></span>Edit
