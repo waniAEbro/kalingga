@@ -31,6 +31,20 @@ class SupplierController extends Controller
     public function store(StoreSupplierRequest $request): RedirectResponse
     {
         // dd($request);
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'code' => 'required',
+        ],[
+            'name.required' => 'Nama tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'phone.required' => 'Nomor Telepon tidak boleh kosong',
+            'address.required' => 'Alamat tidak boleh kosong',
+            'code.required' => 'Kode tidak boleh kosong',
+        ]);
+
         Supplier::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -63,6 +77,20 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, Supplier $supplier)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'code' => 'required',
+        ],[
+            'name.required' => 'Nama tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'phone.required' => 'Nomor Telepon tidak boleh kosong',
+            'address.required' => 'Alamat tidak boleh kosong',
+            'code.required' => 'Kode tidak boleh kosong',
+        ]);
+
         $supplier->update([
             'name' => $request->name,
             'email' => $request->email,
