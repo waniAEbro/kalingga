@@ -14,6 +14,10 @@
         </div>
         <div class="flex w-full gap-3 my-3">
             <div class="flex-1">
+                <label for="supplier_id" class="block text-sm mb-2">Supplier</label>
+                <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'" />
+            </div>
+            <div class="flex-none">
                 <x-input-with-desc :desc="'Rp'" :name="'price_per_unit'" :type="'number'" :label="'Harga Per Unit'"
                     :placeholder="'1000'" :value="old('price_per_unit')" />
             </div>

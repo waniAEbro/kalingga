@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Supplier;
 use App\Models\Component;
-use App\Http\Requests\StorecomponentRequest;
-use App\Http\Requests\UpdatecomponentRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\StorecomponentRequest;
+use App\Http\Requests\UpdatecomponentRequest;
 
 class ComponentController extends Controller
 {
@@ -23,7 +24,7 @@ class ComponentController extends Controller
      */
     public function create(): View
     {
-        return view("component.create");
+        return view("component.create", ["suppliers" => Supplier::get()]);
     }
 
     /**
@@ -36,17 +37,20 @@ class ComponentController extends Controller
         $request->validate([
             'name' => 'required',
             'price_per_unit' => 'required',
-            'unit' => 'required'
-        ],[
+            'unit' => 'required',
+            "supplier_id" => 'required'
+        ], [
             'name.required' => 'Nama tidak boleh kosong',
             'price_per_unit.required' => 'Harga tidak boleh kosong',
             'unit.required' => 'Satuan unit tidak boleh kosong',
+            "supplier_id.required" => 'Supplier tidak boleh kosong'
         ]);
 
         Component::create([
             "name" => $request->name,
             "price_per_unit" => $request->price_per_unit,
-            "unit" => $request->unit
+            "unit" => $request->unit,
+            "supplier_id" => $request->supplier_id
         ]);
 
         return redirect("/components");
@@ -65,7 +69,7 @@ class ComponentController extends Controller
      */
     public function edit(component $component): View
     {
-        return view("component.edit", ["componentedit" => Component::find($component->id)]);
+        return view("component.edit", ["componentedit" => Component::find($component->id), "suppliers" => Supplier::get()]);
     }
 
     /**
@@ -76,17 +80,20 @@ class ComponentController extends Controller
         $request->validate([
             'name' => 'required',
             'price_per_unit' => 'required',
-            'unit' => 'required'
-        ],[
+            'unit' => 'required',
+            "supplier_id" => "required"
+        ], [
             'name.required' => 'Nama tidak boleh kosong',
             'price_per_unit.required' => 'Harga tidak boleh kosong',
             'unit.required' => 'Satuan unit tidak boleh kosong',
+            "supplier_id.required" => 'Supplier tidak boleh kosong'
         ]);
 
         $component->update([
             "name" => $request->name,
             "price_per_unit" => $request->price_per_unit,
-            "unit" => $request->unit
+            "unit" => $request->unit,
+            "supplier_id" => $request->supplier_id
         ]);
 
         return redirect("/components");
