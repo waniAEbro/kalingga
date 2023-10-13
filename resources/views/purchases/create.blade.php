@@ -39,25 +39,6 @@
                         </tr>
                     </thead>
                     <tbody id="purchaseBody">
-                        <tr x-data="{ purchase: $el }" class="border-b">
-                            <td id="number" class="p-2"></td>
-                            <td class="w-40 p-2">
-                                <x-select x-on:click="getComponent(purchase); $nextTick(); set_subtotal($refs.quantity)"
-                                    :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
-                            </td>
-                            <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]" required
-                                    oninput="set_subtotal(this)" value="0" step="0.001"
-                                    class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
-                            </td>
-                            <td id="unit" class="p-2"></td>
-                            <td id="price" class="p-2"></td>
-                            <td id="subtotal" class="p-2"></td>
-                            <td class="p-2">
-                                <button type="button" x-on:click="purchase.remove(); set_total(); set_number()"
-                                    class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
-                                        class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
 
@@ -84,8 +65,6 @@
             let suppliers = {!! $suppliers !!}
             const supplierId = document.getElementById('supplier_id')
             const supplier = suppliers.find(supplier => supplier.id == supplierId.value)
-            // suppliers.forEach(supplier => console.log(supplier.id))
-            // console.log(supplier)
             if (supplier) {
                 const supplierAddress = document.getElementById('supplier_address').value = supplier.address;
                 const supplierEmail = document.getElementById('supplier_email').value = supplier.email;
@@ -96,11 +75,19 @@
                 const supplierEmail = document.getElementById('supplier_email').value = '';
                 const supplierPhone = document.getElementById('supplier_phone').value = '';
             }
+            document.getElementById("purchaseBody").innerHTML = ""
+            components.filter(element => {
+                return element.supplier_id == supplierId.value
+            }).forEach(element => {
+                componentsSelected[element.id] = element.name
+            })
         }
+
+        let componentsSelected = {}
+        let components = {!! $components !!};
 
         function getComponent(tr) {
 
-            let components = {!! $components !!};
             const componentId = tr.querySelector('#component_id');
 
             if (componentId.value) {
@@ -128,7 +115,7 @@
             purchaseRow.innerHTML = `
                                         <td id="number" class="p-2"></td>
                                         <td class="w-40 p-2">
-                                            <x-select x-on:click="getComponent(purchase); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
+                                            <x-select x-on:click="getComponent(purchase); await $nextTick(); set_subtotal($refs.quantity)" x-init="await $nextTick(); setKomponen();" :dataLists="$components->toArray()"
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
@@ -146,6 +133,12 @@
                                     `;
 
             purchaseBody.appendChild(purchaseRow);
+        }
+
+        function setKomponen() {
+            document.querySelectorAll(".component_id").forEach(element => {
+                element._x_dataStack[0].list = componentsSelected
+            })
         }
 
         function set_subtotal(element) {

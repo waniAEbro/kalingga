@@ -1,6 +1,6 @@
 @props(['dataLists', 'name', 'id', 'value' => '', 'label' => 'Please Select'])
 
-<div class="relative text-black" x-data="selectmenu({ @foreach ($dataLists as $dataList) {{ $dataList['id'] }}: '{{ $dataList['name'] }}', @endforeach }, '{{ $value }}', '{{ $label }}')" @click.away="close()">
+<div class="relative text-black {{ $id }}" x-data="selectmenu({ @foreach ($dataLists as $dataList) {{ $dataList['id'] }}: '{{ $dataList['name'] }}', @endforeach }, '{{ $value }}', '{{ $label }}')" @click.away="close()">
     <input type="text" x-model="selectedkey" name="{{ $name }}" id="{{ $id }}" class="hidden">
     <span class="inline-block w-full rounded-md shadow-sm" @click="toggle(); $nextTick(() => $refs.filterinput.focus());">
         <button type="button"
@@ -81,14 +81,13 @@
                     if (this.filter == '') {
                         return this.list;
                     }
-                    var filtered = Object.entries(this.list).filter(([key, value]) => value.toLowerCase().includes(this
-                        .filter.toLowerCase()));
+                    var filtered = Object.entries(this.list).filter(([key, value]) => value.toLowerCase()
+                        .includes(this
+                            .filter.toLowerCase()));
 
                     var result = Object.fromEntries(filtered);
                     return result;
                 },
-
-
             };
         }
     </script>
