@@ -42,179 +42,6 @@
         </div>
         <div id="modal"
             class="absolute text-[#161414] -z-20 translate-x-1/2 -translate-y-1/2 bg-white top-1/2 right-1/2 rounded-xl transition-opacity duration-300 opacity-0">
-            {{-- <div class="w-[960px] bg-white rounded-xl">
-                <div class="py-[20px] px-[30px] w-full border-b-2 border-[#A59898] flex justify-between items-center">
-                    <div class="text-xl font-bold">Detail Penjualan</div>
-                    <div class="flex items-center text-2xl"><ion-icon name="close-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="grid w-full grid-cols-[0.7fr_1.3fr] px-[30px] my-5">
-                    <div class="w-full">
-                        <div class="mb-5 font-bold">Informasi Pelanggan</div>
-
-                        <div class="grid grid-cols-[0.9fr_1.1fr] w-[280px] mb-1 text-xs">
-                            <div class="flex justify-between">
-                                <div class="font-bold">Nama Pelanggan</div>
-                                <div class="whitespace-pre">: </div>
-                            </div>
-                            <div>Rasikh Khalil Pasha</div>
-                        </div>
-
-                        <div class="grid grid-cols-[0.9fr_1.1fr] w-[280px] text-xs mb-1">
-                            <div class="flex justify-between">
-                                <div class="font-bold">Alamat Pelanggan</div>
-                                <div class="whitespace-pre">: </div>
-                            </div>
-                            <div>asdfasdfa asdfSF SADFA DF ADFA DSF ADA asdadgadfsdfs fd </div>
-                        </div>
-
-                        <div class="grid grid-cols-[0.9fr_1.1fr] w-[280px] text-xs mb-1">
-                            <div class="flex justify-between">
-                                <div class="font-bold">Email Pelanggan</div>
-                                <div class="whitespace-pre">: </div>
-                            </div>
-                            <div class="break-all">asdfasdfa@alksdjfl.com</div>
-                        </div>
-
-                        <div class="grid grid-cols-[0.9fr_1.1fr] w-[280px] text-xs mb-1">
-                            <div class="flex justify-between">
-                                <div class="font-bold">No Hp Pelanggan</div>
-                                <div class="whitespace-pre">: </div>
-                            </div>
-                            <div>0230492094023940</div>
-                        </div>
-
-                        <div class="my-5 font-bold">Informasi Penjualan</div>
-
-                        <div class="grid grid-cols-[0.9fr_1.1fr] w-[280px] mb-1 text-xs">
-                            <div class="flex justify-between">
-                                <div class="font-bold">Tanggal Penjualan</div>
-                                <div class="whitespace-pre">: </div>
-                            </div>
-                            <div>10/12/2023</div>
-                        </div>
-
-                        <div class="grid grid-cols-[0.9fr_1.1fr] w-[280px] mb-1 text-xs">
-                            <div class="flex justify-between">
-                                <div class="font-bold">Tanggal Jatuh Tempo</div>
-                                <div class="whitespace-pre">: </div>
-                            </div>
-                            <div>10/12/2023</div>
-                        </div>
-
-                        <div class="grid grid-cols-[0.9fr_1.1fr] w-[280px] text-xs mb-1">
-                            <div class="flex justify-between">
-                                <div class="font-bold">Kode Penjualan</div>
-                                <div class="whitespace-pre">: </div>
-                            </div>
-                            <div>asdfs9sdf89</div>
-                        </div>
-
-                        <div class="grid grid-cols-[0.9fr_1.1fr] w-[280px] text-xs mb-1">
-                            <div class="flex justify-between">
-                                <div class="font-bold">Total</div>
-                                <div class="whitespace-pre">: </div>
-                            </div>
-                            <div>Rp 9.000.000,00</div>
-                        </div>
-
-                        <div class="grid grid-cols-[0.9fr_1.1fr] w-[280px] text-xs mb-1">
-                            <div class="flex justify-between">
-                                <div class="font-bold">Sudah Dibayar</div>
-                                <div class="whitespace-pre">: </div>
-                            </div>
-                            <div>Rp 9.000.000,00</div>
-                        </div>
-
-                        <div class="grid grid-cols-[0.9fr_1.1fr] w-[280px] text-xs mb-1">
-                            <div class="flex justify-between">
-                                <div class="font-bold">sisa</div>
-                                <div class="whitespace-pre">: </div>
-                            </div>
-                            <div>Rp 9.000.000,00</div>
-                        </div>
-
-                    </div>
-
-                    <div class="w-full">
-                        <div class="mb-5 font-bold">Produk</div>
-
-                        <table class="w-full text-xs table-fixed">
-                            <thead class="border-y-2 border-[#A59898]">
-                                <tr>
-                                    <th class="w-10 px-4 py-2">No</th>
-                                    <th class="w-20 px-4 py-2 text-start">Produk</th>
-                                    <th class="w-20 px-4 py-2 text-start">Jumlah</th>
-                                    <th class="px-4 py-2 text-start">Harga per Produk</th>
-                                    <th class="px-4 py-2 text-start">Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="px-4 py-2">1</td>
-                                    <td class="px-4 py-2">Kayu</td>
-                                    <td class="px-4 py-2">1</td>
-                                    <td class="px-4 py-2">Rp 4.000,00</td>
-                                    <td class="px-4 py-2">Rp 4.000,00</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-2">2</td>
-                                    <td class="px-4 py-2">Kayu</td>
-                                    <td class="px-4 py-2">1</td>
-                                    <td class="px-4 py-2">Rp 4.000,00</td>
-                                    <td class="px-4 py-2">Rp 4.000,00</td>
-                                </tr>
-                                <tr class="border-y-2 border-[#A59898]">
-                                    <td class="px-4 py-2"></td>
-                                    <td class="px-4 py-2"></td>
-                                    <td class="px-4 py-2"></td>
-                                    <td class="px-4 py-2 font-bold">Total</td>
-                                    <td class="px-4 py-2 font-bold">Rp 4.000,00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="my-5 font-bold">History Pembayaran</div>
-
-                        <table class="w-full text-xs table-fixed">
-                            <thead class="border-y-2 border-[#A59898]">
-                                <tr>
-                                    <th class="w-10 px-4 py-2">No</th>
-                                    <th class="px-4 py-2 text-start">Tanggal</th>
-                                    <th class="px-4 py-2 text-start">Bayar</th>
-                                    <th class="px-4 py-2 text-start">Keterangan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="px-4 py-2">1</td>
-                                    <td class="px-4 py-2">10/12/2023</td>
-                                    <td class="px-4 py-2">Rp 4.000,00</td>
-                                    <td class="px-4 py-2">Pembayaran Pertama</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-2">1</td>
-                                    <td class="px-4 py-2">10/12/2023</td>
-                                    <td class="px-4 py-2">Rp 4.000,00</td>
-                                    <td class="px-4 py-2">Pembayaran Ke-2</td>
-                                </tr>
-
-                                <tr class="border-y-2 border-[#A59898]">
-                                    <td class="px-4 py-2"></td>
-                                    <td class="px-4 py-2 font-bold">Total</td>
-                                    <td class="px-4 py-2 font-bold">Rp 4.000,00</td>
-                                    <td class="px-4 py-2"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="py-[20px] px-[30px] w-full border-t-2 border-[#A59898] flex justify-end items-center">
-                    <div class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Kembali</div>
-                </div>
-            </div> --}}
 
         </div>
     </div>
@@ -447,6 +274,50 @@
 
         // modal.classList.remove('z-20');
         // modal.classList.add('-z-20');
+    }
+
+    function selectmenu(datalist, selectedKey, selectedlabel) {
+        return {
+            state: false,
+            filter: '',
+            list: datalist,
+            selectedkey: selectedKey,
+            selectedlabel: selectedlabel,
+            initialValue: null,
+            toggle: function() {
+                this.state = !this.state;
+                this.filter = '';
+            },
+            close: function() {
+                this.state = false;
+            },
+            select: function(value, key) {
+                if (this.selectedkey == key) {
+                    this.selectedlabel = "Please Select";
+                    this.selectedkey = null;
+                    this.state = false;
+                } else {
+                    this.selectedlabel = value;
+                    this.selectedkey = key;
+                    this.state = false;
+                }
+            },
+            isselected: function(key) {
+                return this.selectedkey == key;
+            },
+            getlist: function() {
+                if (this.filter == '') {
+                    return this.list;
+                }
+                var filtered = Object.entries(this.list).filter(([key, value]) => value.toLowerCase().includes(
+                    this
+                    .filter.toLowerCase()));
+
+                var result = Object.fromEntries(filtered);
+                return result;
+            },
+
+        };
     }
 </script>
 @stack('script')

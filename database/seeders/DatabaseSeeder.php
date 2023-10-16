@@ -4,9 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Component;
-use App\Models\Customer;
 use App\Models\User;
+use App\Models\Customer;
+use App\Models\Supplier;
+use App\Models\Component;
 use Illuminate\Database\Seeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\CategorySeeder;
@@ -26,7 +27,8 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Component::factory(100000)->create();
-        Customer::factory(100000)->create();
+        Supplier::factory(25)->create();
+        Component::factory(100)->create();
+        Customer::factory(100)->create();
     }
 }
