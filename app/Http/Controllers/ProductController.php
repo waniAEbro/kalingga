@@ -60,7 +60,7 @@ class ProductController extends Controller
             'pack_outer_width' => 'required',
             'pack_nw' => 'required',
             'pack_gw' => 'required',
-            
+
             'price_perakitan' => 'required',
             'price_perakitan_prj' => 'required',
             'price_grendo' => 'required',
@@ -118,7 +118,7 @@ class ProductController extends Controller
             'biaya_listrik.required' => 'Biaya listrik harus diisi',
             'biaya_pajak.required' => 'Biaya pajak harus diisi',
             'biaya_ekspor.required' => 'Biaya ekspor harus diisi',
-            
+
         ]);
 
         $pack = Pack::create([
@@ -227,7 +227,7 @@ class ProductController extends Controller
             'pack_outer_width' => 'required',
             'pack_nw' => 'required',
             'pack_gw' => 'required',
-            
+
             'price_perakitan' => 'required',
             'price_perakitan_prj' => 'required',
             'price_grendo' => 'required',
@@ -285,9 +285,9 @@ class ProductController extends Controller
             'biaya_listrik.required' => 'Biaya listrik harus diisi',
             'biaya_pajak.required' => 'Biaya pajak harus diisi',
             'biaya_ekspor.required' => 'Biaya ekspor harus diisi',
-            
+
         ]);
-        
+
         $pack = Pack::where("id", $product->pack_id)->first();
         $production_costs = ProductionCost::where("id", $product->productioncosts_id)->first();
         $other_costs = OtherCost::where("id", $product->othercosts_id)->first();

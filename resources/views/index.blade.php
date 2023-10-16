@@ -87,7 +87,7 @@
             <div>Sistem Warehouse</div>
         </x-card-menu>
 
-        <x-card-menu :url="'finance'" :icon="'logo-usd'" :color="'#4F9DA6'">
+        <x-card-menu :url="'finances'" :icon="'logo-usd'" :color="'#4F9DA6'">
             <div class="text-xl font-bold">Finance</div>
             <div>Sistem Finance</div>
         </x-card-menu>

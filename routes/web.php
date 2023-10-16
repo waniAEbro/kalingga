@@ -11,6 +11,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\FinanceController;
 use App\Models\Supplier;
 use App\Models\Warehouse;
 
@@ -61,6 +62,7 @@ Route::middleware(['login.check'])->group(function () {
     Route::resource("productions", ProductionController::class);
     Route::resource("customers", CustomerController::class);
     Route::resource("warehouse", WarehouseController::class);
+    Route::resource("finances", FinanceController::class);
     Route::get('/datatable', function () {
         return view('datatable');
     });
