@@ -14,6 +14,10 @@ class LoginController extends Controller
         return view("login");
     }
 
+    function index_user(){
+        return view("users.index", ["users" => User::get()]);
+    }
+
     function dashboard(){
         return view("index");
     }
@@ -53,8 +57,8 @@ class LoginController extends Controller
 
     function create(Request $request){
 
-        Session::flash('name', $request->name);
-        Session::flash('email', $request->email);
+        // Session::flash('name', $request->name);
+        // Session::flash('email', $request->email);
         // Session::flash([
         //     'name', $request->name,
         //     'email', $request->email,
