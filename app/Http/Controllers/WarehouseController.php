@@ -34,15 +34,15 @@ class WarehouseController extends Controller
         //     "quantity" => $warehouse->quantity + 1,
         // ]);
 
-        $warehouse = Supplier::create([
-            "name" => "name",
-            "address" => json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"],
-            "phone" => "098",
-            "email" => "wer@mail.com",
-            "code" => "asd"
-        ]);
+        // $warehouse = Supplier::create([
+        //     "name" => "name",
+        //     "address" => json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"],
+        //     "phone" => "098",
+        //     "email" => "wer@mail.com",
+        //     "code" => "asd"
+        // ]);
 
-        return response()->json($warehouse, 200);
+        return response()->json("ack", 200);
     }
 
     public function stockout(Request $request)
