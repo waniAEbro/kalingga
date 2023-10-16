@@ -25,14 +25,17 @@ class WarehouseController extends Controller
      */
     public function stockin(Request $request)
     {
-        // $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
+        if (json_decode($request->input("m2m:sgn")["m2m:vrq"]) && !json_decode($request->input("m2m:sgn")["m2m:sud"])) {
+            return response()->json("ok", 200);
+        }
+        $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
 
-        // $warehouse = Warehouse::where("production_id", $production->product_id)->first();
+        $warehouse = Warehouse::where("production_id", $production->product_id)->first();
 
-        // $warehouse->update([
-        //     "product_id" => $production->product_id,
-        //     "quantity" => $warehouse->quantity + 1,
-        // ]);
+        $warehouse->update([
+            "product_id" => $production->product_id,
+            "quantity" => $warehouse->quantity + 1,
+        ]);
 
         // $warehouse = Supplier::create([
         //     "name" => "name",
