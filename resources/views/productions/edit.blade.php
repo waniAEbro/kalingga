@@ -21,7 +21,7 @@
             <div class="flex-1">
                 <label for="quantity_finished" class="block text-sm">Jumlah Sudah Selesai</label>
                 <input type="number" value="{{ $production->quantity_finished }}" name="quantity_finished"
-                    oninput="set_finished(this)" value="0" required id="quantity_finished"
+                    oninput="set_finished(this)" value="0" id="quantity_finished"
                     class="w-full px-3 py-2 mt-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
             </div>
             <div class="flex-1">
@@ -34,7 +34,9 @@
         let production = @json($production)
 
         function set_finished(element) {
-
+            if (element.value === '') {
+                element.value = 0
+            }
             const total = parseInt(production.sale.product.find(e => e.id == production.product_id).pivot.quantity)
             let quantity_finished = parseInt(element.value)
             let quantity_not_finished = total - quantity_finished
@@ -49,6 +51,7 @@
                 quantity_finished = 0
                 element.value = 0
             }
+
             document.getElementById('quantity_not_finished').value = quantity_not_finished
         }
     </script>

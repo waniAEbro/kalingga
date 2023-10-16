@@ -42,11 +42,13 @@ class SaleController extends Controller
             'sale_date' => 'required',
             'due_date' => 'required',
             'code' => 'required',
+            'paid' => 'required',
         ],[
             'customer_id.required' => 'ID Customer tidak boleh kosong',
             'sale_date.required' => 'Tanggal Pembelian tidak boleh kosong',
             'due_date.required' => 'Tanggal Jatuh Tempo tidak boleh kosong',
             'code.required' => 'Kode tidak boleh kosong',
+            'paid.required' => 'Bayar tidak boleh kosong'
         ]);
 
         $sale = Sale::create([

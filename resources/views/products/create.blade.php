@@ -8,6 +8,7 @@
             <h1 class="mb-3 text-xl font-bold">Komponen</h1>
 
             <table class="w-full text-left">
+                {{-- <p>{{ old('component_id[0]') }}</p> --}}
                 <thead>
                     <tr class="border-b-2">
                         <th class="p-2 text-sm">#</th>
@@ -26,8 +27,9 @@
                             <x-select x-on:click="getComponent(productEl); $nextTick();" :dataLists="$components->toArray()" :name="'component_id[]'"
                                 :id="'component_id'" />
                         </td>
-                        <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"
-                                min="0" oninput="set_subtotal(this)" value="0"
+                        <td class="p-2">
+                            <input step="0.001" x-ref="quantity" type="number" name="quantity[]" min="0"
+                                oninput="set_subtotal(this)" value=""
                                 class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                         </td>
                         <td id="unit" class="p-2"></td>
@@ -92,9 +94,12 @@
 
                 <h1 class="my-3 font-bold">Dimensi Luar</h1>
                 <div class="flex w-full gap-3">
-                    <x-input-with-desc :desc="'Panjang'" :name="'pack_outer_length'" :type="'number'" oninput="set_volume()" :value="old('pack_outer_length')" />
-                    <x-input-with-desc :desc="'Tinggi'" :name="'pack_outer_height'" :type="'number'" oninput="set_volume()" :value="old('pack_outer_height')" />
-                    <x-input-with-desc :desc="'Lebar'" :name="'pack_outer_width'" :type="'number'" oninput="set_volume()" :value="old('pack_outer_width')" />
+                    <x-input-with-desc :desc="'Panjang'" :name="'pack_outer_length'" :type="'number'" oninput="set_volume()"
+                        :value="old('pack_outer_length')" />
+                    <x-input-with-desc :desc="'Tinggi'" :name="'pack_outer_height'" :type="'number'" oninput="set_volume()"
+                        :value="old('pack_outer_height')" />
+                    <x-input-with-desc :desc="'Lebar'" :name="'pack_outer_width'" :type="'number'" oninput="set_volume()"
+                        :value="old('pack_outer_width')" />
                 </div>
                 <div class="w-40 my-3">
                     <x-input :label="'Volume (m³)'" :name="'volume'" :type="'number'" readonly />
@@ -118,45 +123,45 @@
                     <h1 class="my-3 font-bold text-center">Biaya Produksi</h1>
 
                     <x-input oninput="set_total_produksi()" :label="'Harga Perakitan'" :desc="'Rp'" :name="'price_perakitan'"
-                        :type="'number'" class="mb-3" :value="old('price_perakitan')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('price_perakitan')" />
                     <x-input oninput="set_total_produksi()" :label="'Harga Perakitan PRJ'" :desc="'Rp'" :name="'price_perakitan_prj'"
-                        :type="'number'" class="mb-3" :value="old('price_perakitan_prj')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('price_perakitan_prj')" />
                     <x-input oninput="set_total_produksi()" :label="'Harga Grendo'" :desc="'Rp'" :name="'price_grendo'"
-                        :type="'number'" class="mb-3" :value="old('price_grendo')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('price_grendo')" />
                     <x-input oninput="set_total_produksi()" :label="'Harga Obat'" :desc="'Rp'" :name="'price_obat'"
-                        :type="'number'" class="mb-3" :value="old('price_obat')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('price_obat')" />
                     <x-input oninput="set_total_produksi()" :label="'Upah'" :desc="'Rp'" :name="'upah'"
-                        :type="'number'" class="mb-2" :value="old('upah')" />
+                        :type="'number'" :value="old('upah')" />
                 </div>
 
                 <div class="flex-1 px-4 border-gray-200 biaya_packing border-x-2">
                     <h1 class="my-3 font-bold text-center">Biaya Packing</h1>
 
                     <x-input oninput="set_total_packing()" :label="'Harga Box'" :desc="'Rp'" :name="'pack_box_price'"
-                        :type="'number'" class="mb-3" :value="old('pack_box_price')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_box_price')" />
                     <x-input oninput="set_total_packing()" :label="'Box Hardware'" :desc="'Rp'" :name="'pack_box_hardware'"
-                        :type="'number'" class="mb-3" :value="old('pack_box_hardware')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_box_hardware')" />
                     <x-input oninput="set_total_packing()" :label="'Assembling'" :desc="'Rp'" :name="'pack_assembling'"
-                        :type="'number'" class="mb-3" :value="old('pack_assembling')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_assembling')" />
                     <x-input oninput="set_total_packing()" :label="'Stiker'" :desc="'Rp'" :name="'pack_stiker'"
-                        :type="'number'" class="mb-3" :value="old('pack_sticker')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_sticker')" />
                     <x-input oninput="set_total_packing()" :label="'Hagtag'" :desc="'Rp'" :name="'pack_hagtag'"
-                        :type="'number'" class="mb-3" :value="old('pack_hagtag')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_hagtag')" />
                     <x-input oninput="set_total_packing()" :label="'Maintenance'" :desc="'Rp'" :name="'pack_maintenance'"
-                        :type="'number'" class="mb-3" :value="old('pack_maintenance')" />
+                        :type="'number'" :value="old('pack_maintenance')" />
                 </div>
 
                 <div class="flex-1 px-2 biaya_lain">
                     <h1 class="my-3 font-bold text-center">Biaya Lain-Lain</h1>
 
                     <x-input oninput="set_total_lain()" :label="'Overhead Pabrik'" :desc="'Rp'" :name="'biaya_overhead_pabrik'"
-                        :type="'number'" class="mb-3" :value="old('biaya_overhead_pabrik')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('biaya_overhead_pabrik')" />
                     <x-input oninput="set_total_lain()" :label="'Listrik'" :desc="'Rp'" :name="'biaya_listrik'"
-                        :type="'number'" class="mb-3" :value="old('biaya_listrik')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('biaya_listrik')" />
                     <x-input oninput="set_total_lain()" :label="'Pajak'" :desc="'Rp'" :name="'biaya_pajak'"
-                        :type="'number'" class="mb-3" :value="old('biaya_pajak')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('biaya_pajak')" />
                     <x-input oninput="set_total_lain()" :label="'Export+Usaha'" :desc="'Rp'" :name="'biaya_ekspor'"
-                        :type="'number'" class="mb-3" :value="old('biaya_ekspor')" />
+                        :type="'number'" :value="old('biaya_ekspor')" />
                 </div>
 
             </div>
@@ -186,7 +191,8 @@
                 </div>
 
                 <div class="w-52">
-                    <x-input-with-desc :desc="'Rp'" :label="'Harga Jual'" :name="'sell_price'" :type="'number'" :value="old('sell_pice')" />
+                    <x-input-with-desc :desc="'Rp'" :label="'Harga Jual'" :name="'sell_price'" :type="'number'"
+                        :value="old('sell_pice')" />
                 </div>
             </div>
     </x-create-input-field>
@@ -269,9 +275,13 @@
                                             <x-select x-on:click="getComponent(productEl); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
-                                        <td class="p-2"><input step="0.001" x-ref="quantity" type="number" name="quantity[]"
-                                                oninput="set_subtotal(this)" value="0"
+                                        <td class="p-2">
+                                            <input step="0.001" x-ref="quantity" type="number" name="quantity[]"
+                                                oninput="set_subtotal(this)" value=""
                                                 class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                            @error('quantity.*')
+                                                <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                            @enderror
                                         </td>
                                         <td id="unit" class="p-2"></td>
                                         <td id="price" class="p-2"></td>

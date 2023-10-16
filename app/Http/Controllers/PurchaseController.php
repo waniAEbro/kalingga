@@ -46,11 +46,13 @@ class PurchaseController extends Controller
             'purchase_date' => 'required',
             'due_date' => 'required',
             'code' => 'required',
+            'paid' => 'required',
         ],[
             'supplier_id.required' => 'ID Supplier tidak boleh kosong',
             'purchase_date.required' => 'Tanggal Pembelian tidak boleh kosong',
             'due_date.required' => 'Tanggal Jatuh Tempo tidak boleh kosong',
             'code.required' => 'Kode tidak boleh kosong',
+            'paid.required' => 'Bayar tidak boleh kosong',
         ]);
 
         $purchase = Purchase::create([
@@ -110,7 +112,7 @@ class PurchaseController extends Controller
         $request->validate([
             'paid' => 'required',
         ],[
-            'paid.required' => 'Paid tidak boleh kosong',
+            'paid.required' => 'Bayar tidak boleh kosong',
         ]);
 
         $purchase->update([

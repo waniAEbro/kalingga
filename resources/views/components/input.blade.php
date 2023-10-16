@@ -1,6 +1,11 @@
-@props(['label' => '', 'name' => '', 'placeholder' => '', 'value' => '', 'type' => 'text'])
+@props(['label' => '', 'name' => '', 'placeholder' => '', 'value' => '', 'type' => 'text', 'inputParentClass' => ''])
 
-<label for="{{ $name }}" class="block text-sm">{{ $label }}</label>
-<input id="{{ $name }}" name="{{ $name }}" step="0.001" min="0"
-    {{ $attributes->merge(['class' => 'py-2 px-3 w-full mt-2 rounded text-sm border outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300 transition-all duration-100']) }}
-    type="{{ $type }}" placeholder="{{ $placeholder }}" value="{{ $value }}">
+<div class="{{ $inputParentClass }}">
+    <label for="{{ $name }}" class="block text-sm">{{ $label }}</label>
+    <input id="{{ $name }}" name="{{ $name }}" step="0.001" min="0"
+        {{ $attributes->merge(['class' => 'w-full px-3 py-2 mt-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300']) }}
+        type="{{ $type }}" placeholder="{{ $placeholder }}" value="{{ $value }}">
+    @error($name)
+        <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+    @enderror
+</div>

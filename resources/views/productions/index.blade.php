@@ -43,37 +43,38 @@
             modal.classList.add('opacity-100', 'z-20');
 
             modal.innerHTML = `
-                <div class="w-[400px] px-[18px] py-[24px] text-gray-700">
-                    <div class="relative flex justify-between">
-                        <div class="text-lg font-bold">Detail Produksi</div>
-                        <div onclick="hideModal()" class="absolute top-0 right-0 flex items-center justify-center p-1 transition-all rounded-full cursor-pointer hover:bg-slate-200 bg-slate-100">
-                            <ion-icon size="small" name="close-outline"></ion-icon>    
+                <div class="w-[400px] bg-white rounded-xl text-gray-800">
+                    <div class="py-[20px] px-[30px] w-full relative border-b-2 border-gray-200 flex justify-between items-center">
+                        <div class="text-xl font-bold">Detail Produksi</div>
+                        <div onclick="hideModal()" class="absolute flex items-center p-1 text-2xl transition-all rounded-full cursor-pointer right-5 hover:bg-slate-100"><ion-icon name="close-outline"></ion-icon>
                         </div>
                     </div>
         
-                    <div class="divider"></div>
-        
-                    <div>
+                    <div class="px-[30px] py-[20px] text-sm">
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
-                            <div class="mb-3 font-bold">Kode Produksi</div>
-                            <div class="mb-3">: ${production.code}</div>
+                            <div class="font-bold w-40 flex justify-between">Kode Produksi<div>:</div></div>
+                            <div class="">${production.code}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
-                            <div class="mb-3 font-bold">Nama Produk</div>
-                            <div class="mb-3">: ${production.product.name}</div>
+                            <div class="font-bold w-40 flex justify-between">Nama Produk<div>:</div></div>
+                            <div class="">${production.product.name}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
-                            <div class="mb-3 font-bold">Jumlah Belum Selesai</div>
-                            <div class="mb-3">: ${production.quantity_not_finished}</div>
+                            <div class="font-bold w-40 flex justify-between">Jumlah Belum Selesai<div>:</div></div>
+                            <div class="">${production.quantity_not_finished}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
-                            <div class="mb-3 font-bold">Jumlah Sudah Selesai</div>
-                            <div class="mb-3">: ${production.quantity_finished}</div>
+                            <div class="font-bold w-40 flex justify-between">Jumlah Selesai<div>:</div></div>
+                            <div class="">${production.quantity_finished}</div>
                         </div>
-                        <div class="grid grid-cols-[1fr_1fr]">
-                            <div class="mb-3 font-bold">Total</div>
-                            <div class="mb-3">: ${production.quantity_finished+production.quantity_not_finished}</div>
+                        <div class="grid grid-cols-[1fr_1fr] mb-1">
+                            <div class="font-bold w-40 flex justify-between">Total<div>:</div></div>
+                            <div class="">${production.quantity_finished+production.quantity_not_finished}</div>
                         </div>
+                    </div>
+
+                    <div class="py-[20px] px-[30px] w-full flex justify-end items-center">
+                        <button onclick="hideModal()" class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Kembali</button>
                     </div>
                 </div>
             `

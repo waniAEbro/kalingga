@@ -7,20 +7,20 @@
         <div class="flex gap-5">
             <div>
                 <label for="sale_date" class="block text-sm">Tanggal Penjualan</label>
-                <x-input type="date" :name="'sale_date'" class="mb-3" required />
+                <x-input type="date" :name="'sale_date'" :inputParentClass="'mb-3'" :value="old('sale_date')" />
 
                 <label for="due_date" class="block text-sm">Tanggal Jatuh Tempo</label>
-                <x-input type="date" :name="'due_date'" class="mb-3" required />
+                <x-input type="date" :name="'due_date'" :inputParentClass="'mb-3'" :value="old('due_date')" />
 
                 <label for="customer_id" class="block text-sm">Pelanggan</label>
                 <div class="w-40 mt-2 mb-3">
                     <x-select x-on:click="getCustomer" :dataLists="$customers->toArray()" :name="'customer_id'" :id="'customer_id'" />
                 </div>
 
-                <x-input :name="'customer_address'" :label="'Alamat Pelanggan'" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'customer_email'" :label="'Email Pelanggan'" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'customer_phone'" :label="'No Hp Pelanggan'" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'code'" :type="'text'" :label="'Kode Penjualan'" class="mb-3" required />
+                <x-input :name="'customer_address'" :label="'Alamat Pelanggan'" readonly :inputParentClass="'mb-3'" />
+                <x-input :name="'customer_email'" :label="'Email Pelanggan'" readonly :inputParentClass="'mb-3'" />
+                <x-input :name="'customer_phone'" :label="'No Hp Pelanggan'" readonly :inputParentClass="'mb-3'" />
+                <x-input :name="'code'" :type="'text'" :label="'Kode Penjualan'" :inputParentClass="'mb-3'" :value="old('code')" />
             </div>
 
             <div class="divider divider-horizontal"></div>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="w-40">
                         <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
-                            onInput="update_bill(this)" required />
+                            :value="old('paid')" onInput="update_bill(this)" />
                     </div>
                 </div>
             </div>

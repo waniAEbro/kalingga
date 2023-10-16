@@ -39,37 +39,38 @@
             modal.classList.add('opacity-100', 'z-20');
 
             modal.innerHTML = `
-                <div class="w-[400px] px-[18px] py-[24px] text-gray-700">
-                    <div class="relative flex justify-between">
-                        <div class="text-lg font-bold">Detail Pemasok</div>
-                        <div onclick="hideModal()" class="absolute top-0 right-0 flex items-center justify-center p-1 transition-all rounded-full cursor-pointer hover:bg-slate-200 bg-slate-100">
-                            <ion-icon size="small" name="close-outline"></ion-icon>    
+                <div class="w-[400px] bg-white rounded-xl text-gray-800">
+                    <div class="py-[20px] px-[30px] w-full relative border-b-2 border-gray-200 flex justify-between items-center">
+                        <div class="text-xl font-bold">Detail Pemasok</div>
+                        <div onclick="hideModal()" class="absolute flex items-center p-1 text-2xl transition-all rounded-full cursor-pointer right-5 hover:bg-slate-100"><ion-icon name="close-outline"></ion-icon>
                         </div>
                     </div>
         
-                    <div class="divider"></div>
-        
-                    <div>
-                        <div class="grid grid-cols-[0.7fr_1.3fr] mb-1">
-                            <div class="font-bold ">Nama</div>
-                            <div class="">: ${supplier.name}</div>
+                    <div class="px-[30px] py-[20px] text-sm">
+                        <div class="grid grid-cols-[1fr_1fr] mb-1">
+                            <div class="font-bold w-40 flex justify-between">Nama Pemasok<div>:</div></div>
+                            <div class="">${supplier.name}</div>
                         </div>
-                        <div class="grid grid-cols-[0.7fr_1.3fr] mb-1">
-                            <div class="font-bold ">Email</div>
-                            <div class="break-all">: ${supplier.email}</div>
+                        <div class="grid grid-cols-[1fr_1fr] mb-1">
+                            <div class="font-bold w-40 flex justify-between">Email<div>:</div></div>
+                            <div class="">${supplier.email}</div>
                         </div>
-                        <div class="grid grid-cols-[0.7fr_1.3fr] mb-1">
-                            <div class="font-bold ">No Hp</div>
-                            <div class="">: ${supplier.phone}</div>
+                        <div class="grid grid-cols-[1fr_1fr] mb-1">
+                            <div class="font-bold w-40 flex justify-between">No Hp<div>:</div></div>
+                            <div class="">${supplier.phone}</div>
                         </div>
-                        <div class="grid grid-cols-[0.7fr_1.3fr] mb-1">
-                            <div class="font-bold ">Kode Pemasok</div>
-                            <div class="">: ${supplier.code}</div>
+                        <div class="grid grid-cols-[1fr_1fr] mb-1">
+                            <div class="font-bold w-40 flex justify-between">Kode Pemasok<div>:</div></div>
+                            <div class="">${supplier.code}</div>
                         </div>
-                        <div class="grid grid-cols-[0.7fr_1.3fr]">
-                            <div class="font-bold ">Alamat</div>
-                            <div class="">: ${supplier.address}</div>
+                        <div class="grid grid-cols-[1fr_1fr] mb-1">
+                            <div class="font-bold w-40 flex justify-between">Alamat<div>:</div></div>
+                            <div class="">${supplier.address}</div>
                         </div>
+                    </div>
+
+                    <div class="py-[20px] px-[30px] w-full flex justify-end items-center">
+                        <button onclick="hideModal()" class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Kembali</button>
                     </div>
                 </div>
             `

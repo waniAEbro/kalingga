@@ -6,18 +6,22 @@
     <x-create-input-field :action="'suppliers'" :width="'w-full'">
         <div class="flex w-full gap-3">
             <div class="flex-1">
-                <x-input name="name" :label="'Nama Pemasok'" :placeholder="'name'" :type="'text'" class="mb-3" :value="old('name')" />
+                <x-input name="name" :label="'Nama Pemasok'" :placeholder="'name'" :type="'text'" :inputParentClass="'mb-3'"
+                    :value="old('name')" />
             </div>
             <div class="flex-1">
-                <x-input name="email" :label="'Email'" :placeholder="'email'" :type="'email'" class="mb-3" :value="old('email')"/>
+                <x-input name="email" :label="'Email'" :placeholder="'email'" :type="'email'" :inputParentClass="'mb-3'"
+                    :value="old('email')" />
             </div>
         </div>
         <div class="flex w-full gap-3 my-3">
             <div class="flex-1">
-                <x-input name="code" :label="'Kode Pemasok'" :placeholder="'code'" :type="'text'" class="mb-3" :value="old('code')"/>
+                <x-input name="code" :label="'Kode Pemasok'" :placeholder="'code'" :type="'text'" :inputParentClass="'mb-3'"
+                    :value="old('code')" />
             </div>
             <div class="flex-1">
-                <x-input name="phone" :label="'No Hp'" :placeholder="'phone'" :type="'number'" class="mb-3" :value="old('phone') "/>
+                <x-input name="phone" :label="'No Hp'" :placeholder="'phone'" :type="'number'" :inputParentClass="'mb-3'"
+                    :value="old('phone')" />
             </div>
         </div>
         <div class="flex w-full gap-3 my-3">

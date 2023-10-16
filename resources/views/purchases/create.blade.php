@@ -7,20 +7,20 @@
         <div class="flex gap-5 text-sm">
             <div>
                 <label for="purchase_date" class="block text-sm">Tanggal Pembelian</label>
-                <x-input type="date" :name="'purchase_date'" class="mb-3" required />
+                <x-input type="date" :name="'purchase_date'" :inputParentClass="'mb-3'" :value="old('purchase_date')" />
 
                 <label for="due_date" class="block text-sm">Tanggal Jatuh Tempo</label>
-                <x-input type="date" :name="'due_date'" class="mb-3" required />
+                <x-input type="date" :name="'due_date'" :inputParentClass="'mb-3'" :value="old('due_date')" />
 
                 <label for="supplier_id" class="block text-sm">Pemasok</label>
                 <div class="w-40 mt-2 mb-3">
-                    <x-select x-on:click="getSupplier" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'" required />
+                    <x-select x-on:click="getSupplier" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'" />
                 </div>
 
                 <x-input :name="'supplier_address'" :label="'Alamat Pemasok'" readonly class="mb-3 bg-slate-100" />
                 <x-input :name="'supplier_email'" :label="'Email Pemasok'" readonly class="mb-3 bg-slate-100" />
                 <x-input :name="'supplier_phone'" :label="'No Hp Pemasok'" readonly class="mb-3 bg-slate-100" />
-                <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" class="mb-3" required />
+                <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" :inputParentClass="'mb-3'" :value="old('code')" />
             </div>
 
             <div class="divider divider-horizontal"></div>
@@ -45,7 +45,7 @@
                                 <x-select x-on:click="getComponent(purchase); $nextTick(); set_subtotal($refs.quantity)"
                                     :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" />
                             </td>
-                            <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]" required
+                            <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
                                     oninput="set_subtotal(this)" value="0" step="0.001"
                                     class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                             </td>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="w-40">
                         <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
-                            oninput="batasBayar(this)" required />
+                            :value="old('paid')" oninput="batasBayar(this)" />
                     </div>
                 </div>
             </div>

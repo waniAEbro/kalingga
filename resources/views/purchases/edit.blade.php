@@ -97,15 +97,15 @@
                     @if ($purchase->remain_bill)
                         <div class="w-40">
                             <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
-                                onInput="update_sisa(this)" class="mb-3" required />
+                                onInput="update_sisa(this)" />
                         </div>
                         <div class="w-40">
                             <x-input :label="'Sisa'" :name="'remain_bill'" :placeholder="'Sisa'" :value="$purchase->remain_bill"
-                                :type="'number'" class="mb-3" readonly />
+                                :type="'number'" class="bg-slate-100" readonly />
                         </div>
                         <div class="w-40">
                             <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total'" :value="$purchase->total_bill"
-                                :type="'number'" readonly />
+                                :type="'number'" class="bg-slate-100" readonly />
                         </div>
                     @endif
                 </div>

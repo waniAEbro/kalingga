@@ -126,13 +126,13 @@
                     <h1 class="my-3 font-bold text-center">Biaya Produksi</h1>
 
                     <x-input :value="$product->production_costs->price_perakitan" oninput="set_total_produksi()" :label="'Harga Perakitan'" :desc="'Rp'"
-                        :name="'price_perakitan'" :type="'number'" class="mb-3" />
+                        :name="'price_perakitan'" :type="'number'" :inputParentClass="'mb-3'" />
                     <x-input :value="$product->production_costs->price_perakitan_prj" oninput="set_total_produksi()" :label="'Harga Perakitan PRJ'" :desc="'Rp'"
-                        :name="'price_perakitan_prj'" :type="'number'" class="mb-3" />
+                        :name="'price_perakitan_prj'" :type="'number'" :inputParentClass="'mb-3'" />
                     <x-input :value="$product->production_costs->price_grendo" oninput="set_total_produksi()" :label="'Harga Grendo'" :desc="'Rp'"
-                        :name="'price_grendo'" :type="'number'" class="mb-3" />
+                        :name="'price_grendo'" :type="'number'" :inputParentClass="'mb-3'" />
                     <x-input :value="$product->production_costs->price_obat" oninput="set_total_produksi()" :label="'Harga Obat'" :desc="'Rp'"
-                        :name="'price_obat'" :type="'number'" class="mb-3" />
+                        :name="'price_obat'" :type="'number'" :inputParentClass="'mb-3'" />
                     <x-input :value="$product->production_costs->upah" oninput="set_total_produksi()" :label="'Upah'" :desc="'Rp'"
                         :name="'upah'" :type="'number'" class="mb-2" />
                 </div>
@@ -141,30 +141,30 @@
                     <h1 class="my-3 font-bold text-center">Biaya Packing</h1>
 
                     <x-input :value="$product->pack->box_price" oninput="set_total_packing()" :label="'Harga Box'" :desc="'Rp'"
-                        :name="'pack_box_price'" :type="'number'" class="mb-3" />
+                        :name="'pack_box_price'" :type="'number'" :inputParentClass="'mb-3'" />
                     <x-input :value="$product->pack->box_hardware" oninput="set_total_packing()" :label="'Box Hardware'" :desc="'Rp'"
-                        :name="'pack_box_hardware'" :type="'number'" class="mb-3" />
+                        :name="'pack_box_hardware'" :type="'number'" :inputParentClass="'mb-3'" />
                     <x-input :value="$product->pack->assembling" oninput="set_total_packing()" :label="'Assembling'" :desc="'Rp'"
-                        :name="'pack_assembling'" :type="'number'" class="mb-3" />
+                        :name="'pack_assembling'" :type="'number'" :inputParentClass="'mb-3'" />
                     <x-input :value="$product->pack->stiker" oninput="set_total_packing()" :label="'Stiker'" :desc="'Rp'"
-                        :name="'pack_stiker'" :type="'number'" class="mb-3" />
+                        :name="'pack_stiker'" :type="'number'" :inputParentClass="'mb-3'" />
                     <x-input :value="$product->pack->hagtag" oninput="set_total_packing()" :label="'Hagtag'" :desc="'Rp'"
-                        :name="'pack_hagtag'" :type="'number'" class="mb-3" />
+                        :name="'pack_hagtag'" :type="'number'" :inputParentClass="'mb-3'" />
                     <x-input :value="$product->pack->maintenance" oninput="set_total_packing()" :label="'Maintenance'" :desc="'Rp'"
-                        :name="'pack_maintenance'" :type="'number'" class="mb-3" />
+                        :name="'pack_maintenance'" :type="'number'" :inputParentClass="'mb-3'" />
                 </div>
 
                 <div class="flex-1 px-2 biaya_lain">
                     <h1 class="my-3 font-bold text-center">Biaya Lain-Lain</h1>
 
                     <x-input :value="$product->other_costs->biaya_overhead_pabrik" oninput="set_total_lain()" :label="'Overhead Pabrik'" :desc="'Rp'"
-                        :name="'biaya_overhead_pabrik'" :type="'number'" class="mb-3" />
+                        :name="'biaya_overhead_pabrik'" :type="'number'" :inputParentClass="'mb-3'" />
                     <x-input :value="$product->other_costs->biaya_listrik" oninput="set_total_lain()" :label="'Listrik'" :desc="'Rp'"
-                        :name="'biaya_listrik'" :type="'number'" class="mb-3" />
+                        :name="'biaya_listrik'" :type="'number'" :inputParentClass="'mb-3'" />
                     <x-input :value="$product->other_costs->biaya_pajak" oninput="set_total_lain()" :label="'Pajak'" :desc="'Rp'"
-                        :name="'biaya_pajak'" :type="'number'" class="mb-3" />
+                        :name="'biaya_pajak'" :type="'number'" :inputParentClass="'mb-3'" />
                     <x-input :value="$product->other_costs->biaya_ekspor" oninput="set_total_lain()" :label="'Export+Usaha'" :desc="'Rp'"
-                        :name="'biaya_ekspor'" :type="'number'" class="mb-3" />
+                        :name="'biaya_ekspor'" :type="'number'" :inputParentClass="'mb-3'" />
                 </div>
 
             </div>

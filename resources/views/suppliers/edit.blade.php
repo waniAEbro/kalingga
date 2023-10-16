@@ -7,19 +7,19 @@
         <div class="flex w-full gap-3">
             <div class="flex-1">
                 <x-input :name="'name'" :label="'Nama Pemasok'" :placeholder="'name'" :value="$suppliers->name" :type="'text'"
-                    class="mb-3" />
+                    :inputParentClass="'mb-3'" />
             </div>
             <div class="flex-1">
                 <x-input :name="'email'" :label="'Email'" :placeholder="'email'" :value="$suppliers->email" :type="'email'"
-                    class="mb-3" />
+                    :inputParentClass="'mb-3'" />
             </div>
         </div>
         <div class="flex w-full gap-3 my-3">
             <div class="flex-1">
-                <x-input :name="'code'" :label="'Kode Pemasok'" :placeholder="'Code'" :value="$suppliers->code" class="mb-3" />
+                <x-input :name="'code'" :label="'Kode Pemasok'" :placeholder="'Code'" :value="$suppliers->code" :inputParentClass="'mb-3'" />
             </div>
             <div class="flex-1">
-                <x-input :name="'phone'" :label="'No Hp'" :placeholder="'phone'" :value="$suppliers->phone" class="mb-3" />
+                <x-input :name="'phone'" :label="'No Hp'" :placeholder="'phone'" :value="$suppliers->phone" :inputParentClass="'mb-3'" />
             </div>
         </div>
         <div class="flex w-full gap-3 my-3">

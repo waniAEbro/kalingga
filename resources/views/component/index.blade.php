@@ -18,7 +18,473 @@
 
         document.querySelector(".table-fixed").appendChild(buildHeader())
 
-        const components = {!! $components !!}
+        // const components = {!! $components !!}
+        const components = [{
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+            {
+                name: "rasikh",
+                unit: "m",
+                price_per_unit: "Rp 80.000"
+            },
+        ]
 
 
         state.data = components
@@ -37,31 +503,32 @@
             modal.classList.add('opacity-100', 'z-20');
 
             modal.innerHTML = `
-            <div class="w-[400px] px-[18px] py-[24px] text-gray-700">
-                    <div class="relative flex justify-between">
-                        <div class="text-lg font-bold">Detail Komponen</div>
-                        <div onclick="hideModal()" class="absolute top-0 right-0 flex items-center justify-center p-1 transition-all rounded-full cursor-pointer hover:bg-slate-200 bg-slate-100">
-                            <ion-icon size="small" name="close-outline"></ion-icon>    
-                        </div>
-                    </div>
-        
-                    <div class="divider"></div>
-        
-                    <div>
-                        <div class="grid grid-cols-[1fr_1fr] mb-1">
-                            <div class="font-bold ">Nama Komponen</div>
-                            <div class="">: ${component.name}</div>
-                        </div>
-                        <div class="grid grid-cols-[1fr_1fr] mb-1">
-                            <div class="font-bold ">Satuan</div>
-                            <div class="">: ${component.unit}</div>
-                        </div>
-                        <div class="grid grid-cols-[1fr_1fr] mb-1">
-                            <div class="font-bold ">Harga per Satuan</div>
-                            <div class="">: ${component.price_per_unit}</div>
-                        </div>
+            <div class="w-[400px] bg-white rounded-xl text-gray-800">
+                <div class="py-[20px] px-[30px] w-full relative border-b-2 border-gray-200 flex justify-between items-center">
+                    <div class="text-xl font-bold">Detail Komponen</div>
+                    <div onclick="hideModal()" class="absolute flex items-center p-1 text-2xl transition-all rounded-full cursor-pointer right-5 hover:bg-slate-100"><ion-icon name="close-outline"></ion-icon>
                     </div>
                 </div>
+    
+                <div class="px-[30px] py-[20px] text-sm">
+                    <div class="grid grid-cols-[1fr_1fr] mb-1">
+                        <div class="font-bold w-40 flex justify-between">Nama Komponen<div>:</div></div>
+                        <div class="">${component.name}</div>
+                    </div>
+                    <div class="grid grid-cols-[1fr_1fr] mb-1">
+                        <div class="font-bold w-40 flex justify-between">Satuan<div>:</div></div>
+                        <div class="">${component.unit}</div>
+                    </div>
+                    <div class="grid grid-cols-[1fr_1fr] mb-1">
+                        <div class="font-bold w-40 flex justify-between">Harga<div>:</div></div>
+                        <div class="">${toRupiah(component.price_per_unit)}</div>
+                    </div>
+                </div>
+
+                <div class="py-[20px] px-[30px] w-full flex justify-end items-center">
+                    <button onclick="hideModal()" class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Kembali</button>
+                </div>
+            </div>
             `
         }
     </script>

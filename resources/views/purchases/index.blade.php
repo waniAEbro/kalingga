@@ -170,7 +170,7 @@
             modal.innerHTML = `
             <div class="w-[960px] bg-white rounded-xl">
                 <div class="py-[20px] px-[30px] w-full relative border-b-2 border-gray-200 flex justify-between items-center">
-                    <div class="text-xl font-bold">Detail Penjualan</div>
+                    <div class="text-xl font-bold">Detail Pembelian</div>
                     <div onclick="hideModal()" class="absolute flex items-center p-1 text-2xl rounded-full cursor-pointer right-5 hover:bg-slate-100"><ion-icon name="close-outline"></ion-icon>
                     </div>
                 </div>
