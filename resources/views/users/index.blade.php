@@ -1,33 +1,35 @@
+{{-- @dd($sales) --}}
 @extends('layouts.layout')
 
 @section('content')
-    <x-data-list>
-        <div class="h-[550px] relative m-5">
-            <table class="w-full mt-5 border-separate table-fixed border-spacing-y-3">
-            </table>
-            <div id="pagination-wrapper" class="absolute bottom-0 flex h-10 gap-2 my-5 text-sm"></div>
-        </div>
-    </x-data-list>
-@endsection
 
+<x-data-list>
+    <div class="h-[550px] relative m-5">
+        <table class="w-full mt-5 border-separate table-fixed border-spacing-y-3">
+        </table>
+        <div id="pagination-wrapper" class="absolute bottom-0 flex h-10 gap-2 my-5 text-sm"></div>
+    </div>
+</x-data-list>
+
+@endsection
 @push('script')
     <script>
-        state.columnName = ["Nomor", "Nama Komponen", "Supplier", "Satuan", "Harga Per Satuan", "Aksi"]
-        state.columnQuery = ["name", "supplier.name", "unit", "price_per_unit"]
-        state.menu = "components"
+        state.columnName = ["Nomor", "Nama Pengguna", "Email"]
+        state.columnQuery = ["name", "email"]
+        state.menu = "users"
 
         document.querySelector(".table-fixed").appendChild(buildHeader())
 
-        const components = {!! $components !!}
+        const users = {!! $users !!}
 
-        state.data = components
-        state.allData = components
+        state.data = users
+        state.allData = users
         paginate()
         pageNumber()
         buildTable()
 
         function show(id) {
-            const component = components.find(data => data.id === id);
+            const user = users.find(data => data.id === id);
 
             const modal = document.querySelector('#modal');
             document.querySelector('#modal-background').classList.remove('hidden');
@@ -46,15 +48,15 @@
                 <div class="px-[30px] py-[20px] text-sm">
                     <div class="grid grid-cols-[1fr_1fr] mb-1">
                         <div class="font-bold w-40 flex justify-between">Nama Komponen<div>:</div></div>
-                        <div class="">${component.name}</div>
+                        <div class="">${user.name}</div>
                     </div>
                     <div class="grid grid-cols-[1fr_1fr] mb-1">
                         <div class="font-bold w-40 flex justify-between">Satuan<div>:</div></div>
-                        <div class="">${component.unit}</div>
+                        <div class="">${user.unit}</div>
                     </div>
                     <div class="grid grid-cols-[1fr_1fr] mb-1">
                         <div class="font-bold w-40 flex justify-between">Harga<div>:</div></div>
-                        <div class="">${toRupiah(component.price_per_unit)}</div>
+                        <div class="">${toRupiah(user.price_per_unit)}</div>
                     </div>
                 </div>
 
@@ -64,5 +66,6 @@
             </div>
             `
         }
+
     </script>
 @endpush

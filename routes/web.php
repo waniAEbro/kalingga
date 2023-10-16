@@ -63,10 +63,14 @@ Route::middleware(['login.check'])->group(function () {
     Route::resource("customers", CustomerController::class);
     Route::resource("warehouse", WarehouseController::class);
     Route::resource("finances", FinanceController::class);
+
     Route::get('/datatable', function () {
         return view('datatable');
     });
+
     Route::get('/dashboard', function () {
         return view('dashboard', ["suppliers" => Supplier::get()]);
     });
+
+    Route::get('/users', [LoginController::class, 'index_user']);
 });

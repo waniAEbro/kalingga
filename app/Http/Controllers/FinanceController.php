@@ -16,7 +16,6 @@ class FinanceController extends Controller
     public function index()
     {
         return view("finances.index", [
-            "finances" => Finance::get() ,
             "sales" => Sale::get(),
             "purchases" => Purchase::get() ]);
     }
