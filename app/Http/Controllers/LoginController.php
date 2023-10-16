@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\StoreUserRequest;
+use Illuminate\Contracts\View\View;
 
 class LoginController extends Controller
 {
@@ -55,8 +58,7 @@ class LoginController extends Controller
         return view("register");
     }
 
-    function create(Request $request){
-
+    function register_user(Request $request){
         // Session::flash('name', $request->name);
         // Session::flash('email', $request->email);
         // Session::flash([
@@ -94,5 +96,38 @@ class LoginController extends Controller
         } else{
             return redirect("login")->withErrors("Email/Password not Valid");
         }
+    }
+
+    public function create() :View
+    {
+        return view("users.create");
+    }
+
+    public function store(StoreUserRequest $request): RedirectResponse
+    {
+        // @dd($request);
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ],[
+            'name.required' => 'Nama Wajib Diisi',
+            'email.required' => 'Email Wajib Diisi',
+            'password.required' => 'Password Wajib Diisi',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect("/users");
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect("/users");
     }
 }

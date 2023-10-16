@@ -47,7 +47,7 @@ Route::get('/index', function () {
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login/user', [LoginController::class, 'login']);
 Route::get('/register', [LoginController::class, 'register']);
-Route::post('/register/user', [LoginController::class, 'create']);
+Route::post('/register/user', [LoginController::class, 'register_user']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
 
@@ -63,6 +63,7 @@ Route::middleware(['login.check'])->group(function () {
     Route::resource("customers", CustomerController::class);
     Route::resource("warehouse", WarehouseController::class);
     Route::resource("finances", FinanceController::class);
+    Route::resource("users", LoginController::class);
 
     Route::get('/datatable', function () {
         return view('datatable');

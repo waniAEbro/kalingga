@@ -47,16 +47,12 @@
 
                 <div class="px-[30px] py-[20px] text-sm">
                     <div class="grid grid-cols-[1fr_1fr] mb-1">
-                        <div class="font-bold w-40 flex justify-between">Nama Komponen<div>:</div></div>
+                        <div class="font-bold w-40 flex justify-between">Nama Pengguna<div>:</div></div>
                         <div class="">${user.name}</div>
                     </div>
                     <div class="grid grid-cols-[1fr_1fr] mb-1">
-                        <div class="font-bold w-40 flex justify-between">Satuan<div>:</div></div>
-                        <div class="">${user.unit}</div>
-                    </div>
-                    <div class="grid grid-cols-[1fr_1fr] mb-1">
-                        <div class="font-bold w-40 flex justify-between">Harga<div>:</div></div>
-                        <div class="">${toRupiah(user.price_per_unit)}</div>
+                        <div class="font-bold w-40 flex justify-between">Email<div>:</div></div>
+                        <div class="">${user.email}</div>
                     </div>
                 </div>
 
