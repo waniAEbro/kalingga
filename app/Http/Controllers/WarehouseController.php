@@ -25,20 +25,7 @@ class WarehouseController extends Controller
      */
     public function stockin(Request $request)
     {
-        if (json_decode($request->input(), true)["m2m:sgn"]) {
-            return response()->json("ok", 200);
-        }
-
-        $tag = json_decode($request->input(), true) ?? "halo";
-
-        $supplier = Supplier::create([
-            "name" => $tag,
-            "address" => $tag,
-            "phone" => $tag,
-            "email" => $tag,
-        ]);
-
-        return response()->json($supplier, 200);
+        return response()->json($request->input(), 200);
     }
 
     public function stockout(Request $request)
