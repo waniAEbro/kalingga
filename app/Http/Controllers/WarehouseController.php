@@ -25,14 +25,27 @@ class WarehouseController extends Controller
      */
     public function stockin(Request $request)
     {
-        Supplier::create([
-            "name" => $request->input(),
-            "address" => $request->input(),
-            "phone" => $request->input(),
-            "email" => $request->input(),
-            "code" => "halo"
+        if ($request->input("m2m:sgn")["m2m:vrq"] && !$request->input("m2m:sgn")["m2m:sud"]) {
+            return response()->json("ok", 200);
+        }
+        // $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
+
+        // $warehouse = Warehouse::where("production_id", $production->product_id)->first();
+
+        // $warehouse->update([
+        //     "product_id" => $production->product_id,
+        //     "quantity" => $warehouse->quantity + 1,
+        // ]);
+
+        $supplier = Supplier::create([
+            "name" => $request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"],
+            "address" => "unknown",
+            "phone" => "unknown",
+            "email" => "unknown",
+            "code" => "unknows"
         ]);
-        return response()->json($request->input(), 200);
+
+        return response()->json($supplier, 200);
     }
 
     public function stockout(Request $request)
