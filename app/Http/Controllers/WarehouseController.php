@@ -25,6 +25,13 @@ class WarehouseController extends Controller
      */
     public function stockin(Request $request)
     {
+        Supplier::create([
+            "name" => $request->input(),
+            "address" => $request->input(),
+            "phone" => $request->input(),
+            "email" => $request->input(),
+            "code" => "halo"
+        ]);
         return response()->json($request->input(), 200);
     }
 
