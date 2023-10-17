@@ -6,6 +6,7 @@ use App\Models\Purchase;
 use App\Models\Supplier;
 use App\Models\Component;
 use App\Models\PurchaseHistory;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\ComponentPurchase;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -47,7 +48,7 @@ class PurchaseController extends Controller
             'due_date' => 'required',
             'code' => 'required',
             'paid' => 'required',
-        ],[
+        ], [
             'supplier_id.required' => 'ID Supplier tidak boleh kosong',
             'purchase_date.required' => 'Tanggal Pembelian tidak boleh kosong',
             'due_date.required' => 'Tanggal Jatuh Tempo tidak boleh kosong',
@@ -111,7 +112,7 @@ class PurchaseController extends Controller
     {
         $request->validate([
             'paid' => 'required',
-        ],[
+        ], [
             'paid.required' => 'Bayar tidak boleh kosong',
         ]);
 
@@ -141,5 +142,14 @@ class PurchaseController extends Controller
         PurchaseHistory::where("purchase_id", $purchase->id)->delete();
         $purchase->delete();
         return redirect("/purchases");
+    }
+
+    public function print(Purchase $purchase)
+    {
+        $pdf = Pdf::loadView('purchases.print', [
+            "purchase" => $purchase
+        ]);
+
+        return $pdf->stream('quotation.pdf');
     }
 }

@@ -47,6 +47,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 <script>
     const setup = () => {
@@ -167,12 +168,16 @@
 
                 tr.appendChild(td)
             })
+            const button = `<a href="/${state.menu}/${ data.id }/print" target="_blank" class="flex items-center gap-1 text-slate-600">
+                        <span class="text-lg"><ion-icon name="print-outline"></ion-icon></span>Print
+                    </a>`
             tr.innerHTML += `
             <td class="px-4 py-2" onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
                 <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                     <a href="/${state.menu}/${ data.id }/edit" class="flex items-center gap-1 text-slate-600">
                         <span class="text-lg"><ion-icon name="create-outline"></ion-icon></span>Edit
                     </a>
+                    ${state.menu == "sales" || state.menu == "purchases" ? button : ""}
                     <form action="/${state.menu}/${ data.id }" method="post">
                         @csrf
                         @method('delete')

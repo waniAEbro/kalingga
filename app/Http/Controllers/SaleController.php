@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\Warehouse;
 use App\Models\Production;
 use App\Models\SaleHistory;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
@@ -43,7 +44,7 @@ class SaleController extends Controller
             'due_date' => 'required',
             'code' => 'required',
             'paid' => 'required',
-        ],[
+        ], [
             'customer_id.required' => 'ID Customer tidak boleh kosong',
             'sale_date.required' => 'Tanggal Pembelian tidak boleh kosong',
             'due_date.required' => 'Tanggal Jatuh Tempo tidak boleh kosong',
@@ -130,7 +131,7 @@ class SaleController extends Controller
         // dd($request);
         $request->validate([
             'paid' => 'required',
-        ],[
+        ], [
             'paid.required' => 'Paid tidak boleh kosong',
         ]);
 
@@ -165,5 +166,14 @@ class SaleController extends Controller
         SaleHistory::where("sale_id", $sale->id)->delete();
         $sale->delete();
         return redirect("/sales");
+    }
+
+    public function print(Sale $sale)
+    {
+        $pdf = Pdf::loadView('sales.print', [
+            "sale" => $sale
+        ]);
+
+        return $pdf->stream('quotation.pdf');
     }
 }
