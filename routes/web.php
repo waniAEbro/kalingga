@@ -78,7 +78,7 @@ Route::middleware(['login.check'])->group(function () {
     });
 
     Route::get('/dashboard', function () {
-        return view('dashboard', ["sales" => Sale::get(), "purchases" => Purchase::get()]);
+        return view('dashboard', ["salesNotDone" => Sale::where("status", "open")->get(), "sales" => Sale::get(), "purchases" => Purchase::get()]);
     });
 
     Route::get('/users', [LoginController::class, 'index_user']);
