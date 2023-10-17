@@ -25,7 +25,7 @@ class WarehouseController extends Controller
      */
     public function stockin(Request $request)
     {
-        if ($request->input("m2m:sgn")["m2m:vrq"] && !$request->input("m2m:sgn")["m2m:sud"]) {
+        if ($request->input("m2m:sgn")) {
             return response()->json("ok", 200);
         }
         // $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
