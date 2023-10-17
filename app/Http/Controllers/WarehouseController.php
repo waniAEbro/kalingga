@@ -25,7 +25,7 @@ class WarehouseController extends Controller
      */
     public function stockin(Request $request)
     {
-        if (json_decode($request->input("m2m:sgn"), true)["m2m:vrq"] && !json_decode($request->input("m2m:sgn"), true)["m2m:sud"]) {
+        if (json_decode($request->input(), true)["m2m:sgn"]) {
             return response()->json("ok", 200);
         }
 
@@ -37,15 +37,6 @@ class WarehouseController extends Controller
             "phone" => $tag,
             "email" => $tag,
         ]);
-
-        // $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", "hallo")->first();
-
-        // $warehouse = Warehouse::where("production_id", $production->product_id)->first();
-
-        // $warehouse->update([
-        //     "product_id" => $production->product_id,
-        //     "quantity" => $warehouse->quantity + 1,
-        // ]);
 
         return response()->json($supplier, 200);
     }
