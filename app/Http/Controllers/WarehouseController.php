@@ -25,7 +25,7 @@ class WarehouseController extends Controller
      */
     public function stockin(Request $request)
     {
-        if (json_decode($request->input("m2m:sgn")["m2m:vrq"]) && !json_decode($request->input("m2m:sgn")["m2m:sud"])) {
+        if (json_decode($request->input("m2m:sgn"), true)["m2m:vrq"] && !json_decode($request->input("m2m:sgn"), true)["m2m:sud"]) {
             return response()->json("ok", 200);
         }
 
