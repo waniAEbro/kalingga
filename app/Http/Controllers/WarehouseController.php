@@ -29,7 +29,7 @@ class WarehouseController extends Controller
             return response()->json("ok", 200);
         }
 
-        $tag = json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["uhf"] ? json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["uhf"] : "halo";
+        $tag = json_decode($request->input(), true) ?? "halo";
 
         $supplier = Supplier::create([
             "name" => $tag,
