@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="shortcut icon" type="image/png" href="/img/image 6.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -16,7 +17,7 @@
         }
     </style>
 
-    <title>Document</title>
+    <title>Kalingga Keing Jati</title>
 </head>
 
 <body class="bg-[#064E3B] h-screen w-full px-8">

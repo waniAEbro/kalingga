@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+    <link rel="shortcut icon" type="image/png" href="/img/image 6.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -26,7 +27,7 @@
             display: none;
         }
     </style>
-    <title>Document</title>
+    <title>Kalingga Keling Jati</title>
 </head>
 
 <body class="font-['Roboto']">
