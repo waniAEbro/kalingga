@@ -25,6 +25,19 @@ class WarehouseController extends Controller
      */
     public function stockin(Request $request)
     {
+        if ($request->input("m2m:sgn") && array_key_exists("m2m:vrq", $request->input("m2m:sgn"))) {
+            return response()->json("ok", 200);
+        } else {
+            $supplier = Supplier::create([
+                "name" => $request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"],
+                "address" => "unknown",
+                "phone" => "unknown",
+                "email" => "unknown",
+                "code" => "unknows"
+            ]);
+
+            return response()->json($supplier, 200);
+        }
         // $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
 
         // $warehouse = Warehouse::where("production_id", $production->product_id)->first();
@@ -34,15 +47,7 @@ class WarehouseController extends Controller
         //     "quantity" => $warehouse->quantity + 1,
         // ]);
 
-        $warehouse = Supplier::create([
-            "name" => "name",
-            "address" => json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"],
-            "phone" => "098",
-            "email" => "wer@mail.com",
-            "code" => "asd"
-        ]);
 
-        return response()->json($warehouse, 200);
     }
 
     public function stockout(Request $request)

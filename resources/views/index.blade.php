@@ -68,7 +68,7 @@
             <div>Sistem Sales</div>
         </x-card-menu>
 
-        <x-card-menu :url="'purchasing'" :icon="'bag-check-outline'" :color="'#12263aff'">
+        <x-card-menu :url="'purchases'" :icon="'bag-check-outline'" :color="'#12263aff'">
             <div class="text-xl font-bold">Purchasing</div>
             <div>Sistem Purchasing</div>
         </x-card-menu>
@@ -78,7 +78,7 @@
             <div>Sistem Manufacture</div>
         </x-card-menu>
 
-        <x-card-menu :url="'quotation'" :icon="'clipboard-outline'" :color="'#028090ff'">
+        <x-card-menu :url="'quotations'" :icon="'clipboard-outline'" :color="'#028090ff'">
             <div class="text-xl font-bold">Quotation</div>
             <div>Sistem Quotation</div>
         </x-card-menu>
@@ -88,7 +88,7 @@
             <div>Sistem Warehouse</div>
         </x-card-menu>
 
-        <x-card-menu :url="'finance'" :icon="'logo-usd'" :color="'#4F9DA6'">
+        <x-card-menu :url="'finances'" :icon="'logo-usd'" :color="'#4F9DA6'">
             <div class="text-xl font-bold">Finance</div>
             <div>Sistem Finance</div>
         </x-card-menu>
