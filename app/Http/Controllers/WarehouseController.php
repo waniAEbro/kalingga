@@ -28,39 +28,34 @@ class WarehouseController extends Controller
         if ($request->input("m2m:sgn") && array_key_exists("m2m:vrq", $request->input("m2m:sgn"))) {
             return response()->json("ok", 200);
         } else {
-            $supplier = Supplier::create([
-                "name" => $request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"],
-                "address" => "unknown",
-                "phone" => "unknown",
-                "email" => "unknown",
-                "code" => "unknows"
+            $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
+
+            $warehouse = Warehouse::where("production_id", $production->product_id)->first();
+
+            $warehouse->update([
+                "product_id" => $production->product_id,
+                "quantity" => $warehouse->quantity + 1,
             ]);
 
-            return response()->json($supplier, 200);
+            return response()->json($warehouse, 200);
         }
-        // $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
-
-        // $warehouse = Warehouse::where("production_id", $production->product_id)->first();
-
-        // $warehouse->update([
-        //     "product_id" => $production->product_id,
-        //     "quantity" => $warehouse->quantity + 1,
-        // ]);
-
-
     }
 
     public function stockout(Request $request)
     {
-        $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
+        if ($request->input("m2m:sgn") && array_key_exists("m2m:vrq", $request->input("m2m:sgn"))) {
+            return response()->json("ok", 200);
+        } else {
+            $production = DB::table("productions")->join("products", "productions.product_id", "products.id")->where("products.rfid", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"])->first();
 
-        $warehouse = Warehouse::where("production_id", $production->product_id)->first();
+            $warehouse = Warehouse::where("production_id", $production->product_id)->first();
 
-        $warehouse->update([
-            "product_id" => $production->product_id,
-            "quantity" => $warehouse->quantity - 1,
-        ]);
+            $warehouse->update([
+                "product_id" => $production->product_id,
+                "quantity" => $warehouse->quantity - 1,
+            ]);
 
-        return response()->json($warehouse, 200);
+            return response()->json($warehouse, 200);
+        }
     }
 }
