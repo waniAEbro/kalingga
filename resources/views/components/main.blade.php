@@ -7,7 +7,7 @@
                 </div>
 
                 <div x-data="{ open: false }" x-on:click="open = !open" x-cloak
-                    class="font-[500] hover:cursor-pointer relative text-white">
+                    class="font-[500] hover:cursor-pointer relative text-white z-40">
                     <div class="bg-yellow-400 rounded-full w-9 h-9"></div>
 
                     <div x-show="open" x-transition:enter.duration.300ms x-transition:leave.duration.300ms
