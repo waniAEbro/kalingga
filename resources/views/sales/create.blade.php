@@ -21,6 +21,13 @@
                 <x-input :name="'customer_email'" :label="'Email Pelanggan'" readonly :inputParentClass="'mb-3'" />
                 <x-input :name="'customer_phone'" :label="'No Hp Pelanggan'" readonly :inputParentClass="'mb-3'" />
                 <x-input :name="'code'" :type="'text'" :label="'Kode Penjualan'" :inputParentClass="'mb-3'" :value="old('code')" />
+                <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :inputParentClass="'mb-3'" :value="old('method')" />
+                <x-input :name="'value'" :type="'text'" :label="'VA/Rekening'" :inputParentClass="'mb-3'" :value="old('value')" />
+                <div class="flex w-full gap-3 my-3">
+                    <div class="flex-1">
+                        <x-input-textarea :name="'location'" :label="'Lokasi Pengiriman'" :placeholder="'location'" :value="old('location')" />
+                    </div>
+                </div>
             </div>
 
             <div class="divider divider-horizontal"></div>

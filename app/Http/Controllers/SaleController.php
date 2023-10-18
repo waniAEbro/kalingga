@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Customer;
+use App\Models\Delivery;
 use App\Models\Production;
 use App\Models\SaleHistory;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -27,7 +29,7 @@ class SaleController extends Controller
      */
     public function create()
     {
-        return view('sales.create', ["customers" => Customer::get(), "products" => Product::get(), "justArray" => ['one', 'two', 'three', 'four', 'five']]);
+        return view('sales.create', ["customers" => Customer::get(), "products" => Product::get(), "justArray" => ['one', 'two', 'three', 'four', 'five'], 'payments'=> Payment::get(), 'deliveries'=> Delivery::get()]);
     }
 
     /**
@@ -96,6 +98,17 @@ class SaleController extends Controller
             "payment" => $request->paid
         ]);
 
+        Payment::create([
+            "sale_id" => $sale->id,
+            "method" => $request->method,
+            "value" => $request->value
+        ]);
+
+        Delivery::create([
+            "sale_id" => $sale->id,
+            "location" => $request->location,
+        ]);
+
         return redirect("/sales");
     }
 
@@ -118,7 +131,7 @@ class SaleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSaleRequest $request, Sale $sale)
+    public function update(UpdateSaleRequest $request, Sale $sale, Payment $payment, Delivery $delivery)
     {
         $request->validate([
             'paid' => 'required',
@@ -138,6 +151,17 @@ class SaleController extends Controller
             "sale_id" => $sale->id,
             "description" => $sale->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count + 1,
             "payment" => $request->paid
+        ]);
+
+        $payment->update([
+            "sale_id" => $sale->id,
+            "method" => $request->method,
+            "value" => $request->value
+        ]);
+
+        $delivery->update([
+            "sale_id" => $sale->id,
+            "location" => $request->location,
         ]);
 
         return redirect("/sales");
