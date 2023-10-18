@@ -12,7 +12,7 @@
 
 @push('script')
     <script>
-        state.columnName = ["Nomor", "Nama Komponen", "Supplier", "Satuan", "Harga Per Satuan", "Aksi"]
+        state.columnName = ["Nomor", "Nama Komponen", "Pemasok", "Satuan", "Harga Per Satuan", "Aksi"]
         state.columnQuery = ["name", "supplier.name", "unit", "price_per_unit"]
         state.menu = "components"
 
@@ -45,15 +45,19 @@
 
                 <div class="px-[30px] py-[20px] text-sm">
                     <div class="grid grid-cols-[1fr_1fr] mb-1">
-                        <div class="font-bold w-40 flex justify-between">Nama Komponen<div>:</div></div>
+                        <div class="flex justify-between w-40 font-bold">Nama Komponen<div>:</div></div>
                         <div class="">${component.name}</div>
                     </div>
                     <div class="grid grid-cols-[1fr_1fr] mb-1">
-                        <div class="font-bold w-40 flex justify-between">Satuan<div>:</div></div>
+                        <div class="flex justify-between w-40 font-bold">Satuan<div>:</div></div>
                         <div class="">${component.unit}</div>
                     </div>
                     <div class="grid grid-cols-[1fr_1fr] mb-1">
-                        <div class="font-bold w-40 flex justify-between">Harga<div>:</div></div>
+                        <div class="flex justify-between w-40 font-bold">Pemasok<div>:</div></div>
+                        <div class="">${component.supplier.name}</div>
+                    </div>
+                    <div class="grid grid-cols-[1fr_1fr] mb-1">
+                        <div class="flex justify-between w-40 font-bold">Harga<div>:</div></div>
                         <div class="">${toRupiah(component.price_per_unit)}</div>
                     </div>
                 </div>
