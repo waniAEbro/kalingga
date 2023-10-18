@@ -195,6 +195,14 @@
                         :value="old('sell_pice')" />
                 </div>
             </div>
+            <div class="flex justify-end gap-3 mt-5">
+                <select name="suppliers[]" multiple>
+                    <option value="">Please Select</option>
+                    @foreach ($suppliers as $supplier)
+                        <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                    @endforeach
+                </select>
+            </div>
     </x-create-input-field>
 @endsection
 @push('script')

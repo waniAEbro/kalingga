@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Models\Product;
 use App\Models\Customer;
-use App\Models\Warehouse;
 use App\Models\Production;
 use App\Models\SaleHistory;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -91,13 +90,6 @@ class SaleController extends Controller
             ]);
         }
 
-        foreach ($productions as $production) {
-            Warehouse::create([
-                "production_id" => $production->id,
-                "quantity" => 0
-            ]);
-        }
-
         SaleHistory::create([
             "sale_id" => $sale->id,
             "description" => $sale->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
@@ -128,7 +120,6 @@ class SaleController extends Controller
      */
     public function update(UpdateSaleRequest $request, Sale $sale)
     {
-        // dd($request);
         $request->validate([
             'paid' => 'required',
         ], [
@@ -158,11 +149,7 @@ class SaleController extends Controller
     public function destroy(Sale $sale)
     {
         DB::table("product_sale")->where("sale_id", $sale->id)->delete();
-        $productions = Production::where("sale_id", $sale->id)->get();
-        foreach ($productions as $production) {
-            Warehouse::where("production_id", $production->production_id)->delete();
-            $production->delete();
-        }
+        $productions = Production::where("sale_id", $sale->id)->delete();
         SaleHistory::where("sale_id", $sale->id)->delete();
         $sale->delete();
         return redirect("/sales");

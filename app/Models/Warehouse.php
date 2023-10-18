@@ -14,10 +14,10 @@ class Warehouse extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["production"];
+    protected $with = ["product"];
 
-    public function production(): BelongsTo
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(Production::class, "production_id", "id");
+        return $this->belongsTo(Product::class, "product_id", "id");
     }
 }

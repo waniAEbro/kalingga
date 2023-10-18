@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pack;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Supplier;
 use App\Models\Component;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\StoreproductRequest;
-use App\Http\Requests\UpdateproductRequest;
 use App\Models\OtherCost;
-use App\Models\Pack;
 use App\Models\ProductionCost;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\StoreproductRequest;
+use App\Http\Requests\UpdateproductRequest;
 
 class ProductController extends Controller
 {
@@ -30,7 +31,7 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        return view("products.create", ["components" => Component::get()]);
+        return view("products.create", ["components" => Component::get(), "suppliers" => Supplier::get()]);
     }
 
     /**
@@ -78,7 +79,7 @@ class ProductController extends Controller
             'biaya_listrik' => 'required',
             'biaya_pajak' => 'required',
             'biaya_ekspor' => 'required',
-        ],[
+        ], [
             'component_id.*.required' => 'Komponen harus dipilih',
             'quantity.*.required' => 'Jumlah harus diisi',
 
@@ -180,6 +181,13 @@ class ProductController extends Controller
                 "quantity" => $request->quantity[$index]
             ]);
         }
+
+        foreach ($request->suppliers as $supplier) {
+            DB::table("product_supplier")->insert([
+                "product_id" => $product->id,
+                "supplier_id" => $supplier
+            ]);
+        }
         return redirect("/products");
     }
 
@@ -245,7 +253,7 @@ class ProductController extends Controller
             'biaya_listrik' => 'required',
             'biaya_pajak' => 'required',
             'biaya_ekspor' => 'required',
-        ],[
+        ], [
             'component_id.*.required' => 'Komponen harus dipilih',
             'quantity.*.required' => 'Jumlah harus diisi',
 
@@ -352,6 +360,15 @@ class ProductController extends Controller
                 "quantity" => $request->quantity[$index]
             ]);
         }
+
+        DB::table("product_supplier")->where("product_id", $product->id)->delete();
+        foreach ($request->suppliers as $supplier) {
+            DB::table("product_supplier")->insert([
+                "product_id" => $product->id,
+                "supplier_id" => $supplier
+            ]);
+        }
+
         return redirect("/products");
     }
 
@@ -361,6 +378,7 @@ class ProductController extends Controller
     public function destroy(product $product): RedirectResponse
     {
         DB::table("component_product")->where("product_id", $product->id)->delete();
+        DB::table("product_supplier")->where("product_id", $product->id)->delete();
         Pack::where("id", $product->pack_id)->delete();
         ProductionCost::where("id", $product->productioncosts_id)->delete();
         OtherCost::where("id", $product->othercosts_id)->delete();

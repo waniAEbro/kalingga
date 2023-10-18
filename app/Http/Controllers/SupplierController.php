@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
-use Illuminate\Http\RedirectResponse;
 
 class SupplierController extends Controller
 {
@@ -37,7 +38,7 @@ class SupplierController extends Controller
             'phone' => 'required',
             'address' => 'required',
             'code' => 'required',
-        ],[
+        ], [
             'name.required' => 'Nama tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',
             'phone.required' => 'Nomor Telepon tidak boleh kosong',
@@ -83,7 +84,7 @@ class SupplierController extends Controller
             'phone' => 'required',
             'address' => 'required',
             'code' => 'required',
-        ],[
+        ], [
             'name.required' => 'Nama tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',
             'phone.required' => 'Nomor Telepon tidak boleh kosong',
@@ -108,6 +109,8 @@ class SupplierController extends Controller
     public function destroy(Supplier $supplier)
     {
         $supplier->delete();
+        DB::table("component_supplier")->where("supplier_id", $supplier->id)->delete();
+        DB::table("product_supplier")->where("supplier_id", $supplier->id)->delete();
         return redirect("/suppliers");
     }
 }

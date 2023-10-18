@@ -13,23 +13,25 @@
 
 @push('script')
     <script>
-        state.columnName = ["Nomor", "Nama Produk", "RFID", "Barcode", "Jumlah", "Aksi"]
-        state.columnQuery = ["production.product.name", "production.product.rfid", "production.product.barcode", "quantity"]
+        state.columnName = ["Nomor", "Nama Produk", "RFID", "Barcode", "Quantity"]
+        state.columnQuery = ["name", "rfid", "barcode"]
         state.menu = "warehouse"
 
         document.querySelector(".table-fixed").appendChild(buildHeader())
 
-        const warehouse = {!! $warehouse !!}
+        const products = {!! $products !!}
 
-        state.data = warehouse
-        state.allData = warehouse
+        const warehouses = {!! $warehouses !!}
+
+        state.data = products
+        state.allData = products
 
         paginate()
         pageNumber()
-        buildTable()
+        buildTable(warehouses)
 
         function show(id) {
-            const wh = warehouse.find(data => data.id === id);
+            const wh = products.find(data => data.id === id);
 
             const modal = document.querySelector('#modal');
             document.querySelector('#modal-background').classList.remove('hidden');

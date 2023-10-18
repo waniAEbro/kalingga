@@ -12,6 +12,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\ComponentSeeder;
+use Spatie\Permission\Models\Permission;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,8 +28,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Supplier::factory(25)->create();
-        Component::factory(100)->create();
-        Customer::factory(100)->create();
+        // Supplier::factory(25)->create();
+        // Component::factory(100)->create();
+        // Customer::factory(100)->create();
+
+        $this->call([PermissionSeeder::class]);
     }
 }

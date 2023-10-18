@@ -145,7 +145,7 @@
         return thead
     }
 
-    function buildTable() {
+    function buildTable(warehouses = []) {
         if (document.querySelector("#table-body")) {
             document.querySelector("#table-body").remove()
         }
@@ -172,7 +172,8 @@
             const button = `<a href="/${state.menu}/${ data.id }/print" target="_blank" class="flex items-center gap-1 text-slate-600">
                         <span class="text-lg"><ion-icon name="print-outline"></ion-icon></span>Print
                     </a>`
-            tr.innerHTML += `
+            if (state.columnName.includes("Aksi")) {
+                tr.innerHTML += `
             <td class="px-4 py-2" onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
                 <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                     <a href="/${state.menu}/${ data.id }/edit" class="flex items-center gap-1 text-slate-600">
@@ -187,6 +188,15 @@
                     </form>
                 </div>
             </td>`
+            } else if (state.menu == "warehouse") {
+                let count = warehouses.filter(e => e.product_id == data.id).reduce((total, current) => total +
+                    1, 0)
+
+                console.log(count)
+                tr.innerHTML += `
+                <td class="quantity-${data.id} px-4 py-2" class="p-4 rounded-l-lg">${count}</td>
+                `
+            }
             tr.addEventListener("click", (event) => {
                 show(data.id)
             })
