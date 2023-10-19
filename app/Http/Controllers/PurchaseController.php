@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use App\Models\Component;
+use App\Models\PaymentPurchase;
 use App\Models\PurchaseHistory;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\DeliveryPurchase;
 use App\Models\ComponentPurchase;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
-use App\Models\Product;
 
 class PurchaseController extends Controller
 {
@@ -33,7 +35,13 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        return view('purchases.create', ["suppliers" => Supplier::get(), "components" => Component::get(), "products" => Product::get()]);
+        return view('purchases.create', [
+            "suppliers" => Supplier::get(),
+            "components" => Component::get(),
+            "products" => Product::get(),
+            "payment_purchases" => PaymentPurchase::get(),
+            "delivery_purchases" => DeliveryPurchase::get()
+        ]);
     }
 
     /**
@@ -90,6 +98,23 @@ class PurchaseController extends Controller
             "payment" => $request->paid
         ]);
 
+        PaymentPurchase::create([
+            "purchase_id" => $purchase->id,
+            "method" => $request->method,
+            "beneficiary_bank" => $request->beneficiary_bank,
+            "beneficiary_ac_usd" => $request->beneficiary_ac_usd,
+            "bank_address" => $request->bank_address,
+            "swift_code" => $request->swift_code,
+            "beneficiary_name" => $request->beneficiary_name,
+            "beneficiary_address" => $request->beneficiary_address,
+            "phone" => $request->phone,
+        ]);
+
+        DeliveryPurchase::create([
+            "purchase_id" => $purchase->id,
+            "location" => $request->location,
+        ]);
+
         return redirect("/purchases");
     }
 
@@ -118,7 +143,7 @@ class PurchaseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePurchaseRequest $request, Purchase $purchase)
+    public function update(UpdatePurchaseRequest $request, Purchase $purchase, PaymentPurchase $payment, DeliveryPurchase $delivery)
     {
         $request->validate([
             'paid' => 'required',
@@ -138,6 +163,23 @@ class PurchaseController extends Controller
             "purchase_id" => $purchase->id,
             "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count + 1,
             "payment" => $request->paid
+        ]);
+
+        $payment->update([
+            "purchase_id" => $purchase->id,
+            "method" => $request->method,
+            "beneficiary_bank" => $request->beneficiary_bank,
+            "beneficiary_ac_usd" => $request->beneficiary_ac_usd,
+            "bank_address" => $request->bank_address,
+            "swift_code" => $request->swift_code,
+            "beneficiary_name" => $request->beneficiary_name,
+            "beneficiary_address" => $request->beneficiary_address,
+            "phone" => $request->phone,
+        ]);
+
+        $delivery->update([
+            "purchase_id" => $purchase->id,
+            "location" => $request->location,
         ]);
 
         return redirect("/purchases");

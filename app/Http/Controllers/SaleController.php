@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
-use App\Models\Payment;
+use App\Models\PaymentSale;
 use App\Models\Product;
 use App\Models\Customer;
-use App\Models\Delivery;
+use App\Models\DeliverySale;
 use App\Models\Production;
 use App\Models\SaleHistory;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -29,7 +29,12 @@ class SaleController extends Controller
      */
     public function create()
     {
-        return view('sales.create', ["customers" => Customer::get(), "products" => Product::get(), "justArray" => ['one', 'two', 'three', 'four', 'five'], 'payments' => Payment::get(), 'deliveries' => Delivery::get()]);
+        return view('sales.create', [
+            "customers" => Customer::get(),
+            "products" => Product::get(),
+            "justArray" => ['one', 'two', 'three', 'four', 'five'],
+            "payment_sales" => PaymentSale::get(),
+            "delivery_sales" => DeliverySale::get()]);
     }
 
     /**
@@ -98,13 +103,19 @@ class SaleController extends Controller
             "payment" => $request->paid
         ]);
 
-        Payment::create([
+        PaymentSale::create([
             "sale_id" => $sale->id,
             "method" => $request->method,
-            "value" => $request->value
+            "beneficiary_bank" => $request->beneficiary_bank,
+            "beneficiary_ac_usd" => $request->beneficiary_ac_usd,
+            "bank_address" => $request->bank_address,
+            "swift_code" => $request->swift_code,
+            "beneficiary_name" => $request->beneficiary_name,
+            "beneficiary_address" => $request->beneficiary_address,
+            "phone" => $request->phone,
         ]);
 
-        Delivery::create([
+        DeliverySale::create([
             "sale_id" => $sale->id,
             "location" => $request->location,
         ]);
@@ -131,7 +142,7 @@ class SaleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSaleRequest $request, Sale $sale, Payment $payment, Delivery $delivery)
+    public function update(UpdateSaleRequest $request, Sale $sale, PaymentSale $payment, DeliverySale $delivery)
     {
         $request->validate([
             'paid' => 'required',
@@ -156,7 +167,13 @@ class SaleController extends Controller
         $payment->update([
             "sale_id" => $sale->id,
             "method" => $request->method,
-            "value" => $request->value
+            "beneficiary_bank" => $request->beneficiary_bank,
+            "beneficiary_ac_usd" => $request->beneficiary_ac_usd,
+            "bank_address" => $request->bank_address,
+            "swift_code" => $request->swift_code,
+            "beneficiary_name" => $request->beneficiary_name,
+            "beneficiary_address" => $request->beneficiary_address,
+            "phone" => $request->phone,
         ]);
 
         $delivery->update([

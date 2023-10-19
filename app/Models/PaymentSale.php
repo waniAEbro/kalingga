@@ -6,10 +6,11 @@ use App\Models\Sale;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Delivery extends Model
+class PaymentSale extends Model
 {
-    protected $guarded = ["id"];
-    protected $with = ["sales"];
+    protected $guarded = ['id'];
+    protected $with = ['sales'];
+
     use HasFactory;
 
     public function sales()

@@ -22,7 +22,13 @@
                 <x-input :name="'customer_phone'" :label="'No Hp Pelanggan'" readonly :inputParentClass="'mb-3'" />
                 <x-input :name="'code'" :type="'text'" :label="'Kode Penjualan'" :inputParentClass="'mb-3'" :value="old('code')" />
                 <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :inputParentClass="'mb-3'" :value="old('method')" />
-                <x-input :name="'value'" :type="'text'" :label="'VA/Rekening'" :inputParentClass="'mb-3'" :value="old('value')" />
+                <x-input :name="'beneficiary_bank'" :type="'text'" :label="'Beneficiary\'s Bank'" :inputParentClass="'mb-3'" :value="old('beneficiary_bank')" />
+                <x-input :name="'beneficiary_ac_usd'" :type="'text'" :label="'Beneficiary A/C USD'" :inputParentClass="'mb-3'" :value="old('beneficiary_ac_usd')" />
+                <x-input :name="'bank_address'" :type="'text'" :label="'Bank Address'" :inputParentClass="'mb-3'" :value="old('bank_address')" />
+                <x-input :name="'swift_code'" :type="'text'" :label="'Swift Code'" :inputParentClass="'mb-3'" :value="old('swift_code')" />
+                <x-input :name="'beneficiary_name'" :type="'text'" :label="'Swift Code'" :inputParentClass="'mb-3'" :value="old('beneficiary_name')" />
+                <x-input :name="'beneficiary_address'" :type="'text'" :label="'Beneficiary\'s Address'" :inputParentClass="'mb-3'" :value="old('beneficiary_address')" />
+                <x-input :name="'phone'" :type="'text'" :label="'Phone'" :inputParentClass="'mb-3'" :value="old('phone')" />
                 <div class="flex w-full gap-3 my-3">
                     <div class="flex-1">
                         <x-input-textarea :name="'location'" :label="'Lokasi Pengiriman'" :placeholder="'location'" :value="old('location')" />

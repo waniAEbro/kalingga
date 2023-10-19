@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Payment;
+use App\Models\PaymentSale;
 use App\Models\Product;
 use App\Models\Customer;
-use App\Models\Delivery;
+use App\Models\DeliverySale;
 use App\Models\Production;
 use App\Models\SaleHistory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +21,7 @@ class Sale extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["customer", "products", "histories", "payment", "delivery"];
+    protected $with = ["customer", "products", "histories", "payment_sales", "delivery_sales"];
 
     public function customer(): BelongsTo
     {
@@ -43,13 +43,13 @@ class Sale extends Model
         return $this->hasMany(SaleHistory::class);
     }
 
-    public function payment(): HasOne
+    public function payment_sales(): HasOne
     {
-        return $this->hasOne(Payment::class);
+        return $this->hasOne(PaymentSale::class);
     }
 
-    public function delivery(): HasOne
+    public function delivery_sales(): HasOne
     {
-        return $this->hasOne(Delivery::class);
+        return $this->hasOne(DeliverySale::class);
     }
 }

@@ -20,15 +20,27 @@
                     class="bg-slate-100" />
                 <x-input :name="'code'" :type="'text'" :label="'Kode Penjualan'" :value="$sales->code" readonly
                     :inputParentClass="'mb-3'" class="bg-slate-100" />
-                <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :value="$sales->payment->method" readonly
+                <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :value="$sales->payment_sales->method" readonly
                     :inputParentClass="'mb-3'" class="bg-slate-100" />
-                <x-input :name="'value'" :type="'text'" :label="'VA/Rekening'" :value="$sales->payment->value" readonly
+                <x-input :name="'beneficiary_bank'" :type="'text'" :label="'beneficiary\'s Bank'" :value="$sales->payment_sales->beneficiary_bank" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'beneficiary_ac_usd'" :type="'text'" :label="'beneficiary A/C USD'" :value="$sales->payment_sales->beneficiary_ac_usd" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'bank_address'" :type="'text'" :label="'Bank Address'" :value="$sales->payment_sales->bank_address" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'swift_code'" :type="'text'" :label="'Swift Code'" :value="$sales->payment_sales->swift_code" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'beneficiary_name'" :type="'text'" :label="'Beneficiary\'s Name'" :value="$sales->payment_sales->beneficiary_name" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'beneficiary_address'" :type="'text'" :label="'Beneficiary\'s Address'" :value="$sales->payment_sales->beneficiary_address" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'phone'" :type="'text'" :label="'Phone'" :value="$sales->payment_sales->phone" readonly
                     :inputParentClass="'mb-3'" class="bg-slate-100" />
 
                 <div class="flex w-full gap-3 my-3">
                     <div class="flex-1">
-                        <x-input-textarea :name="'location'" :label="'Lokasi Pengiriman'" :placeholder="'location'" :value="$sales->delivery->location"
-                            readonly />
+                        <x-input-textarea :name="'location'" :label="'Lokasi Pengiriman'" :placeholder="'location'" :value="$sales->delivery_sales->location"
+                            class="bg-slate-100" readonly />
                     </div>
                 </div>
             </div>
