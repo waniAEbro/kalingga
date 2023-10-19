@@ -168,7 +168,8 @@
             if (componentId.value) {
                 const component = components.find(component => component.id == componentId.value)
                 const unit = tr.querySelector('#unit').innerText = component.unit;
-                const price = tr.querySelector('#price').innerText = toRupiah(component.price_per_unit);
+                const price = tr.querySelector('#price').innerText = toRupiah(component.suppliers.find(supplier =>
+                    supplier.id == document.getElementById('supplier_id').value).pivot.price_per_unit);
             } else {
                 const unit = tr.querySelector('#unit').innerText = '';
                 const price = tr.querySelector('#price').innerText = '';

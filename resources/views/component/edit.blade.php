@@ -32,17 +32,19 @@
                     <td colspan="3" class=" border-t border-b p-3 text-center">Add Supplier</td>
                 </tr>
                 @foreach ($componentedit->suppliers as $supplier)
-                    <td class="border-t border-b p-3">
-                        <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'"
-                            :value="$supplier->id" :label="$supplier->name" />
-                    </td>
-                    <td class="border-t border-b p-3">
-                        <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'"
-                            :value="$supplier->pivot->price_per_unit" />
-                    </td>
-                    <td class="border-t border-b p-3">
-                        <button type="button" class="btn btn-red"
-                            onclick="this.parentElement.parentElement.remove()">Hapus</button>
+                    <tr>
+                        <td class="border-t border-b p-3">
+                            <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'"
+                                :value="$supplier->id" :label="$supplier->name" />
+                        </td>
+                        <td class="border-t border-b p-3">
+                            <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'"
+                                :value="$supplier->pivot->price_per_unit" />
+                        </td>
+                        <td class="border-t border-b p-3">
+                            <button type="button" class="btn btn-red"
+                                onclick="this.parentElement.parentElement.remove()">Hapus</button>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
