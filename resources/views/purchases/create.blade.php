@@ -14,7 +14,8 @@
 
                 <label for="supplier_id" class="block text-sm">Pemasok</label>
                 <div class="w-40 mt-2 mb-3">
-                    <x-select x-on:click="getSupplier" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'" />
+                    <x-select x-on:click="getSupplier; await $nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id'"
+                        :id="'supplier_id'" />
                 </div>
 
                 <x-input :name="'supplier_address'" :label="'Alamat Pemasok'" readonly class="mb-3 bg-slate-100" />
@@ -139,10 +140,20 @@
                 const supplierPhone = document.getElementById('supplier_phone').value = supplier.phone;
 
                 document.getElementById("purchaseBody").innerHTML = ""
+                document.getElementById("table-products").innerHTML = `<tr onclick="addProduct()">
+                            <td colspan="5" class=" border-t border-b p-3 text-center">Add Product</td>
+                        </tr>`
+                componentsSelected = {}
+                productsSelected = {}
                 components.filter(element => {
-                    return element.supplier_id == supplierId.value
+                    return element.suppliers.find(element => element.id == supplierId.value)
                 }).forEach(element => {
                     componentsSelected[element.id] = element.name
+                })
+                products.filter(element => {
+                    return element.suppliers.find(element => element.id == supplierId.value)
+                }).forEach(element => {
+                    selectedProduct[element.id] = element.name
                 })
             } else {
                 const supplierAddress = document.getElementById('supplier_address').value = '';
@@ -151,6 +162,7 @@
 
                 document.getElementById("purchaseBody").innerHTML = ""
                 componentsSelected = {}
+                productsSelected = {}
             }
         }
 
@@ -160,11 +172,9 @@
         function getComponent(tr) {
 
             const componentId = tr.querySelector('#component_id');
-            console.log('componentId', componentId)
 
             if (componentId.value) {
                 const component = components.find(component => component.id == componentId.value)
-                console.log('component', component)
                 const unit = tr.querySelector('#unit').innerText = component.unit;
                 const price = tr.querySelector('#price').innerText = toRupiah(component.suppliers.find(supplier =>
                     supplier.id == document.getElementById('supplier_id').value).pivot.price_per_unit);
