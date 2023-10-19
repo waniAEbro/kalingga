@@ -14,7 +14,7 @@
         </div>
         <div class="flex w-full gap-3 my-3">
             <div class="flex-1">
-                <x-input :value="$production->sale->product->find($production->product_id)->pivot->quantity" :label="'Total Produksi'" :name="'total_production'" readonly />
+                <x-input :value="$production->total_quantity" :label="'Total Produksi'" :name="'total_production'" readonly />
             </div>
         </div>
         <div class="flex w-full gap-3 my-3">

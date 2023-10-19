@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('components', function (Blueprint $table) {
             $table->id();
             $table->text("name");
-            $table->text("price_per_unit");
             $table->text("unit");
-            $table->foreignId("supplier_id")->constrained("suppliers")->onDelete("cascade");
+            $table->text("price_per_unit");
             $table->timestamps();
         });
     }

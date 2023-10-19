@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Customer extends Model
 {
@@ -11,8 +12,8 @@ class Customer extends Model
 
     protected $guarded = ["id"];
 
-    function sales()
+    function sales(): BelongsToMany
     {
-        return $this->hasMany(Sale::class);
+        return $this->belongsToMany(Sale::class);
     }
 }

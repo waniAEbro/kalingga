@@ -19,6 +19,7 @@ return new class extends Migration
             $table->bigInteger("price_grendo");
             $table->bigInteger("price_obat");
             $table->bigInteger("upah");
+            $table->bigInteger("total");
             $table->timestamps();
         });
     }

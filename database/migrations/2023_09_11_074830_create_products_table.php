@@ -22,6 +22,7 @@ return new class extends Migration
             $table->double("height");
             $table->text("logo");
             $table->text("barcode");
+            $table->bigInteger("hpp");
             $table->foreignId("pack_id")->constrained("packs")->onDelete("cascade");
             $table->foreignId("productioncosts_id")->constrained("production_costs")->onDelete("cascade");
             $table->foreignId("othercosts_id")->constrained("other_costs")->onDelete("cascade");

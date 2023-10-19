@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use App\Models\Component;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StorecomponentRequest;
@@ -37,21 +38,26 @@ class ComponentController extends Controller
         $request->validate([
             'name' => 'required',
             'price_per_unit' => 'required',
-            'unit' => 'required',
-            "supplier_id" => 'required'
+            'unit' => 'required'
         ], [
             'name.required' => 'Nama tidak boleh kosong',
             'price_per_unit.required' => 'Harga tidak boleh kosong',
-            'unit.required' => 'Satuan unit tidak boleh kosong',
-            "supplier_id.required" => 'Supplier tidak boleh kosong'
+            'unit.required' => 'Satuan unit tidak boleh kosong'
         ]);
 
-        Component::create([
+        $component = Component::create([
             "name" => $request->name,
             "price_per_unit" => $request->price_per_unit,
-            "unit" => $request->unit,
-            "supplier_id" => $request->supplier_id
+            "unit" => $request->unit
         ]);
+
+        foreach ($request->supplier_id as $index => $supplier) {
+            DB::table("component_supplier")->insert([
+                "component_id" => $component->id,
+                "supplier_id" => $supplier,
+                "price_per_unit" => $request->price_supplier[$index]
+            ]);
+        }
 
         return redirect("/components");
     }
@@ -80,21 +86,28 @@ class ComponentController extends Controller
         $request->validate([
             'name' => 'required',
             'price_per_unit' => 'required',
-            'unit' => 'required',
-            "supplier_id" => "required"
+            'unit' => 'required'
         ], [
             'name.required' => 'Nama tidak boleh kosong',
             'price_per_unit.required' => 'Harga tidak boleh kosong',
-            'unit.required' => 'Satuan unit tidak boleh kosong',
-            "supplier_id.required" => 'Supplier tidak boleh kosong'
+            'unit.required' => 'Satuan unit tidak boleh kosong'
         ]);
 
         $component->update([
             "name" => $request->name,
             "price_per_unit" => $request->price_per_unit,
-            "unit" => $request->unit,
-            "supplier_id" => $request->supplier_id
+            "unit" => $request->unit
         ]);
+
+        DB::table("component_supplier")->where("component_id", $component->id)->delete();
+
+        foreach ($request->supplier_id as $index => $supplier) {
+            DB::table("component_supplier")->insert([
+                "component_id" => $component->id,
+                "supplier_id" => $supplier,
+                "price_per_unit" => $request->price_supplier[$index]
+            ]);
+        }
 
         return redirect("/components");
     }
@@ -104,6 +117,8 @@ class ComponentController extends Controller
      */
     public function destroy(component $component): RedirectResponse
     {
+        DB::table("component_product")->where("component_id", $component->id)->delete();
+        DB::table("component_supplier")->where("component_id", $component->id)->delete();
         $component->delete();
         return redirect("/components");
     }

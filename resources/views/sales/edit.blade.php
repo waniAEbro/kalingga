@@ -20,14 +20,15 @@
                     class="bg-slate-100" />
                 <x-input :name="'code'" :type="'text'" :label="'Kode Penjualan'" :value="$sales->code" readonly
                     :inputParentClass="'mb-3'" class="bg-slate-100" />
-                <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :value="$sales->payments->method" readonly
+                <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :value="$sales->payment->method" readonly
                     :inputParentClass="'mb-3'" class="bg-slate-100" />
-                <x-input :name="'value'" :type="'text'" :label="'VA/Rekening'" :value="$sales->payments->value" readonly
+                <x-input :name="'value'" :type="'text'" :label="'VA/Rekening'" :value="$sales->payment->value" readonly
                     :inputParentClass="'mb-3'" class="bg-slate-100" />
 
                 <div class="flex w-full gap-3 my-3">
                     <div class="flex-1">
-                        <x-input-textarea :name="'location'" :label="'Lokasi Pengiriman'" :placeholder="'location'" :value="$sales->deliveries->location" readonly/>
+                        <x-input-textarea :name="'location'" :label="'Lokasi Pengiriman'" :placeholder="'location'" :value="$sales->delivery->location"
+                            readonly />
                     </div>
                 </div>
             </div>
@@ -48,7 +49,7 @@
                         </tr>
                     </thead>
                     <tbody id="salesBody">
-                        @foreach ($sales->product as $product)
+                        @foreach ($sales->products as $product)
                             <tr id="tr" x-data="" class="border-b">
                                 <td id="number" class="p-2"></td>
                                 <td class="w-40 p-2">{{ $product->name }}</td>

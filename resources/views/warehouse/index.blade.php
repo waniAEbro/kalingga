@@ -14,21 +14,19 @@
 @push('script')
     <script>
         state.columnName = ["Nomor", "Nama Produk", "RFID", "Barcode", "Quantity"]
-        state.columnQuery = ["name", "rfid", "barcode"]
+        state.columnQuery = ["name", "rfid", "barcode", "warehouses.length"]
         state.menu = "warehouse"
 
         document.querySelector(".table-fixed").appendChild(buildHeader())
 
         const products = {!! $products !!}
 
-        const warehouses = {!! $warehouses !!}
-
         state.data = products
         state.allData = products
 
         paginate()
         pageNumber()
-        buildTable(warehouses)
+        buildTable()
 
         function show(id) {
             const wh = products.find(data => data.id === id);

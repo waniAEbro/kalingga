@@ -29,7 +29,7 @@ class SaleController extends Controller
      */
     public function create()
     {
-        return view('sales.create', ["customers" => Customer::get(), "products" => Product::get(), "justArray" => ['one', 'two', 'three', 'four', 'five'], 'payments'=> Payment::get(), 'deliveries'=> Delivery::get()]);
+        return view('sales.create', ["customers" => Customer::get(), "products" => Product::get(), "justArray" => ['one', 'two', 'three', 'four', 'five'], 'payments' => Payment::get(), 'deliveries' => Delivery::get()]);
     }
 
     /**
@@ -88,7 +88,7 @@ class SaleController extends Controller
                 "sale_id" => $sale->id,
                 "quantity_finished" => 0,
                 "quantity_not_finished" => $product->quantity,
-                "total_production" => $product->quantity,
+                "total_quantity" => $product->quantity,
             ]);
         }
 

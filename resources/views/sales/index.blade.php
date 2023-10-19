@@ -128,7 +128,7 @@
 
             let products_lists = '';
             let products_price = 0;
-            sale.product.forEach((pr, i) => {
+            sale.products.forEach((pr, i) => {
                 products_price += pr.pivot.quantity * pr.sell_price;
                 console.log(products_price)
 

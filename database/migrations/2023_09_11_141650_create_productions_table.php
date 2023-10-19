@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId("sale_id")->constrained("sales")->onDelete("cascade");
             $table->bigInteger("quantity_finished");
             $table->bigInteger("quantity_not_finished");
+            $table->bigInteger("total_quantity");
             $table->timestamps();
         });
     }
