@@ -132,30 +132,26 @@
             let suppliers = {!! $suppliers !!}
             const supplierId = document.getElementById('supplier_id')
             const supplier = suppliers.find(supplier => supplier.id == supplierId.value)
+
             if (supplier) {
                 const supplierAddress = document.getElementById('supplier_address').value = supplier.address;
                 const supplierEmail = document.getElementById('supplier_email').value = supplier.email;
                 const supplierPhone = document.getElementById('supplier_phone').value = supplier.phone;
 
+                document.getElementById("purchaseBody").innerHTML = ""
+                components.filter(element => {
+                    return element.supplier_id == supplierId.value
+                }).forEach(element => {
+                    componentsSelected[element.id] = element.name
+                })
             } else {
                 const supplierAddress = document.getElementById('supplier_address').value = '';
                 const supplierEmail = document.getElementById('supplier_email').value = '';
                 const supplierPhone = document.getElementById('supplier_phone').value = '';
+
+                document.getElementById("purchaseBody").innerHTML = ""
+                componentsSelected = {}
             }
-            document.getElementById("purchaseBody").innerHTML = ""
-            document.getElementById("table-products").innerHTML = `<tr onclick="addProduct()">
-                            <td colspan="5" class=" border-t border-b p-3 text-center">Add Product</td>
-                        </tr>`
-            components.filter(element => {
-                return element.suppliers.find(element => element.id == supplierId.value)
-            }).forEach(element => {
-                componentsSelected[element.id] = element.name
-            })
-            products.filter(element => {
-                return element.suppliers.find(element => element.id == supplierId.value)
-            }).forEach(element => {
-                selectedProduct[element.id] = element.name
-            })
         }
 
         let componentsSelected = {}
@@ -164,9 +160,11 @@
         function getComponent(tr) {
 
             const componentId = tr.querySelector('#component_id');
+            console.log('componentId', componentId)
 
             if (componentId.value) {
                 const component = components.find(component => component.id == componentId.value)
+                console.log('component', component)
                 const unit = tr.querySelector('#unit').innerText = component.unit;
                 const price = tr.querySelector('#price').innerText = toRupiah(component.suppliers.find(supplier =>
                     supplier.id == document.getElementById('supplier_id').value).pivot.price_per_unit);
