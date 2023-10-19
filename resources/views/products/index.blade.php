@@ -61,23 +61,13 @@
                             <td class="px-4 py-2 font-bold">${toRupiah(components_price)}</td>
                         </tr>`
 
-            let total_produksi = toRupiah(product.production_costs.price_perakitan + product.production_costs
-                .price_perakitan_prj + product.production_costs.price_grendo + product.production_costs.price_obat +
-                product.production_costs.upah);
+            let total_produksi = toRupiah(product.production_costs.total);
 
-            let total_packing = toRupiah(product.pack.box_price + product.pack.box_hardware + product.pack.assembling +
-                product.pack.stiker + product.pack.hagtag + product.pack.maintenance)
+            let total_packing = toRupiah(product.pack.total)
 
-            let total_lain_lain = toRupiah(product.other_costs.biaya_overhead_pabrik + product.other_costs
-                .biaya_listrik + product.other_costs.biaya_pajak + product.other_costs.biaya_ekspor)
+            let total_lain_lain = toRupiah(product.other_costs.total)
 
-            let hpp = toRupiah(product.production_costs.price_perakitan + product.production_costs
-                .price_perakitan_prj + product.production_costs.price_grendo + product.production_costs.price_obat +
-                product.production_costs.upah + product.pack.box_price + product.pack.box_hardware + product.pack
-                .assembling +
-                product.pack.stiker + product.pack.hagtag + product.pack.maintenance + product.other_costs
-                .biaya_overhead_pabrik + product.other_costs
-                .biaya_listrik + product.other_costs.biaya_pajak + product.other_costs.biaya_ekspor);
+            let hpp = toRupiah(product.hpp);
 
             modal.innerHTML = `
             <div class="w-[960px] bg-white rounded-xl text-gray-800">

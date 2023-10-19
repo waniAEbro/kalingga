@@ -28,6 +28,7 @@ return new class extends Migration
             $table->bigInteger("stiker");
             $table->bigInteger("hagtag");
             $table->bigInteger("maintenance");
+            $table->bigInteger("total");
             $table->timestamps();
         });
     }

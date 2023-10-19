@@ -138,6 +138,7 @@ class ProductController extends Controller
             "stiker" => $request->pack_stiker,
             "hagtag" => $request->pack_hagtag,
             "maintenance" => $request->pack_maintenance,
+            "total" => $request->pack_cost,
         ]);
 
         $production_costs = ProductionCost::create([
@@ -147,6 +148,7 @@ class ProductController extends Controller
             "price_grendo" => $request->price_grendo,
             "price_obat" => $request->price_obat,
             "upah" => $request->upah,
+            "total" => $request->total_production,
         ]);
 
         $other_costs = OtherCost::create([
@@ -172,6 +174,7 @@ class ProductController extends Controller
             "height" => $request->height,
             "sell_price" => $request->sell_price,
             "barcode" => $request->barcode,
+            "hpp" => $request->hpp,
         ]);
 
         foreach ($request->component_id as $index => $component) {
@@ -182,10 +185,11 @@ class ProductController extends Controller
             ]);
         }
 
-        foreach ($request->suppliers as $supplier) {
+        foreach ($request->supplier_id as $index => $supplier) {
             DB::table("product_supplier")->insert([
                 "product_id" => $product->id,
-                "supplier_id" => $supplier
+                "supplier_id" => $supplier,
+                "price_per_unit" => $request->price_supplier[$index]
             ]);
         }
         return redirect("/products");
@@ -204,7 +208,7 @@ class ProductController extends Controller
      */
     public function edit(product $product): View
     {
-        return view("products.edit", ["product" => Product::find($product->id), "components" => Component::get()]);
+        return view("products.edit", ["product" => Product::find($product->id), "components" => Component::get(), "suppliers" => Supplier::get()]);
     }
 
     /**
@@ -316,6 +320,7 @@ class ProductController extends Controller
             "stiker" => $request->pack_stiker,
             "hagtag" => $request->pack_hagtag,
             "maintenance" => $request->pack_maintenance,
+            "total" => $request->pack_cost,
         ]);
 
         $production_costs->update([
@@ -325,6 +330,7 @@ class ProductController extends Controller
             "price_grendo" => $request->price_grendo,
             "price_obat" => $request->price_obat,
             "upah" => $request->upah,
+            "total" => $request->total_production,
         ]);
 
         $other_costs->update([
@@ -348,7 +354,8 @@ class ProductController extends Controller
             "length" => $request->length,
             "width" => $request->width,
             "height" => $request->height,
-            "sell_price" => $request->sell_price
+            "sell_price" => $request->sell_price,
+            "hpp" => $request->hpp,
         ]);
 
         DB::table("component_product")->where("product_id", $product->id)->delete();
@@ -362,10 +369,11 @@ class ProductController extends Controller
         }
 
         DB::table("product_supplier")->where("product_id", $product->id)->delete();
-        foreach ($request->suppliers as $supplier) {
+        foreach ($request->supplier_id as $index => $supplier) {
             DB::table("product_supplier")->insert([
                 "product_id" => $product->id,
-                "supplier_id" => $supplier
+                "supplier_id" => $supplier,
+                "price_per_unit" => $request->price_supplier[$index]
             ]);
         }
 

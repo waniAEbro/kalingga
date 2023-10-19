@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Supplier extends Model
 {
@@ -11,13 +13,18 @@ class Supplier extends Model
 
     protected $guarded = ["id"];
 
-    public function components()
+    public function components(): BelongsToMany
     {
-        return $this->hasMany(Component::class);
+        return $this->belongsToMany(Component::class);
     }
 
-    public function products()
+    public function products(): BelongsToMany
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsToMany(Product::class);
+    }
+
+    public function purchases(): BelongsTo
+    {
+        return $this->belongsTo(Purchase::class);
     }
 }

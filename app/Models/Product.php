@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -18,11 +19,11 @@ class Product extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["components", "pack", "production_costs", "other_costs"];
+    protected $with = ["components", "pack", "production_costs", "other_costs", "warehouses", "suppliers"];
 
     public function components(): BelongsToMany
     {
-        return $this->belongsToMany(Component::class, "component_product")->withPivot("quantity");
+        return $this->belongsToMany(Component::class)->withPivot("quantity");
     }
 
     public function sales(): BelongsToMany
@@ -32,17 +33,17 @@ class Product extends Model
 
     public function suppliers(): BelongsToMany
     {
-        return $this->belongsToMany(Supplier::class, "product_supplier");
+        return $this->belongsToMany(Supplier::class, "product_supplier")->withPivot("price_per_unit");
     }
 
     public function production(): HasOne
     {
-        return $this->hasOne(Production::class, "product_id", "id");
+        return $this->hasOne(Production::class);
     }
 
-    public function warehouse(): HasOne
+    public function warehouses(): HasMany
     {
-        return $this->hasOne(Warehouse::class, "product_id", "id");
+        return $this->hasMany(Warehouse::class);
     }
 
     public function pack(): BelongsTo

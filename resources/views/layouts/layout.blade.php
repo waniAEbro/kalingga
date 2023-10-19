@@ -145,7 +145,7 @@
         return thead
     }
 
-    function buildTable(warehouses = []) {
+    function buildTable() {
         if (document.querySelector("#table-body")) {
             document.querySelector("#table-body").remove()
         }
@@ -188,14 +188,6 @@
                     </form>
                 </div>
             </td>`
-            } else if (state.menu == "warehouse") {
-                let count = warehouses.filter(e => e.product_id == data.id).reduce((total, current) => total +
-                    1, 0)
-
-                console.log(count)
-                tr.innerHTML += `
-                <td class="quantity-${data.id} px-4 py-2" class="p-4 rounded-l-lg">${count}</td>
-                `
             }
             tr.addEventListener("click", (event) => {
                 show(data.id)

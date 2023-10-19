@@ -14,15 +14,20 @@ class Component extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["supplier"];
+    protected $with = ["suppliers"];
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, "component_product");
+        return $this->belongsToMany(Product::class);
     }
 
-    public function supplier(): BelongsTo
+    public function suppliers(): BelongsToMany
     {
-        return $this->belongsTo(Supplier::class, "supplier_id", "id");
+        return $this->belongsToMany(Supplier::class, "component_supplier")->withPivot("price_per_unit");
+    }
+
+    public function purchases(): BelongsToMany
+    {
+        return $this->belongsToMany(Purchase::class, "component_purchase")->withPivot("quantity");
     }
 }

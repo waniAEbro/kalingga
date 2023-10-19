@@ -11,7 +11,9 @@ use App\Models\SaleHistory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Sale extends Model
 {
@@ -19,21 +21,21 @@ class Sale extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["customer", "product", "histories", "payments", "deliveries"];
+    protected $with = ["customer", "products", "histories", "payment", "delivery"];
 
-    public function customer()
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
 
-    public function product()
+    public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class)->withPivot("quantity");
     }
 
-    public function productions(): HasMany
+    public function productions(): HasOne
     {
-        return $this->hasMany(Production::class);
+        return $this->hasOne(Production::class);
     }
 
     public function histories(): HasMany
@@ -41,12 +43,12 @@ class Sale extends Model
         return $this->hasMany(SaleHistory::class);
     }
 
-    public function payments()
+    public function payment(): HasOne
     {
         return $this->hasOne(Payment::class);
     }
 
-    public function deliveries()
+    public function delivery(): HasOne
     {
         return $this->hasOne(Delivery::class);
     }

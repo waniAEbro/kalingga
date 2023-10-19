@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
+use App\Models\Product;
 
 class PurchaseController extends Controller
 {
@@ -32,7 +33,7 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        return view('purchases.create', ["suppliers" => Supplier::get(), "components" => Component::get(), "justArray" => ['one', 'two', 'three']]);
+        return view('purchases.create', ["suppliers" => Supplier::get(), "components" => Component::get(), "products" => Product::get()]);
     }
 
     /**
@@ -75,6 +76,14 @@ class PurchaseController extends Controller
             ]);
         }
 
+        foreach ($request->product_id as $index => $id) {
+            DB::table("product_purchase")->insert([
+                "product_id" => $id,
+                "purchase_id" => $purchase->id,
+                "quantity" => $request->quantity_product[$index],
+            ]);
+        }
+
         PurchaseHistory::create([
             "purchase_id" => $purchase->id,
             "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
@@ -102,6 +111,7 @@ class PurchaseController extends Controller
             "purchase" => $purchase,
             "suppliers" => Supplier::get(),
             "components" => Component::get(),
+            "products" => Product::get(),
         ]);
     }
 

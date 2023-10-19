@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Purchase extends Model
 {
@@ -17,16 +18,21 @@ class Purchase extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["components", "supplier", "histories"];
+    protected $with = ["components", "supplier", "histories", "products"];
 
-    public function supplier(): BelongsTo
+    public function supplier(): HasOne
     {
-        return $this->belongsTo(Supplier::class);
+        return $this->hasOne(Supplier::class);
     }
 
-    public function components(): BelongsToMany
+    public function components(): HasMany
     {
-        return $this->belongsToMany(Component::class)->withPivot("quantity");
+        return $this->hasMany(Component::class);
+    }
+
+    public function products(): HasMany
+    {
+        return $this->HasMany(Product::class);
     }
 
     public function histories(): HasMany

@@ -46,6 +46,23 @@
                     class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
                     New</button>
 
+                <table class="w-full text-left">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-5 font-[500]">Product</th>
+                            <th class="px-4 py-5 font-[500]">Quantity</th>
+                            <th class="px-4 py-5 font-[500]">Price</th>
+                            <th class="px-4 py-5 font-[500]">Subtotal</th>
+                            <th class="px-4 py-5 font-[500]">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-products">
+                        <tr onclick="addProduct()">
+                            <td colspan="5" class=" border-t border-b p-3 text-center">Add Product</td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <div class="flex justify-end gap-3 mt-10">
                     <div class="w-40">
                         <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bayar'" :type="'number'" readonly />
@@ -61,6 +78,56 @@
 @endsection
 @push('script')
     <script>
+        function addProduct() {
+            const tableBody = document.getElementById('table-products');
+            const row = document.createElement('tr');
+            row.setAttribute('x-data', '{ products: $el }')
+            row.className = 'border-b';
+            row.innerHTML = `
+            <td class="border-t border-b p-3">
+                <x-select x-on:click="getProduct(products); await $nextTick();" x-init="await $nextTick(); setProduk();" :dataLists="$suppliers->toArray()" :name="'product_id[]'" :id="'product_id'" />
+            </td>
+            <td class="border-t border-b p-3">
+                <input oninput="subTotalProduk(this)" id="quantity" type="number" step="0.0001" name="quantity_product[]" class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300" />
+            </td>
+            <td id="price">0</td>
+            <td id="subtotal">0</td>
+            <td class="border-t border-b p-3">
+                <button type="button" class="btn btn-red" onclick="this.parentElement.parentElement.remove()">Hapus</button>
+`;
+            tableBody.appendChild(row);
+        }
+
+        function subTotalProduk(e) {
+            const tr = e.parentElement.parentElement;
+            const price = tr.querySelector('#price').innerText.replace(/[^0-9\.,]/g, '').replace(/\./g, '').replace(',',
+                '.');
+            const subtotal = tr.querySelector('#subtotal');
+            subtotal.innerText = toRupiah(price * e.value);
+            set_total();
+        }
+
+        const products = {!! $products !!}
+        const selectedProduct = {}
+
+        function getProduct(tr) {
+            const value = tr.querySelector("#product_id").value
+
+            if (value) {
+                const product = products.find(product => product.id == value)
+                const price = tr.querySelector('#price').innerText = toRupiah(product.suppliers.find(supplier => supplier
+                    .id == document.getElementById('supplier_id').value).pivot.price_per_unit);
+            } else {
+                const price = tr.querySelector('#price').innerText = '';
+            }
+        }
+
+        function setProduk() {
+            document.querySelectorAll(".product_id").forEach(element => {
+                element._x_dataStack[0].list = selectedProduct
+            })
+        }
+
         function getSupplier() {
             let suppliers = {!! $suppliers !!}
             const supplierId = document.getElementById('supplier_id')

@@ -13,7 +13,7 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        return view("warehouse.index", ["warehouses" => Warehouse::all(), "products" => Product::all()]);
+        return view("warehouse.index", ["products" => Product::all()]);
     }
 
     /**
@@ -37,13 +37,17 @@ class WarehouseController extends Controller
             } else {
                 $product = Product::where("rfid", $uid[0])->first();
 
-                $warehouse = Warehouse::create([
-                    "tag_id" => $index,
-                    "tag" => $uid[0],
-                    "product_id" => $product->id
-                ]);
+                if ($product) {
+                    $warehouse = Warehouse::create([
+                        "tag_id" => $index,
+                        "tag" => $uid[0],
+                        "product_id" => $product->id
+                    ]);
 
-                return response()->json($warehouse, 200);
+                    return response()->json($warehouse, 200);
+                } else {
+                    return response()->json("not found", 404);
+                }
             }
         }
     }
@@ -55,9 +59,11 @@ class WarehouseController extends Controller
         } else {
             $tag = array_slice(explode(" ", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["uhf"]), 5, 12);
 
+            $uid = array_slice($tag, 0, 1);
+
             $index = implode("", array_slice($tag, 1));
 
-            $warehouse = Warehouse::where("tag_id", $index)->delete();
+            $warehouse = Warehouse::where("tag", $uid[0])->where("tag_id", $index)->delete();
 
             return response()->json($warehouse, 200);
         }

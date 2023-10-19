@@ -195,18 +195,41 @@
                         :value="old('sell_pice')" />
                 </div>
             </div>
-            <div class="flex justify-end gap-3 mt-5">
-                <select name="suppliers[]" multiple>
-                    <option value="">Please Select</option>
-                    @foreach ($suppliers as $supplier)
-                        <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+            <table class="w-full text-left">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-5 font-[500]">Supplier</th>
+                        <th class="px-4 py-5 font-[500]">Price</th>
+                        <th class="px-4 py-5 font-[500]">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="table-suppliers">
+                    <tr onclick="addRow()">
+                        <td colspan="3" class=" border-t border-b p-3 text-center">Add Supplier</td>
+                    </tr>
+                </tbody>
+            </table>
     </x-create-input-field>
 @endsection
 @push('script')
     <script>
+        const tableBody = document.getElementById('table-suppliers');
+
+        function addRow() {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+        <td class="border-t border-b p-3">
+            <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" />
+        </td>
+        <td class="border-t border-b p-3">
+            <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
+        </td>
+        <td class="border-t border-b p-3">
+            <button type="button" class="btn btn-red" onclick="this.parentElement.parentElement.remove()">Hapus</button>
+    `;
+            tableBody.appendChild(row);
+        }
+
         function set_total_produksi() {
             const el_biaya_produksi = document.querySelectorAll('.biaya_produksi input')
             const biaya_produksi = Array.from(el_biaya_produksi)
