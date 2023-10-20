@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
 use App\Models\Product;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
@@ -44,6 +45,8 @@ class WarehouseController extends Controller
                         "product_id" => $product->id
                     ]);
 
+                    event(new MessageSent(["count" => Warehouse::get()->count(), "action" => "in", "product_name" => $product->name]));
+
                     return response()->json($warehouse, 200);
                 } else {
                     return response()->json("not found", 404);
@@ -64,6 +67,10 @@ class WarehouseController extends Controller
             $index = implode("", array_slice($tag, 1));
 
             $warehouse = Warehouse::where("tag", $uid[0])->where("tag_id", $index)->delete();
+
+            $product = Product::where("rfid", $uid[0])->first();
+
+            event(new MessageSent(["count" => Warehouse::get()->count(), "action" => "out", "product_name" => $product->name]));
 
             return response()->json($warehouse, 200);
         }

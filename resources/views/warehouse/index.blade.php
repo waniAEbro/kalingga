@@ -1,7 +1,23 @@
 @extends('layouts.layout')
 
+@push('head')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0- 
+     alpha/css/bootstrap.css"
+        rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+@endpush
+
 @section('content')
     {{-- @dd($warehouse[0]->production->product->name) --}}
+    <div id="popup" class="absolute top-10 right-10 z-50">
+
+    </div>
     <x-data-list :isReadOnly="true">
         <div class="h-[550px] relative">
             <table class="w-full mt-5 border-separate table-fixed border-spacing-y-3">
@@ -12,6 +28,53 @@
 @endsection
 
 @push('script')
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('f25045053f0f4e32da39', {
+            cluster: 'ap1'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            document.querySelector(".warehouses-length").innerText = data.message.count
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            if (data.message.action == "in") {
+                toastr.success(`${data.message.product_name} berhasil ditambahkan ke warehouse`)
+            } else {
+                toastr.success(`${data.message.product_name} keluar dari warehouse`)
+            }
+
+
+
+        });
+
+        function removeAlert(el) {
+            console.log('el', el)
+            setTimeout(() => {
+                el.remove()
+            }, 5000);
+        }
+    </script>
     <script>
         state.columnName = ["Nomor", "Nama Produk", "RFID", "Barcode", "Quantity"]
         state.columnQuery = ["name", "rfid", "barcode", "warehouses.length"]

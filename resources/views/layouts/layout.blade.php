@@ -164,7 +164,7 @@
             state.columnQuery.forEach(columnQuery => {
                 const query = "data." + columnQuery
                 const td = document.createElement("td")
-                td.classList.add("p-4", "break-words")
+                td.classList.add("p-4", "break-words", columnQuery.replace(".", "-"))
                 td.innerText = eval(query)
 
                 tr.appendChild(td)
