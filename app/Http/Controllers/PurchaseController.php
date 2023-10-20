@@ -49,7 +49,7 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request): RedirectResponse
     {
-        // dd($request->due_date);
+        // dd($request->quantity_product, $request->quantity);
 
         $request->validate([
             'supplier_id' => 'required',
@@ -76,20 +76,24 @@ class PurchaseController extends Controller
             "code" => $request->code
         ]);
 
-        foreach ($request->component_id as $index => $id) {
-            DB::table("component_purchase")->insert([
-                "component_id" => $id,
-                "purchase_id" => $purchase->id,
-                "quantity" => $request->quantity[$index],
-            ]);
+        if($request->component_id){
+            foreach ($request->component_id as $index => $id) {
+                DB::table("component_purchase")->insert([
+                    "component_id" => $id,
+                    "purchase_id" => $purchase->id,
+                    "quantity" => $request->quantity[$index],
+                ]);
+            }
         }
 
-        foreach ($request->product_id as $index => $id) {
-            DB::table("product_purchase")->insert([
-                "product_id" => $id,
-                "purchase_id" => $purchase->id,
-                "quantity" => $request->quantity_product[$index],
-            ]);
+        if($request->product_id){
+            foreach ($request->product_id as $index => $id) {
+                DB::table("product_purchase")->insert([
+                    "product_id" => $id,
+                    "purchase_id" => $purchase->id,
+                    "quantity" => $request->quantity_product[$index],
+                ]);
+            }
         }
 
         PurchaseHistory::create([

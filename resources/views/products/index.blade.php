@@ -37,18 +37,24 @@
             modal.classList.add('opacity-100', 'z-20');
 
             let components_lists = '';
+            let supplier_list = '';
             let components_price = 0;
             product.components.forEach((cp, i) => {
-                components_price += cp.pivot.quantity * cp.price_per_unit;
-                console.log(components_price)
-
                 components_lists += `<tr>
-                                <td class="px-4 py-2">${i+1}</td>
+                                <td class="px-4 py-2 text-center">${i+1}</td>
                                 <td class="px-4 py-2">${cp.name}</td>
                                 <td class="px-4 py-2">${cp.pivot.quantity}</td>
                                 <td class="px-4 py-2">${cp.unit}</td>
                                 <td class="px-4 py-2">${toRupiah(cp.price_per_unit)}</td>
                                 <td class="px-4 py-2">${toRupiah(cp.price_per_unit*cp.pivot.quantity)}</td>
+                            </tr>`;
+            })
+
+            product.suppliers.forEach((sp, i) => {
+                supplier_list += `<tr>
+                                <td class="px-4 py-2 text-center">${i+1}</td>
+                                <td class="px-4 py-2">${sp.name}</td>
+                                <td class="px-4 py-2">${toRupiah(sp.pivot.price_per_unit)}</td>
                             </tr>`;
             })
 
@@ -249,6 +255,21 @@
                                 </thead>
                                 <tbody>
                                     ${components_lists}
+                                </tbody>
+                            </table>
+
+                            <div class="my-3 font-bold">Pemasok</div>
+
+                            <table class="w-full text-xs table-fixed">
+                                <thead class="border-gray-200 border-y-2">
+                                    <tr>
+                                        <th class="w-10 px-4 py-2">No</th>
+                                        <th class="px-4 py-2 text-start">Pemasok</th>
+                                        <th class="px-4 py-2 text-start">Harga</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${supplier_list}
                                 </tbody>
                             </table>
                         </div>

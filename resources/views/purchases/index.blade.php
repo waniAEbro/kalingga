@@ -282,6 +282,24 @@
                             </tbody>
                         </table>
 
+                        <div class="my-5 font-bold">Produk</div>
+
+                        <table class="w-full text-xs table-fixed">
+                            <thead class="border-gray-200 border-y-2">
+                                <tr>
+                                    <th class="w-10 px-4 py-2">No</th>
+                                    <th class="w-20 px-4 py-2 text-start">Komponen</th>
+                                    <th class="w-20 px-4 py-2 text-start">Jumlah</th>
+                                    <th class="w-10 px-4 py-2 text-start">Unit</th>
+                                    <th class="px-4 py-2 text-start">Harga per Satuan</th>
+                                    <th class="px-4 py-2 text-start">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${product_list}
+                            </tbody>
+                        </table>
+
                         <div class="my-5 font-bold">History Pembayaran</div>
 
                         <table class="w-full text-xs table-fixed">

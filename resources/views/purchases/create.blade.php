@@ -40,42 +40,48 @@
             <div class="divider divider-horizontal"></div>
 
             <div class="w-full">
-                <table class="w-full text-left">
+                <h1 class="mb-3 text-xl font-bold">Komponen</h1>
+
+                <table class="w-full text-left table-fixed">
                     <thead>
                         <tr class="border-b-2">
-                            <th class="p-2">#</th>
+                            <th class="w-10 p-2 text-center">#</th>
                             <th class="p-2">Komponen</th>
-                            <th class="p-2">Jumlah</th>
-                            <th class="p-2">Unit</th>
-                            <th class="p-2">Harga Per Produk</th>
+                            <th class="w-20 p-2">Jumlah</th>
+                            <th class="w-10 p-2">Unit</th>
+                            <th class="p-2">Harga</th>
                             <th class="p-2">Subtotal</th>
-                            <th class="p-2"></th>
+                            <th class="w-20 p-2"></th>
                         </tr>
                     </thead>
-                    <tbody id="purchaseBody">
+                    <tbody id="table-component">
                     </tbody>
                 </table>
 
-                <button type="button" x-data x-on:click="addNew(); set_number()"
+                <button type="button" x-data x-on:click="addNewComponent(); set_number_component()"
                     class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
                     New</button>
 
-                <table class="w-full text-left">
+                <h1 class="mt-5 mb-3 text-xl font-bold">Produk</h1>
+
+                <table class="w-full text-left table-fixed">
                     <thead>
-                        <tr>
-                            <th class="px-4 py-5 font-[500]">Product</th>
-                            <th class="px-4 py-5 font-[500]">Quantity</th>
-                            <th class="px-4 py-5 font-[500]">Price</th>
-                            <th class="px-4 py-5 font-[500]">Subtotal</th>
-                            <th class="px-4 py-5 font-[500]">Aksi</th>
+                        <tr class="border-b-2">
+                            <th class="w-10 p-2 text-center">#</th>
+                            <th class="p-2">Produk</th>
+                            <th class="w-20 p-2">Jumlah</th>
+                            <th class="p-2">Harga</th>
+                            <th class="p-2">Subtotal</th>
+                            <th class="w-20 p-2"></th>
                         </tr>
                     </thead>
-                    <tbody id="table-products">
-                        <tr onclick="addProduct()">
-                            <td colspan="5" class=" border-t border-b p-3 text-center">Add Product</td>
-                        </tr>
+                    <tbody id="table-product">
                     </tbody>
                 </table>
+
+                <button type="button" x-data x-on:click="addNewProduct(); set_number_product()"
+                    class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
+                    New</button>
 
                 <div class="flex justify-end gap-3 mt-10">
                     <div class="w-40">
@@ -92,26 +98,6 @@
 @endsection
 @push('script')
     <script>
-        function addProduct() {
-            const tableBody = document.getElementById('table-products');
-            const row = document.createElement('tr');
-            row.setAttribute('x-data', '{ products: $el }')
-            row.className = 'border-b';
-            row.innerHTML = `
-            <td class="border-t border-b p-3">
-                <x-select x-on:click="getProduct(products); await $nextTick();" x-init="await $nextTick(); setProduk();" :dataLists="$suppliers->toArray()" :name="'product_id[]'" :id="'product_id'" />
-            </td>
-            <td class="border-t border-b p-3">
-                <input oninput="subTotalProduk(this)" id="quantity" type="number" step="0.0001" name="quantity_product[]" class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300" />
-            </td>
-            <td id="price">0</td>
-            <td id="subtotal">0</td>
-            <td class="border-t border-b p-3">
-                <button type="button" class="btn btn-red" onclick="this.parentElement.parentElement.remove()">Hapus</button>
-`;
-            tableBody.appendChild(row);
-        }
-
         function subTotalProduk(e) {
             const tr = e.parentElement.parentElement;
             const price = tr.querySelector('#price').innerText.replace(/[^0-9\.,]/g, '').replace(/\./g, '').replace(',',
@@ -122,7 +108,10 @@
         }
 
         const products = {!! $products !!}
-        const selectedProduct = {}
+        const components = {!! $components !!};
+        let selectedProduct = {}
+        let componentsSelected = {}
+
 
         function getProduct(tr) {
             const value = tr.querySelector("#product_id").value
@@ -152,10 +141,11 @@
                 const supplierEmail = document.getElementById('supplier_email').value = supplier.email;
                 const supplierPhone = document.getElementById('supplier_phone').value = supplier.phone;
 
-                document.getElementById("purchaseBody").innerHTML = ""
-                document.getElementById("table-products").innerHTML = `<tr onclick="addProduct()">
-                            <td colspan="5" class=" border-t border-b p-3 text-center">Add Product</td>
-                        </tr>`
+                document.getElementById("table-component").innerHTML = ""
+                document.getElementById("table-product").innerHTML = ""
+                // document.getElementById("table-products").innerHTML = `<tr onclick="addProduct()">
+            //             <td colspan="5" class="p-3 text-center border-t border-b ">Add Product</td>
+            //         </tr>`
                 componentsSelected = {}
                 productsSelected = {}
                 components.filter(element => {
@@ -173,14 +163,12 @@
                 const supplierEmail = document.getElementById('supplier_email').value = '';
                 const supplierPhone = document.getElementById('supplier_phone').value = '';
 
-                document.getElementById("purchaseBody").innerHTML = ""
+                document.getElementById("table-component").innerHTML = ""
+                document.getElementById("table-product").innerHTML = ""
                 componentsSelected = {}
-                productsSelected = {}
+                selectedProduct = {}
             }
         }
-
-        let componentsSelected = {}
-        let components = {!! $components !!};
 
         function getComponent(tr) {
 
@@ -197,22 +185,29 @@
             }
         }
 
-        function set_number() {
-            const numbers = document.querySelectorAll('#number');
+        function set_number_component() {
+            const numbers = document.querySelectorAll('#number-component');
             numbers.forEach((number, i) => number.innerText = i + 1)
         }
 
-        set_number();
 
-        function addNew() {
-            const purchaseBody = document.getElementById('purchaseBody');
-            const purchaseRow = document.createElement('tr');
-            purchaseRow.setAttribute('x-data', '{ purchase: $el }')
-            purchaseRow.className = 'border-b';
-            purchaseRow.innerHTML = `
-                                        <td id="number" class="p-2"></td>
+        function set_number_product() {
+            const numbers = document.querySelectorAll('#number-product');
+            numbers.forEach((number, i) => number.innerText = i + 1)
+        }
+
+        // set_number_component();
+        // set_number_product();
+
+        function addNewComponent() {
+            const tableComponent = document.getElementById('table-component');
+            const componentRow = document.createElement('tr');
+            componentRow.setAttribute('x-data', '{ component: $el }')
+            componentRow.className = 'border-b';
+            componentRow.innerHTML = `
+                                        <td id="number-component" class="p-2 text-center"></td>
                                         <td class="w-40 p-2">
-                                            <x-select x-on:click="getComponent(purchase); await $nextTick(); set_subtotal($refs.quantity)" x-init="await $nextTick(); setKomponen();" :dataLists="$components->toArray()"
+                                            <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)" x-init="await $nextTick(); setKomponen();" :dataLists="$components->toArray()"
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
@@ -223,13 +218,40 @@
                                         <td id="price" class="p-2"></td>
                                         <td id="subtotal" class="p-2"></td>
                                         <td class="p-2">
-                                            <button type="button" x-on:click="purchase.remove(); set_total(); set_number()"
+                                            <button type="button" x-on:click="component.remove(); set_total(); set_number_component()"
                                                 class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
                                     `;
 
-            purchaseBody.appendChild(purchaseRow);
+            tableComponent.appendChild(componentRow);
+        }
+
+        function addNewProduct() {
+            const tableProduct = document.getElementById('table-product');
+            const productRow = document.createElement('tr');
+            productRow.setAttribute('x-data', '{ product: $el }')
+            productRow.className = 'border-b';
+            productRow.innerHTML = `
+                                        <td id="number-product" class="p-2 text-center"></td>
+                                        <td class="w-40 p-2">
+                                            <x-select x-on:click="getProduct(product); await $nextTick(); setProduk();"  x-init="await $nextTick(); setProduk();" :dataLists="$products->toArray()"
+                                                :name="'product_id[]'" :id="'product_id'" />
+                                        </td>
+                                        <td class="p-2"><input type="number" name="quantity_product[]"
+                                                oninput="subTotalProduk(this)" value="0" step="0.0001"
+                                                class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                        </td>
+                                        <td id="price" class="p-2"></td>
+                                        <td id="subtotal" class="p-2"></td>
+                                        <td class="p-2">
+                                            <button type="button" x-on:click="product.remove(); set_total(); set_number_product()"
+                                                class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                        </td>
+                                    `;
+
+            tableProduct.appendChild(productRow);
         }
 
         function setKomponen() {

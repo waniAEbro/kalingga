@@ -19,6 +19,7 @@
         document.querySelector(".table-fixed").appendChild(buildHeader())
 
         const components = {!! $components !!}
+        const componentSupplier = {!! $component_supplier !!}
 
         state.data = components
         state.allData = components
@@ -28,12 +29,21 @@
 
         function show(id) {
             const component = components.find(data => data.id === id);
-
             const modal = document.querySelector('#modal');
             document.querySelector('#modal-background').classList.remove('hidden');
 
             modal.classList.remove('opacity-0', '-z-20');
             modal.classList.add('opacity-100', 'z-20');
+
+            let supplier_list = ''
+
+            component.suppliers.forEach((sp, i) => {
+                supplier_list += `<tr>
+                        <td class="px-4 py-2 text-center">${i+1}</td>
+                        <td class="px-4 py-2">${sp.name}</td>
+                        <td class="px-4 py-2">${toRupiah(sp.pivot.price_per_unit)}</td>
+                    </tr>`
+            })
 
             modal.innerHTML = `
             <div class="w-[400px] bg-white rounded-xl text-gray-800">
@@ -56,6 +66,18 @@
                         <div class="flex justify-between w-40 font-bold">Harga<div>:</div></div>
                         <div class="">${toRupiah(component.price_per_unit)}</div>
                     </div>
+                    <table class="w-full mt-5 table-fixed">
+                                <thead class="border-gray-200 border-y-2">
+                                    <tr>
+                                        <th class="w-10 px-4 py-2">No</th>
+                                        <th class="w-20 px-4 py-2 text-start">Pemasok</th>
+                                        <th class="w-20 px-4 py-2 text-start">Harga</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${supplier_list}
+                                </tbody>
+                            </table>
                 </div>
 
                 <div class="py-[20px] px-[30px] w-full flex justify-end items-center">

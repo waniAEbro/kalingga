@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="shortcut icon" type="image/png" href="/img/image 6.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -32,7 +33,8 @@
                             </label>
                             <input
                                 class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                id="email" name="email" type="email" value="{{ Session::get('email') }}" placeholder="email" />
+                                id="email" name="email" type="email" value="{{ Session::get('email') }}"
+                                placeholder="email" />
                         </div>
                         <div class="mb-4">
                             <label class="block mb-2 text-sm font-bold text-gray-700" for="password">

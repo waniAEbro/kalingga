@@ -18,40 +18,54 @@
                     :placeholder="'1000'" :value="old('price_per_unit')" />
             </div>
         </div>
-        <table class="w-full text-left">
+
+        <table class="w-full mt-5 text-left table-fixed">
             <thead>
-                <tr>
-                    <th class="px-4 py-5 font-[500]">Supplier</th>
-                    <th class="px-4 py-5 font-[500]">Price</th>
-                    <th class="px-4 py-5 font-[500]">Aksi</th>
+                <tr class="border-y-2">
+                    <th class="w-20 p-2 text-center">#</th>
+                    <th class="p-2 w-96">Pemasok</th>
+                    <th class="p-2">Harga</th>
+                    <th class="w-20 p-2"></th>
                 </tr>
             </thead>
             <tbody id="table-body">
-                <tr onclick="addRow()">
-                    <td colspan="3" class=" border-t border-b p-3 text-center">Add Supplier</td>
-                </tr>
             </tbody>
         </table>
+
+        <button type="button" x-data x-on:click="addNewSupplier(); set_number()"
+            class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
+            New</button>
     </x-create-input-field>
 @endsection
 
 @push('script')
     <script>
-        const tableBody = document.getElementById('table-body');
+        function addNewSupplier() {
+            const tableBody = document.getElementById('table-body');
+            const tableRow = document.createElement('tr');
+            tableRow.setAttribute('x-data', '{ supplier: $el }')
+            tableRow.className = 'border-b';
+            tableRow.innerHTML = `
+                                        <td id="number" class="p-2 text-center"></td>
+                                        <td class="p-2">
+                                            <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" />
+                                        </td>
+                                        <td class="p-2">
+                                            <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
+                                        </td>
+                                        <td class="p-2">
+                                            <button type="button" x-on:click="supplier.remove(); set_total(); set_number()"
+                                                class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                        </td>
+                                    `;
 
-        function addRow() {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td class="border-t border-b p-3">
-                    <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" />
-                </td>
-                <td class="border-t border-b p-3">
-                    <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
-                </td>
-                <td class="border-t border-b p-3">
-                    <button type="button" class="btn btn-red" onclick="this.parentElement.parentElement.remove()">Hapus</button>
-            `;
-            tableBody.appendChild(row);
+            tableBody.appendChild(tableRow);
+        }
+
+        function set_number() {
+            const numbers = document.querySelectorAll('#number');
+            numbers.forEach((number, i) => number.innerText = i + 1)
         }
     </script>
 @endpush

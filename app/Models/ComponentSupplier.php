@@ -9,5 +9,7 @@ class ComponentSupplier extends Model
 {
     use HasFactory;
 
+    protected $table = 'component_supplier';
+
     protected $guarded = ["id"];
 }
