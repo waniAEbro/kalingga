@@ -31,7 +31,7 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        return view("products.create", ["components" => Component::get(), "suppliers" => Supplier::get()]);
+        return view("products.create", ["components" => Component::get(), "suppliers" => Supplier::get(), 'products' => Product::get()]);
     }
 
     /**

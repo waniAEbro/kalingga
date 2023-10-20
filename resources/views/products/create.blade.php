@@ -7,22 +7,22 @@
         <div class="w-full">
             <h1 class="mb-3 text-xl font-bold">Komponen</h1>
 
-            <table class="w-full text-left">
+            <table class="w-full text-sm text-left table-fixed">
                 {{-- <p>{{ old('component_id[0]') }}</p> --}}
                 <thead>
                     <tr class="border-b-2">
-                        <th class="p-2 text-sm">#</th>
-                        <th class="p-2 text-sm">Komponen</th>
-                        <th class="p-2 text-sm">Jumlah</th>
-                        <th class="p-2 text-sm">Unit</th>
-                        <th class="p-2 text-sm">Harga Per Produk</th>
-                        <th class="p-2 text-sm">Subtotal</th>
-                        <th class="p-2 text-sm"></th>
+                        <th class="p-2 w-20 text-center">#</th>
+                        <th class="p-2">Komponen</th>
+                        <th class="p-2">Jumlah</th>
+                        <th class="p-2">Unit</th>
+                        <th class="p-2">Harga Per Produk</th>
+                        <th class="p-2">Subtotal</th>
+                        <th class="p-2 w-20"></th>
                     </tr>
                 </thead>
                 <tbody id="productBody">
                     <tr x-data="{ productEl: $el }" class="border-b">
-                        <td id="number" class="p-2"></td>
+                        <td id="number-component" class="p-2 text-center"></td>
                         <td class="w-40 p-2">
                             <x-select x-on:click="getComponent(productEl); $nextTick();" :dataLists="$components->toArray()" :name="'component_id[]'"
                                 :id="'component_id'" />
@@ -30,7 +30,7 @@
                         <td class="p-2">
                             <input step="0.001" x-ref="quantity" type="number" name="quantity[]" min="0"
                                 oninput="set_subtotal(this)" value=""
-                                class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                class="w-20 px-2 py-2 transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                         </td>
                         <td id="unit" class="p-2"></td>
                         <td id="price" class="p-2"></td>
@@ -39,15 +39,48 @@
                             <button type="button"
                                 x-on:click="productEl.remove(); await $nextTick; set_total(); set_number()"
                                 class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
-                                    class="p-2 text-r0 material-symbols-outlined">delete</span></button>
+                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <button type="button" x-data x-on:click="addNew(); set_number()"
+            <button type="button" x-data x-on:click="addNewComponent(); set_number()"
                 class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Tambah
                 Data Baru</button>
+
+            <h1 class="mb-3 mt-5 text-xl font-bold">Pemasok</h1>
+
+            <table class="w-full text-left mt-5 table-fixed text-sm">
+                <thead>
+                    <tr class="border-b-2">
+                        <th class="p-2 w-20 text-center">#</th>
+                        <th class="p-2 w-96">Pemasok</th>
+                        <th class="p-2">Harga</th>
+                        <th class="p-2 w-20"></th>
+                    </tr>
+                </thead>
+                <tbody id="table-suppliers">
+                    <tr x-data="{ supplier: $el }" class="border-b">
+                        <td id="number-supplier" class="p-2 text-center"></td>
+                        <td class="p-2">
+                            <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" />
+                        </td>
+                        <td class="p-2">
+                            <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
+                        </td>
+                        <td class="p-2">
+                            <button type="button" x-on:click="supplier.remove(); set_total(); set_number()"
+                                class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button type="button" x-data x-on:click="addNewSupplier(); set_number()"
+                class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
+                New</button>
         </div>
 
         <div class="divider"></div>
@@ -195,39 +228,31 @@
                         :value="old('sell_pice')" />
                 </div>
             </div>
-            <table class="w-full text-left">
-                <thead>
-                    <tr>
-                        <th class="px-4 py-5 font-[500]">Supplier</th>
-                        <th class="px-4 py-5 font-[500]">Price</th>
-                        <th class="px-4 py-5 font-[500]">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="table-suppliers">
-                    <tr onclick="addRow()">
-                        <td colspan="3" class=" border-t border-b p-3 text-center">Add Supplier</td>
-                    </tr>
-                </tbody>
-            </table>
     </x-create-input-field>
 @endsection
 @push('script')
     <script>
-        const tableBody = document.getElementById('table-suppliers');
+        function addNewSupplier() {
+            const tableBody = document.getElementById('table-suppliers');
+            const tableRow = document.createElement('tr');
+            tableRow.setAttribute('x-data', '{ supplier: $el }')
+            tableRow.className = 'border-b';
+            tableRow.innerHTML = `
+                                        <td id="number-supplier" class="p-2 text-center"></td>
+                                        <td class="p-2">
+                                            <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" />
+                                        </td>
+                                        <td class="p-2">
+                                            <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
+                                        </td>
+                                        <td class="p-2">
+                                            <button type="button" x-on:click="supplier.remove(); set_total(); set_number()"
+                                                class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                        </td>
+                                    `;
 
-        function addRow() {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-        <td class="border-t border-b p-3">
-            <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" />
-        </td>
-        <td class="border-t border-b p-3">
-            <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
-        </td>
-        <td class="border-t border-b p-3">
-            <button type="button" class="btn btn-red" onclick="this.parentElement.parentElement.remove()">Hapus</button>
-    `;
-            tableBody.appendChild(row);
+            tableBody.appendChild(tableRow);
         }
 
         function set_total_produksi() {
@@ -288,20 +313,27 @@
             }
         }
 
-        function set_number() {
-            const numbers = document.querySelectorAll('#number');
+        function set_number_component() {
+            const numbers = document.querySelectorAll('#number-component');
             numbers.forEach((number, i) => number.innerText = i + 1)
         }
 
-        set_number();
+        set_number_component();
 
-        function addNew() {
+        function set_number_supplier() {
+            const numbers = document.querySelectorAll('#number-supplier');
+            numbers.forEach((number, i) => number.innerText = i + 1)
+        }
+
+        set_number_supplier();
+
+        function addNewComponent() {
             const productBody = document.getElementById('productBody');
             const productRow = document.createElement('tr');
             productRow.setAttribute('x-data', '{ productEl: $el }')
             productRow.className = 'border-b';
             productRow.innerHTML = `
-                                        <td id="number" class="p-2"></td>
+                                        <td id="number-component" class="p-2 text-center"></td>
                                         <td class="w-40 p-2">
                                             <x-select x-on:click="getComponent(productEl); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
                                                 :name="'component_id[]'" :id="'component_id'" />

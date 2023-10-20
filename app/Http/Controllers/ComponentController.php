@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StorecomponentRequest;
 use App\Http\Requests\UpdatecomponentRequest;
+use App\Models\ComponentSupplier;
 
 class ComponentController extends Controller
 {
@@ -17,7 +18,7 @@ class ComponentController extends Controller
      */
     public function index(): View
     {
-        return view("component.index", ["components" => Component::get()]);
+        return view("component.index", ["components" => Component::get(), 'component_supplier' => ComponentSupplier::get()]);
     }
 
     /**
