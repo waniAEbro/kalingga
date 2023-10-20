@@ -22,19 +22,19 @@ class Purchase extends Model
 
     protected $with = ["components", "supplier", "histories", "products","payment_purchases", "delivery_purchases"];
 
-    public function supplier(): HasOne
+    public function supplier(): BelongsTo
     {
-        return $this->hasOne(Supplier::class);
+        return $this->belongsTo(Supplier::class);
     }
 
-    public function components(): HasMany
+    public function components(): BelongsToMany
     {
-        return $this->hasMany(Component::class);
+        return $this->belongsToMany(Component::class);
     }
 
-    public function products(): HasMany
+    public function products(): BelongsToMany
     {
-        return $this->HasMany(Product::class);
+        return $this->belongsToMany(Product::class);
     }
 
     public function histories(): HasMany

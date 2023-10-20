@@ -17,6 +17,12 @@
                 <x-input :name="'supplier_phone'" :label="'No Hp Pemasok'" :value="$purchase->supplier->phone" readonly class="mb-3 bg-slate-100" />
                 <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" :value="$purchase->code" readonly
                     class="bg-slate-100" />
+                <div class="flex w-full gap-3 my-3">
+                    <div class="flex-1">
+                        <x-input-textarea :name="'location'" :label="'Lokasi Pengiriman'" :placeholder="'location'" :value="$purchase->delivery_purchases->location"
+                            class="bg-slate-100" readonly />
+                    </div>
+                </div>
             </div>
 
             <div class="divider divider-horizontal"></div>
