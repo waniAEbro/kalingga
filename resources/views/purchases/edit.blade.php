@@ -17,6 +17,22 @@
                 <x-input :name="'supplier_phone'" :label="'No Hp Pemasok'" :value="$purchase->supplier->phone" readonly class="mb-3 bg-slate-100" />
                 <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" :value="$purchase->code" readonly
                     class="bg-slate-100" />
+                <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :value="$purchase->payment_purchases->method" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'beneficiary_bank'" :type="'text'" :label="'beneficiary\'s Bank'" :value="$purchase->payment_purchases->beneficiary_bank" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'beneficiary_ac_usd'" :type="'text'" :label="'beneficiary A/C USD'" :value="$purchase->payment_purchases->beneficiary_ac_usd" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'bank_address'" :type="'text'" :label="'Bank Address'" :value="$purchase->payment_purchases->bank_address" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'swift_code'" :type="'text'" :label="'Swift Code'" :value="$purchase->payment_purchases->swift_code" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'beneficiary_name'" :type="'text'" :label="'Beneficiary\'s Name'" :value="$purchase->payment_purchases->beneficiary_name" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'beneficiary_address'" :type="'text'" :label="'Beneficiary\'s Address'" :value="$purchase->payment_purchases->beneficiary_address" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
+                <x-input :name="'phone'" :type="'text'" :label="'Phone'" :value="$purchase->payment_purchases->phone" readonly
+                    :inputParentClass="'mb-3'" class="bg-slate-100" />
                 <div class="flex w-full gap-3 my-3">
                     <div class="flex-1">
                         <x-input-textarea :name="'location'" :label="'Lokasi Pengiriman'" :placeholder="'location'" :value="$purchase->delivery_purchases->location"
