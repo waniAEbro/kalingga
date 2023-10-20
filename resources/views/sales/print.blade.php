@@ -138,7 +138,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($sale->product as $no => $item)
+            @foreach ($sale->products as $no => $item)
                 <tr>
                     <td>{{ $no + 1 }}</td>
                     <td>{{ $item->code }}</td>

@@ -54,7 +54,7 @@
                 filter: '',
                 list: datalist,
                 selectedkey: selectedKey,
-                selectedlabel: selectedlabel,
+                selectedlabel: datalist[selectedKey] ?? selectedlabel,
                 initialValue: null,
                 toggle: function() {
                     this.state = !this.state;

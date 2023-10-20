@@ -34,7 +34,8 @@ class SaleController extends Controller
             "products" => Product::get(),
             "justArray" => ['one', 'two', 'three', 'four', 'five'],
             "payment_sales" => PaymentSale::get(),
-            "delivery_sales" => DeliverySale::get()]);
+            "delivery_sales" => DeliverySale::get()
+        ]);
     }
 
     /**
@@ -50,6 +51,17 @@ class SaleController extends Controller
             'due_date' => 'required',
             'code' => 'required',
             'paid' => 'required',
+            "method" => "required",
+            "beneficiary_bank" => "required",
+            "beneficiary_ac_usd" => "required",
+            "bank_address" => "required",
+            "swift_code" => "required",
+            "beneficiary_name" => "required",
+            "beneficiary_address" => "required",
+            "phone" => "required",
+            "location" => "required",
+            "product_id.*" => "required",
+            "quantity.*" => "required",
         ], [
             'customer_id.required' => 'ID Customer tidak boleh kosong',
             'sale_date.required' => 'Tanggal Pembelian tidak boleh kosong',

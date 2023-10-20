@@ -37,7 +37,7 @@
             if (element.value === '') {
                 element.value = 0
             }
-            const total = parseInt(production.sale.product.find(e => e.id == production.product_id).pivot.quantity)
+            const total = parseInt(production.sale.products.find(e => e.id == production.product_id).pivot.quantity)
             let quantity_finished = parseInt(element.value)
             let quantity_not_finished = total - quantity_finished
             console.log(quantity_finished)

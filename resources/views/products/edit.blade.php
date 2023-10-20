@@ -39,7 +39,7 @@
                             <td id="subtotal" class="p-2"></td>
                             <td class="p-2">
                                 <button type="button"
-                                    x-on:click="purchase.remove(); await $nextTick; set_total(); set_number()"
+                                    x-on:click="purchase.remove(); await $nextTick; set_total(); set_number_component()"
                                     class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
                                         class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                             </td>
@@ -48,7 +48,7 @@
                 </tbody>
             </table>
 
-            <button type="button" x-data x-on:click="addNewComponent(); set_number()"
+            <button type="button" x-data x-on:click="addNewComponent(); set_number_component()"
                 class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Tambah
                 Data Baru</button>
 
@@ -76,7 +76,7 @@
                                     :placeholder="'1000'" :value="$supplier->pivot->price_per_unit" />
                             </td>
                             <td class="p-2">
-                                <button type="button" x-on:click="supplier.remove(); set_total(); set_number()"
+                                <button type="button" x-on:click="supplier.remove(); set_total(); set_number_supplier()"
                                     class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
                                         class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                             </td>
@@ -85,7 +85,7 @@
                 </tbody>
             </table>
 
-            <button type="button" x-data x-on:click="addNewSupplier(); set_number()"
+            <button type="button" x-data x-on:click="addNewSupplier(); set_number_supplier()"
                 class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
                 New</button>
         </div>
@@ -253,7 +253,7 @@
                                             <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
                                         </td>
                                         <td class="p-2">
-                                            <button type="button" x-on:click="supplier.remove(); set_total(); set_number()"
+                                            <button type="button" x-on:click="supplier.remove(); set_total(); set_number_supplier()"
                                                 class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
@@ -358,7 +358,7 @@
                                 <td id="price" class="p-2"></td>
                                 <td id="subtotal" class="p-2"></td>
                                 <td class="p-2">
-                                    <button type="button" x-on:click="productEl.remove(); set_total(); set_number()"
+                                    <button type="button" x-on:click="productEl.remove(); set_total(); set_number_component()"
                                         class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
                                             class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                 </td>

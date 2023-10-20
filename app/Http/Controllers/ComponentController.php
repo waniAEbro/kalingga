@@ -39,11 +39,15 @@ class ComponentController extends Controller
         $request->validate([
             'name' => 'required',
             'price_per_unit' => 'required',
-            'unit' => 'required'
+            'unit' => 'required',
+            'supplier_id.*' => 'required',
+            'price_supplier.*' => 'required'
         ], [
             'name.required' => 'Nama tidak boleh kosong',
             'price_per_unit.required' => 'Harga tidak boleh kosong',
-            'unit.required' => 'Satuan unit tidak boleh kosong'
+            'unit.required' => 'Satuan unit tidak boleh kosong',
+            'supplier_id.*.required' => 'Supplier tidak boleh kosong',
+            'price_supplier.*.required' => 'Harga supplier tidak boleh kosong'
         ]);
 
         $component = Component::create([

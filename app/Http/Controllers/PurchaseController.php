@@ -57,6 +57,15 @@ class PurchaseController extends Controller
             'due_date' => 'required',
             'code' => 'required',
             'paid' => 'required',
+            "method" => "required",
+            "beneficiary_bank" => "required",
+            "beneficiary_ac_usd" => "required",
+            "bank_address" => "required",
+            "swift_code" => "required",
+            "beneficiary_name" => "required",
+            "beneficiary_address" => "required",
+            "phone" => "required",
+            "location" => "required",
         ], [
             'supplier_id.required' => 'ID Supplier tidak boleh kosong',
             'purchase_date.required' => 'Tanggal Pembelian tidak boleh kosong',
@@ -76,7 +85,7 @@ class PurchaseController extends Controller
             "code" => $request->code
         ]);
 
-        if($request->component_id){
+        if ($request->component_id) {
             foreach ($request->component_id as $index => $id) {
                 DB::table("component_purchase")->insert([
                     "component_id" => $id,
@@ -86,7 +95,7 @@ class PurchaseController extends Controller
             }
         }
 
-        if($request->product_id){
+        if ($request->product_id) {
             foreach ($request->product_id as $index => $id) {
                 DB::table("product_purchase")->insert([
                     "product_id" => $id,

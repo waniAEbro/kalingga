@@ -1,3 +1,9 @@
+@dump(old('component_id', []), old('quantity', []), $errors->get('component_id.*'))
+
+@error('component_id.' . 1)
+    @dump($message)
+@enderror
+
 @extends('layouts.layout')
 
 @section('content')
@@ -8,7 +14,6 @@
             <h1 class="mb-3 text-xl font-bold">Komponen</h1>
 
             <table class="w-full text-sm text-left table-fixed">
-                {{-- <p>{{ old('component_id[0]') }}</p> --}}
                 <thead>
                     <tr class="border-b-2">
                         <th class="p-2 w-20 text-center">#</th>
@@ -21,31 +26,64 @@
                     </tr>
                 </thead>
                 <tbody id="productBody">
-                    <tr x-data="{ productEl: $el }" class="border-b">
-                        <td id="number-component" class="p-2 text-center"></td>
-                        <td class="w-40 p-2">
-                            <x-select x-on:click="getComponent(productEl); $nextTick();" :dataLists="$components->toArray()" :name="'component_id[]'"
-                                :id="'component_id'" />
-                        </td>
-                        <td class="p-2">
-                            <input step="0.001" x-ref="quantity" type="number" name="quantity[]" min="0"
-                                oninput="set_subtotal(this)" value=""
-                                class="w-20 px-2 py-2 transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
-                        </td>
-                        <td id="unit" class="p-2"></td>
-                        <td id="price" class="p-2"></td>
-                        <td id="subtotal" class="p-2"></td>
-                        <td class="p-2">
-                            <button type="button"
-                                x-on:click="productEl.remove(); await $nextTick; set_total(); set_number()"
-                                class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
-                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
-                        </td>
-                    </tr>
+                    @if (old('component_id', []))
+                        @foreach (old('component_id', []) as $index => $cp)
+                            <tr x-data="{ productEl: $el }" class="border-b">
+                                <td id="number-component" class="p-2 text-center"></td>
+                                <td class="w-40 p-2">
+                                    <x-select x-on:click="getComponent(productEl); $nextTick();" :dataLists="$components->toArray()"
+                                        :name="'component_id[]'" :id="'component_id'" :value="$cp" />
+                                    @error('component_id.' . $index)
+                                        <div class="text-sm text-red">{{ $message }}</div>
+                                    @enderror
+                                </td>
+                                <td class="p-2">
+                                    <input step="0.001" x-ref="quantity" type="number" name="quantity[]" min="0"
+                                        oninput="set_subtotal(this)" value="{{ old('quantity', [])[$index] }}"
+                                        class="w-20 px-2 py-2 transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                    @error('quantity.' . $index)
+                                        <div class="text-sm text-red">{{ $message }}</div>
+                                    @enderror
+                                </td>
+                                <td id="unit" class="p-2"></td>
+                                <td id="price" class="p-2"></td>
+                                <td id="subtotal" class="p-2"></td>
+                                <td class="p-2">
+                                    <button type="button"
+                                        x-on:click="productEl.remove(); await $nextTick; set_total(); set_number_component()"
+                                        class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                            class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr x-data="{ productEl: $el }" class="border-b">
+                            <td id="number-component" class="p-2 text-center"></td>
+                            <td class="w-40 p-2">
+                                <x-select x-on:click="getComponent(productEl); $nextTick();" :dataLists="$components->toArray()"
+                                    :name="'component_id[]'" :id="'component_id'" />
+                            </td>
+                            <td class="p-2">
+                                <input step="0.001" x-ref="quantity" type="number" name="quantity[]" min="0"
+                                    oninput="set_subtotal(this)" value=""
+                                    class="w-20 px-2 py-2 transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                            </td>
+                            <td id="unit" class="p-2"></td>
+                            <td id="price" class="p-2"></td>
+                            <td id="subtotal" class="p-2"></td>
+                            <td class="p-2">
+                                <button type="button"
+                                    x-on:click="productEl.remove(); await $nextTick; set_total(); set_number_component()"
+                                    class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                        class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                            </td>
+                        </tr>
+                    @endif
+
                 </tbody>
             </table>
 
-            <button type="button" x-data x-on:click="addNewComponent(); set_number()"
+            <button type="button" x-data x-on:click="addNewComponent(); set_number_component()"
                 class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Tambah
                 Data Baru</button>
 
@@ -61,24 +99,54 @@
                     </tr>
                 </thead>
                 <tbody id="table-suppliers">
-                    <tr x-data="{ supplier: $el }" class="border-b">
-                        <td id="number-supplier" class="p-2 text-center"></td>
-                        <td class="p-2">
-                            <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" />
-                        </td>
-                        <td class="p-2">
-                            <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
-                        </td>
-                        <td class="p-2">
-                            <button type="button" x-on:click="supplier.remove(); set_total(); set_number()"
-                                class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
-                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
-                        </td>
-                    </tr>
+                    @if (old('supplier_id', []))
+                        @foreach (old('supplier_id', []) as $index => $supplier)
+                            <tr x-data="{ supplier: $el }" class="border-b">
+                                <td id="number-supplier" class="p-2 text-center"></td>
+                                <td class="p-2">
+                                    <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
+                                        :id="'supplier_id'" :value="$supplier" />
+                                    @error('supplier_id.' . $index)
+                                        <div class="text-sm text-red">{{ $message }}</div>
+                                    @enderror
+                                </td>
+                                <td class="p-2">
+                                    <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'"
+                                        :placeholder="'1000'" :value="old('price_supplier', [])[$index]" />
+                                    @error('price_supplier.' . $index)
+                                        <div class="text-sm text-red">{{ $message }}</div>
+                                    @enderror
+                                </td>
+                                <td class="p-2">
+                                    <button type="button"
+                                        x-on:click="supplier.remove(); set_total(); set_number_supplier()"
+                                        class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                            class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr x-data="{ supplier: $el }" class="border-b">
+                            <td id="number-supplier" class="p-2 text-center"></td>
+                            <td class="p-2">
+                                <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
+                                    :id="'supplier_id'" />
+                            </td>
+                            <td class="p-2">
+                                <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'"
+                                    :placeholder="'1000'" />
+                            </td>
+                            <td class="p-2">
+                                <button type="button" x-on:click="supplier.remove(); set_total(); set_number_supplier()"
+                                    class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                        class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                            </td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
 
-            <button type="button" x-data x-on:click="addNewSupplier(); set_number()"
+            <button type="button" x-data x-on:click="addNewSupplier(); set_number_supplier()"
                 class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
                 New</button>
         </div>
@@ -225,7 +293,7 @@
 
                 <div class="w-52">
                     <x-input-with-desc :desc="'Rp'" :label="'Harga Jual'" :name="'sell_price'" :type="'number'"
-                        :value="old('sell_pice')" />
+                        :value="old('sell_price')" />
                 </div>
             </div>
     </x-create-input-field>
@@ -246,7 +314,7 @@
                                             <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
                                         </td>
                                         <td class="p-2">
-                                            <button type="button" x-on:click="supplier.remove(); set_total(); set_number()"
+                                            <button type="button" x-on:click="supplier.remove(); set_total(); set_number_supplier()"
                                                 class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
@@ -342,15 +410,12 @@
                                             <input step="0.001" x-ref="quantity" type="number" name="quantity[]"
                                                 oninput="set_subtotal(this)" value=""
                                                 class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
-                                            @error('quantity.*')
-                                                <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
-                                            @enderror
                                         </td>
                                         <td id="unit" class="p-2"></td>
                                         <td id="price" class="p-2"></td>
                                         <td id="subtotal" class="p-2"></td>
                                         <td class="p-2">
-                                            <button type="button" x-on:click="productEl.remove(); set_total(); set_number()"
+                                            <button type="button" x-on:click="productEl.remove(); set_total(); set_number_component()"
                                                 class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-r0 material-symbols-outlined">delete</span></button>
                                         </td>

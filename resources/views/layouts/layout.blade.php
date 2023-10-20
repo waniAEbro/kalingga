@@ -283,50 +283,6 @@
         // modal.classList.remove('z-20');
         // modal.classList.add('-z-20');
     }
-
-    function selectmenu(datalist, selectedKey, selectedlabel) {
-        return {
-            state: false,
-            filter: '',
-            list: datalist,
-            selectedkey: selectedKey,
-            selectedlabel: selectedlabel,
-            initialValue: null,
-            toggle: function() {
-                this.state = !this.state;
-                this.filter = '';
-            },
-            close: function() {
-                this.state = false;
-            },
-            select: function(value, key) {
-                if (this.selectedkey == key) {
-                    this.selectedlabel = "Please Select";
-                    this.selectedkey = null;
-                    this.state = false;
-                } else {
-                    this.selectedlabel = value;
-                    this.selectedkey = key;
-                    this.state = false;
-                }
-            },
-            isselected: function(key) {
-                return this.selectedkey == key;
-            },
-            getlist: function() {
-                if (this.filter == '') {
-                    return this.list;
-                }
-                var filtered = Object.entries(this.list).filter(([key, value]) => value.toLowerCase().includes(
-                    this
-                    .filter.toLowerCase()));
-
-                var result = Object.fromEntries(filtered);
-                return result;
-            },
-
-        };
-    }
 </script>
 @stack('script')
 

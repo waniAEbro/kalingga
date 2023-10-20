@@ -42,6 +42,8 @@ class ProductController extends Controller
         $request->validate([
             'component_id.*' => 'required',
             'quantity.*' => 'required',
+            "supplier_id.*" => 'required',
+            "price_supplier.*" => 'required',
 
             'name' => 'required',
             'code' => 'required',
@@ -120,6 +122,8 @@ class ProductController extends Controller
             'biaya_pajak.required' => 'Biaya pajak harus diisi',
             'biaya_ekspor.required' => 'Biaya ekspor harus diisi',
 
+            "supplier_id.*.required" => "Supplier harus dipilih",
+            "price_supplier.*.required" => "Harga supplier harus diisi",
         ]);
 
         $pack = Pack::create([
