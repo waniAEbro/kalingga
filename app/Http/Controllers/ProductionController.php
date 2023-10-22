@@ -84,7 +84,7 @@ class ProductionController extends Controller
             "remain_bill" => $request->total_bill - $request->paid,
             "total_bill" => $request->total_bill,
             "paid" => $request->paid,
-            "status" => $request->remain_bill == 0 ? "closed" : "open",
+            "status" => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
         ]);
 
         PurchaseHistory::create([
