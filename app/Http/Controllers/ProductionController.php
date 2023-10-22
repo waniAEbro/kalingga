@@ -72,7 +72,7 @@ class ProductionController extends Controller
         $production->update([
             "quantity_finished" => $request->quantity_finished,
             "quantity_not_finished" => $request->quantity_not_finished,
-            "total_production" => $request->total_production,
+            "total_quantity" => $request->total_production,
             "code" => implode("-", array_slice(explode("-", $production->code), 0, -2)) . "-" .  $request->quantity_not_finished . "-" . $request->quantity_finished,
         ]);
 
