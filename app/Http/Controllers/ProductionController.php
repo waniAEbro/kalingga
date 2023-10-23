@@ -59,9 +59,12 @@ class ProductionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Production $production): View
+    public function edit(Production $production, PaymentPurchase $payment): View
     {
-        return view("productions.edit", ["production" => $production]);
+        return view("productions.edit", [
+            "production" => $production,
+        ]);
+
     }
 
     /**
@@ -69,6 +72,35 @@ class ProductionController extends Controller
      */
     public function update(UpdateProductionRequest $request, Production $production): RedirectResponse
     {
+        $request->validate([
+            'quantity_finished' => 'required',
+            'quantity_not_finished' => 'required',
+            'total_quantity' => 'required',
+            'code' => 'required',
+
+            'supplier_id' => 'required',
+            'purchase_date' => 'required',
+            'due_date' => 'required',
+            'due_date' => 'required',
+            'purchase_code' => 'required',
+            'total_bill' => 'required',
+            'paid' => 'required',
+
+            'method' => 'required',
+            "beneficiary_bank" => 'required',
+            "beneficiary_ac_usd" => 'required',
+            "bank_address" => 'required',
+            "swift_code" => 'required',
+            "beneficiary_name" => 'required',
+            "beneficiary_address" => 'required',
+            "phone" => 'required',
+
+            'location' => 'required',
+            'quantity_purchase' => 'required',
+        ],[
+
+        ]);
+
         $production->update([
             "quantity_finished" => $request->quantity_finished,
             "quantity_not_finished" => $request->quantity_not_finished,
@@ -80,7 +112,7 @@ class ProductionController extends Controller
             "supplier_id" => $request->supplier_id,
             "purchase_date" => $request->purchase_date,
             "due_date" => $request->due_date,
-            "code" => $request->code,
+            "code" => $request->purchase_code,
             "remain_bill" => $request->total_bill - $request->paid,
             "total_bill" => $request->total_bill,
             "paid" => $request->paid,
