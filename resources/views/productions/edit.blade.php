@@ -1,3 +1,4 @@
+
 @extends('layouts.layout')
 
 @section('content')
@@ -49,7 +50,7 @@
 
                 <x-input :name="'supplier_phone'" :label="'No Hp Pemasok'" readonly class="mb-3 bg-slate-100" />
 
-                <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" :inputParentClass="'mb-3'" :value="old('code')" />
+                <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" :inputParentClass="'mb-3'" :value="old('purchase_code')" />
 
                 <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :inputParentClass="'mb-3'" :value="old('method')" />
 
@@ -106,6 +107,8 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <input type="checkbox" name="cek">
 
                 <div class="flex justify-end gap-3 mt-10">
                     <div class="w-40">
