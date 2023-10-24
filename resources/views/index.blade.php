@@ -17,7 +17,7 @@
         }
     </style>
 
-    <title>Kalingga Keing Jati</title>
+    <title>Kalingga Keling Jati</title>
 </head>
 
 <body class="bg-[#064E3B] h-screen w-full px-8">

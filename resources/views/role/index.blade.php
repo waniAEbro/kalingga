@@ -17,7 +17,7 @@
         }
     </style>
 
-    <title>Kalingga Keing Jati</title>
+    <title>Kalingga Keling Jati</title>
 </head>
 
 <body class="bg-[#064E3B] h-screen w-full px-8">
@@ -56,21 +56,30 @@
         </div>
 
     </div>
-    <div class="h-[calc(100vh-100px)] bg-[#F1F5F9] rounded-[30px] w-full pt-10 px-16 grid grid-cols-4 gap-10 content-start">
-        <x-data-list>
-            <div class="h-[550px] relative m-5">
-                <table class="w-full mt-5 border-separate table-fixed border-spacing-y-3">
-                </table>
-                <div id="pagination-wrapper" class="absolute bottom-0 flex h-10 gap-2 my-5 text-sm"></div>
-            </div>
-        </x-data-list>
+
+    <div class="h-[calc(100vh-100px)] bg-[#F1F5F9] rounded-[30px] w-full pt-10 px-16 flex justify-center gap-10">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg h-fit ">
+            <table class="table-fixed text-center text-sm text-left text-gray-500 dark:text-gray-400 w-96 ">
+                <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">No</th>
+                        <th scope="col" class="px-6 py-3 bg-gray-100">Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ( $roles as $no => $role )
+                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">{{ $no + 1 }}</td>
+                        <td scope="row" class="bg-gray-100">{{ $role->name }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-
-
 
 </body>
 
