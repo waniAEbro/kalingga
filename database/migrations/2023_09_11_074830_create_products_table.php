@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text("name");
             $table->text("rfid");
             $table->bigInteger("sell_price");
+            $table->bigInteger("sell_price_usd");
             $table->double("length");
             $table->double("width");
             $table->double("height");

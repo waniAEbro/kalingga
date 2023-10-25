@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Production extends Model
@@ -16,7 +17,7 @@ class Production extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["product", "sale"];
+    protected $with = ["saleProductions"];
 
     public function product(): BelongsTo
     {
@@ -26,5 +27,10 @@ class Production extends Model
     public function sale(): BelongsTo
     {
         return $this->belongsTo(Sale::class);
+    }
+
+    public function saleProductions(): HasMany
+    {
+        return $this->hasMany(SaleProduction::class);
     }
 }

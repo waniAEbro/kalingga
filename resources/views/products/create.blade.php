@@ -1,9 +1,3 @@
-@dump(old('component_id', []), old('quantity', []), $errors->get('component_id.*'))
-
-@error('component_id.' . 1)
-    @dump($message)
-@enderror
-
 @extends('layouts.layout')
 
 @section('content')

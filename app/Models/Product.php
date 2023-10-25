@@ -19,7 +19,7 @@ class Product extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["components", "pack", "production_costs", "other_costs", "warehouses", "suppliers"];
+    protected $with = ["components", "pack", "production_costs", "other_costs", "warehouses", "suppliers", "production"];
 
     public function components(): BelongsToMany
     {

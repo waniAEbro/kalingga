@@ -13,6 +13,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
+use App\Models\SaleProduction;
 
 class SaleController extends Controller
 {
@@ -21,7 +22,7 @@ class SaleController extends Controller
      */
     public function index()
     {
-        return view('sales.index', ["sales" => Sale::get()]);
+        return view('sales.index', ["sales" => Sale::with("products")->get()]);
     }
 
     /**
@@ -32,7 +33,6 @@ class SaleController extends Controller
         return view('sales.create', [
             "customers" => Customer::get(),
             "products" => Product::get(),
-            "justArray" => ['one', 'two', 'three', 'four', 'five'],
             "payment_sales" => PaymentSale::get(),
             "delivery_sales" => DeliverySale::get()
         ]);
@@ -43,8 +43,6 @@ class SaleController extends Controller
      */
     public function store(StoreSaleRequest $request)
     {
-        // dd($request);
-        // dd($request->product_id, $request->quantity, $request->customer_name, $request->total_bill, $request->paid);
         $request->validate([
             'customer_id' => 'required',
             'sale_date' => 'required',
@@ -81,31 +79,23 @@ class SaleController extends Controller
             "code" => $request->code
         ]);
 
-        $products = [];
-
         foreach ($request->product_id as $key => $id) {
-            $id = DB::table('product_sale')->insertGetId([
+            DB::table('product_sale')->insert([
                 'product_id' => $id,
                 'sale_id' => $sale->id,
                 'quantity' => $request->quantity[$key],
             ]);
 
-            $products[] = DB::table('product_sale')->find($id);
-        }
-
-        $customer = Customer::find($request->customer_id);
-
-        $productions = [];
-
-        foreach ($products as $product) {
-            $production_count = DB::table("productions")->join("sales", "productions.sale_id", "=", "sales.id")->where("sales.customer_id", $request->customer_id)->select("productions.*")->count();
-            $productions[] = Production::create([
-                "code" => $customer->code . $production_count + 1 . "-" . $product->quantity . "-" . "00",
-                "product_id" => $product->product_id,
-                "sale_id" => $sale->id,
+            Production::where("product_id", $id)->update([
                 "quantity_finished" => 0,
-                "quantity_not_finished" => $product->quantity,
-                "total_quantity" => $product->quantity,
+                "quantity_not_finished" => DB::raw("quantity_not_finished + " . $request->quantity[$key])
+            ]);
+
+            SaleProduction::create([
+                "sale_id" => $sale->id,
+                "production_id" => Product::find($id)->production->id,
+                "quantity_finished" => 0,
+                "quantity_not_finished" => $request->quantity[$key]
             ]);
         }
 
@@ -148,13 +138,13 @@ class SaleController extends Controller
      */
     public function edit(Sale $sale)
     {
-        return view("sales.edit", ["sales" => Sale::find($sale->id)]);
+        return view("sales.edit", ["sales" => Sale::with("products")->find($sale->id)]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSaleRequest $request, Sale $sale, PaymentSale $payment, DeliverySale $delivery)
+    public function update(UpdateSaleRequest $request, Sale $sale)
     {
         $request->validate([
             'paid' => 'required',
@@ -176,23 +166,6 @@ class SaleController extends Controller
             "payment" => $request->paid
         ]);
 
-        $payment->update([
-            "sale_id" => $sale->id,
-            "method" => $request->method,
-            "beneficiary_bank" => $request->beneficiary_bank,
-            "beneficiary_ac_usd" => $request->beneficiary_ac_usd,
-            "bank_address" => $request->bank_address,
-            "swift_code" => $request->swift_code,
-            "beneficiary_name" => $request->beneficiary_name,
-            "beneficiary_address" => $request->beneficiary_address,
-            "phone" => $request->phone,
-        ]);
-
-        $delivery->update([
-            "sale_id" => $sale->id,
-            "location" => $request->location,
-        ]);
-
         return redirect("/sales");
     }
 
@@ -202,7 +175,7 @@ class SaleController extends Controller
     public function destroy(Sale $sale)
     {
         DB::table("product_sale")->where("sale_id", $sale->id)->delete();
-        $productions = Production::where("sale_id", $sale->id)->delete();
+        SaleProduction::where("sale_id", $sale->id)->delete();
         SaleHistory::where("sale_id", $sale->id)->delete();
         $sale->delete();
         return redirect("/sales");

@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Supplier;
 use App\Models\Component;
 use App\Models\OtherCost;
+use App\Models\Production;
 use App\Models\ProductionCost;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
@@ -179,6 +180,12 @@ class ProductController extends Controller
             "sell_price" => $request->sell_price,
             "barcode" => $request->barcode,
             "hpp" => $request->hpp,
+        ]);
+
+        Production::create([
+            "product_id" => $product->id,
+            "quantity_finished" => 0,
+            "quantity_not_finished" => 0
         ]);
 
         foreach ($request->component_id as $index => $component) {
@@ -394,6 +401,7 @@ class ProductController extends Controller
         Pack::where("id", $product->pack_id)->delete();
         ProductionCost::where("id", $product->productioncosts_id)->delete();
         OtherCost::where("id", $product->othercosts_id)->delete();
+        Production::where("product_id", $product->id)->delete();
         $product->delete();
         return redirect("/products");
     }

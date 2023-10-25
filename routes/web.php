@@ -57,8 +57,9 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::middleware(['login.check'])->group(function () {
     Route::resource("products", ProductController::class);
+    Route::get("/products/production/{product}/edit", [ProductionController::class, "edit"]);
+    Route::put("/products/production/{product}", [ProductionController::class, "update"]);
     Route::resource("components", ComponentController::class);
-    Route::resource("categories", CategoryController::class);
     Route::resource("sales", SaleController::class);
     Route::resource("suppliers", SupplierController::class);
     Route::resource("purchases", PurchaseController::class);
