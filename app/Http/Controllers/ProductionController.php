@@ -61,9 +61,9 @@ class ProductionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Production $production): View
+    public function edit(Product $product): View
     {
-        return view("productions.edit", ["production" => $production]);
+        return view("productions.edit", ["product" => $product]);
     }
 
     /**
