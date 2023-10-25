@@ -17,6 +17,7 @@ use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\ProductionController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,7 @@ Route::middleware(['login.check'])->group(function () {
     Route::resource("warehouse", WarehouseController::class);
     Route::resource("finances", FinanceController::class);
     Route::resource("users", LoginController::class);
+    Route::resource("roles", RoleController::class);
 
     Route::get("/quotations", [QuotationController::class, "index"]);
 
