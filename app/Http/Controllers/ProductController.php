@@ -54,6 +54,7 @@ class ProductController extends Controller
             'width' => 'required',
             'height' => 'required',
             'sell_price' => 'required',
+            'sell_price_usd' => "required",
             'barcode' => 'required',
 
             'pack_inner_length' => 'required',
@@ -180,6 +181,7 @@ class ProductController extends Controller
             "sell_price" => $request->sell_price,
             "barcode" => $request->barcode,
             "hpp" => $request->hpp,
+            "sell_price_usd" => $request->sell_price_usd,
         ]);
 
         Production::create([
@@ -240,6 +242,7 @@ class ProductController extends Controller
             'width' => 'required',
             'height' => 'required',
             'sell_price' => 'required',
+            'sell_price_usd' => "required",
             'barcode' => 'required',
 
             'pack_inner_length' => 'required',
@@ -367,6 +370,7 @@ class ProductController extends Controller
             "height" => $request->height,
             "sell_price" => $request->sell_price,
             "hpp" => $request->hpp,
+            "sell_price_usd" => $request->sell_price_usd,
         ]);
 
         DB::table("component_product")->where("product_id", $product->id)->delete();
