@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Supplier;
 use App\Models\Component;
 use App\Models\OtherCost;
+use App\Models\Production;
 use App\Models\ProductionCost;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
@@ -53,6 +54,7 @@ class ProductController extends Controller
             'width' => 'required',
             'height' => 'required',
             'sell_price' => 'required',
+            'sell_price_usd' => "required",
             'barcode' => 'required',
 
             'pack_inner_length' => 'required',
@@ -179,6 +181,13 @@ class ProductController extends Controller
             "sell_price" => $request->sell_price,
             "barcode" => $request->barcode,
             "hpp" => $request->hpp,
+            "sell_price_usd" => $request->sell_price_usd,
+        ]);
+
+        Production::create([
+            "product_id" => $product->id,
+            "quantity_finished" => 0,
+            "quantity_not_finished" => 0
         ]);
 
         foreach ($request->component_id as $index => $component) {
@@ -235,6 +244,7 @@ class ProductController extends Controller
             'width' => 'required',
             'height' => 'required',
             'sell_price' => 'required',
+            'sell_price_usd' => "required",
             'barcode' => 'required',
 
             'pack_inner_length' => 'required',
@@ -364,6 +374,7 @@ class ProductController extends Controller
             "height" => $request->height,
             "sell_price" => $request->sell_price,
             "hpp" => $request->hpp,
+            "sell_price_usd" => $request->sell_price_usd,
         ]);
 
         DB::table("component_product")->where("product_id", $product->id)->delete();
@@ -398,6 +409,7 @@ class ProductController extends Controller
         Pack::where("id", $product->pack_id)->delete();
         ProductionCost::where("id", $product->productioncosts_id)->delete();
         OtherCost::where("id", $product->othercosts_id)->delete();
+        Production::where("product_id", $product->id)->delete();
         $product->delete();
         return redirect("/products");
     }

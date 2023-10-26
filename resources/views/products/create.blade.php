@@ -290,6 +290,11 @@
                     <x-input-with-desc :desc="'Rp'" :label="'Harga Jual'" :name="'sell_price'" :type="'number'"
                         :value="old('sell_price')" />
                 </div>
+
+                <div class="w-52">
+                    <x-input-with-desc :desc="'$'" :label="'Harga Jual Dollar'" :name="'sell_price_usd'" :type="'number'"
+                        :value="old('sell_price_usd')" />
+                </div>
             </div>
     </x-create-input-field>
 @endsection

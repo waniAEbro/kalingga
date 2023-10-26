@@ -166,7 +166,7 @@ class PurchaseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePurchaseRequest $request, Purchase $purchase, PaymentPurchase $payment, DeliveryPurchase $delivery)
+    public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
         $request->validate([
             'paid' => 'required',
@@ -186,23 +186,6 @@ class PurchaseController extends Controller
             "purchase_id" => $purchase->id,
             "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count + 1,
             "payment" => $request->paid
-        ]);
-
-        $payment->update([
-            "purchase_id" => $purchase->id,
-            "method" => $request->method,
-            "beneficiary_bank" => $request->beneficiary_bank,
-            "beneficiary_ac_usd" => $request->beneficiary_ac_usd,
-            "bank_address" => $request->bank_address,
-            "swift_code" => $request->swift_code,
-            "beneficiary_name" => $request->beneficiary_name,
-            "beneficiary_address" => $request->beneficiary_address,
-            "phone" => $request->phone,
-        ]);
-
-        $delivery->update([
-            "purchase_id" => $purchase->id,
-            "location" => $request->location,
         ]);
 
         return redirect("/purchases");

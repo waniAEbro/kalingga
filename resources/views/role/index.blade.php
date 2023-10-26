@@ -56,49 +56,31 @@
         </div>
 
     </div>
-    <div
-        class="h-[calc(100vh-100px)] bg-[#F1F5F9] rounded-[30px] w-full pt-10 px-16 grid grid-cols-4 gap-10 content-start">
 
-        <x-card-menu :url="'dashboard'" :icon="'home-outline'">
-            <div class="text-xl font-bold">Dashboard</div>
-        </x-card-menu>
-
-        <x-card-menu :url="'sales'" :icon="'cash-outline'" :color="'#2c8d39ff'">
-            <div class="text-xl font-bold">Sales</div>
-            <div>Sistem Sales</div>
-        </x-card-menu>
-
-        <x-card-menu :url="'purchases'" :icon="'bag-check-outline'" :color="'#12263aff'">
-            <div class="text-xl font-bold">Purchasing</div>
-            <div>Sistem Purchasing</div>
-        </x-card-menu>
-
-        <x-card-menu :url="'productions'" :icon="'cog-outline'" :color="'#ccfccbff'">
-            <div class="text-xl font-bold">Manufacture</div>
-            <div>Sistem Manufacture</div>
-        </x-card-menu>
-
-        <x-card-menu :url="'quotations'" :icon="'clipboard-outline'" :color="'#028090ff'">
-            <div class="text-xl font-bold">Quotation</div>
-            <div>Sistem Quotation</div>
-        </x-card-menu>
-
-        <x-card-menu :url="'warehouse'" :icon="'grid-outline'" :color="'#f4c095ff'">
-            <div class="text-xl font-bold">Warehouse</div>
-            <div>Sistem Warehouse</div>
-        </x-card-menu>
-
-        <x-card-menu :url="'finances'" :icon="'logo-usd'" :color="'#4F9DA6'">
-            <div class="text-xl font-bold">Finance</div>
-            <div>Sistem Finance</div>
-        </x-card-menu>
-
+    <div class="h-[calc(100vh-100px)] bg-[#F1F5F9] rounded-[30px] w-full pt-10 px-16 flex justify-center gap-10">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg h-fit ">
+            <table class="table-fixed text-center text-sm text-left text-gray-500 dark:text-gray-400 w-96 ">
+                <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">No</th>
+                        <th scope="col" class="px-6 py-3 bg-gray-100">Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ( $roles as $no => $role )
+                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">{{ $no + 1 }}</td>
+                        <td scope="row" class="bg-gray-100">{{ $role->name }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
-
-
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
 </body>
 
 </html>

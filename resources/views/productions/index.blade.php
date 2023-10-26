@@ -9,24 +9,23 @@
         </div>
 
     </x-data-list>
+    @dump($products)
 @endsection
 
 @push('script')
     <script>
-        const productions = {!! $productions !!}
+        const products = {!! $products !!}
 
-        state.columnName = ["Nomor", "Kode", "Nama Produk", "Jumlah Belum Selesai", "Jumlah Sudah Selesai", "Jumlah Total",
+        state.columnName = ["Nomor", "Kode", "Nama Produk", "Jumlah Belum Selesai", "Jumlah Sudah Selesai",
             "Aksi"
         ]
-        state.columnQuery = ["code", "product.name", "quantity_not_finished", "quantity_finished",
-            "total_quantity"
-        ]
-        state.menu = "productions"
+        state.columnQuery = ["code", "name", "production.quantity_not_finished", "production.quantity_finished"]
+        state.menu = "products/production"
 
         document.querySelector(".table-fixed").appendChild(buildHeader())
 
-        state.data = productions
-        state.allData = productions
+        state.data = products
+        state.allData = products
 
         paginate()
         pageNumber()

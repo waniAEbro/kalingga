@@ -72,7 +72,7 @@
                                 <td class="p-2">
                                     <button type="button"
                                         x-on:click="component.remove(); await $nextTick; set_total(); set_number_component(); componentDeleteBtnToggle()"
-                                        class="transition-all duration-300 comp-delete-btn rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                        class="transition-all duration-300 rounded-full comp-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                             class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                 </td>
                             </tr>
@@ -86,15 +86,15 @@
                 class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Tambah
                 Data Baru</button>
 
-            <h1 class="mb-3 mt-5 text-xl font-bold">Pemasok</h1>
+            <h1 class="mt-5 mb-3 text-xl font-bold">Pemasok</h1>
 
-            <table class="w-full text-left mt-5 table-fixed text-sm">
+            <table class="w-full mt-5 text-sm text-left table-fixed">
                 <thead>
                     <tr class="border-b-2">
-                        <th class="p-2 w-20 text-center">#</th>
+                        <th class="w-20 p-2 text-center">#</th>
                         <th class="p-2 w-96">Pemasok</th>
                         <th class="p-2">Harga</th>
-                        <th class="p-2 w-20"></th>
+                        <th class="w-20 p-2"></th>
                     </tr>
                 </thead>
                 <tbody id="table-suppliers">
@@ -139,7 +139,7 @@
                                 <td class="p-2">
                                     <button type="button"
                                         x-on:click="supplier.remove(); set_total(); set_number_supplier(); supplierDeleteBtnToggle()"
-                                        class="transition-all duration-300 supplier-delete-btn rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                        class="transition-all duration-300 rounded-full supplier-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                             class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                 </td>
                             </tr>
@@ -298,17 +298,20 @@
                     <x-input-with-desc :value="$product->sell_price" :desc="'Rp'" :label="'Harga Jual'" :name="'sell_price'"
                         :type="'number'" />
                 </div>
-            </div>
-            </x-create-input-field>
-        @endsection
-        @push('script')
-            <script>
-                function addNewSupplier() {
-                    const tableBody = document.getElementById('table-suppliers');
-                    const tableRow = document.createElement('tr');
-                    tableRow.setAttribute('x-data', '{ supplier: $el }')
-                    tableRow.className = 'border-b';
-                    tableRow.innerHTML = `
+                <div class="w-52">
+                    <x-input-with-desc :value="$product->sell_price_usd" :desc="'$'" :label="'Harga Jual Dollar'" :name="'sell_price_usd'"
+                        :type="'number'" />
+                </div>
+                </x-create-input-field>
+            @endsection
+            @push('script')
+                <script>
+                    function addNewSupplier() {
+                        const tableBody = document.getElementById('table-suppliers');
+                        const tableRow = document.createElement('tr');
+                        tableRow.setAttribute('x-data', '{ supplier: $el }')
+                        tableRow.className = 'border-b';
+                        tableRow.innerHTML = `
                                         <td id="number-supplier" class="p-2 text-center"></td>
                                         <td class="p-2">
                                             <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" />
@@ -323,94 +326,93 @@
                                         </td>
                                     `;
 
-                    tableBody.appendChild(tableRow);
-                }
-
-                set_number_supplier();
-                set_number_component();
-                set_volume();
-                set_total_produksi();
-                set_total_packing();
-                set_total_lain();
-                supplierDeleteBtnToggle();
-                componentDeleteBtnToggle();
-                // set_subtotal();
-
-                function set_total_produksi() {
-                    const el_biaya_produksi = document.querySelectorAll('.biaya_produksi input')
-                    const biaya_produksi = Array.from(el_biaya_produksi)
-                        .map(el => parseInt(el.value) || 0)
-                        .reduce((acc, curr) => acc + curr)
-                    const total_produksi = document.querySelector('input[name="total_production"]').value = biaya_produksi;
-
-                    set_total();
-                }
-
-                function set_total_packing() {
-                    const el_biaya_packing = document.querySelectorAll('.biaya_packing input')
-                    const biaya_packing = Array.from(el_biaya_packing)
-                        .map(el => parseInt(el.value) || 0)
-                        .reduce((acc, curr) => acc + curr)
-                    const total_packing = document.querySelector('input[name="pack_cost"]').value = biaya_packing;
-
-                    set_total();
-                }
-
-                function set_total_lain() {
-                    const el_biaya_lain = document.querySelectorAll('.biaya_lain input')
-                    const biaya_lain = Array.from(el_biaya_lain)
-                        .map(el => parseInt(el.value) || 0)
-                        .reduce((acc, curr) => acc + curr)
-                    const total_packing = document.querySelector('input[name="total_other_cost"]').value = biaya_lain;
-
-                    set_total();
-                }
-
-
-
-                function set_volume() {
-                    const packOuterLength = document.getElementById('pack_outer_length').value;
-                    const packOuterWidth = document.getElementById('pack_outer_width').value;
-                    const packOuterHeight = document.getElementById('pack_outer_height').value;
-                    const volume = document.getElementById('volume').value = packOuterHeight * packOuterLength * packOuterWidth;
-
-                }
-
-
-                function getComponent(tr) {
-
-                    let components = {!! $components !!};
-                    const componentId = tr.querySelector('#component_id');
-
-                    if (componentId.value) {
-                        const component = components.find(component => component.id == componentId.value)
-                        const unit = tr.querySelector('#unit').innerText = component.unit;
-                        const price = tr.querySelector('#price').innerText = toRupiah(component.price_per_unit);
-                    } else {
-                        tr.querySelector('#unit').innerText = '';
-                        tr.querySelector('#price').innerText = '';
-                        tr.querySelector('#subtotal').innerText = "";
-                        tr.querySelector('.input_quantity').value = 0;
-                        set_total()
+                        tableBody.appendChild(tableRow);
                     }
-                }
 
-                function set_number_component() {
-                    const numbers = document.querySelectorAll('#number-component');
-                    numbers.forEach((number, i) => number.innerText = i + 1)
-                }
+                    set_number_supplier();
+                    set_number_component();
+                    set_volume();
+                    set_total_produksi();
+                    set_total_packing();
+                    set_total_lain();
+                    supplierDeleteBtnToggle();
+                    componentDeleteBtnToggle();
+                    // set_subtotal();
 
-                function set_number_supplier() {
-                    const numbers = document.querySelectorAll('#number-supplier');
-                    numbers.forEach((number, i) => number.innerText = i + 1)
-                }
+                    function set_total_produksi() {
+                        const el_biaya_produksi = document.querySelectorAll('.biaya_produksi input')
+                        const biaya_produksi = Array.from(el_biaya_produksi)
+                            .map(el => parseInt(el.value) || 0)
+                            .reduce((acc, curr) => acc + curr)
+                        const total_produksi = document.querySelector('input[name="total_production"]').value = biaya_produksi;
 
-                function addNewComponent() {
-                    const productBody = document.getElementById('productBody');
-                    const productRow = document.createElement('tr');
-                    productRow.setAttribute('x-data', '{ component: $el }')
-                    productRow.className = 'border-b';
-                    productRow.innerHTML = `
+                        set_total();
+                    }
+
+                    function set_total_packing() {
+                        const el_biaya_packing = document.querySelectorAll('.biaya_packing input')
+                        const biaya_packing = Array.from(el_biaya_packing)
+                            .map(el => parseInt(el.value) || 0)
+                            .reduce((acc, curr) => acc + curr)
+                        const total_packing = document.querySelector('input[name="pack_cost"]').value = biaya_packing;
+
+                        set_total();
+                    }
+
+                    function set_total_lain() {
+                        const el_biaya_lain = document.querySelectorAll('.biaya_lain input')
+                        const biaya_lain = Array.from(el_biaya_lain)
+                            .map(el => parseInt(el.value) || 0)
+                            .reduce((acc, curr) => acc + curr)
+                        const total_packing = document.querySelector('input[name="total_other_cost"]').value = biaya_lain;
+
+                        set_total();
+                    }
+
+                    function set_volume() {
+                        const packOuterLength = document.getElementById('pack_outer_length').value;
+                        const packOuterWidth = document.getElementById('pack_outer_width').value;
+                        const packOuterHeight = document.getElementById('pack_outer_height').value;
+                        const volume = document.getElementById('volume').value = packOuterHeight * packOuterLength * packOuterWidth;
+
+                    }
+
+
+                    function getComponent(tr) {
+
+                        let components = {!! $components !!};
+                        const componentId = tr.querySelector('#component_id');
+
+                        if (componentId.value) {
+                            const component = components.find(component => component.id == componentId.value)
+                            const unit = tr.querySelector('#unit').innerText = component.unit;
+                            const price = tr.querySelector('#price').innerText = toRupiah(component.price_per_unit);
+                        } else {
+                            tr.querySelector('#unit').innerText = '';
+                            tr.querySelector('#price').innerText = '';
+                            tr.querySelector('#subtotal').innerText = "";
+                            tr.querySelector('.input_quantity').value = 0;
+                            set_total()
+                            tableBody.appendChild(tableRow);
+                        }
+                    }
+
+                    function set_number_component() {
+                        const numbers = document.querySelectorAll('#number-component');
+                        numbers.forEach((number, i) => number.innerText = i + 1)
+                    }
+
+                    function set_number_supplier() {
+                        const numbers = document.querySelectorAll('#number-supplier');
+                        numbers.forEach((number, i) => number.innerText = i + 1)
+                    }
+
+                    function addNewComponent() {
+                        const productBody = document.getElementById('productBody');
+                        const productRow = document.createElement('tr');
+                        productRow.setAttribute('x-data', '{ component: $el }')
+                        productRow.className = 'border-b';
+                        productRow.innerHTML = `
                                 <td id="number-component" class="p-2"></td>
                                 <td class="w-40 p-2">
                                     <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
@@ -425,65 +427,66 @@
                                 <td id="subtotal" class="p-2"></td>
                                 <td class="p-2">
                                     <button type="button" x-on:click="component.remove(); set_total(); set_number_component()"
-                                        class="transition-all duration-300 comp-delete-btn rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                        class="transition-all duration-300 rounded-full comp-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                             class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                 </td>
                             `;
 
-                    productBody.appendChild(productRow);
-                }
-
-                function set_subtotal(element) {
-                    let tr = element.parentElement.parentElement;
-                    let price = tr.querySelector('#price').textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
-                        '').replace(',', '.');
-                    let subtotal = tr.querySelector('#subtotal');
-                    subtotal.textContent = toRupiah(0)
-                    if (price != "" && parseFloat(element.value) >= 0) {
-                        subtotal.textContent = toRupiah(parseInt(price) * parseFloat(element.value));
-                    } else {
-                        subtotal.textContent = toRupiah(0);
+                        productBody.appendChild(productRow);
                     }
 
-                    set_total();
-                }
+                    function set_subtotal(element) {
+                        let tr = element.parentElement.parentElement;
+                        let price = tr.querySelector('#price').textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
+                            '').replace(',', '.');
+                        let subtotal = tr.querySelector('#subtotal');
+                        subtotal.textContent = toRupiah(0)
+                        if (price != "" && parseFloat(element.value) >= 0) {
+                            subtotal.textContent = toRupiah(parseInt(price) * parseFloat(element.value));
+                        } else {
+                            subtotal.textContent = toRupiah(0);
+                        }
 
-                function set_total() {
-                    let subtotals = document.querySelectorAll('#subtotal');
-                    let total = 0;
-                    subtotals.forEach(subtotalElement => {
-                        let subtotalValue = parseFloat(subtotalElement.textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
-                            '').replace(',', '.'));
-                        total += isNaN(subtotalValue) ? 0 : subtotalValue;
-                    })
-
-                    console.log(total)
-
-                    let production_cost = parseInt(document.querySelector('#total_production').value) || 0;
-                    let other_cost = parseInt(document.querySelector('#total_other_cost').value) || 0;
-                    let pack_cost = parseInt(document.querySelector('#pack_cost').value) || 0;
-
-                    total += production_cost + other_cost + pack_cost
-
-                    document.querySelector('#hpp').value = total;
-                }
-
-                function componentDeleteBtnToggle() {
-                    const deleteBtn = document.querySelectorAll('.comp-delete-btn')
-                    if (deleteBtn.length == 1) {
-                        deleteBtn[0].style.display = "none"
-                    } else {
-                        deleteBtn.forEach(btn => btn.style.display = 'block')
+                        set_total();
                     }
-                }
 
-                function supplierDeleteBtnToggle() {
-                    const deleteBtn = document.querySelectorAll('.supplier-delete-btn')
-                    if (deleteBtn.length == 1) {
-                        deleteBtn[0].style.display = "none"
-                    } else {
-                        deleteBtn.forEach(btn => btn.style.display = 'block')
+                    function set_total() {
+                        let subtotals = document.querySelectorAll('#subtotal');
+                        let total = 0;
+                        subtotals.forEach(subtotalElement => {
+                            let subtotalValue = parseFloat(subtotalElement.textContent.replace(/[^0-9\.,]/g, '').replace(
+                                /\./g,
+                                '').replace(',', '.'));
+                            total += isNaN(subtotalValue) ? 0 : subtotalValue;
+                        })
+
+                        console.log(total)
+
+                        let production_cost = parseInt(document.querySelector('#total_production').value) || 0;
+                        let other_cost = parseInt(document.querySelector('#total_other_cost').value) || 0;
+                        let pack_cost = parseInt(document.querySelector('#pack_cost').value) || 0;
+
+                        total += production_cost + other_cost + pack_costs
+
+                        document.querySelector('#hpp').value = total;
                     }
-                }
-            </script>
-        @endpush
+
+                    function componentDeleteBtnToggle() {
+                        const deleteBtn = document.querySelectorAll('.comp-delete-btn')
+                        if (deleteBtn.length == 1) {
+                            deleteBtn[0].style.display = "none"
+                        } else {
+                            deleteBtn.forEach(btn => btn.style.display = 'block')
+                        }
+                    }
+
+                    function supplierDeleteBtnToggle() {
+                        const deleteBtn = document.querySelectorAll('.supplier-delete-btn')
+                        if (deleteBtn.length == 1) {
+                            deleteBtn[0].style.display = "none"
+                        } else {
+                            deleteBtn.forEach(btn => btn.style.display = 'block')
+                        }
+                    }
+                </script>
+            @endpush
