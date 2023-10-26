@@ -1,4 +1,11 @@
-@props(['label' => '', 'name' => '', 'placeholder' => '', 'value' => '', 'type' => 'text', 'inputParentClass' => ''])
+@props([
+    'label' => '',
+    'name' => '',
+    'placeholder' => '',
+    'value' => '',
+    'type' => 'text',
+    'inputParentClass' => '',
+])
 
 <div class="{{ $inputParentClass }}">
     <label for="{{ $name }}" class="block text-sm">{{ $label }}</label>
