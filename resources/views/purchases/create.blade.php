@@ -15,7 +15,10 @@
                 <label for="supplier_id" class="block text-sm">Pemasok</label>
                 <div class="w-40 mt-2 mb-3">
                     <x-select x-on:click="getSupplier; await $nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id'"
-                        :id="'supplier_id'" />
+                        :id="'supplier_id'" :value="old('supplier_id')" />
+                        @error('supplier_id')
+                        <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <x-input :name="'supplier_address'" :label="'Alamat Pemasok'" readonly class="mb-3 bg-slate-100" />
@@ -67,6 +70,32 @@
                         </tr>
                     </thead>
                     <tbody id="table-component">
+                        @if (old('component_id', []))
+                            @foreach (old('component_id', []) as $index => $component)
+                                <tr x-data="{ component: $el }" class="border-b">
+                                    <td id="number-component" class="p-2 text-center"></td>
+                                        <td class="w-40 p-2">
+                                            <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)" x-init="await $nextTick(); setKomponen();" :dataLists="$components->toArray()"
+                                                :name="'component_id[]'" :id="'component_id'" :value="$component" />
+                                                @error('component_id.' . $index)
+                                            <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                        @enderror
+                                        </td>
+                                        <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
+                                                oninput="set_subtotal(this)" value="0" step="0.0001"
+                                                class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                        </td>
+                                        <td id="unit" class="p-2"></td>
+                                        <td id="price" class="p-2"></td>
+                                        <td id="subtotal" class="p-2"></td>
+                                        <td class="p-2">
+                                            <button type="button" x-on:click="component.remove(); set_total(); set_number_component()"
+                                                class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                        </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
 
@@ -291,7 +320,7 @@
                     '').replace(',', '.'));
                 total += isNaN(subtotalValue) ? 0 : subtotalValue;
 
-                document.querySelector('#total_bill').value = total;
+                document.querySelector('#total_bill').value = total || null;
             })
         }
 

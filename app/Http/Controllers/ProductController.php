@@ -234,6 +234,8 @@ class ProductController extends Controller
         $request->validate([
             'component_id.*' => 'required',
             'quantity.*' => 'required',
+            "supplier_id.*" => 'required',
+            "price_supplier.*" => 'required',
 
             'name' => 'required',
             'code' => 'required',
@@ -275,6 +277,8 @@ class ProductController extends Controller
         ], [
             'component_id.*.required' => 'Komponen harus dipilih',
             'quantity.*.required' => 'Jumlah harus diisi',
+            "supplier_id.*.required" => "Supplier harus dipilih",
+            "price_supplier.*.required" => "Harga supplier harus diisi",
 
             'name.required' => 'Nama harus diisi',
             'code.required' => 'Kode harus diisi',

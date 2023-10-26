@@ -66,13 +66,23 @@ class PurchaseController extends Controller
             "beneficiary_address" => "required",
             "phone" => "required",
             "location" => "required",
+            "total_bill" => 'required'
         ], [
             'supplier_id.required' => 'ID Supplier tidak boleh kosong',
             'purchase_date.required' => 'Tanggal Pembelian tidak boleh kosong',
             'due_date.required' => 'Tanggal Jatuh Tempo tidak boleh kosong',
             'code.required' => 'Kode tidak boleh kosong',
             'paid.required' => 'Bayar tidak boleh kosong',
+            'total_bill.required' => 'Total bayar kosong. Komponen atau produk harus diisi',
         ]);
+
+        if($request->component_id) {
+            $request->validate(['component_id.*' => 'required']);
+        }
+
+        if($request->product_id) {
+            $request->validate(['product_id.*' => 'required']);
+        }
 
         $purchase = Purchase::create([
             'supplier_id' => $request->supplier_id,

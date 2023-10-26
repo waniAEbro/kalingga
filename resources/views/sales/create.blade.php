@@ -89,8 +89,9 @@
                                     <td id="price" class="p-"></td>
                                     <td id="subtotal" class="p-2"></td>
                                     <td class="p-2">
-                                        <button type="button" x-on:click="sale.remove(); set_total(); set_number()"
-                                            class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                        <button type="button"
+                                            x-on:click="sale.remove(); set_total(); set_number(); productDeleteBtnToggle()"
+                                            class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200 product-delete-btn"><span
                                                 class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                     </td>
                                 </tr>
@@ -109,8 +110,9 @@
                                 <td id="price" class="p-"></td>
                                 <td id="subtotal" class="p-2"></td>
                                 <td class="p-2">
-                                    <button type="button" x-on:click="sale.remove(); set_total(); set_number()"
-                                        class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                    <button type="button"
+                                        x-on:click="sale.remove(); set_total(); set_number(); productDeleteBtnToggle()"
+                                        class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200 product-delete-btn"><span
                                             class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                 </td>
                             </tr>
@@ -118,7 +120,7 @@
                     </tbody>
                 </table>
 
-                <button type="button" x-data x-on:click="addNew(); set_number()"
+                <button type="button" x-data x-on:click="addNew(); set_number(); productDeleteBtnToggle()"
                     class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
                     New</button>
 
@@ -128,7 +130,10 @@
                     </div>
                     <div class="w-40">
                         <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
-                            :value="old('paid') ?? 0" onInput="update_bill(this)" />
+                            :value="old('paid') ?? null" onInput="update_bill(this)" />
+                        {{-- @error('quantity.' . $index)
+                                            <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                        @enderror --}}
                     </div>
                 </div>
             </div>
@@ -138,6 +143,8 @@
 
 @push('script')
     <script>
+        productDeleteBtnToggle()
+
         function getCustomer() {
             let customers = {!! $customers !!}
             const customerId = document.getElementById('customer_id')
@@ -196,8 +203,8 @@
                                     <td id="price" class="p-2"></td>
                                     <td id="subtotal" class="p-2"></td>
                                     <td class="p-2">
-                                        <button type="button" x-on:click="sale.remove(); set_total(); set_number()"
-                                            class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                        <button type="button" x-on:click="sale.remove(); set_total(); set_number(); productDeleteBtnToggle()"
+                                            class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200 product-delete-btn"><span
                                                 class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                     </td>
                                     `;
@@ -225,6 +232,15 @@
 
                 document.querySelector('#total_bill').value = total;
             })
+        }
+
+        function productDeleteBtnToggle() {
+            const deleteBtn = document.querySelectorAll('.product-delete-btn')
+            if (deleteBtn.length == 1) {
+                deleteBtn[0].style.display = "none"
+            } else {
+                deleteBtn.forEach(btn => btn.style.display = 'block')
+            }
         }
     </script>
 @endpush
