@@ -153,25 +153,25 @@
 
                 <div class="flex w-full gap-3">
                     <div class="flex-1">
-                        <x-input :label="'Nama Produk'" :name="'name'" :value="old('name')" />
+                        <x-input :label="'Nama Produk'" :name="'name'" :value="old('name') ?? 0" />
                     </div>
                     <div class="flex-1">
-                        <x-input :label="'Logo'" :name="'logo'" :value="old('logo')" />
+                        <x-input :label="'Logo'" :name="'logo'" :value="old('logo') ?? 0" />
                     </div>
                 </div>
 
                 <h1 class="my-3 font-bold">Kode</h1>
                 <div class="flex w-full gap-3">
-                    <x-input-with-desc :desc="'RFID'" :name="'rfid'" :value="old('rfid')" />
-                    <x-input-with-desc :desc="'Produk'" :name="'code'" :type="'text'" :value="old('code')" />
-                    <x-input-with-desc :desc="'Barcode'" :name="'barcode'" :type="'number'" :value="old('barcode')" />
+                    <x-input-with-desc :desc="'RFID'" :name="'rfid'" :value="old('rfid') ?? 0" />
+                    <x-input-with-desc :desc="'Produk'" :name="'code'" :type="'text'" :value="old('code') ?? 0" />
+                    <x-input-with-desc :desc="'Barcode'" :name="'barcode'" :type="'number'" :value="old('barcode') ?? 0" />
                 </div>
 
                 <h1 class="my-3 font-bold">Dimensi</h1>
                 <div class="flex w-full gap-3">
-                    <x-input-with-desc :desc="'Panjang'" :name="'length'" :type="'number'" :value="old('length')" />
-                    <x-input-with-desc :desc="'Tinggi'" :name="'height'" :type="'number'" :value="old('height')" />
-                    <x-input-with-desc :desc="'Lebar'" :name="'width'" :type="'number'" :value="old('width')" />
+                    <x-input-with-desc :desc="'Panjang'" :name="'length'" :type="'number'" :value="old('length') ?? 0" />
+                    <x-input-with-desc :desc="'Tinggi'" :name="'height'" :type="'number'" :value="old('height') ?? 0" />
+                    <x-input-with-desc :desc="'Lebar'" :name="'width'" :type="'number'" :value="old('width') ?? 0" />
                 </div>
             </div>
 
@@ -182,28 +182,29 @@
 
                 <h1 class="my-3 font-bold">Dimensi Dalam</h1>
                 <div class="flex w-full gap-3">
-                    <x-input-with-desc :desc="'Panjang'" :name="'pack_inner_length'" :type="'number'" :value="old('pack_inner_length')" />
-                    <x-input-with-desc :desc="'Tinggi'" :name="'pack_inner_height'" :type="'number'" :value="old('pack_inner_height')" />
-                    <x-input-with-desc :desc="'Lebar'" :name="'pack_inner_width'" :type="'number'" :value="old('pack_inner_width')" />
+                    <x-input-with-desc :desc="'Panjang'" :name="'pack_inner_length'" :type="'number'" :value="old('pack_inner_length') ?? 0" />
+                    <x-input-with-desc :desc="'Tinggi'" :name="'pack_inner_height'" :type="'number'" :value="old('pack_inner_height') ?? 0" />
+                    <x-input-with-desc :desc="'Lebar'" :name="'pack_inner_width'" :type="'number'" :value="old('pack_inner_width') ?? 0" />
                 </div>
 
                 <h1 class="my-3 font-bold">Dimensi Luar</h1>
                 <div class="flex w-full gap-3">
                     <x-input-with-desc :desc="'Panjang'" :name="'pack_outer_length'" :type="'number'" oninput="set_volume()"
-                        :value="old('pack_outer_length')" />
+                        :value="old('pack_outer_length') ?? 0" />
                     <x-input-with-desc :desc="'Tinggi'" :name="'pack_outer_height'" :type="'number'" oninput="set_volume()"
-                        :value="old('pack_outer_height')" />
+                        :value="old('pack_outer_height') ?? 0" />
                     <x-input-with-desc :desc="'Lebar'" :name="'pack_outer_width'" :type="'number'" oninput="set_volume()"
-                        :value="old('pack_outer_width')" />
+                        :value="old('pack_outer_width') ?? 0" />
                 </div>
                 <div class="w-40 my-3">
-                    <x-input :label="'Volume (m³)'" :name="'volume'" :type="'number'" readonly />
+                    <x-input :label="'Volume (m³)'" :name="'volume'" :type="'number'" :value="0" readonly />
+                    <x-input :label="'CBM'" :name="'cbm'" :type="'number'" :value="old('cbm') ?? 0" />
                 </div>
 
                 <h1 class="my-3 font-bold">Berat</h1>
                 <div class="flex w-full gap-3">
-                    <x-input-with-desc :desc="'NW'" :name="'pack_nw'" :type="'number'" :value="old('pack_nw')" />
-                    <x-input-with-desc :desc="'GW'" :name="'pack_gw'" :type="'number'" :value="old('pack_gw')" />
+                    <x-input-with-desc :desc="'NW'" :name="'pack_nw'" :type="'number'" :value="old('pack_nw') ?? 0" />
+                    <x-input-with-desc :desc="'GW'" :name="'pack_gw'" :type="'number'" :value="old('pack_gw') ?? 0" />
                 </div>
             </div>
         </div>
@@ -218,45 +219,45 @@
                     <h1 class="my-3 font-bold text-center">Biaya Produksi</h1>
 
                     <x-input oninput="set_total_produksi()" :label="'Harga Perakitan'" :desc="'Rp'" :name="'price_perakitan'"
-                        :type="'number'" :inputParentClass="'mb-3'" :value="old('price_perakitan')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('price_perakitan') ?? 0" />
                     <x-input oninput="set_total_produksi()" :label="'Harga Perakitan PRJ'" :desc="'Rp'" :name="'price_perakitan_prj'"
-                        :type="'number'" :inputParentClass="'mb-3'" :value="old('price_perakitan_prj')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('price_perakitan_prj') ?? 0" />
                     <x-input oninput="set_total_produksi()" :label="'Harga Grendo'" :desc="'Rp'" :name="'price_grendo'"
-                        :type="'number'" :inputParentClass="'mb-3'" :value="old('price_grendo')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('price_grendo') ?? 0" />
                     <x-input oninput="set_total_produksi()" :label="'Harga Obat'" :desc="'Rp'" :name="'price_obat'"
-                        :type="'number'" :inputParentClass="'mb-3'" :value="old('price_obat')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('price_obat') ?? 0" />
                     <x-input oninput="set_total_produksi()" :label="'Upah'" :desc="'Rp'" :name="'upah'"
-                        :type="'number'" :value="old('upah')" />
+                        :type="'number'" :value="old('upah') ?? 0" />
                 </div>
 
                 <div class="flex-1 px-4 border-gray-200 biaya_packing border-x-2">
                     <h1 class="my-3 font-bold text-center">Biaya Packing</h1>
 
                     <x-input oninput="set_total_packing()" :label="'Harga Box'" :desc="'Rp'" :name="'pack_box_price'"
-                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_box_price')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_box_price') ?? 0" />
                     <x-input oninput="set_total_packing()" :label="'Box Hardware'" :desc="'Rp'" :name="'pack_box_hardware'"
-                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_box_hardware')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_box_hardware') ?? 0" />
                     <x-input oninput="set_total_packing()" :label="'Assembling'" :desc="'Rp'" :name="'pack_assembling'"
-                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_assembling')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_assembling') ?? 0" />
                     <x-input oninput="set_total_packing()" :label="'Stiker'" :desc="'Rp'" :name="'pack_stiker'"
-                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_sticker')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_sticker') ?? 0" />
                     <x-input oninput="set_total_packing()" :label="'Hagtag'" :desc="'Rp'" :name="'pack_hagtag'"
-                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_hagtag')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('pack_hagtag') ?? 0" />
                     <x-input oninput="set_total_packing()" :label="'Maintenance'" :desc="'Rp'" :name="'pack_maintenance'"
-                        :type="'number'" :value="old('pack_maintenance')" />
+                        :type="'number'" :value="old('pack_maintenance') ?? 0" />
                 </div>
 
                 <div class="flex-1 px-2 biaya_lain">
                     <h1 class="my-3 font-bold text-center">Biaya Lain-Lain</h1>
 
                     <x-input oninput="set_total_lain()" :label="'Overhead Pabrik'" :desc="'Rp'" :name="'biaya_overhead_pabrik'"
-                        :type="'number'" :inputParentClass="'mb-3'" :value="old('biaya_overhead_pabrik')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('biaya_overhead_pabrik') ?? 0" />
                     <x-input oninput="set_total_lain()" :label="'Listrik'" :desc="'Rp'" :name="'biaya_listrik'"
-                        :type="'number'" :inputParentClass="'mb-3'" :value="old('biaya_listrik')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('biaya_listrik') ?? 0" />
                     <x-input oninput="set_total_lain()" :label="'Pajak'" :desc="'Rp'" :name="'biaya_pajak'"
-                        :type="'number'" :inputParentClass="'mb-3'" :value="old('biaya_pajak')" />
+                        :type="'number'" :inputParentClass="'mb-3'" :value="old('biaya_pajak') ?? 0" />
                     <x-input oninput="set_total_lain()" :label="'Export+Usaha'" :desc="'Rp'" :name="'biaya_ekspor'"
-                        :type="'number'" :value="old('biaya_ekspor')" />
+                        :type="'number'" :value="old('biaya_ekspor') ?? 0" />
                 </div>
 
             </div>
@@ -266,15 +267,15 @@
             <div class="flex w-full gap-2 biaya_biaya">
                 <div class="flex-1 px-2">
                     <x-input readonly :label="'Total Produksi'" :desc="'Rp'" :name="'total_production'" :type="'number'"
-                        class="" :value="old('total_production')" />
+                        class="" :value="old('total_production') ?? 0" />
                 </div>
                 <div class="flex-1 px-4">
                     <x-input readonly :label="'Total Packing'" :desc="'Rp'" :name="'pack_cost'" :type="'number'"
-                        class="" :value="old('pack_cost')" />
+                        class="" :value="old('pack_cost') ?? 0" />
                 </div>
                 <div class="flex-1 px-2">
                     <x-input readonly :label="'Total Lain-Lain'" :desc="'Rp'" :name="'total_other_cost'" :type="'number'"
-                        class="" :value="old('total_other_cost')" />
+                        class="" :value="old('total_other_cost') ?? 0" />
                 </div>
             </div>
 
@@ -282,17 +283,18 @@
 
             <div class="flex justify-end gap-3 mt-5">
                 <div class="w-52">
-                    <x-input-with-desc :desc="'Rp'" :label="'HPP'" :name="'hpp'" :type="'number'" />
+                    <x-input-with-desc :desc="'Rp'" :label="'HPP'" :name="'hpp'" :type="'number'"
+                        :value="0" />
                 </div>
 
                 <div class="w-52">
                     <x-input-with-desc :desc="'Rp'" :label="'Harga Jual'" :name="'sell_price'" :type="'number'"
-                        :value="old('sell_price')" />
+                        :value="old('sell_price') ?? 0" />
                 </div>
 
                 <div class="w-52">
                     <x-input-with-desc :desc="'$'" :label="'Harga Jual Dollar'" :name="'sell_price_usd'" :type="'number'"
-                        :value="old('sell_price_usd')" />
+                        :value="old('sell_price_usd') ?? 0" />
                 </div>
             </div>
     </x-create-input-field>

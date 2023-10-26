@@ -143,6 +143,7 @@
                 </div>
                 <div class="w-40 my-3">
                     <x-input :label="'Volume (m³)'" :name="'volume'" :type="'number'" readonly />
+                    <x-input :label="'CBM'" :name="'cbm'" :type="'number'" :value="{{ $product->cbm }}" />
                 </div>
 
                 <h1 class="my-3 font-bold">Berat</h1>

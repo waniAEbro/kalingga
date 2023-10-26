@@ -182,6 +182,7 @@ class ProductController extends Controller
             "barcode" => $request->barcode,
             "hpp" => $request->hpp,
             "sell_price_usd" => $request->sell_price_usd,
+            "cbm" => $request->cbm
         ]);
 
         Production::create([
@@ -371,6 +372,7 @@ class ProductController extends Controller
             "sell_price" => $request->sell_price,
             "hpp" => $request->hpp,
             "sell_price_usd" => $request->sell_price_usd,
+            "cbm" => $request->cbm
         ]);
 
         DB::table("component_product")->where("product_id", $product->id)->delete();
