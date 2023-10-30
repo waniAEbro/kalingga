@@ -76,54 +76,13 @@
             </tbody>
         </table>
 
-        <button type="button" x-data x-on:click="addNewSupplier(); set_number()"
+        <button type="button" x-data x-on:click="addNewSupplier(); set_number(); deleteBtnToggle()"
             class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
             New</button>
     </x-create-input-field>
 @endsection
 
 @push('script')
-    <script>
-        set_number();
-        deleteBtnToggle();
-
-        function addNewSupplier() {
-            const tableBody = document.getElementById('table-body');
-            const tableRow = document.createElement('tr');
-            tableRow.setAttribute('x-data', '{ supplier: $el }')
-            tableRow.className = 'border-b';
-            tableRow.innerHTML = `
-                                        <td id="number" class="p-2 text-center"></td>
-                                        <td class="p-2">
-                                            <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" />
-                                        </td>
-                                        <td class="p-2">
-                                            <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
-                                        </td>
-                                        <td id="aksi" class="p-2">
-                                            <button type="button" x-on:click="supplier.remove(); set_number(); deleteBtnToggle()"
-                                                class="transition-all duration-300 rounded-full delete-btn hover:bg-slate-100 active:bg-slate-200"><span
-                                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
-                                        </td>
-                                    `;
-
-            tableBody.appendChild(tableRow);
-            deleteBtnToggle();
-        }
-
-        function set_number() {
-            const numbers = document.querySelectorAll('#number');
-            numbers.forEach((number, i) => number.innerText = i + 1)
-        }
-
-        function deleteBtnToggle() {
-            const deleteBtn = document.querySelectorAll('.delete-btn')
-            const aksi = document.querySelectorAll('#aksi')
-            if (aksi.length == 1) {
-                deleteBtn[0].classList.add('hidden')
-            } else {
-                deleteBtn.forEach(btn => btn.classList.remove('hidden'))
-            }
-        }
-    </script>
+    {{-- <script src="../../js/test.js"></script> --}}
+    <script></script>
 @endpush

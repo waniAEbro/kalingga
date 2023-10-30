@@ -1,4 +1,4 @@
-@props(['dataLists', 'name', 'id', 'value' => '', 'label' => 'Please Select'])
+@props(['dataLists', 'name', 'id', 'value' => '', 'label' => 'Please Select', 'new' => ''])
 
 <div class="relative text-black {{ $id }}" x-data="selectmenu({ @foreach ($dataLists as $dataList) {{ $dataList['id'] }}: '{{ $dataList['name'] }}', @endforeach }, '{{ $value }}', '{{ $label }}')" @click.away="close()">
     <input type="text" x-model="selectedkey" name="{{ $name }}" id="{{ $id }}" class="hidden">
@@ -38,9 +38,16 @@
                     </span>
                 </li>
             </template>
+            @if ($new)
+                <div onclick="{{ $new }}"
+                    class="mt-5 text-sm text-center text-blue-500 cursor-pointer hover:text-blue-400">
+                    Tambah baru
+                </div>
+            @endif
         </ul>
     </div>
 </div>
+{{-- <div>lsdkjf</div> --}}
 
 {{-- @foreach ($dataLists as $dt)
     <div>{{ $dt->name }}</div>

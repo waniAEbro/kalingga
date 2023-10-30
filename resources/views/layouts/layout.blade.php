@@ -41,14 +41,14 @@
         <div id="modal-background" onclick="hideModal()"
             class="absolute top-0 z-10 hidden w-full h-full bg-black opacity-50">
         </div>
+
         <div id="modal"
-            class="absolute text-[#161414] -z-20 translate-x-1/2 -translate-y-1/2 bg-white top-1/2 right-1/2 rounded-xl transition-opacity duration-300 opacity-0">
+            class="absolute text-[#161414] -z-20 translate-x-1/2 top-20 right-1/2 rounded-xl transition-opacity duration-300 opacity-0">
 
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 <script>
     const setup = () => {
