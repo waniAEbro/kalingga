@@ -51,7 +51,11 @@ class WarehouseController extends Controller
                     ])->withBasicAuth(env("VITE_ABLY_PUBLIC_KEY"), env("VITE_ABLY_SECRET_KEY"))
                         ->post('https://rest.ably.io/channels/channel-in/messages', [
                             'name' => 'publish',
-                            'data' => $product->name . " berhasil masuk ke gudang"
+                            'data' => [
+                                "product" => $product->name,
+                                "count" => Warehouse::where("tag", $uid[0])->get()->count(),
+                                "tag" => $uid[0]
+                            ]
                         ]);
 
                     return response()->json($warehouse, 200);
@@ -82,7 +86,11 @@ class WarehouseController extends Controller
             ])->withBasicAuth(env("VITE_ABLY_PUBLIC_KEY"), env("VITE_ABLY_SECRET_KEY"))
                 ->post('https://rest.ably.io/channels/channel-out/messages', [
                     'name' => 'publish',
-                    'data' => $product->name . " berhasil keluar dari gudang"
+                    'data' => [
+                        "product" => $product->name,
+                        "count" => Warehouse::where("tag", $uid[0])->get()->count(),
+                        "tag" => $uid[0]
+                    ]
                 ]);
 
             return response()->json($warehouse, 200);

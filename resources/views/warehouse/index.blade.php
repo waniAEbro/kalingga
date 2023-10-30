@@ -15,6 +15,28 @@
 @endsection
 
 @push('script')
+    <script lang="text/javascript" src="https://cdn.ably.com/lib/ably.min-1.js"></script>
+    <script>
+        var realtime = new Ably.Realtime('f-eOvQ.531lyg:rYnJ7AxwNX3q7RlLJTLwpFdav5ybFJMhuYV6bVf90I8');
+        var channel_in = realtime.channels.get('channel-in');
+        channel_in.subscribe(function(message) {
+            console.log(message)
+            document.querySelectorAll(".table-fixed tbody tr").forEach((tr) => {
+                if (tr.querySelector("td.rfid").innerHTML == message.data.tag) {
+                    tr.querySelector("td.warehouses-length").innerHTML = message.data.count
+                }
+            })
+        });
+        var channel_out = realtime.channels.get('channel-out');
+        channel_out.subscribe(function(message) {
+            console.log(message)
+            document.querySelectorAll(".table-fixed tbody tr").forEach((tr) => {
+                if (tr.querySelector("td.rfid").innerHTML == message.data.tag) {
+                    tr.querySelector("td.warehouses-length").innerHTML = message.data.count
+                }
+            })
+        });
+    </script>
     <script>
         state.columnName = ["Nomor", "Nama Produk", "RFID", "Barcode", "Quantity"]
         state.columnQuery = ["name", "rfid", "barcode", "warehouses.length"]
