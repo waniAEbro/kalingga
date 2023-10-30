@@ -17,6 +17,18 @@
         }
     </style>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0- 
+ alpha/css/bootstrap.css"
+        rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
     <title>Kalingga Keling Jati</title>
 </head>
 
@@ -93,12 +105,29 @@
             <div>Sistem Finance</div>
         </x-card-menu>
 
+        <button onclick="kirim()" class="w-10 h-10 bg-slate-500">pencet</button>
+
     </div>
 
 
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        function kirim() {
+            fetch("/api/product", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    name: "test",
+                    price: 1000
+                })
+            }).then(res => res.json()).then(data => console.log(data))
+        }
+    </script>
 </body>
 
 </html>

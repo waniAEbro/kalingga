@@ -207,7 +207,7 @@
                 </div>
                 <div class="w-40 my-3">
                     <x-input :label="'Volume (m³)'" :name="'volume'" :type="'number'" readonly />
-                    <x-input :label="'CBM'" :name="'cbm'" :type="'number'" :value="{{ $product->cbm }}" />
+                    <x-input :label="'CBM'" :name="'cbm'" :type="'number'" :value="$product->cbm" />
                 </div>
 
                 <h1 class="my-3 font-bold">Berat</h1>
@@ -467,7 +467,7 @@
                         let other_cost = parseInt(document.querySelector('#total_other_cost').value) || 0;
                         let pack_cost = parseInt(document.querySelector('#pack_cost').value) || 0;
 
-                        total += production_cost + other_cost + pack_costs
+                        total += production_cost + other_cost + pack_cost
 
                         document.querySelector('#hpp').value = total;
                     }

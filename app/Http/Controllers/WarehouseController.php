@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MessageSent;
 use App\Models\Product;
 use App\Models\Warehouse;
+use App\Events\MessageSent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class WarehouseController extends Controller
 {
@@ -45,7 +46,17 @@ class WarehouseController extends Controller
                         "product_id" => $product->id
                     ]);
 
-                    event(new MessageSent(["count" => Warehouse::get()->count(), "action" => "in", "product_name" => $product->name]));
+                    Http::withHeaders([
+                        'Content-Type' => 'application/json'
+                    ])->withBasicAuth(env("VITE_ABLY_PUBLIC_KEY"), env("VITE_ABLY_SECRET_KEY"))
+                        ->post('https://rest.ably.io/channels/channel-in/messages', [
+                            'name' => 'publish',
+                            'data' => [
+                                "product" => $product->name,
+                                "count" => Warehouse::where("tag", $uid[0])->get()->count(),
+                                "tag" => $uid[0]
+                            ]
+                        ]);
 
                     return response()->json($warehouse, 200);
                 } else {
@@ -70,7 +81,17 @@ class WarehouseController extends Controller
 
             $product = Product::where("rfid", $uid[0])->first();
 
-            event(new MessageSent(["count" => Warehouse::get()->count(), "action" => "out", "product_name" => $product->name]));
+            Http::withHeaders([
+                'Content-Type' => 'application/json'
+            ])->withBasicAuth(env("VITE_ABLY_PUBLIC_KEY"), env("VITE_ABLY_SECRET_KEY"))
+                ->post('https://rest.ably.io/channels/channel-out/messages', [
+                    'name' => 'publish',
+                    'data' => [
+                        "product" => $product->name,
+                        "count" => Warehouse::where("tag", $uid[0])->get()->count(),
+                        "tag" => $uid[0]
+                    ]
+                ]);
 
             return response()->json($warehouse, 200);
         }
