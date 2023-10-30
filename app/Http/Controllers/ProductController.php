@@ -16,6 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreproductRequest;
 use App\Http\Requests\UpdateproductRequest;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -414,5 +415,177 @@ class ProductController extends Controller
         Production::where("product_id", $product->id)->delete();
         $product->delete();
         return redirect("/products");
+    }
+
+    public function storeapi(Request $request)
+    {
+        $request->validate([
+            'component_id.*' => 'required',
+            'quantity.*' => 'required',
+            "supplier_id.*" => 'required',
+            "price_supplier.*" => 'required',
+
+            'name' => 'required',
+            'code' => 'required',
+            'rfid' => 'required',
+            'logo' => 'required',
+            'length' => 'required',
+            'width' => 'required',
+            'height' => 'required',
+            'sell_price' => 'required',
+            'sell_price_usd' => "required",
+            'barcode' => 'required',
+
+            'pack_inner_length' => 'required',
+            'pack_inner_height' => 'required',
+            'pack_inner_width' => 'required',
+            'pack_outer_length' => 'required',
+            'pack_outer_height' => 'required',
+            'pack_outer_width' => 'required',
+            'pack_nw' => 'required',
+            'pack_gw' => 'required',
+
+            'price_perakitan' => 'required',
+            'price_perakitan_prj' => 'required',
+            'price_grendo' => 'required',
+            'price_obat' => 'required',
+            'upah' => 'required',
+
+            'pack_box_price' => 'required',
+            'pack_box_hardware' => 'required',
+            'pack_assembling' => 'required',
+            'pack_stiker' => 'required',
+            'pack_hagtag' => 'required',
+            'pack_maintenance' => 'required',
+
+            'biaya_overhead_pabrik' => 'required',
+            'biaya_listrik' => 'required',
+            'biaya_pajak' => 'required',
+            'biaya_ekspor' => 'required',
+        ], [
+            'component_id.*.required' => 'Komponen harus dipilih',
+            'quantity.*.required' => 'Jumlah harus diisi',
+
+            'name.required' => 'Nama harus diisi',
+            'code.required' => 'Kode harus diisi',
+            'rfid.required' => 'RFID harus diisi',
+            'logo.required' => 'Logo harus diisi',
+            'length.required' => 'Panjang harus diisi',
+            'width.required' => 'Lebar harus diisi',
+            'height.required' => 'Tinggi harus diisi',
+            'sell_price.required' => 'Harga jual harus diisi',
+            'barcode.required' => 'Barcode harus diisi',
+
+            'pack_outer_length.required' => 'Panjang luar harus diisi',
+            'pack_outer_width.required' => 'Lebar luar harus diisi',
+            'pack_outer_heigth.required' => 'Tinggi luar harus diisi',
+            'pack_inner_length.required' => 'Panjang dalam harus diisi',
+            'pack_inner_width.required' => 'Lebar dalam harus diisi',
+            'pack_inner_height.required' => 'Tinggi dalam harus diisi',
+            'pack_nw.required' => 'NW harus diisi',
+            'pack_gw.required' => 'GW harus diisi',
+
+            'pack_box_price.required' => 'Harga box harus diisi',
+            'pack_box_hardware.required' => 'Hardware box harus diisi',
+            'pack_assembling.required' => 'Assembling harus diisi',
+            'pack_stiker.required' => 'Stiker harus diisi',
+            'pack_hagtag.required' => 'Hagtag harus diisi',
+            'pack_maintenance.required' => 'Maintenance harus diisi',
+
+            'price_perakitan.required' => 'Harga perakitan harus diisi',
+            'price_perakitan_prj.required' => 'Harga perakitan prj harus diisi',
+            'price_grendo.required' => 'Harga grendo harus diisi',
+            'price_obat.required' => 'Harga obat harus diisi',
+            'upah.required' => 'Upah harus diisi',
+
+            'biaya_overhead_pabrik.required' => 'Biaya overhead pabrik harus diisi',
+            'biaya_listrik.required' => 'Biaya listrik harus diisi',
+            'biaya_pajak.required' => 'Biaya pajak harus diisi',
+            'biaya_ekspor.required' => 'Biaya ekspor harus diisi',
+
+            "supplier_id.*.required" => "Supplier harus dipilih",
+            "price_supplier.*.required" => "Harga supplier harus diisi",
+        ]);
+
+        $pack = Pack::create([
+            "cost" => $request->pack_cost,
+            "outer_length" => $request->pack_outer_length,
+            "outer_width" => $request->pack_outer_width,
+            "outer_height" => $request->pack_outer_height,
+            "inner_length" => $request->pack_inner_length,
+            "inner_width" => $request->pack_inner_width,
+            "inner_height" => $request->pack_inner_height,
+            "nw" => $request->pack_nw,
+            "gw" => $request->pack_gw,
+            "box_price" => $request->pack_box_price,
+            "box_hardware" => $request->pack_box_hardware,
+            "assembling" => $request->pack_assembling,
+            "stiker" => $request->pack_stiker,
+            "hagtag" => $request->pack_hagtag,
+            "maintenance" => $request->pack_maintenance,
+            "total" => $request->pack_cost,
+        ]);
+
+        $production_costs = ProductionCost::create([
+            "total_production" => $request->total_production,
+            "price_perakitan" => $request->price_perakitan,
+            "price_perakitan_prj" => $request->price_perakitan_prj,
+            "price_grendo" => $request->price_grendo,
+            "price_obat" => $request->price_obat,
+            "upah" => $request->upah,
+            "total" => $request->total_production,
+        ]);
+
+        $other_costs = OtherCost::create([
+            "biaya_overhead_pabrik" => $request->biaya_overhead_pabrik,
+            "biaya_listrik" => $request->biaya_listrik,
+            "biaya_pajak" => $request->biaya_pajak,
+            "biaya_ekspor" => $request->biaya_ekspor,
+            "total" => $request->total_other_cost,
+        ]);
+
+        $product = Product::create([
+            "name" => $request->name,
+            "code" => $request->code,
+            "rfid" => $request->rfid,
+            "logo" => $request->logo,
+            "other_cost" => $request->other_cost,
+            "production_cost" => $request->production_cost,
+            "pack_id" => $pack->id,
+            "productioncosts_id" => $production_costs->id,
+            "othercosts_id" => $other_costs->id,
+            "length" => $request->length,
+            "width" => $request->width,
+            "height" => $request->height,
+            "sell_price" => $request->sell_price,
+            "barcode" => $request->barcode,
+            "hpp" => $request->hpp,
+            "sell_price_usd" => $request->sell_price_usd,
+            "cbm" => $request->cbm
+        ]);
+
+        Production::create([
+            "product_id" => $product->id,
+            "quantity_finished" => 0,
+            "quantity_not_finished" => 0
+        ]);
+
+        foreach ($request->component_id as $index => $component) {
+            DB::table("component_product")->insert([
+                "product_id" => $product->id,
+                "component_id" => $component,
+                "quantity" => $request->quantity[$index]
+            ]);
+        }
+
+        foreach ($request->supplier_id as $index => $supplier) {
+            DB::table("product_supplier")->insert([
+                "product_id" => $product->id,
+                "supplier_id" => $supplier,
+                "price_per_unit" => $request->price_supplier[$index]
+            ]);
+        }
+
+        return response()->json($request->all(), 200);
     }
 }

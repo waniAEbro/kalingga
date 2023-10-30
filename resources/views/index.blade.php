@@ -105,12 +105,29 @@
             <div>Sistem Finance</div>
         </x-card-menu>
 
+        <button onclick="kirim()" class="w-10 h-10 bg-slate-500">pencet</button>
+
     </div>
 
 
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        function kirim() {
+            fetch("/api/product", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    name: "test",
+                    price: 1000
+                })
+            }).then(res => res.json()).then(data => console.log(data))
+        }
+    </script>
 </body>
 
 </html>

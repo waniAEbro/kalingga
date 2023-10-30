@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
-use App\Http\Requests\StoreCustomerRequest;
-use App\Http\Requests\UpdateCustomerRequest;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\StoreCustomerRequest;
+use App\Http\Requests\UpdateCustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -29,7 +30,7 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCustomerRequest $request) : RedirectResponse
+    public function store(StoreCustomerRequest $request): RedirectResponse
     {
         $request->validate([
             'name' => 'required',
@@ -76,7 +77,7 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCustomerRequest $request, Customer $customer) :RedirectResponse
+    public function update(UpdateCustomerRequest $request, Customer $customer): RedirectResponse
     {
         $request->validate([
             'name' => 'required',
@@ -107,9 +108,37 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customer $customer) :RedirectResponse
+    public function destroy(Customer $customer): RedirectResponse
     {
         $customer->delete();
         return redirect("/customers");
+    }
+
+    public function storeapi(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'code' => 'required',
+
+        ], [
+            'name.required' => 'Name tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'phone.required' => 'Nomor Telepon tidak boleh kosong',
+            'address.required' => 'Alamat tidak boleh kosong',
+            'code.required' => 'Kode tidak boleh kosong',
+        ]);
+
+        Customer::create([
+            "name" => $request->name,
+            "email" => $request->email,
+            "phone" => $request->phone,
+            "address" => $request->address,
+            "code" => $request->code,
+        ]);
+
+        return response()->json($request->all(), 200);
     }
 }

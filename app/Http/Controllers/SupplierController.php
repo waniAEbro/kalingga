@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreSupplierRequest;
@@ -112,5 +113,32 @@ class SupplierController extends Controller
         DB::table("component_supplier")->where("supplier_id", $supplier->id)->delete();
         DB::table("product_supplier")->where("supplier_id", $supplier->id)->delete();
         return redirect("/suppliers");
+    }
+
+    public function storeapi(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'code' => 'required',
+        ], [
+            'name.required' => 'Nama tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'phone.required' => 'Nomor Telepon tidak boleh kosong',
+            'address.required' => 'Alamat tidak boleh kosong',
+            'code.required' => 'Kode tidak boleh kosong',
+        ]);
+
+        Supplier::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            "code" => $request->code
+        ]);
+
+        return response()->json($request->all(), 200);
     }
 }
