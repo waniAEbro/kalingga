@@ -28,4 +28,4 @@ Route::post("/stockout", [WarehouseController::class, "stockout"]);
 Route::post("/product", [ProductController::class, "storeapi"]);
 Route::post("/component", [ComponentController::class, "storeapi"]);
 Route::post("/suppliers", [SupplierController::class, "storeapi"]);
-Route::post("/customers" . [CustomerController::class, "storeapi"]);
+Route::post("/customers", [CustomerController::class, "storeapi"]);
