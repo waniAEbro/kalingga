@@ -114,6 +114,11 @@ class CustomerController extends Controller
         return redirect("/customers");
     }
 
+    public function indexapi()
+    {
+        return response()->json(Customer::get(), 200);
+    }
+
     public function storeapi(Request $request)
     {
         $request->validate([

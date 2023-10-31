@@ -417,6 +417,11 @@ class ProductController extends Controller
         return redirect("/products");
     }
 
+    public function indexapi()
+    {
+        return response()->json(Product::get(), 200);
+    }
+
     public function storeapi(Request $request)
     {
         $request->validate([

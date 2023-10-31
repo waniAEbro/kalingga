@@ -133,6 +133,11 @@ class ComponentController extends Controller
         return redirect("/components");
     }
 
+    public function indexapi()
+    {
+        return response()->json(Component::get(), 200);
+    }
+
     public function storeapi(Request $request)
     {
         $request->validate([

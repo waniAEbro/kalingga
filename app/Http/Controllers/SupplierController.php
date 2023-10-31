@@ -115,6 +115,11 @@ class SupplierController extends Controller
         return redirect("/suppliers");
     }
 
+    public function indexapi()
+    {
+        return response()->json(Supplier::get(), 200);
+    }
+
     public function storeapi(Request $request)
     {
         $request->validate([
