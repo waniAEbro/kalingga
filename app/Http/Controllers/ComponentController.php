@@ -133,11 +133,6 @@ class ComponentController extends Controller
         return redirect("/components");
     }
 
-    public function indexapi()
-    {
-        return response()->json(Component::get(), 200);
-    }
-
     public function storeapi(Request $request)
     {
         $request->validate([
@@ -168,6 +163,6 @@ class ComponentController extends Controller
             ]);
         }
 
-        return response()->json($request->all(), 200);
+        return response()->json(Component::get(), 200);
     }
 }

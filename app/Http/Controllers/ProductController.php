@@ -417,11 +417,6 @@ class ProductController extends Controller
         return redirect("/products");
     }
 
-    public function indexapi()
-    {
-        return response()->json(Product::get(), 200);
-    }
-
     public function storeapi(Request $request)
     {
         $request->validate([
@@ -591,6 +586,6 @@ class ProductController extends Controller
             ]);
         }
 
-        return response()->json($request->all(), 200);
+        return response()->json(Product::get(), 200);
     }
 }

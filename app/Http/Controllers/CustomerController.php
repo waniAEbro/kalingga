@@ -114,11 +114,6 @@ class CustomerController extends Controller
         return redirect("/customers");
     }
 
-    public function indexapi()
-    {
-        return response()->json(Customer::get(), 200);
-    }
-
     public function storeapi(Request $request)
     {
         $request->validate([
@@ -144,6 +139,6 @@ class CustomerController extends Controller
             "code" => $request->code,
         ]);
 
-        return response()->json($request->all(), 200);
+        return response()->json(Customer::get(), 200);
     }
 }

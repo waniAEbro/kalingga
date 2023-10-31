@@ -115,11 +115,6 @@ class SupplierController extends Controller
         return redirect("/suppliers");
     }
 
-    public function indexapi()
-    {
-        return response()->json(Supplier::get(), 200);
-    }
-
     public function storeapi(Request $request)
     {
         $request->validate([
@@ -144,6 +139,6 @@ class SupplierController extends Controller
             "code" => $request->code
         ]);
 
-        return response()->json($request->all(), 200);
+        return response()->json(Supplier::get(), 200);
     }
 }
