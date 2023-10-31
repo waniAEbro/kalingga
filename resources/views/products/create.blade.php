@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
+
     <h1 class="text-lg font my-7 font-[500]">Buat Produk</h1>
 
     <x-create-input-field :action="'products'" :width="'w-full'">
@@ -320,7 +321,7 @@
                                         </td>
                                         <td id="suppl" class="p-2">
                                             <button type="button" x-on:click="supplier.remove(); set_total(); set_number_supplier(); supplierDeleteBtnToggle()"
-                                                class="transition-all supplier-delete-btn duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                                class="transition-all duration-300 rounded-full supplier-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
                                     `;
@@ -421,7 +422,7 @@
                                         <td id="subtotal" class="p-2"></td>
                                         <td id="comp" class="p-2">
                                             <button type="button" x-on:click="component.remove(); set_total(); set_number_component(); componentDeleteBtnToggle()"
-                                                class="transition-all comp-delete-btn duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                                class="transition-all duration-300 rounded-full comp-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
                                     `;
