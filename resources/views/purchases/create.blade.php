@@ -143,8 +143,8 @@
 @endsection
 @push('script')
     <script>
-        const products = {!! $products !!}
-        const components = {!! $components !!};
+        let products = {!! $products !!}
+        let components = {!! $components !!};
         let selectedProduct = {}
         let componentsSelected = {}
 
@@ -156,10 +156,10 @@
             tableRow.innerHTML = `
                                         <td id="modal-supplier-number" class="p-2 text-center"></td>
                                         <td class="p-2">
-                                            <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" />
+                                            <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id_component'" />
                                         </td>
                                         <td class="p-2">
-                                            <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
+                                            <x-input-with-desc :desc="'Rp'" :name="'price_supplier_component[]'" :type="'number'" :placeholder="'1000'" class="price_supplier_component" />
                                         </td>
                                         <td id="aksi" class="p-2">
                                             <button type="button" x-on:click="supplier.remove(); set_modal_supplier_number(); supplierDeleteBtnToggle()"
@@ -667,7 +667,7 @@
                                         :id="'supplier_id_component'" />
                                 </td>
                                 <td class="p-2">
-                                    <x-input-with-desc :desc="'Rp'" :name="'price_supplier_component'" :type="'number'"
+                                    <x-input-with-desc :desc="'Rp'" :name="'price_supplier_component[]'" :type="'number'" class="price_supplier_component"
                                         :placeholder="'1000'" />
                                 </td>
                                 <td id="aksi" class="p-2">
@@ -983,9 +983,14 @@
             const unit = document.getElementById('component_unit').value
             const price_per_unit = document.getElementById('price_per_unit').value
             const supplier_id = Array.from(document.querySelectorAll('#supplier_id_component')).map(e => e.value)
-            const price_supplier = Array.from(document.querySelectorAll('#price_supplier_component')).map(e => e.value)
+            const price_supplier = Array.from(document.querySelectorAll('.price_supplier_component')).map(e => e
+                .value)
             const loading = document.querySelector('.loading');
             loading.classList.remove('hidden')
+
+            console.log(supplier_id)
+            console.log(document.querySelectorAll('#supplier_id_component'))
+            console.log(price_supplier)
 
             try {
                 const response = await fetch("/api/component", {
@@ -1009,6 +1014,11 @@
 
                 const responseData = await response.json(); // Mengambil data JSON dari respons
                 console.log('Data berhasil terkirim:', responseData);
+
+                components = responseData
+
+                getSupplier()
+
                 toastr.success(`${name} berhasil ditambahkan ke Komponen`)
             } catch (error) {
                 console.error('Terjadi kesalahan', error)
