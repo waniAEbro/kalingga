@@ -144,6 +144,6 @@ class SupplierController extends Controller
             "code" => $request->code
         ]);
 
-        return response()->json($request->all(), 200);
+        return response()->json(Supplier::get(), 200);
     }
 }

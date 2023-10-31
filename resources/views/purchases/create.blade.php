@@ -148,8 +148,6 @@
         let selectedProduct = {}
         let componentsSelected = {}
 
-
-
         function addNewSupplier() {
             const tableBody = document.getElementById('table-body');
             const tableRow = document.createElement('tr');
@@ -261,6 +259,7 @@
                 }).forEach(element => {
                     selectedProduct[element.id] = element.name
                 })
+                // console.log(componentsSelected)
             } else {
                 const supplierAddress = document.getElementById('supplier_address').value = '';
                 const supplierEmail = document.getElementById('supplier_email').value = '';
@@ -581,28 +580,28 @@
                 <div class="px-[30px] pt-[20px]">
                     <div class="flex w-full gap-3">
                         <div class="flex-1">
-                            <x-input name="name" :label="'Nama Pemasok'" :placeholder="'name'" :type="'text'"
-                                :inputParentClass="'mb-3'" :value="old('name')" />
+                            <x-input :label="'Nama Pemasok'" :placeholder="'name'" :type="'text'"
+                                :inputParentClass="'mb-3'" :name="'supplier_name_modal'" />
                         </div>
                         <div class="flex-1">
-                            <x-input name="email" :label="'Email'" :placeholder="'email'" :type="'email'"
-                                :inputParentClass="'mb-3'" :value="old('email')" />
-                        </div>
-                    </div>
-                    <div class="flex w-full gap-3 my-3">
-                        <div class="flex-1">
-                            <x-input name="code" :label="'Kode Pemasok'" :placeholder="'code'" :type="'text'"
-                                :inputParentClass="'mb-3'" :value="old('code')" />
-                        </div>
-                        <div class="flex-1">
-                            <x-input name="phone" :label="'No Hp'" :placeholder="'phone'" :type="'number'"
-                                :inputParentClass="'mb-3'" :value="old('phone')" />
+                            <x-input :label="'Email'" :placeholder="'email'" :type="'email'"
+                                :inputParentClass="'mb-3'" :name="'supplier_email_modal'" />
                         </div>
                     </div>
                     <div class="flex w-full gap-3 my-3">
                         <div class="flex-1">
-                            <x-input-textarea :name="'address'" :label="'Alamat'" :placeholder="'address'"
-                                :value="old('address')" />
+                            <x-input :label="'Kode Pemasok'" :placeholder="'code'" :type="'text'"
+                                :inputParentClass="'mb-3'" :name="'supplier_code_modal'" />
+                        </div>
+                        <div class="flex-1">
+                            <x-input :label="'No Hp'" :placeholder="'phone'" :type="'number'"
+                                :inputParentClass="'mb-3'" :name="'supplier_phone_modal'" />
+                        </div>
+                    </div>
+                    <div class="flex w-full gap-3 my-3">
+                        <div class="flex-1">
+                            <x-input-textarea :name="'supplier_address_modal'" :label="'Alamat'" :placeholder="'address'"
+                                 />
                         </div>
                     </div>
                 </div>
@@ -610,8 +609,8 @@
                 <div class="absolute flex gap-2 bottom-4 right-[30px]">
                     <button type="button" onclick="hideModal()"
                         class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button>
-                    <button type="button" onclick="hideModal()"
-                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save">Simpan</button>
+                        <button type="button" onclick="createSupplier()"
+                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
                 </div>
             </div>`
         }
@@ -636,11 +635,11 @@
                 <div class="px-[30px] pt-[20px]">
                     <div class="flex w-full gap-3">
                         <div class="flex-1">
-                            <x-input :name="'name'" :label="'Nama Komponen'" :placeholder="'kayu'" :type="'text'"
+                            <x-input :name="'component_name'" :label="'Nama Komponen'" :placeholder="'kayu'" :type="'text'"
                                 :value="old('name')" />
                         </div>
                         <div class="flex-none">
-                            <x-input :name="'unit'" :label="'Unit'" :placeholder="'m'" :value="old('unit')" />
+                            <x-input :name="'component_unit'" :label="'Unit'" :placeholder="'m'" :value="old('unit')" />
                         </div>
                     </div>
                     <div class="flex w-full gap-3 my-3">
@@ -665,10 +664,10 @@
                                 <td id="modal-supplier-number" class="p-2 text-center"></td>
                                 <td class="p-2">
                                     <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
-                                        :id="'supplier_id'" />
+                                        :id="'supplier_id_component'" />
                                 </td>
                                 <td class="p-2">
-                                    <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'"
+                                    <x-input-with-desc :desc="'Rp'" :name="'price_supplier_component'" :type="'number'"
                                         :placeholder="'1000'" />
                                 </td>
                                 <td id="aksi" class="p-2">
@@ -688,8 +687,8 @@
                 <div class="absolute flex gap-2 bottom-4 right-[30px]">
                     <button type="button" onclick="hideModal()"
                         class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button>
-                    <button type="button" onclick="hideModal()"
-                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save">Simpan</button>
+                    <button type="button" onclick="createComponent()"
+                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
                 </div>
             </div>`
             set_modal_supplier_number();
@@ -977,6 +976,107 @@
             supplierDeleteBtnToggleProduct();
             set_number_supplier_product();
             set_number_component_product();
+        }
+
+        async function createComponent() {
+            const name = document.getElementById('component_name').value
+            const unit = document.getElementById('component_unit').value
+            const price_per_unit = document.getElementById('price_per_unit').value
+            const supplier_id = Array.from(document.querySelectorAll('#supplier_id_component')).map(e => e.value)
+            const price_supplier = Array.from(document.querySelectorAll('#price_supplier_component')).map(e => e.value)
+            const loading = document.querySelector('.loading');
+            loading.classList.remove('hidden')
+
+            try {
+                const response = await fetch("/api/component", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name,
+                        price_per_unit,
+                        unit,
+                        supplier_id,
+                        price_supplier
+                    })
+                })
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const responseData = await response.json(); // Mengambil data JSON dari respons
+                console.log('Data berhasil terkirim:', responseData);
+                toastr.success(`${name} berhasil ditambahkan ke Komponen`)
+            } catch (error) {
+                console.error('Terjadi kesalahan', error)
+            }
+
+            loading.classList.add('hidden')
+            hideModal()
+        }
+
+        async function createSupplier() {
+            const name = document.getElementById('supplier_name_modal').value
+            const email = document.getElementById('supplier_email_modal').value
+            const phone = document.getElementById('supplier_phone_modal').value
+            const code = document.getElementById('supplier_code_modal').value
+            const address = document.getElementById('supplier_address_modal').value
+
+            console.log('name', name)
+            console.log('email', email)
+            console.log('phone', phone)
+            console.log('code', code)
+            console.log('address', address)
+
+            const loading = document.querySelector('.loading');
+            loading.classList.remove('hidden')
+
+            try {
+                const response = await fetch("/api/suppliers", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        phone,
+                        code,
+                        address
+                    })
+                })
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const responseData = await response.json(); // Mengambil data JSON dari respons
+
+                let responseBaru = {}
+
+                responseData.forEach(e => {
+                    responseBaru[e.id] = e.name
+                })
+
+                document.querySelector(".supplier_id")._x_dataStack[0].list = responseBaru
+
+                document.querySelector(".supplier_id")._x_dataStack[0].selectedkey = responseData[responseData.length -
+                    1].id
+
+                document.querySelector(".supplier_id")._x_dataStack[0].selectedlabel = responseData[responseData
+                    .length - 1].name
+
+                toastr.success(`${name} berhasil ditambahkan ke Supplier`)
+                loading.classList.add('hidden')
+                hideModal()
+            } catch (error) {
+                console.error('Terjadi kesalahan', error)
+            }
+
         }
     </script>
 @endpush
