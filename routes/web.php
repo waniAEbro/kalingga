@@ -1,23 +1,26 @@
 <?php
 
 use App\Models\Sale;
+use App\Models\Employee;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use App\Models\Warehouse;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\ProductionController;
-use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +70,7 @@ Route::middleware(['login.check'])->group(function () {
     Route::resource("productions", ProductionController::class);
     Route::resource("customers", CustomerController::class);
     Route::resource("warehouse", WarehouseController::class);
+    Route::resource("presence", PresenceController::class);
     Route::resource("finances", FinanceController::class);
     Route::resource("users", LoginController::class);
     Route::resource("roles", RoleController::class);
