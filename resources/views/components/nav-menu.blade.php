@@ -5,7 +5,7 @@
     <span class="mt-2 text-2xl"><ion-icon class="font-bold" name="{{ $menuIcon }}-outline"></ion-icon></span>
     <p class="mt-1 text-sm max-xl:hidden">{{ $menuName }}</p>
     <div
-        class="opacity-0 max-xl:group-hover:opacity-100 max-xl:group-hover:left-24 transition-all absolute bg-[#064E3B] text-[#F4F7F6] py-1 px-3 rounded text-sm z-10 left-0">
+        class="opacity-0 max-xl:group-hover:opacity-100 max-xl:group-hover:left-24 transition-all absolute bg-[#064E3B] text-[#F4F7F6] py-1 px-3 rounded text-sm z-50 left-0">
         {{ $menuName }}
     </div>
 

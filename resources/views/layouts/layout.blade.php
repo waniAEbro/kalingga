@@ -37,6 +37,11 @@
         [x-cloak] {
             display: none;
         }
+
+        #nav::-webkit-scrollbar {
+            display: none;
+
+        }
     </style>
     <title>Kalingga Keling Jati</title>
 </head>
