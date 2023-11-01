@@ -4,26 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\Presence;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\View\View;
 
-class PresenceController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index()
     {
-        return view("presence.index", ["presences" => Presence::all(), "employees" => Employee::all()]);
+
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view();
     }
 
     /**
