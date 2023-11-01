@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b331d2c0151a84297b3f23e805de416c",
+    "content-hash": "109bc4a38ee3a2fad9eb500882afd73d",
     "packages": [
         {
             "name": "ably/ably-php",
@@ -58,6 +58,69 @@
                 "source": "https://github.com/ably/ably-php/tree/1.1.9"
             },
             "time": "2022-09-15T12:31:16+00:00"
+        },
+        {
+            "name": "ably/ably-php-laravel",
+            "version": "1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ably/ably-php-laravel.git",
+                "reference": "825ec91eb889655eafd52e1d4551fc20b4bdc6a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ably/ably-php-laravel/zipball/825ec91eb889655eafd52e1d4551fc20b4bdc6a9",
+                "reference": "825ec91eb889655eafd52e1d4551fc20b4bdc6a9",
+                "shasum": ""
+            },
+            "require": {
+                "ably/ably-php": "~1.1.9",
+                "laravel/framework": ">=6.0.0",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "4.13.0",
+                "phpunit/phpunit": "^8.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ably\\Laravel\\AblyServiceProvider"
+                    ],
+                    "aliases": {
+                        "Ably": "Ably\\Laravel\\Facades\\Ably"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ably\\Laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Ably",
+                    "email": "support@ably.com"
+                }
+            ],
+            "description": "Ably realtime REST PHP library wrapper for Laravel",
+            "homepage": "https://www.ably.com/",
+            "keywords": [
+                "ably",
+                "laravel",
+                "messaging",
+                "rest"
+            ],
+            "support": {
+                "issues": "https://github.com/ably/ably-php-laravel/issues",
+                "source": "https://github.com/ably/ably-php-laravel/tree/1.0.8"
+            },
+            "time": "2022-09-15T12:41:59+00:00"
         },
         {
             "name": "ably/laravel-broadcaster",

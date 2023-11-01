@@ -69,23 +69,23 @@
                         <div onclick="hideModal()" class="absolute flex items-center p-1 text-2xl transition-all rounded-full cursor-pointer right-5 hover:bg-slate-100"><ion-icon name="close-outline"></ion-icon>
                         </div>
                     </div>
-        
+
                     <div class="px-[30px] py-[20px] text-sm">
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
                             <div class="font-bold w-40 flex justify-between">Nama Produk<div>:</div></div>
-                            <div class="">${wh.production.product.name}</div>
+                            <div class="">${wh.name}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
                             <div class="font-bold w-40 flex justify-between">RFID<div>:</div></div>
-                            <div class="">${wh.production.product.rfid}</div>
+                            <div class="">${wh.rfid}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
                             <div class="font-bold w-40 flex justify-between">Barcode<div>:</div></div>
-                            <div class="">${wh.production.product.barcode}</div>
+                            <div class="">${wh.barcode}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
                             <div class="font-bold w-40 flex justify-between">Jumlah<div>:</div></div>
-                            <div class="">${wh.quantity}</div>
+                            <div class="">${wh.warehouses.length}</div>
                         </div>
                     </div>
 
