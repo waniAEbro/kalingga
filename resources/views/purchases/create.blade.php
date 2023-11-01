@@ -1064,21 +1064,19 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                const responseData = await response.json(); // Mengambil data JSON dari respons
+                const com
 
+                const responseData = await response.json(); // Mengambil data JSON dari respons
+                const supplier = document.querySelector(".supplier_id")
                 let responseBaru = {}
 
                 responseData.forEach(e => {
                     responseBaru[e.id] = e.name
                 })
 
-                document.querySelector(".supplier_id")._x_dataStack[0].list = responseBaru
-
-                document.querySelector(".supplier_id")._x_dataStack[0].selectedkey = responseData[responseData.length -
-                    1].id
-
-                document.querySelector(".supplier_id")._x_dataStack[0].selectedlabel = responseData[responseData
-                    .length - 1].name
+                supplier._x_dataStack[0].list = responseBaru
+                supplier._x_dataStack[0].selectedkey = responseData[responseData.length - 1].id
+                supplier._x_dataStack[0].selectedlabel = responseData[responseData.length - 1].name
 
                 toastr.success(`${name} berhasil ditambahkan ke Supplier`)
                 loading.classList.add('hidden')

@@ -588,4 +588,9 @@ class ProductController extends Controller
 
         return response()->json(Product::get(), 200);
     }
+
+    public function indexapi()
+    {
+        return response()->json(Product::get(), 200);
+    }
 }

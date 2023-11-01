@@ -14,57 +14,39 @@
 </head>
 
 <body class="font-['Roboto']">
-    <!-- Container -->
-    <div class="container mx-auto drop-shadow-xl">
-        <div class="flex justify-center px-6 my-12">
-            <!-- Row -->
-            <div class="w-full xl:w-3/4 lg:w-11/12 flex">
-                <!-- Col -->
-                <div class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"
-                    style="background-image: url('https://source.unsplash.com/Z3NceSeZqgI/600x800')"></div>
-                <!-- Col -->
-                <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
-                    <h3 class="pt-4 text-2xl text-center">Welcome Back!</h3>
-                    <form action="/login/user" class="px-8 pt-6 pb-8 mb-4 bg-white rounded" method="post">
-                        @csrf
-                        <div class="mb-4">
-                            <label class="block mb-2 text-sm font-bold text-gray-700" for="username">
-                                Email
-                            </label>
-                            <input
-                                class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                id="email" name="email" type="email" value="{{ Session::get('email') }}"
-                                placeholder="email" />
-                        </div>
-                        <div class="mb-4">
-                            <label class="block mb-2 text-sm font-bold text-gray-700" for="password">
-                                Password
-                            </label>
-                            <input
-                                class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                id="password" name="password" type="password" placeholder="******************"
-                                oninput="validasi(event)" />
-                            <p id="error" class="text-xs italic text-red-500 hidden">Password minimal 8 karakter</p>
-                        </div>
-                        <div class="mb-6 text-center">
-                            <button
-                                class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                                type="submit" name="submit">
-                                Sign In
-                            </button>
-                        </div>
-                        <hr class="mb-6 border-t" />
-                        {{-- <div class="text-center">
-                            <a class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                                href="/register">
-                                Create an Account!
-                            </a>
-                        </div> --}}
-                    </form>
+    <div class="grid w-full grid-cols-2">
+        <div class="flex items-center justify-center w-full h-screen">
+            <div class="w-2/3 bg-white p-7 rounded-xl h-fit drop-shadow-lg">
+                <div class="flex items-center w-full gap-2">
+                    <img src="img/image 6 big.png" class="w-10" alt="">
+                    <div class="text-lg font-bold">Kalingga Keling Jati</div>
                 </div>
+
+                <div class="mt-4 mb-2 text-2xl font-bold">Welcome Back!</div>
+
+                <div class="text-sm text-gray-500">Start your website in seconds.</div>
+
+                <form action="/login/user" method="post">
+                    @csrf
+                    <x-input :label="'Email'" :name="'email'" :inputParentClass="'my-5'" :labelClass="'font-[500]'" :placeholder="'example@example.com'"
+                        class="bg-gray-200 focus:bg-white" />
+                    <x-input :label="'Password'" :name="'password'" :type="'password'" :labelClass="'font-[500]'"
+                        class="bg-gray-200 focus:bg-white" oninput="validasi(event)" :placeholder="'*************'" />
+                    <p id="error" class="hidden mt-2 text-xs italic text-red-500">Password minimal 8 karakter</p>
+                    <button
+                        class="mt-10 text-sm text-white bg-[#16A34A] focus:bg-[#278e4d] hover:bg-[#2b9d54] rounded-lg w-full py-2">Sign
+                        in to your
+                        account</button>
+                </form>
+            </div>
+        </div>
+        <div class="flex items-center justify-start w-full h-screen">
+            <div class="w-[90%]">
+                <img src="/img/ilustrasi.png" alt="">
             </div>
         </div>
     </div>
+
 </body>
 <script>
     function validasi(event) {

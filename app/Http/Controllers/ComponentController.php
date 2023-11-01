@@ -165,4 +165,9 @@ class ComponentController extends Controller
 
         return response()->json(Component::get(), 200);
     }
+
+    public function indexapi()
+    {
+        return response()->json(Component::get(), 200);
+    }
 }
