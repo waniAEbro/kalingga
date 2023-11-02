@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("employee_id");
             $table->string("employee_name");
+            $table->string("rfid");
             $table->timestamps();
         });
     }

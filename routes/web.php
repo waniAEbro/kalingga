@@ -71,6 +71,7 @@ Route::middleware(['login.check'])->group(function () {
     Route::resource("customers", CustomerController::class);
     Route::resource("warehouse", WarehouseController::class);
     Route::resource("presence", PresenceController::class);
+    Route::resource("employee", EmployeeController::class);
     Route::resource("finances", FinanceController::class);
     Route::resource("users", LoginController::class);
     Route::resource("roles", RoleController::class);
