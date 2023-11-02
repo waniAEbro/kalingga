@@ -81,6 +81,9 @@ Route::middleware(['login.check'])->group(function () {
     Route::get("/sales/{sale}/print", [SaleController::class, "print"]);
     Route::get("/purchases/{purchase}/print", [PurchaseController::class, "print"]);
 
+    Route::get("presence/month", [PresenceController::class, "month"]);
+    Route::get("presence/{employee}/print", [PresenceController::class, "print"]);
+
     Route::get('/datatable', function () {
         return view('datatable');
     });

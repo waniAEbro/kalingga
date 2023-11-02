@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text("tag");
             $table->boolean("in");
             $table->boolean("out");
-            $table->text("present");
             $table->timestamps();
         });
     }

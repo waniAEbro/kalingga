@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Employee;
 use App\Models\Presence;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Http;
 
 class PresenceController extends Controller
@@ -14,9 +15,9 @@ class PresenceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        return view("presence.index", ["presences" => Presence::all(), "employees" => Employee::all()]);
+        return view("presence.index", ["employees" => Employee::all(), "request" => $request->all()]);
     }
 
     public function employee_in(Request $request)
@@ -26,36 +27,25 @@ class PresenceController extends Controller
         } else {
             $tag = array_slice(explode(" ", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["uhf"]), 5, 12);
 
-            $presences = Presence::where("tag", $tag)->get();
+            $tag = implode("", $tag);
 
-            if ($presences->count() == 0) {
-                return response()->json("ok", 200);
-            } else {
-                $employee = Employee::where("tag", $tag)->first();
+            $employee = Employee::where("rfid", $tag)->first();
 
-                if ($employee) {
+            if ($employee) {
+                $presence = Presence::where("tag", $tag)->whereDate("created_at", Carbon::today())->where("in", true)->first();
+                if ($presence) {
+                    return response()->json("ok", 200);
+                } else {
                     $presence = Presence::create([
-                        "employee_id" => $tag,
+                        "employee_id" => $employee->id,
                         "in" => true,
                         "out" => false,
-                        "present" => 0,
+                        "tag" => $tag
                     ]);
-
-                    Http::withHeaders([
-                        'Content-Type' => 'application/json'
-                    ])->withBasicAuth(env("VITE_ABLY_PUBLIC_KEY"), env("VITE_ABLY_SECRET_KEY"))
-                        ->post('https://rest.ably.io/channels/channel-in/messages', [
-                            'name' => 'publish',
-                            'data' => [
-                                "employee" => $employee->name,
-                                "tag" => $tag
-                            ]
-                        ]);
-
                     return response()->json($presence, 200);
-                } else {
-                    return response()->json("not found", 404);
                 }
+            } else {
+                return response()->json("not found", 404);
             }
         }
     }
@@ -67,38 +57,23 @@ class PresenceController extends Controller
         } else {
             $tag = array_slice(explode(" ", json_decode($request->input("m2m:sgn")["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["uhf"]), 5, 12);
 
-            $presences = Presence::where("tag", $tag)->get();
+            $tag = implode("", $tag);
 
-            if ($presences->count() == 0) {
-                return response()->json("ok", 200);
-            } else {
-                $employee = Employee::where("tag", $tag)->first();
+            $employee = Employee::where("rfid", $tag)->first();
 
-                if ($employee) {
-                    $presence = Presence::create([
-                        "employee_id" => $tag,
-                        "in" => true,
-                        "out" => false,
-                        "present" => 0,
+            if ($employee) {
+                $presence = Presence::where("tag", $tag)->whereDate("created_at", Carbon::today())->where("in", true)->where("out", false)->first();
+                if ($presence) {
+                    $presence->update([
+                        "out" => true
                     ]);
-
-                    Http::withHeaders([
-                        'Content-Type' => 'application/json'
-                    ])->withBasicAuth(env("VITE_ABLY_PUBLIC_KEY"), env("VITE_ABLY_SECRET_KEY"))
-                        ->post('https://rest.ably.io/channels/channel-in/messages', [
-                            'name' => 'publish',
-                            'data' => [
-                                "employee" => $employee->name,
-                                "tag" => $tag
-                            ]
-                        ]);
-
                     return response()->json($presence, 200);
                 } else {
-                    return response()->json("not found", 404);
+                    return response()->json("ok", 200);
                 }
+            } else {
+                return response()->json("not found", 404);
             }
-
         }
     }
 }

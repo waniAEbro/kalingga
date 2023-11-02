@@ -48,8 +48,8 @@ class ProductController extends Controller
             "price_supplier.*" => 'required',
 
             'name' => 'required',
-            'code' => 'required',
-            'rfid' => 'required',
+            'code' => 'unique:products|required',
+            'rfid' => 'unique:products|required',
             'logo' => 'required',
             'length' => 'required',
             'width' => 'required',
@@ -84,49 +84,6 @@ class ProductController extends Controller
             'biaya_listrik' => 'required',
             'biaya_pajak' => 'required',
             'biaya_ekspor' => 'required',
-        ], [
-            'component_id.*.required' => 'Komponen harus dipilih',
-            'quantity.*.required' => 'Jumlah harus diisi',
-
-            'name.required' => 'Nama harus diisi',
-            'code.required' => 'Kode harus diisi',
-            'rfid.required' => 'RFID harus diisi',
-            'logo.required' => 'Logo harus diisi',
-            'length.required' => 'Panjang harus diisi',
-            'width.required' => 'Lebar harus diisi',
-            'height.required' => 'Tinggi harus diisi',
-            'sell_price.required' => 'Harga jual harus diisi',
-            'barcode.required' => 'Barcode harus diisi',
-
-            'pack_outer_length.required' => 'Panjang luar harus diisi',
-            'pack_outer_width.required' => 'Lebar luar harus diisi',
-            'pack_outer_heigth.required' => 'Tinggi luar harus diisi',
-            'pack_inner_length.required' => 'Panjang dalam harus diisi',
-            'pack_inner_width.required' => 'Lebar dalam harus diisi',
-            'pack_inner_height.required' => 'Tinggi dalam harus diisi',
-            'pack_nw.required' => 'NW harus diisi',
-            'pack_gw.required' => 'GW harus diisi',
-
-            'pack_box_price.required' => 'Harga box harus diisi',
-            'pack_box_hardware.required' => 'Hardware box harus diisi',
-            'pack_assembling.required' => 'Assembling harus diisi',
-            'pack_stiker.required' => 'Stiker harus diisi',
-            'pack_hagtag.required' => 'Hagtag harus diisi',
-            'pack_maintenance.required' => 'Maintenance harus diisi',
-
-            'price_perakitan.required' => 'Harga perakitan harus diisi',
-            'price_perakitan_prj.required' => 'Harga perakitan prj harus diisi',
-            'price_grendo.required' => 'Harga grendo harus diisi',
-            'price_obat.required' => 'Harga obat harus diisi',
-            'upah.required' => 'Upah harus diisi',
-
-            'biaya_overhead_pabrik.required' => 'Biaya overhead pabrik harus diisi',
-            'biaya_listrik.required' => 'Biaya listrik harus diisi',
-            'biaya_pajak.required' => 'Biaya pajak harus diisi',
-            'biaya_ekspor.required' => 'Biaya ekspor harus diisi',
-
-            "supplier_id.*.required" => "Supplier harus dipilih",
-            "price_supplier.*.required" => "Harga supplier harus diisi",
         ]);
 
         $pack = Pack::create([
@@ -239,8 +196,8 @@ class ProductController extends Controller
             "price_supplier.*" => 'required',
 
             'name' => 'required',
-            'code' => 'required',
-            'rfid' => 'required',
+            'code' => 'unique:products|required',
+            'rfid' => 'unique:products|required',
             'logo' => 'required',
             'length' => 'required',
             'width' => 'required',
@@ -275,49 +232,6 @@ class ProductController extends Controller
             'biaya_listrik' => 'required',
             'biaya_pajak' => 'required',
             'biaya_ekspor' => 'required',
-        ], [
-            'component_id.*.required' => 'Komponen harus dipilih',
-            'quantity.*.required' => 'Jumlah harus diisi',
-            "supplier_id.*.required" => "Supplier harus dipilih",
-            "price_supplier.*.required" => "Harga supplier harus diisi",
-
-            'name.required' => 'Nama harus diisi',
-            'code.required' => 'Kode harus diisi',
-            'rfid.required' => 'RFID harus diisi',
-            'logo.required' => 'Logo harus diisi',
-            'length.required' => 'Panjang harus diisi',
-            'width.required' => 'Lebar harus diisi',
-            'height.required' => 'Tinggi harus diisi',
-            'sell_price.required' => 'Harga jual harus diisi',
-            'barcode.required' => 'Barcode harus diisi',
-
-            'pack_outer_length.required' => 'Panjang luar harus diisi',
-            'pack_outer_width.required' => 'Lebar luar harus diisi',
-            'pack_outer_heigth.required' => 'Tinggi luar harus diisi',
-            'pack_inner_length.required' => 'Panjang dalam harus diisi',
-            'pack_inner_width.required' => 'Lebar dalam harus diisi',
-            'pack_inner_height.required' => 'Tinggi dalam harus diisi',
-            'pack_nw.required' => 'NW harus diisi',
-            'pack_gw.required' => 'GW harus diisi',
-
-            'pack_box_price.required' => 'Harga box harus diisi',
-            'pack_box_hardware.required' => 'Hardware box harus diisi',
-            'pack_assembling.required' => 'Assembling harus diisi',
-            'pack_stiker.required' => 'Stiker harus diisi',
-            'pack_hagtag.required' => 'Hagtag harus diisi',
-            'pack_maintenance.required' => 'Maintenance harus diisi',
-
-            'price_perakitan.required' => 'Harga perakitan harus diisi',
-            'price_perakitan_prj.required' => 'Harga perakitan prj harus diisi',
-            'price_grendo.required' => 'Harga grendo harus diisi',
-            'price_obat.required' => 'Harga obat harus diisi',
-            'upah.required' => 'Upah harus diisi',
-
-            'biaya_overhead_pabrik.required' => 'Biaya overhead pabrik harus diisi',
-            'biaya_listrik.required' => 'Biaya listrik harus diisi',
-            'biaya_pajak.required' => 'Biaya pajak harus diisi',
-            'biaya_ekspor.required' => 'Biaya ekspor harus diisi',
-
         ]);
 
         $pack = Pack::where("id", $product->pack_id)->first();

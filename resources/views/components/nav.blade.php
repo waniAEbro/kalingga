@@ -21,6 +21,8 @@
             <x-nav-menu :menuName="'Keuangan'" :menuUrl="'Finances'" :menuIcon="'card'" />
             <x-nav-menu :menuName="'Quotation'" :menuUrl="'Quotations'" :menuIcon="'clipboard'" />
             <x-nav-menu :menuName="'Pengguna'" :menuUrl="'Users'" :menuIcon="'person'" />
+            <x-nav-menu :menuName="'Pegawai'" :menuUrl="'Employee'" :menuIcon="'walk'" />
+            <x-nav-menu :menuName="'Presensi'" :menuUrl="'Presence'" :menuIcon="'wifi'" />
         </div>
 
         <div class="border-[#1A5C4A] z-10 border-t max-xl:w-[67px] xl:w-52 mt-5"></div>

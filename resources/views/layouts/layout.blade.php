@@ -180,7 +180,9 @@
             state.columnQuery.forEach(columnQuery => {
                 const query = "data." + columnQuery
                 const td = document.createElement("td")
-                td.classList.add("p-4", "break-words", columnQuery.replace(".", "-"))
+                state.menu == "presence" ? "" : td.classList.add("p-4", "break-words", columnQuery
+                    .replace(
+                        ".", "-"))
                 td.innerText = eval(query)
 
                 tr.appendChild(td)
@@ -188,7 +190,14 @@
             const button = `<a href="/${state.menu}/${ data.id }/print" target="_blank" class="flex items-center gap-1 text-slate-600">
                         <span class="text-lg"><ion-icon name="print-outline"></ion-icon></span>Print
                     </a>`
-            if (state.columnName.includes("Aksi")) {
+            if (state.menu == "presence") {
+                tr.innerHTML += `
+            <td class="px-4 py-2" onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
+                <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
+                    ${button}
+                </div>
+            </td>`
+            } else if (state.columnName.includes("Aksi")) {
                 tr.innerHTML += `
             <td class="px-4 py-2" onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
                 <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">

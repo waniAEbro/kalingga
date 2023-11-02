@@ -30,8 +30,12 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) :RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
+        $request->validate([
+            'employee_name' => 'required',
+            'rfid' => 'required|unique:employees',
+        ]);
         Employee::create([
             'employee_id' => $request->employee_id,
             'employee_name' => $request->employee_name,
@@ -52,7 +56,7 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Employee $employee) :View
+    public function edit(Employee $employee): View
     {
         return view("employee.edit", ["employee" => Employee::find($employee->id)]);
     }
@@ -60,8 +64,12 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Employee $employee) :RedirectResponse
+    public function update(Request $request, Employee $employee): RedirectResponse
     {
+        $request->validate([
+            'employee_name' => 'required',
+            'rfid' => 'required|unique:employees',
+        ]);
         $employee->update([
             'employee_id' => $request->employee_id,
             'employee_name' => $request->employee_name,
@@ -74,8 +82,9 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Employee $employee) :RedirectResponse
+    public function destroy(Employee $employee): RedirectResponse
     {
+        $employee->presence()->delete();
         $employee->delete();
         return redirect("/employee");
     }
