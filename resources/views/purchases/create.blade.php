@@ -103,7 +103,8 @@
                     </tbody>
                 </table>
 
-                <button type="button" x-data x-on:click="addNewComponent(); set_number_component()"
+                <button type="button" x-data
+                    x-on:click="addNewComponent(); set_number_component(); await $nextTick(); setKomponen()"
                     class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
                     New</button>
 
@@ -145,8 +146,11 @@
     <script>
         let products = {!! $products !!}
         let components = {!! $components !!};
+        let suppliers = {!! $suppliers !!}
+
         let selectedProduct = {}
         let componentsSelected = {}
+        let suppliersSelected = {}
 
         function addNewSupplier() {
             const tableBody = document.getElementById('table-body');
@@ -232,8 +236,21 @@
             })
         }
 
+        function setKomponen() {
+            document.querySelectorAll(".component_id").forEach(element => {
+                element._x_dataStack[0].list = componentsSelected
+            })
+        }
+
+        function setSupplier() {
+            document.querySelectorAll('.supplier_id_component').forEach(element => {
+                // console.log(e._x_dataStack[0].list)
+                // console.log(element._x_dataStack)
+                element._x_dataStack[0].list = suppliersSelected
+            })
+        }
+
         function getSupplier() {
-            let suppliers = {!! $suppliers !!}
             const supplierId = document.getElementById('supplier_id')
             const supplier = suppliers.find(supplier => supplier.id == supplierId.value)
 
@@ -248,7 +265,8 @@
             //             <td colspan="5" class="p-3 text-center border-t border-b ">Add Product</td>
             //         </tr>`
                 componentsSelected = {}
-                productsSelected = {}
+                selectedProduct = {}
+
                 components.filter(element => {
                     return element.suppliers.find(element => element.id == supplierId.value)
                 }).forEach(element => {
@@ -308,8 +326,8 @@
             componentRow.innerHTML = `
                                         <td id="number-component" class="p-2 text-center"></td>
                                         <td class="w-40 p-2">
-                                            <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)" x-init="await $nextTick(); setKomponen();" :dataLists="$components->toArray()"
-                                                :name="'component_id[]'" :id="'component_id'" :new="'newComponentModal()'" />
+                                            <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
+                                                :name="'component_id[]'" :id="'component_id'" :new="'newComponentModal(component); await $nextTick(); setSupplier();'" />
                                         </td>
                                         <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
                                                 oninput="set_subtotal(this)" value="0" step="0.0001"
@@ -354,12 +372,6 @@
                                     `;
 
             tableProduct.appendChild(productRow);
-        }
-
-        function setKomponen() {
-            document.querySelectorAll(".component_id").forEach(element => {
-                element._x_dataStack[0].list = componentsSelected
-            })
         }
 
         function set_subtotal(element) {
@@ -615,7 +627,7 @@
             </div>`
         }
 
-        function newComponentModal() {
+        function newComponentModal(componentRow) {
             const modal = document.querySelector('#modal');
             document.querySelector('#modal-background').classList.remove('hidden');
 
@@ -687,10 +699,19 @@
                 <div class="absolute flex gap-2 bottom-4 right-[30px]">
                     <button type="button" onclick="hideModal()"
                         class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button>
-                    <button type="button" onclick="createComponent()"
+                    <button id="create-component" type="button"
                         class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
                 </div>
             </div>`
+
+            document.getElementById('create-component').addEventListener('click', () => {
+                createComponent(componentRow)
+            })
+
+            suppliers.forEach(e => {
+                suppliersSelected[e.id] = e.name
+            })
+
             set_modal_supplier_number();
             supplierDeleteBtnToggle();
         }
@@ -978,19 +999,16 @@
             set_number_component_product();
         }
 
-        async function createComponent() {
+        async function createComponent(componentRow) {
             const name = document.getElementById('component_name').value
             const unit = document.getElementById('component_unit').value
             const price_per_unit = document.getElementById('price_per_unit').value
             const supplier_id = Array.from(document.querySelectorAll('#supplier_id_component')).map(e => e.value)
             const price_supplier = Array.from(document.querySelectorAll('.price_supplier_component')).map(e => e
                 .value)
+
             const loading = document.querySelector('.loading');
             loading.classList.remove('hidden')
-
-            console.log(supplier_id)
-            console.log(document.querySelectorAll('#supplier_id_component'))
-            console.log(price_supplier)
 
             try {
                 const response = await fetch("/api/component", {
@@ -1011,21 +1029,38 @@
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
+                // console.log(componentRow.querySelector('#component_id'))
+                components = await response.json(); // Mengambil data JSON dari respons
 
-                const responseData = await response.json(); // Mengambil data JSON dari respons
-                console.log('Data berhasil terkirim:', responseData);
+                const supplierId = document.querySelector("#supplier_id").value
+                const componentId = componentRow.querySelector('#component_id')
+                const componentClass = componentRow.querySelector('.component_id')
+                componentsSelected = {}
 
-                components = responseData
+                // ngecek apakah komponen yang baru dimasukin memiliki pemasok yang sama dengan pemasok yang dipilih
+                if (components[components.length - 1].suppliers.find(s => s.id == supplierId)) {
+                    // ngambil semua komponen yang sesuai dengan pemasok yang dipilih
+                    const supplierComponent = components.filter(comp => comp.suppliers.find(suppl => suppl.id ==
+                        supplierId))
 
-                getSupplier()
+                    supplierComponent.forEach(e => {
+                        componentsSelected[e.id] = e.name
+                    })
+
+                    componentClass._x_dataStack[0].selectedkey = components[components.length - 1].id
+                    componentClass._x_dataStack[0].selectedlabel = components[components.length - 1].name
+                    componentId.value = components[components.length - 1].id
+
+                    setKomponen()
+                }
+                getComponent(componentRow)
 
                 toastr.success(`${name} berhasil ditambahkan ke Komponen`)
+                loading.classList.add('hidden')
+                hideModal()
             } catch (error) {
                 console.error('Terjadi kesalahan', error)
             }
-
-            loading.classList.add('hidden')
-            hideModal()
         }
 
         async function createSupplier() {
@@ -1034,12 +1069,6 @@
             const phone = document.getElementById('supplier_phone_modal').value
             const code = document.getElementById('supplier_code_modal').value
             const address = document.getElementById('supplier_address_modal').value
-
-            console.log('name', name)
-            console.log('email', email)
-            console.log('phone', phone)
-            console.log('code', code)
-            console.log('address', address)
 
             const loading = document.querySelector('.loading');
             loading.classList.remove('hidden')
@@ -1064,19 +1093,24 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                const com
+                components = await fetchComponents()
+                products = await fetchProducts()
+                suppliers = await response.json(); // Mengambil data JSON dari respons
+                const supplierId = document.getElementById("supplier_id")
+                const supplierClass = document.querySelector('.supplier_id')
 
-                const responseData = await response.json(); // Mengambil data JSON dari respons
-                const supplier = document.querySelector(".supplier_id")
                 let responseBaru = {}
 
-                responseData.forEach(e => {
+                suppliers.forEach(e => {
                     responseBaru[e.id] = e.name
                 })
 
-                supplier._x_dataStack[0].list = responseBaru
-                supplier._x_dataStack[0].selectedkey = responseData[responseData.length - 1].id
-                supplier._x_dataStack[0].selectedlabel = responseData[responseData.length - 1].name
+                supplierClass._x_dataStack[0].list = responseBaru
+                supplierClass._x_dataStack[0].selectedkey = suppliers[suppliers.length - 1].id
+                supplierClass._x_dataStack[0].selectedlabel = suppliers[suppliers.length - 1].name
+                supplierId.value = suppliers[suppliers.length - 1].id
+
+                getSupplier()
 
                 toastr.success(`${name} berhasil ditambahkan ke Supplier`)
                 loading.classList.add('hidden')
@@ -1085,6 +1119,38 @@
                 console.error('Terjadi kesalahan', error)
             }
 
+        }
+
+        async function fetchComponents() {
+            try {
+                const res = await fetch('http://127.0.0.1:8000/api/components');
+
+                if (!res.ok) {
+                    throw new Error(`Gagal mengambil data: ${res.status}`);
+                }
+
+                const data = await res.json();
+                return data;
+            } catch (error) {
+                console.error('Terjadi kesalahan:', error);
+                throw error; // Anda dapat melempar kesalahan ini lagi atau menangani sesuai kebutuhan.
+            }
+        }
+
+        async function fetchProducts() {
+            try {
+                const res = await fetch('http://127.0.0.1:8000/api/products');
+
+                if (!res.ok) {
+                    throw new Error(`Gagal mengambil data: ${res.status}`);
+                }
+
+                const data = await res.json();
+                return data;
+            } catch (error) {
+                console.error('Terjadi kesalahan:', error);
+                throw error; // Anda dapat melempar kesalahan ini lagi atau menangani sesuai kebutuhan.
+            }
         }
     </script>
 @endpush

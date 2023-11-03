@@ -30,5 +30,5 @@ Route::post("/component", [ComponentController::class, "storeapi"]);
 Route::post("/suppliers", [SupplierController::class, "storeapi"]);
 Route::post("/customers", [CustomerController::class, "storeapi"]);
 
-Route::get("/component", [ComponentController::class, "indexapi"]);
-Route::get("/product", [ProductController::class, "indexapi"]);
+Route::get("/components", [ComponentController::class, "indexapi"]);
+Route::get("/products", [ProductController::class, "indexapi"]);
