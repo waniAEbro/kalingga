@@ -23,6 +23,10 @@
             })
         }
 
+        function show(id) {
+            window.location.href = `/presence/${id}`
+        }
+
         let current_date = new Date()
         state.columnName = ["Nomor", "Nama Karyawan", "RFID", "Jumlah Masuk", "Aksi"]
         state.columnQuery = ["employee_name", "rfid",

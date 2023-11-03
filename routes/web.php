@@ -70,7 +70,6 @@ Route::middleware(['login.check'])->group(function () {
     Route::resource("productions", ProductionController::class);
     Route::resource("customers", CustomerController::class);
     Route::resource("warehouse", WarehouseController::class);
-    Route::resource("presence", PresenceController::class);
     Route::resource("employee", EmployeeController::class);
     Route::resource("finances", FinanceController::class);
     Route::resource("users", LoginController::class);
@@ -79,8 +78,11 @@ Route::middleware(['login.check'])->group(function () {
     Route::get("/quotations", [QuotationController::class, "index"]);
 
     Route::get("/sales/{sale}/print", [SaleController::class, "print"]);
+
     Route::get("/purchases/{purchase}/print", [PurchaseController::class, "print"]);
 
+    Route::get("presence", [PresenceController::class, "index"]);
+    Route::get("presence/{employee}", [PresenceController::class, "show"]);
     Route::get("presence/month", [PresenceController::class, "month"]);
     Route::get("presence/{employee}/print", [PresenceController::class, "print"]);
 

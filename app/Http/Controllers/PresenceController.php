@@ -20,6 +20,11 @@ class PresenceController extends Controller
         return view("presence.index", ["employees" => Employee::all(), "request" => $request->all()]);
     }
 
+    public function show(Employee $employee): View
+    {
+        return view("presence.show", ["employee" => $employee]);
+    }
+
     public function employee_in(Request $request)
     {
         if ($request->input("m2m:sgn") && array_key_exists("m2m:vrq", $request->input("m2m:sgn"))) {
