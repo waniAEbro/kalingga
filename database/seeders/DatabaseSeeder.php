@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Customer;
 use App\Models\Supplier;
 use App\Models\Component;
+use App\Models\Employee;
+use App\Models\Presence;
 use Illuminate\Database\Seeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\CategorySeeder;
@@ -31,6 +33,18 @@ class DatabaseSeeder extends Seeder
         // Supplier::factory(25)->create();
         // Component::factory(100)->create();
         // Customer::factory(100)->create();
+
+        Employee::create([
+            "employee_name" => "Imam",
+            "rfid" => "AB0000000000000000000080"
+        ]);
+
+        Presence::create([
+            "employee_id" => 1,
+            "tag" => "AB0000000000000000000080",
+            "in" => true,
+            "out" => false,
+        ]);
 
         $this->call([PermissionSeeder::class]);
     }
