@@ -1064,8 +1064,6 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                const com
-
                 const responseData = await response.json(); // Mengambil data JSON dari respons
                 const supplier = document.querySelector(".supplier_id")
                 let responseBaru = {}
