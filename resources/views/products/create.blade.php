@@ -337,7 +337,7 @@
             tableRow.innerHTML = `
                                         <td id="modal-supplier-number" class="p-2 text-center"></td>
                                         <td class="p-2">
-                                            <x-select x-on:click="$nextTick();" x-init="await $nextTick(); setNewSuppliers()" :dataLists="$suppliers->toArray()" :name="'supplier_id_component[]'" :id="'supplier_id_component'" />
+                                            <x-select x-on:click="$nextTick();" x-init="await $nextTick(); setSuppliersComponent()" :dataLists="$suppliers->toArray()" :name="'supplier_id_component[]'" :id="'supplier_id_component'" />
                                         </td>
                                         <td class="p-2">
                                             <x-input-with-desc :desc="'Rp'" :name="'price_supplier_component[]'" :type="'number'" :placeholder="'1000'" class="price_supplier_component" />
@@ -391,7 +391,6 @@
         }
 
         function getComponent(tr) {
-            let components = {!! $components !!};
             const componentId = tr.querySelector('#component_id');
 
             if (componentId.value) {
@@ -605,7 +604,7 @@
                             <tr x-data="{ supplier: $el }" class="border-b">
                                 <td id="modal-supplier-number" class="p-2 text-center"></td>
                                 <td class="p-2">
-                                    <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
+                                    <x-select x-on:click="$nextTick();" x-init="await $nextTick(); setSuppliersComponent()" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
                                         :id="'supplier_id_component'" />
                                 </td>
                                 <td class="p-2">
@@ -637,6 +636,12 @@
             supplierDeleteBtnToggle();
         }
 
+        function setSuppliersComponent() {
+            document.querySelector('#modal').querySelectorAll('.supplier_id_component').forEach(e => {
+                e._x_dataStack[0].list = suppliersBaru
+            })
+        }
+
         let suppliersBaru = {}
         let componentsBaru = {}
 
@@ -653,6 +658,7 @@
 
         function setNewSuppliers() {
             document.querySelectorAll(".supplier_id").forEach(e => {
+                console.log(e)
                 e._x_dataStack[0].list = suppliersBaru
             })
         }
@@ -694,7 +700,7 @@
                 }
 
                 const responseData = await response.json(); // Mengambil data JSON dari respons
-
+                suppliers = responseData
                 let responseBaru = {}
 
                 responseData.forEach(e => {
@@ -749,6 +755,7 @@
                 }
 
                 const responseData = await response.json(); // Mengambil data JSON dari respons
+                components = responseData
                 componentsBaru = {}
 
                 responseData.forEach(e => {

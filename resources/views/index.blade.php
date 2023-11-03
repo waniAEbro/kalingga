@@ -100,18 +100,22 @@
             <div>Sistem Warehouse</div>
         </x-card-menu>
 
-        <x-card-menu :url="'finances'" :icon="'logo-usd'" :color="'#4F9DA6'">
+        <x-card-menu :url="'finances'" :icon="'logo-usd'" :color="'#2B9AA2'">
             <div class="text-xl font-bold">Finance</div>
             <div>Sistem Finance</div>
         </x-card-menu>
 
+        <x-card-menu :url="'presence'" :icon="'wifi-outline'" :color="'#4F8DA7'">
+            <div class="text-xl font-bold">Presence</div>
+            <div>Sistem Presensi</div>
+        </x-card-menu>
     </div>
 
 
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    
+
 </body>
 
 </html>
