@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EmployeeExport;
 use App\Models\Employee;
 use App\Models\Presence;
 use Illuminate\Http\RedirectResponse;
@@ -87,5 +88,11 @@ class EmployeeController extends Controller
         $employee->presence()->delete();
         $employee->delete();
         return redirect("/employee");
+    }
+
+    public function export()
+    {
+        $excel = app('excel');
+        return $excel->download(new EmployeeExport, 'users.xlsx');
     }
 }
