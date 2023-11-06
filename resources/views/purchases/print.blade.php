@@ -164,6 +164,33 @@
             </tbody>
         </table>
     @endif
+    <table class="content">
+        <tbody>
+            <tr>
+                <td>
+                    <p style="margin:0"><b>Payment method T/T to {{ $purchase->payment_purchases->beneficiary_name }}</b></p>
+                    <p style="margin:0"><b>BANK DETAILS</b></p>
+                    <p style="margin:0"><b>Beneficiary's Bank : {{ $purchase->payment_purchases->beneficiary_bank }}</b></p>
+                    <p style="margin:0"><b>Beneficiary's A/C USD : {{ $purchase->payment_purchases->beneficiary_ac_usd }}</b></p>
+                    <p style="margin:0">Bank Add. : {{ $purchase->payment_purchases->bank_address }}</p>
+                    <p style="margin:0">Swift Code : <b>{{ $purchase->payment_purchases->swift_code }}</b></p>
+                    <p style="margin:0">Beneficiary's Name : <b></b>{{ $purchase->payment_purchases->beneficiary_name }}</p>
+                    <p style="margin:0">Address : {{ $purchase->payment_purchases->beneficiary_address }}</p>
+                    <p style="margin:0">Phone : {{ $purchase->payment_purchases->phone }}</p>
+                </td>
+                <td style="width: 30%">
+                    <p>Best Regard</p>
+                    <p>CV. Kalingga Keling Jati</p>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <p style="text-decoration: underline;">Rensi Eka Prattistia</p>
+                    <p>Director</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 
 </html>

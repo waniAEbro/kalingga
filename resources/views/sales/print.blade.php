@@ -67,6 +67,7 @@
             border-left: none;
             border-right: none;
         }
+
     </style>
 </head>
 
@@ -93,7 +94,7 @@
             <tr>
                 <td style="width:50%;">
                     <div class="invoice-header">
-                        <h1>Curtomer Information</h1>
+                        <h1>Customer Information</h1>
                     </div>
                     <div class="invoice-details">
                         <p><b>Client</b> {{ ': ' . $sale->customer->name }}</p>
@@ -180,8 +181,15 @@
         <tbody>
             <tr>
                 <td>
-                    <p>Payment method</p>
-                    <p>Bank Details</p>
+                    <p style="margin:0"><b>Payment method T/T to {{ $sale->payment_sales->beneficiary_name }}</b></p>
+                    <p style="margin:0"><b>BANK DETAILS</b></p>
+                    <p style="margin:0"><b>Beneficiary's Bank : {{ $sale->payment_sales->beneficiary_bank }}</b></p>
+                    <p style="margin:0"><b>Beneficiary's A/C USD : {{ $sale->payment_sales->beneficiary_ac_usd }}</b></p>
+                    <p style="margin:0">Bank Add. : {{ $sale->payment_sales->bank_address }}</p>
+                    <p style="margin:0">Swift Code : <b>{{ $sale->payment_sales->swift_code }}</b></p>
+                    <p style="margin:0">Beneficiary's Name : <b></b>{{ $sale->payment_sales->beneficiary_name }}</p>
+                    <p style="margin:0">Address : {{ $sale->payment_sales->beneficiary_address }}</p>
+                    <p style="margin:0">Phone : {{ $sale->payment_sales->phone }}</p>
                 </td>
                 <td style="width: 30%">
                     <p>Best Regard</p>
