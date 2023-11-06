@@ -38,8 +38,8 @@
             const modal = document.querySelector('#modal');
             document.querySelector('#modal-background').classList.remove('hidden');
 
-            modal.classList.remove('opacity-0', '-z-20');
-            modal.classList.add('opacity-100', 'z-20');
+            modal.classList.remove('opacity-0', '-z-40');
+            modal.classList.add('opacity-100', 'z-40');
 
             modal.innerHTML = `
                 <div class="w-[400px] bg-white rounded-xl text-gray-800">

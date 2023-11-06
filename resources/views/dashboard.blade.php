@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="flex gap-5 mb-10">
-        <div class="relative z-30 flex items-end justify-center w-full h-40 group">
+        <div class="relative z-10 flex items-end justify-center w-full h-40 group">
             <div
                 class="w-[90%] group-hover:scale-110 transition duration-500 h-20 bg-slate-50 shadow-[0px_3px_20px_#0000000b] rounded-xl z-0">
             </div>
@@ -13,7 +13,7 @@
                 <div class="text-[#707E94] mt-2">Total Penjualan</div>
             </div>
         </div>
-        <div class="relative z-30 flex items-end justify-center w-full h-40 group">
+        <div class="relative z-10 flex items-end justify-center w-full h-40 group">
             <div
                 class="w-[90%] group-hover:scale-110 transition duration-500 h-20 bg-slate-50 shadow-[0px_3px_20px_#0000000b] rounded-xl z-0">
             </div>
@@ -24,7 +24,7 @@
                 <div class="text-[#707E94] mt-2">Total Produk</div>
             </div>
         </div>
-        <div class="relative z-30 flex items-end justify-center w-full h-40 group">
+        <div class="relative z-10 flex items-end justify-center w-full h-40 group">
             <div
                 class="w-[90%] group-hover:scale-110 transition duration-500 h-20 bg-slate-50 shadow-[0px_3px_20px_#0000000b] rounded-xl z-0">
             </div>

@@ -39,8 +39,9 @@
                 </li>
             </template>
             @if ($new)
-                <div onclick="{{ $new }}"
-                    class="mt-5 text-sm text-center text-blue-500 cursor-pointer hover:text-blue-400">
+                <div x-on:click="{{ $new }}"
+                    class="mt-5 text-sm text-center text-blue-500
+                    cursor-pointer hover:text-blue-400">
                     Tambah baru
                 </div>
             @endif
