@@ -1,4 +1,4 @@
-<nav class="w-[118px] transition-all xl:w-64 bg-[#064E3B] z-50">
+<nav class="w-[118px] transition-all xl:w-64 bg-[#064E3B] z-20">
     <div class="w-[224px] mt-10 ml-8">
         <a href="/" class="flex h-12 gap-4 ml-3">
             <img class="mt-1" src="/img/image 6 big.png" alt="">
