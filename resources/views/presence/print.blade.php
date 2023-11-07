@@ -118,27 +118,6 @@
             </tr>
         </tbody>
     </table>
-    <hr>
-    <h1 class="header">Presensi</h1>
-    <hr>
-    <table class="content">
-        <tbody>
-            <tr>
-                <td style="width:50%;">
-                    <div class="employee-header">
-                        <h1>Customer Information</h1>
-                    </div>
-                    <div class="employee-details">
-                        <p><b>RFID</b> {{ ': ' . $employee->rfid }}</p>
-                        <p><b>Nama Karyawan</b> {{ ': ' . $employee->employee_name }}</p>
-                        <p><b>Bulan</b>
-                            {{ ': ' . Carbon\Carbon::createFromFormat('Y-m', $bulan)->format('F') . ' ' . Carbon\Carbon::createFromFormat('Y-m', $bulan)->year }}
-                        </p>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
     <table class="content">
         <thead>
             <tr>
