@@ -123,8 +123,8 @@
             const modal = document.querySelector('#modal');
             document.querySelector('#modal-background').classList.remove('hidden');
 
-            modal.classList.remove('opacity-0', '-z-20');
-            modal.classList.add('opacity-100', 'z-20');
+            modal.classList.remove('opacity-0', '-z-40');
+            modal.classList.add('opacity-100', 'z-40');
 
             let products_lists = '';
             let products_price = 0;

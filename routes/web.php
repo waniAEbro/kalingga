@@ -86,6 +86,8 @@ Route::middleware(['login.check'])->group(function () {
     Route::get("presence/month", [PresenceController::class, "month"]);
     Route::get("presence/{employee}/print", [PresenceController::class, "print"]);
 
+    Route::get("cetak", [EmployeeController::class, "export"]);
+
     Route::get('/datatable', function () {
         return view('datatable');
     });

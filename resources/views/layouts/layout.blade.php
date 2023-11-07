@@ -55,11 +55,11 @@
         </x-main>
 
         <div id="modal-background" onclick="hideModal()"
-            class="absolute top-0 z-10 hidden w-full h-full bg-black opacity-50">
+            class="absolute top-0 z-30 hidden w-full h-full bg-black opacity-50">
         </div>
 
         <div id="modal"
-            class="absolute text-[#161414] -z-20 translate-x-1/2 top-20 right-1/2 rounded-xl transition-opacity duration-300 opacity-0">
+            class="absolute text-[#161414] -z-40 translate-x-1/2 top-20 right-1/2 rounded-xl transition-opacity duration-300 opacity-0">
 
         </div>
 
@@ -307,8 +307,8 @@
         const modal = document.querySelector("#modal");
         document.querySelector("#modal-background").classList.add("hidden");
 
-        modal.classList.remove('opacity-100', 'z-20');
-        modal.classList.add('opacity-0', '-z-20');
+        modal.classList.remove('opacity-100', 'z-40');
+        modal.classList.add('opacity-0', '-z-40');
 
         // modal.classList.remove('z-20');
         // modal.classList.add('-z-20');

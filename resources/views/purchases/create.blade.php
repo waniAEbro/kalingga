@@ -27,7 +27,7 @@
 
                 <x-input :name="'supplier_phone'" :label="'No Hp Pemasok'" readonly class="mb-3 bg-slate-100" />
 
-                <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" :inputParentClass="'mb-3'" :value="old('code')" />
+                <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" :inputParentClass="'mb-3'" :value="old('code') ?? 0" />
 
                 <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :inputParentClass="'mb-3'" :value="old('method') ?? 0" />
 
@@ -77,16 +77,21 @@
                                     <td class="w-40 p-2">
                                         <x-select
                                             x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)"
-                                            x-init="await $nextTick();
-                                            setKomponen();" :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'"
-                                            :value="$component" :new="'newComponentModal()'" />
+                                            :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" :value="$component"
+                                            :new="'newComponentModal()'" />
                                         @error('component_id.' . $index)
                                             <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
                                         @enderror
                                     </td>
                                     <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
-                                            oninput="set_subtotal(this)" value="0" step="0.0001"
+                                            x-init="getComponent(component);
+                                            await $nextTick();
+                                            set_subtotal($refs.quantity)" oninput="set_subtotal(this)"
+                                            value="{{ old('quantity', [])[$index] }}" step="0.0001"
                                             class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                        @error('quantity.' . $index)
+                                            <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                        @enderror
                                     </td>
                                     <td id="unit" class="p-2"></td>
                                     <td id="price" class="p-2"></td>
@@ -122,10 +127,44 @@
                         </tr>
                     </thead>
                     <tbody id="table-product">
+                        @if (old('product_id', []))
+                            @foreach (old('product_id', []) as $index => $product)
+                                <tr x-data="{ product: $el }" class="border-b">
+                                    <td id="number-product" class="p-2 text-center"></td>
+                                    <td class="w-40 p-2">
+                                        <x-select x-on:click="getProduct(product); await $nextTick(); setProduk();"
+                                            :dataLists="$products->toArray()" :name="'product_id[]'" :value="$product" :id="'product_id'"
+                                            :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); '" />
+                                        @error('product_id.' . $index)
+                                            <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                        @enderror
+                                    </td>
+                                    <td class="p-2"><input x-ref="quantity" type="number" name="quantity_product[]"
+                                            oninput="subTotalProduk(this)" value="{{ old('quantity_product', [])[$index] }}"
+                                            x-init="getProduct(product);
+                                            await $nextTick();
+                                            subTotalProduk($refs.quantity)" step="0.0001"
+                                            class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                        @error('quantity_product.' . $index)
+                                            <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                        @enderror
+                                    </td>
+                                    <td id="price" class="p-2"></td>
+                                    <td id="subtotal" class="p-2"></td>
+                                    <td class="p-2">
+                                        <button type="button"
+                                            x-on:click="product.remove(); set_total(); set_number_product()"
+                                            class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                                class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
 
-                <button type="button" x-data x-on:click="addNewProduct(); set_number_product()"
+                <button type="button" x-data
+                    x-on:click="addNewProduct(); set_number_product(); await $nextTick(); setProduk()"
                     class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
                     New</button>
 
@@ -151,6 +190,9 @@
         let selectedProduct = {}
         let componentsSelected = {}
         let suppliersSelected = {}
+
+        set_number_product();
+        set_number_component();
 
         function addNewSupplier() {
             const tableBody = document.getElementById('table-body');
@@ -209,11 +251,13 @@
         }
 
         function subTotalProduk(e) {
+            console.log(e)
             const tr = e.parentElement.parentElement;
             const price = tr.querySelector('#price').innerText.replace(/[^0-9\.,]/g, '').replace(/\./g, '').replace(',',
                 '.');
             const subtotal = tr.querySelector('#subtotal');
             subtotal.innerText = toRupiah(price * e.value);
+            console.log(subtotal)
             set_total();
         }
 
@@ -356,7 +400,7 @@
                                         <td id="number-product" class="p-2 text-center"></td>
                                         <td class="w-40 p-2">
                                             <x-select x-on:click="getProduct(product); await $nextTick(); setProduk();"  x-init="await $nextTick(); setProduk();" :dataLists="$products->toArray()"
-                                                :name="'product_id[]'" :id="'product_id'" :new="'newProductModal()'" />
+                                                :name="'product_id[]'" :id="'product_id'" :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); '" />
                                         </td>
                                         <td class="p-2"><input type="number" name="quantity_product[]"
                                                 oninput="subTotalProduk(this)" value="0" step="0.0001"
@@ -376,12 +420,13 @@
 
         function set_subtotal(element) {
             element.value < 0 ? element.value = 0 : element.value;
+            console.log(element)
             let tr = element.parentElement.parentElement;
             let price = tr.querySelector('#price').textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
                 '').replace(',', '.');
             let subtotal = tr.querySelector('#subtotal');
             subtotal.textContent = toRupiah(price * element.value);
-
+            console.log(subtotal)
             set_total();
         }
 
@@ -412,17 +457,17 @@
             tableRow.innerHTML = `
                                         <td id="number-component-product" class="p-2 text-center"></td>
                                         <td class="w-40 p-2">
-                                            <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
+                                            <x-select x-on:click="getComponentProduct(component); set_subtotal_product(component)" :dataLists="$components->toArray()"
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2">
                                             <input step="0.001" x-ref="quantity" type="number" name="quantity[]"
-                                                oninput="set_subtotal(this)" value=""
+                                                oninput="set_subtotal_product(this)" value=""
                                                 class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         </td>
-                                        <td id="unit" class="p-2"></td>
-                                        <td id="price" class="p-2"></td>
-                                        <td id="subtotal" class="p-2"></td>
+                                        <td id="unit-product-modal" class="p-2"></td>
+                                        <td id="price-product-modal" class="p-2"></td>
+                                        <td id="subtotal-product-modal" class="p-2"></td>
                                         <td id="comp" class="p-2">
                                             <button type="button" x-on:click="component.remove(); set_total(); set_number_component_product(); componentDeleteBtnToggleProduct()"
                                                 class="transition-all duration-300 rounded-full comp-delete-btn-product hover:bg-slate-100 active:bg-slate-200"><span
@@ -439,18 +484,21 @@
             tableRow.setAttribute('x-data', '{ supplier: $el }')
             tableRow.className = 'border-b';
             tableRow.innerHTML = `
-                                        <td id="number-supplier-product" class="p-2 text-center"></td>
-                                        <td class="p-2">
-                                            <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" />
-                                        </td>
-                                        <td class="p-2">
-                                            <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
-                                        </td>
-                                        <td id="suppl" class="p-2">
-                                            <button type="button" x-on:click="supplier.remove(); set_total(); set_number_supplier_product(); supplierDeleteBtnToggleProduct()"
-                                                class="transition-all duration-300 rounded-full supplier-delete-btn-product hover:bg-slate-100 active:bg-slate-200"><span
-                                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
-                                        </td>
+                                    <td id="number-supplier-product" class="p-2 text-center"></td>
+                                    <td class="p-2">
+                                        <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
+                                            :id="'supplier_id'" />
+                                    </td>
+                                    <td class="p-2">
+                                        <x-input-with-desc :desc="'Rp'" :name="'price_supplier'" :type="'number'"
+                                            :placeholder="'1000'" />
+                                    </td>
+                                    <td id="suppl" class="p-2">
+                                        <button type="button"
+                                            x-on:click="supplier.remove(); set_total(); set_number_supplier_product(); supplierDeleteBtnToggleProduct()"
+                                            class="transition-all duration-300 rounded-full supplier-delete-btn-product hover:bg-slate-100 active:bg-slate-200"><span
+                                                class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                    </td>
                                     `;
 
             tableBody.appendChild(tableRow);
@@ -556,11 +604,12 @@
         }
 
         function getComponentProduct(tr) {
-            let components = {!! $components !!};
             const componentId = tr.querySelector('#component_id');
-
+            console.log('componentId', componentId)
+            console.log('components', components)
             if (componentId.value) {
                 const component = components.find(component => component.id == componentId.value)
+                console.log('component', component)
                 tr.querySelector('#unit-product-modal').innerText = component.unit;
                 tr.querySelector('#price-product-modal').innerText = toRupiah(component.price_per_unit);
             } else {
@@ -576,8 +625,8 @@
             const modal = document.querySelector('#modal');
             document.querySelector('#modal-background').classList.remove('hidden');
 
-            modal.classList.remove('opacity-0', '-z-20');
-            modal.classList.add('opacity-100', 'z-20');
+            modal.classList.remove('opacity-0', '-z-40');
+            modal.classList.add('opacity-100', 'z-40');
 
             modal.innerHTML = `<div class="w-[600px] bg-white h-fit rounded-xl pb-20 relative">
                 <div
@@ -631,8 +680,8 @@
             const modal = document.querySelector('#modal');
             document.querySelector('#modal-background').classList.remove('hidden');
 
-            modal.classList.remove('opacity-0', '-z-20');
-            modal.classList.add('opacity-100', 'z-20');
+            modal.classList.remove('opacity-0', '-z-40');
+            modal.classList.add('opacity-100', 'z-40');
 
             modal.innerHTML = `<div class="w-[700px] bg-white h-fit rounded-xl pb-20 relative">
                 <div
@@ -648,16 +697,16 @@
                     <div class="flex w-full gap-3">
                         <div class="flex-1">
                             <x-input :name="'component_name'" :label="'Nama Komponen'" :placeholder="'kayu'" :type="'text'"
-                                :value="old('name')" />
+                                 oninput="toggleComponentSaveButtonState()" />
                         </div>
                         <div class="flex-none">
-                            <x-input :name="'component_unit'" :label="'Unit'" :placeholder="'m'" :value="old('unit')" />
+                            <x-input :name="'component_unit'" :label="'Unit'" :placeholder="'m'"  oninput="toggleComponentSaveButtonState()" />
                         </div>
                     </div>
                     <div class="flex w-full gap-3 my-3">
                         <div class="flex-1">
                             <x-input-with-desc :desc="'Rp'" :name="'price_per_unit'" :type="'number'"
-                                :label="'Harga Per Unit'" :placeholder="'1000'" :value="old('price_per_unit')" />
+                                :label="'Harga Per Unit'" :placeholder="'1000'"  oninput="toggleComponentSaveButtonState()" />
                         </div>
                     </div>
 
@@ -675,12 +724,12 @@
                             <tr x-data="{ supplier: $el }" class="border-b">
                                 <td id="modal-supplier-number" class="p-2 text-center"></td>
                                 <td class="p-2">
-                                    <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
+                                    <x-select x-on:click="toggleComponentSaveButtonState()" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
                                         :id="'supplier_id_component'" />
                                 </td>
                                 <td class="p-2">
                                     <x-input-with-desc :desc="'Rp'" :name="'price_supplier_component[]'" :type="'number'" class="price_supplier_component"
-                                        :placeholder="'1000'" />
+                                        :placeholder="'1000'" oninput="toggleComponentSaveButtonState()" />
                                 </td>
                                 <td id="aksi" class="p-2">
                                     <button type="button"
@@ -712,16 +761,17 @@
                 suppliersSelected[e.id] = e.name
             })
 
+            toggleComponentSaveButtonState()
             set_modal_supplier_number();
             supplierDeleteBtnToggle();
         }
 
-        function newProductModal() {
+        function newProductModal(productRow) {
             const modal = document.querySelector('#modal');
             document.querySelector('#modal-background').classList.remove('hidden');
 
-            modal.classList.remove('opacity-0', '-z-20');
-            modal.classList.add('opacity-100', 'z-20');
+            modal.classList.remove('opacity-0', '-z-40');
+            modal.classList.add('opacity-100', 'z-40');
 
             modal.innerHTML = `<div class="w-[1000px] bg-white h-fit rounded-xl pb-20 relative">
                 <div
@@ -754,11 +804,11 @@
                                 <tr x-data="{ component: $el }" class="border-b">
                                     <td id="number-component-product" class="p-2 text-center"></td>
                                     <td class="w-40 p-2">
-                                        <x-select x-on:click="getComponentProduct(component); $nextTick();" :dataLists="$components->toArray()"
+                                        <x-select x-on:click="getComponentProduct(component); set_subtotal_product(component)" :dataLists="$components->toArray()"
                                             :name="'component_id[]'" :id="'component_id'" />
                                     </td>
                                     <td class="p-2">
-                                        <input step="0.001" x-ref="quantity" type="number" name="quantity[]"
+                                        <input id="quantity" step="0.001" x-ref="quantity" type="number" name="quantity[]"
                                             min="0" oninput="set_subtotal_product(this)" value=""
                                             class="w-20 px-2 py-2 transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                     </td>
@@ -777,7 +827,7 @@
                         </table>
 
                         <button type="button" x-data
-                            x-on:click="addNewComponentProduct(); set_number_component_product(); componentDeleteBtnToggleProduct()"
+                            x-on:click="addNewComponentProduct(); set_number_component_product(); componentDeleteBtnToggleProduct(); await $nextTick(); setComponentListInProduct() "
                             class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Tambah
                             Data Baru</button>
 
@@ -801,7 +851,7 @@
                                             :id="'supplier_id'" />
                                     </td>
                                     <td class="p-2">
-                                        <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'"
+                                        <x-input-with-desc :desc="'Rp'" :name="'price_supplier'" :type="'number'"
                                             :placeholder="'1000'" />
                                     </td>
                                     <td id="suppl" class="p-2">
@@ -815,7 +865,7 @@
                         </table>
 
                         <button type="button" x-data
-                            x-on:click="addNewSupplierProduct(); set_number_supplier_product(); supplierDeleteBtnToggleProduct()"
+                            x-on:click="addNewSupplierProduct(); set_number_supplier_product(); supplierDeleteBtnToggleProduct(); await $nextTick(); setSupplierListInProduct(); "
                             class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
                             New</button>
                     </div>
@@ -837,9 +887,15 @@
 
                             <h1 class="my-3 font-bold">Kode</h1>
                             <div class="flex w-full gap-3">
-                                <x-input-with-desc :desc="'RFID'" :name="'rfid'" :value="0" />
-                                <x-input-with-desc :desc="'Produk'" :name="'code'" :type="'text'"
+                                <div>
+                                    <x-input-with-desc :desc="'RFID'" :name="'rfid'" :value="0" />
+                                    <div id="rfid-error" class="text-red-500 text-xs mt-1 italic"></div>
+                                </div>
+                                <div>
+                                    <x-input-with-desc :desc="'Produk'" :name="'code'" :type="'text'"
                                     :value="0" />
+                                    <div id="code-error" class="text-red-500 text-xs mt-1 italic"></div>
+                                </div>
                                 <x-input-with-desc :desc="'Barcode'" :name="'barcode'" :type="'number'"
                                     :value="0" />
                             </div>
@@ -988,11 +1044,16 @@
                     <div class="absolute flex gap-2 bottom-4 right-[30px]">
                         <button type="button" onclick="hideModal()"
                             class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button>
-                        <button type="button" onclick="hideModal()"
-                            class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save">Simpan</button>
+                        <button onmouseover="toggleProductSaveButtonState()" id="create-product" type="button" 
+                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
                     </div>
                 </div>
             </div>`
+
+            document.getElementById('create-product').addEventListener('click', () => {
+                createProduct(productRow)
+            })
+
             componentDeleteBtnToggleProduct();
             supplierDeleteBtnToggleProduct();
             set_number_supplier_product();
@@ -1029,9 +1090,9 @@
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                // console.log(componentRow.querySelector('#component_id'))
-                components = await response.json(); // Mengambil data JSON dari respons
 
+                components = await response.json(); // Mengambil data JSON dari respons
+                console.log(components)
                 const supplierId = document.querySelector("#supplier_id").value
                 const componentId = componentRow.querySelector('#component_id')
                 const componentClass = componentRow.querySelector('.component_id')
@@ -1121,6 +1182,161 @@
 
         }
 
+        async function createProduct(productRow) {
+            const modal = document.querySelector('#modal');
+
+            const component_id = Array.from(modal.querySelectorAll('#component_id')).map(e => e.value)
+            const quantity = Array.from(modal.querySelectorAll('#quantity')).map(e => e.value)
+            const supplier_id = Array.from(modal.querySelectorAll('#supplier_id')).map(e => e.value)
+            const price_supplier = Array.from(modal.querySelectorAll('#price_supplier')).map(e => e.value)
+
+            const name = modal.querySelector('#name').value
+            const logo = modal.querySelector('#logo').value
+            const rfid = modal.querySelector('#rfid').value
+            const code = modal.querySelector('#code').value
+            const barcode = modal.querySelector('#barcode').value
+
+            const length = modal.querySelector('#length').value
+            const width = modal.querySelector('#width').value
+            const height = modal.querySelector('#height').value
+
+            const pack_inner_length = modal.querySelector('#pack_inner_length').value
+            const pack_inner_width = modal.querySelector('#pack_inner_width').value
+            const pack_inner_height = modal.querySelector('#pack_inner_height').value
+            const pack_outer_length = modal.querySelector('#pack_outer_length').value
+            const pack_outer_width = modal.querySelector('#pack_outer_width').value
+            const pack_outer_height = modal.querySelector('#pack_outer_height').value
+            const volume = modal.querySelector('#volume').value
+            const cbm = modal.querySelector('#cbm').value
+            const pack_nw = modal.querySelector('#pack_nw').value
+            const pack_gw = modal.querySelector('#pack_gw').value
+
+            const price_perakitan = modal.querySelector('#price_perakitan').value
+            const price_perakitan_prj = modal.querySelector('#price_perakitan_prj').value
+            const price_grendo = modal.querySelector('#price_grendo').value
+            const price_obat = modal.querySelector('#price_obat').value
+            const upah = modal.querySelector('#upah').value
+
+            const pack_box_price = modal.querySelector('#pack_box_price').value
+            const pack_box_hardware = modal.querySelector('#pack_box_hardware').value
+            const pack_assembling = modal.querySelector('#pack_assembling').value
+            const pack_stiker = modal.querySelector('#pack_stiker').value
+            const pack_hagtag = modal.querySelector('#pack_hagtag').value
+            const pack_maintenance = modal.querySelector('#pack_maintenance').value
+
+            const biaya_overhead_pabrik = modal.querySelector('#biaya_overhead_pabrik').value
+            const biaya_listrik = modal.querySelector('#biaya_listrik').value
+            const biaya_pajak = modal.querySelector('#biaya_pajak').value
+            const biaya_ekspor = modal.querySelector('#biaya_ekspor').value
+
+            const total_production = modal.querySelector('#total_production').value
+            const pack_cost = modal.querySelector('#pack_cost').value
+            const total_other_cost = modal.querySelector('#total_other_cost').value
+
+            const sell_price = modal.querySelector('#sell_price').value
+            const sell_price_usd = modal.querySelector('#sell_price_usd').value
+            const hpp = modal.querySelector('#hpp').value
+
+            const loading = document.querySelector('.loading');
+            loading.classList.remove('hidden')
+
+            try {
+                const response = await fetch("/api/product", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        component_id,
+                        quantity,
+                        supplier_id,
+                        price_supplier,
+                        name,
+                        logo,
+                        rfid,
+                        code,
+                        barcode,
+                        length,
+                        width,
+                        height,
+                        pack_inner_height,
+                        pack_inner_length,
+                        pack_inner_width,
+                        pack_outer_length,
+                        pack_outer_width,
+                        pack_outer_height,
+                        volume,
+                        cbm,
+                        pack_nw,
+                        pack_gw,
+                        price_perakitan,
+                        price_perakitan_prj,
+                        price_grendo,
+                        price_obat,
+                        upah,
+                        pack_box_price,
+                        pack_box_hardware,
+                        pack_assembling,
+                        pack_stiker,
+                        pack_hagtag,
+                        pack_maintenance,
+                        biaya_overhead_pabrik,
+                        biaya_listrik,
+                        biaya_pajak,
+                        biaya_ekspor,
+                        pack_cost,
+                        total_production,
+                        total_other_cost,
+                        sell_price,
+                        sell_price_usd,
+                        hpp
+                    })
+                })
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                products = await response.json(); // Mengambil data JSON dari respons
+
+                if (products.rfid || products.code) throw products;
+
+                const supplierId = document.querySelector("#supplier_id").value
+                const productId = productRow.querySelector('#product_id')
+                const productClass = productRow.querySelector('.product_id')
+                selectedProduct = {}
+
+                // ngecek apakah produk yang baru dimasukin memiliki pemasok yang sama dengan pemasok yang dipilih
+                if (products[products.length - 1].suppliers.find(s => s.id == supplierId)) {
+                    // ngambil semua produk yang sesuai dengan pemasok yang dipilih
+                    const supplierProduct = products.filter(prod => prod.suppliers.find(suppl => suppl.id ==
+                        supplierId))
+
+                    supplierProduct.forEach(e => {
+                        selectedProduct[e.id] = e.name
+                    })
+
+                    productClass._x_dataStack[0].selectedkey = products[products.length - 1].id
+                    productClass._x_dataStack[0].selectedlabel = products[products.length - 1].name
+                    productId.value = products[products.length - 1].id
+
+                    setProduk()
+                }
+
+                getProduct(productRow)
+
+                toastr.success(`${name} berhasil ditambahkan ke Produk`)
+                loading.classList.add('hidden')
+                hideModal()
+            } catch (error) {
+                loading.classList.add('hidden')
+                console.log('Terjadi kesalahan', error)
+                modal.querySelector('#rfid-error').innerHTML = error.rfid || ''
+                modal.querySelector('#code-error').innerHTML = error.code || ''
+            }
+        }
+
         async function fetchComponents() {
             try {
                 const res = await fetch('http://127.0.0.1:8000/api/components');
@@ -1151,6 +1367,160 @@
                 console.error('Terjadi kesalahan:', error);
                 throw error; // Anda dapat melempar kesalahan ini lagi atau menangani sesuai kebutuhan.
             }
+        }
+
+        function toggleComponentSaveButtonState() {
+            const name = document.getElementById('component_name').value
+            const unit = document.getElementById('component_unit').value
+            const price_per_unit = document.getElementById('price_per_unit').value
+            const supplier_id = Array.from(document.querySelectorAll('#supplier_id_component')).map(e => e.value)
+            const price_supplier = Array.from(document.querySelectorAll('.price_supplier_component')).map(e => e
+                .value)
+            const saveButton = document.getElementById('create-component')
+
+            if (name && unit && price_supplier[0] && price_per_unit && supplier_id[0]) {
+                console.log('boleh save')
+                saveButton.disabled = false
+                saveButton.style.cursor = 'pointer'
+            } else {
+                console.log('gk boleh save')
+                saveButton.disabled = true
+                saveButton.style.cursor = "not-allowed"
+            }
+        }
+
+        function toggleProductSaveButtonState() {
+            const modal = document.querySelector('#modal');
+
+            const component_id = Array.from(modal.querySelectorAll('#component_id')).map(e => e.value)
+            const quantity = Array.from(modal.querySelectorAll('#quantity')).map(e => e.value)
+            const supplier_id = Array.from(modal.querySelectorAll('#supplier_id')).map(e => e.value)
+            const price_supplier = Array.from(modal.querySelectorAll('#price_supplier')).map(e => e.value)
+
+            const name = modal.querySelector('#name').value
+            const logo = modal.querySelector('#logo').value
+            const rfid = modal.querySelector('#rfid').value
+            const code = modal.querySelector('#code').value
+            const barcode = modal.querySelector('#barcode').value
+
+            const length = modal.querySelector('#length').value
+            const width = modal.querySelector('#width').value
+            const height = modal.querySelector('#height').value
+
+            const pack_inner_length = modal.querySelector('#pack_inner_length').value
+            const pack_inner_width = modal.querySelector('#pack_inner_width').value
+            const pack_inner_height = modal.querySelector('#pack_inner_height').value
+            const pack_outer_length = modal.querySelector('#pack_outer_length').value
+            const pack_outer_width = modal.querySelector('#pack_outer_width').value
+            const pack_outer_height = modal.querySelector('#pack_outer_height').value
+            const volume = modal.querySelector('#volume').value
+            const cbm = modal.querySelector('#cbm').value
+            const pack_nw = modal.querySelector('#pack_nw').value
+            const pack_gw = modal.querySelector('#pack_gw').value
+
+            const price_perakitan = modal.querySelector('#price_perakitan').value
+            const price_perakitan_prj = modal.querySelector('#price_perakitan_prj').value
+            const price_grendo = modal.querySelector('#price_grendo').value
+            const price_obat = modal.querySelector('#price_obat').value
+            const upah = modal.querySelector('#upah').value
+
+            const pack_box_price = modal.querySelector('#pack_box_price').value
+            const pack_box_hardware = modal.querySelector('#pack_box_hardware').value
+            const pack_assembling = modal.querySelector('#pack_assembling').value
+            const pack_stiker = modal.querySelector('#pack_stiker').value
+            const pack_hagtag = modal.querySelector('#pack_hagtag').value
+            const pack_maintenance = modal.querySelector('#pack_maintenance').value
+
+            const biaya_overhead_pabrik = modal.querySelector('#biaya_overhead_pabrik').value
+            const biaya_listrik = modal.querySelector('#biaya_listrik').value
+            const biaya_pajak = modal.querySelector('#biaya_pajak').value
+            const biaya_ekspor = modal.querySelector('#biaya_ekspor').value
+
+            const total_production = modal.querySelector('#total_production').value
+            const pack_cost = modal.querySelector('#pack_cost').value
+            const total_other_cost = modal.querySelector('#total_other_cost').value
+
+            const sell_price = modal.querySelector('#sell_price').value
+            const sell_price_usd = modal.querySelector('#sell_price_usd').value
+            const hpp = modal.querySelector('#hpp').value
+            const saveButton = document.getElementById('create-product')
+
+            const productsList = [component_id,
+                quantity,
+                supplier_id,
+                price_supplier,
+                name,
+                logo,
+                rfid,
+                code,
+                barcode,
+                length,
+                width,
+                height,
+                pack_inner_height,
+                pack_inner_length,
+                pack_inner_width,
+                pack_outer_length,
+                pack_outer_width,
+                pack_outer_height,
+                volume,
+                cbm,
+                pack_nw,
+                pack_gw,
+                price_perakitan,
+                price_perakitan_prj,
+                price_grendo,
+                price_obat,
+                upah,
+                pack_box_price,
+                pack_box_hardware,
+                pack_assembling,
+                pack_stiker,
+                pack_hagtag,
+                pack_maintenance,
+                biaya_overhead_pabrik,
+                biaya_listrik,
+                biaya_pajak,
+                biaya_ekspor,
+                pack_cost,
+                total_production,
+                total_other_cost,
+                sell_price,
+                sell_price_usd,
+                hpp
+            ]
+
+            let save = productsList.every((p) => ((typeof p === 'object' && p[0]) || (typeof p !== 'object' && p)))
+
+            if (save) {
+                saveButton.disabled = false
+                saveButton.style.cursor = 'pointer'
+            } else {
+                saveButton.disabled = true
+                saveButton.style.cursor = "not-allowed"
+            }
+        }
+
+        function setComponentListInProduct() {
+            const modal = document.querySelector('#modal')
+            let componentList = {}
+
+            components.forEach(c => componentList[c.id] = c.name)
+
+            modal.querySelectorAll('.component_id').forEach(e => {
+                e._x_dataStack[0].list = componentList
+            })
+        }
+
+        function setSupplierListInProduct() {
+            const modal = document.querySelector('#modal')
+            let supplierList = {}
+
+            suppliers.forEach(s => supplierList[s.id] = s.name)
+
+            modal.querySelectorAll('.supplier_id').forEach(e => {
+                e._x_dataStack[0].list = supplierList
+            })
         }
     </script>
 @endpush
