@@ -13,11 +13,10 @@
                 $date = \Carbon\Carbon::today()
                     ->startOfMonth()
                     ->addDays($i);
-                $presence = $employees[0]->presence();
+                $presence = $employee->presence();
                 $presence = $presence->whereDate('created_at', $date)->first();
-                $masuk = $presence ? $presence->created_at->format('H:i:s') : 'N/A';
-                $pulang = $presence && $masuk != $presence->updated_at->format('H:i:s') ? $presence->updated_at->format('H:i:s') : 'N/A';
-                // $deskripsi = $masuk != 'N/A' && \Carbon\Carbon::createFromFormat('H:i:s', $masuk)->isBefore(\Carbon\Carbon::createFromFormat('H:i:s', '07:00:00')) ? 'Tepat waktu' : 'telat';
+                $masuk = $presence && $presence->in ? $presence->created_at->format('H:i:s') : 'N/A';
+                $pulang = $presence && $presence->out ? $presence->updated_at->format('H:i:s') : 'N/A';
 
                 $deskripsi = '';
 

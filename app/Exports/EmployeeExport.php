@@ -15,12 +15,20 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class EmployeeExport implements FromView, ShouldAutoSize, WithStyles, WithEvents
 {
+
+    protected $employee;
+
+    public function __construct($employee)
+    {
+        $this->employee = $employee;
+    }
+
     public function view(): View
     {
         return view(
             "employee.excel",
             [
-                "employees" => Employee::all()
+                "employee" => $this->employee
             ]
         );
     }

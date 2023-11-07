@@ -89,10 +89,4 @@ class EmployeeController extends Controller
         $employee->delete();
         return redirect("/employee");
     }
-
-    public function export()
-    {
-        $excel = app('excel');
-        return $excel->download(new EmployeeExport, 'users.xlsx');
-    }
 }
