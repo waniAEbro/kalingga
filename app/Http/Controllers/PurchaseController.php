@@ -49,39 +49,13 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request): RedirectResponse
     {
-        // dd($request->quantity_product, $request->quantity);
-
-        $request->validate([
-            'supplier_id' => 'required',
-            'purchase_date' => 'required',
-            'due_date' => 'required',
-            'code' => 'required',
-            'paid' => 'required',
-            "method" => "required",
-            "beneficiary_bank" => "required",
-            "beneficiary_ac_usd" => "required",
-            "bank_address" => "required",
-            "swift_code" => "required",
-            "beneficiary_name" => "required",
-            "beneficiary_address" => "required",
-            "phone" => "required",
-            "location" => "required",
-            "total_bill" => 'required'
-        ], [
-            'supplier_id.required' => 'ID Supplier tidak boleh kosong',
-            'purchase_date.required' => 'Tanggal Pembelian tidak boleh kosong',
-            'due_date.required' => 'Tanggal Jatuh Tempo tidak boleh kosong',
-            'code.required' => 'Kode tidak boleh kosong',
-            'paid.required' => 'Bayar tidak boleh kosong',
-            'total_bill.required' => 'Total bayar kosong. Komponen atau produk harus diisi',
-        ]);
-
-        if($request->component_id) {
-            $request->validate(['component_id.*' => 'required']);
+        dd($request->all());
+        if ($request->component_id) {
+            $request->validate(['component_id.*' => 'required', 'quantity.*' => 'required']);
         }
 
-        if($request->product_id) {
-            $request->validate(['product_id.*' => 'required']);
+        if ($request->product_id) {
+            $request->validate(['product_id.*' => 'required', 'quantity_product.*' => 'required']);
         }
 
         $purchase = Purchase::create([
@@ -154,7 +128,6 @@ class PurchaseController extends Controller
      */
     public function edit(Purchase $purchase, Supplier $supplier)
     {
-
         return view("purchases.edit", [
             "purchase" => $purchase,
             "suppliers" => Supplier::get(),
@@ -168,12 +141,6 @@ class PurchaseController extends Controller
      */
     public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
-        $request->validate([
-            'paid' => 'required',
-        ], [
-            'paid.required' => 'Bayar tidak boleh kosong',
-        ]);
-
         $purchase->update([
             'status' => $purchase->remain_bill - $request->paid == 0 ? "closed"  : "open",
             'remain_bill' => $purchase->remain_bill - $request->paid,

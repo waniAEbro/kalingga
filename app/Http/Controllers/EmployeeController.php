@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\EmployeeExport;
+use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employee;
-use App\Models\Presence;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
 class EmployeeController extends Controller
@@ -31,12 +30,8 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreEmployeeRequest $request): RedirectResponse
     {
-        $request->validate([
-            'employee_name' => 'required',
-            'rfid' => 'required|unique:employees',
-        ]);
         Employee::create([
             'employee_id' => $request->employee_id,
             'employee_name' => $request->employee_name,
@@ -65,12 +60,8 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Employee $employee): RedirectResponse
+    public function update(UpdateEmployeeRequest $request, Employee $employee): RedirectResponse
     {
-        $request->validate([
-            'employee_name' => 'required',
-            'rfid' => 'required|unique:employees',
-        ]);
         $employee->update([
             'employee_id' => $request->employee_id,
             'employee_name' => $request->employee_name,

@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use App\Models\Component;
-use Illuminate\Http\Request;
 use App\Models\ComponentSupplier;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\StorecomponentRequest;
-use App\Http\Requests\UpdatecomponentRequest;
+use App\Http\Requests\StoreComponentRequest;
+use App\Http\Requests\UpdateComponentRequest;
 
 class ComponentController extends Controller
 {
@@ -33,24 +32,8 @@ class ComponentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorecomponentRequest $request): RedirectResponse
+    public function store(StoreComponentRequest $request): RedirectResponse
     {
-        // dd($request->selectfield);
-
-        $request->validate([
-            'name' => 'required',
-            'price_per_unit' => 'required',
-            'unit' => 'required',
-            'supplier_id.*' => 'required',
-            'price_supplier.*' => 'required'
-        ], [
-            'name.required' => 'Nama tidak boleh kosong',
-            'price_per_unit.required' => 'Harga tidak boleh kosong',
-            'unit.required' => 'Satuan unit tidak boleh kosong',
-            'supplier_id.*.required' => 'Supplier tidak boleh kosong',
-            'price_supplier.*.required' => 'Harga supplier tidak boleh kosong'
-        ]);
-
         $component = Component::create([
             "name" => $request->name,
             "price_per_unit" => $request->price_per_unit,
@@ -87,22 +70,8 @@ class ComponentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatecomponentRequest $request, component $component): RedirectResponse
+    public function update(UpdateComponentRequest $request, component $component): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required',
-            'price_per_unit' => 'required',
-            'unit' => 'required',
-            'supplier_id.*' => 'required',
-            'price_supplier.*' => 'required'
-        ], [
-            'name.required' => 'Nama tidak boleh kosong',
-            'price_per_unit.required' => 'Harga tidak boleh kosong',
-            'unit.required' => 'Satuan unit tidak boleh kosong',
-            'supplier_id.*.required' => 'Supplier tidak boleh kosong',
-            'price_supplier.*.required' => 'Harga supplier tidak boleh kosong'
-        ]);
-
         $component->update([
             "name" => $request->name,
             "price_per_unit" => $request->price_per_unit,
@@ -133,22 +102,8 @@ class ComponentController extends Controller
         return redirect("/components");
     }
 
-    public function storeapi(Request $request)
+    public function storeapi(StoreComponentRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'price_per_unit' => 'required',
-            'unit' => 'required',
-            'supplier_id.*' => 'required',
-            'price_supplier.*' => 'required'
-        ], [
-            'name.required' => 'Nama tidak boleh kosong',
-            'price_per_unit.required' => 'Harga tidak boleh kosong',
-            'unit.required' => 'Satuan unit tidak boleh kosong',
-            'supplier_id.*.required' => 'Supplier tidak boleh kosong',
-            'price_supplier.*.required' => 'Harga supplier tidak boleh kosong'
-        ]);
-
         $component = Component::create([
             "name" => $request->name,
             "price_per_unit" => $request->price_per_unit,

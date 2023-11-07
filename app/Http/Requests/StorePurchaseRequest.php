@@ -22,7 +22,21 @@ class StorePurchaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'supplier_id' => 'required',
+            'purchase_date' => 'required',
+            'due_date' => 'required',
+            'code' => 'required',
+            'paid' => 'required',
+            "method" => "required",
+            "beneficiary_bank" => "required",
+            "beneficiary_ac_usd" => "required",
+            "bank_address" => "required",
+            "swift_code" => "required",
+            "beneficiary_name" => "required",
+            "beneficiary_address" => "required",
+            "phone" => "required",
+            "location" => "required",
+            "total_bill" => 'required'
         ];
     }
 }

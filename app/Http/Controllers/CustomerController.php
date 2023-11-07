@@ -32,21 +32,6 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'code' => 'required',
-
-        ], [
-            'name.required' => 'Name tidak boleh kosong',
-            'email.required' => 'Email tidak boleh kosong',
-            'phone.required' => 'Nomor Telepon tidak boleh kosong',
-            'address.required' => 'Alamat tidak boleh kosong',
-            'code.required' => 'Kode tidak boleh kosong',
-        ]);
-
         Customer::create([
             "name" => $request->name,
             "email" => $request->email,
@@ -79,21 +64,6 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, Customer $customer): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'code' => 'required',
-
-        ], [
-            'name.required' => 'Name tidak boleh kosong',
-            'email.required' => 'Email tidak boleh kosong',
-            'phone.required' => 'Nomor Telepon tidak boleh kosong',
-            'address.required' => 'Alamat tidak boleh kosong',
-            'code.required' => 'Kode tidak boleh kosong',
-        ]);
-
         $customer->update([
             "name" => $request->name,
             "email" => $request->email,
@@ -114,23 +84,8 @@ class CustomerController extends Controller
         return redirect("/customers");
     }
 
-    public function storeapi(Request $request)
+    public function storeapi(StoreCustomerRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'code' => 'required',
-
-        ], [
-            'name.required' => 'Name tidak boleh kosong',
-            'email.required' => 'Email tidak boleh kosong',
-            'phone.required' => 'Nomor Telepon tidak boleh kosong',
-            'address.required' => 'Alamat tidak boleh kosong',
-            'code.required' => 'Kode tidak boleh kosong',
-        ]);
-
         Customer::create([
             "name" => $request->name,
             "email" => $request->email,
