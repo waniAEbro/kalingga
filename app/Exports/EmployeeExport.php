@@ -16,19 +16,21 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class EmployeeExport implements FromView, ShouldAutoSize, WithStyles, WithEvents
 {
 
-    protected $employee;
+    protected $employee, $bulan;
 
-    public function __construct($employee)
+    public function __construct($employee, $bulan)
     {
         $this->employee = $employee;
+        $this->bulan = $bulan;
     }
 
     public function view(): View
     {
         return view(
-            "employee.excel",
+            "presence.excel",
             [
-                "employee" => $this->employee
+                "employee" => $this->employee,
+                "bulan" => $this->bulan,
             ]
         );
     }

@@ -23,7 +23,6 @@
             })
             document.querySelectorAll(".tanggal_cetak").forEach(e => {
                 e.value = element.value
-                console.log(e.value)
             })
         }
 

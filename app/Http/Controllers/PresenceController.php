@@ -86,7 +86,6 @@ class PresenceController extends Controller
 
     public function print(Employee $employee, Request $request)
     {
-        $bulan = Carbon::createFromFormat("Y-m", $request->bulan);
         $pdf = Pdf::loadView('presence.print', [
             "employee" => $employee,
             "bulan" => $request->bulan
@@ -95,9 +94,9 @@ class PresenceController extends Controller
         return $pdf->stream('presensi.pdf');
     }
 
-    public function export(Employee $employee)
+    public function export(Employee $employee, Request $request)
     {
         $excel = app('excel');
-        return $excel->download(new EmployeeExport($employee), 'users.xlsx');
+        return $excel->download(new EmployeeExport($employee, $request->bulan), 'users.xlsx');
     }
 }

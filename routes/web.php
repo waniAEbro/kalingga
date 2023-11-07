@@ -84,7 +84,7 @@ Route::middleware(['login.check'])->group(function () {
     Route::get("/presence", [PresenceController::class, "index"]);
     Route::get("/presence/{employee}", [PresenceController::class, "show"]);
     Route::post("/presence/{employee}/print", [PresenceController::class, "print"]);
-    Route::get("/presence/{employee}/excel", [PresenceController::class, "export"]);
+    Route::post("/presence/{employee}/excel", [PresenceController::class, "export"]);
 
     Route::get('/datatable', function () {
         return view('datatable');
