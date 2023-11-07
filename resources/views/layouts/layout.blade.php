@@ -194,7 +194,12 @@
                 tr.innerHTML += `
             <td class="px-4 py-2" onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
                 <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
-                    <a href="/${state.menu}/${data.id}/excel">Excel</a>
+                    <form action="/${state.menu}/${data.id}/excel" method="post">
+                        @csrf
+                        <input type="hidden" class="tanggal_cetak" name="bulan" value="${(new Date).getFullYear()}-${(new Date).getMonth()+1}" />
+                        <button type="submit" class="flex items-center gap-1 text-slate-600">
+                        <span class="text-lg"><ion-icon name="document-outline"></ion-icon></span>Excel</button>
+                    </form>
                     <form action="/${state.menu}/${data.id}/print" method="post" target="_blank">
                         @csrf
                         <input type="hidden" class="tanggal_cetak" name="bulan" value="${(new Date).getFullYear()}-${(new Date).getMonth()+1}" />

@@ -8,13 +8,15 @@
         </tr>
     </thead>
     <tbody>
-        @for ($i = 0; $i < \Carbon\Carbon::today()->daysInMonth; $i++)
+        @for ($i = 0; $i < Carbon\Carbon::createFromFormat('Y-m', $bulan)->daysInMonth; $i++)
             @php
-                $date = \Carbon\Carbon::today()
+                $date = Carbon\Carbon::createFromFormat('Y-m', $bulan)
                     ->startOfMonth()
                     ->addDays($i);
-                $presence = $employee->presence();
-                $presence = $presence->whereDate('created_at', $date)->first();
+                $presence = $employee
+                    ->presence()
+                    ->whereDate('created_at', $date)
+                    ->first();
                 $masuk = $presence && $presence->in ? $presence->created_at->format('H:i:s') : 'N/A';
                 $pulang = $presence && $presence->out ? $presence->updated_at->format('H:i:s') : 'N/A';
 
@@ -40,11 +42,5 @@
                 <td>{{ $deskripsi }}</td>
             </tr>
         @endfor
-        <tr>
-            <td>12</td>
-            <td>12</td>
-            <td>13</td>
-            <td>masuk</td>
-        </tr>
     </tbody>
 </table>
