@@ -67,6 +67,18 @@
                 border-right: none;
             }
 
+            .employee-belumpulang {
+                background-color: yellow;
+            }
+
+            .employee-kuning {
+                background-color: rgb(255, 241, 137);
+            }
+
+            .employee-hadir {
+                background-color: rgb(137, 255, 157);
+            }
+
         </style>
     </head>
 
@@ -109,7 +121,8 @@
                 <tr>
                     <th>Tanggal</th>
                     <th>Masuk</th>
-                    <th>Keluar</th>
+                    <th>Pulang</th>
+                    <th>Deskripsi</th>
                 </tr>
             </thead>
             <tbody>
@@ -117,26 +130,71 @@
                     @php
                         $date = Carbon\Carbon::today()->startOfMonth()->addDays($i);
                         $presence = $employee->presence()->whereDate("created_at", $date)->first();
+                        $masuk = $presence ? $presence->created_at->format('H:i:s') : '-';
+                        $pulang = $presence && $masuk != $presence->updated_at->format('H:i:s') ? $presence->updated_at->format('H:i:s') : '-';
+                        $deskripsi = '';
+
+                        if ($masuk != '-' && $pulang != '-' && \Carbon\Carbon::createFromFormat('H:i:s', $masuk)->isBefore(\Carbon\Carbon::createFromFormat('H:i:s', '07:00:00')) && \Carbon\Carbon::createFromFormat('H:i:s', $pulang)->isAfter(\Carbon\Carbon::createFromFormat('H:i:s', '16:00:00'))) {
+                            $deskripsi = 'Tepat waktu';
+                        } elseif ($masuk != '-' && $pulang != '-' && \Carbon\Carbon::createFromFormat('H:i:s', $masuk)->isBefore(\Carbon\Carbon::createFromFormat('H:i:s', '07:00:00')) && \Carbon\Carbon::createFromFormat('H:i:s', $pulang)->isBefore(\Carbon\Carbon::createFromFormat('H:i:s', '16:00:00'))) {
+                            $deskripsi = 'Pulang Cepat';
+                        } elseif ($masuk != '-' && $pulang == '-' && \Carbon\Carbon::createFromFormat('H:i:s', $masuk)->isBefore(\Carbon\Carbon::createFromFormat('H:i:s', '07:00:00'))) {
+                            $deskripsi = 'Belum Absen Pulang';
+                        } elseif ($masuk != '-' && \Carbon\Carbon::createFromFormat('H:i:s', $masuk)->isAfter(\Carbon\Carbon::createFromFormat('H:i:s', '07:00:00'))) {
+                            $deskripsi = 'Telat';
+                        } else {
+                            $deskripsi = 'Tidak Absen';
+                        }
                     @endphp
-                    <tr>
-                        <td>
-                            {{ $date->format("Y-m-d") }}
-                        </td>
-                        <td>
-                            {{ $presence ? $presence->created_at->format("H:i:s") : "-"}}
-                        </td>
-                        <td>
-                            {{ $presence ? $presence->updated_at->format("H:i:s") : "-"}}
-                        </td>
-                    </tr>
+                    @switch($deskripsi)
+                        @case('Tepat waktu')
+                        <tr>
+                            <td class="employee-hadir">{{ $date->format('Y-m-d') }}</td>
+                            <td class="employee-hadir">{{ $masuk }}</td>
+                            <td class="employee-hadir">{{ $pulang }}</td>
+                            <td class="employee-hadir">{{ $deskripsi }}</td>
+                        </tr>
+                            @break
+                        @case('Pulang Cepat')
+                        <tr>
+                            <td class="employee-kuning">{{ $date->format('Y-m-d') }}</td>
+                            <td class="employee-kuning">{{ $masuk }}</td>
+                            <td class="employee-kuning">{{ $pulang }}</td>
+                            <td class="employee-kuning">{{ $deskripsi }}</td>
+                        </tr>
+                            @break
+                        @case('Belum Absen Pulang')
+                        <tr>
+                            <td class="employee-kuning">{{ $date->format('Y-m-d') }}</td>
+                            <td class="employee-kuning">{{ $masuk }}</td>
+                            <td class="employee-kuning">{{ $pulang }}</td>
+                            <td class="employee-kuning">{{ $deskripsi }}</td>
+                        </tr>
+                            @break
+                        @case('Telat')
+                        <tr>
+                            <td class="employee-kuning">{{ $date->format('Y-m-d') }}</td>
+                            <td class="employee-kuning">{{ $masuk }}</td>
+                            <td class="employee-kuning">{{ $pulang }}</td>
+                            <td class="employee-kuning">{{ $deskripsi }}</td>
+                        </tr>
+                            @break
+
+                        @default
+                        <tr>
+                            <td>{{ $date->format('Y-m-d') }}</td>
+                            <td>{{ $masuk }}</td>
+                            <td>{{ $pulang }}</td>
+                            <td>{{ $deskripsi }}</td>
+                        </tr>
+
+                    @endswitch
+
                 @endfor
             </tbody>
         </table>
 
     </body>
-
-
-
 
 
 </html>
