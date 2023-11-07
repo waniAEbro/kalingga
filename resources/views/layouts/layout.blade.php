@@ -18,7 +18,7 @@
     <script src="//unpkg.com/alpinejs" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0- 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-
      alpha/css/bootstrap.css"
         rel="stylesheet">
 
@@ -194,7 +194,12 @@
                 tr.innerHTML += `
             <td class="px-4 py-2" onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
                 <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
-                    ${button}
+                    <form action="/${state.menu}/${data.id}/print" method="get">
+                        @csrf
+                        <input type="hidden" class="tanggal_cetak" name="bulan" value="${(new Date).getFullYear()}-${(new Date).getMonth()+1}" />
+                        <button type="submit" class="flex items-center gap-1 text-slate-600">
+                        <span class="text-lg"><ion-icon name="print-outline"></ion-icon></span>Print</button>
+                    </form>
                 </div>
             </td>`
             } else if (state.columnName.includes("Aksi")) {

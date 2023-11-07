@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Employee;
 use App\Models\Presence;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\View\View;
@@ -80,5 +81,15 @@ class PresenceController extends Controller
                 return response()->json("not found", 404);
             }
         }
+    }
+
+    public function print (Employee $employee, Request $request){
+        $bulan = Carbon::createFromFormat("Y-m", $request->bulan);
+        $pdf = Pdf::loadView('presence.print', [
+            "employee" => $employee,
+            "bulan" => $request->bulan
+        ]);
+
+        return $pdf->stream('presensi.pdf');
     }
 }
