@@ -22,7 +22,7 @@ class UpdateSaleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'paid' => 'required'
         ];
     }
 }

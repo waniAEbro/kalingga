@@ -10,7 +10,7 @@
             <div id="pagination-wrapper" class="absolute bottom-0 flex h-10 gap-2 my-5 text-sm"></div>
         </div>
     </x-data-list>
-    <input type="date" oninput="changeDate(this)">
+    <input type="month" id="bulan" oninput="changeDate(this)">
 @endsection
 
 @push('script')
@@ -20,6 +20,9 @@
             buildTable()
             document.querySelector("#nama-bulan").innerHTML = current_date.toLocaleString('id', {
                 month: 'long'
+            })
+            document.querySelectorAll(".tanggal_cetak").forEach(e => {
+                e.value = element.value
             })
         }
 

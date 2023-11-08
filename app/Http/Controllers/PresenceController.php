@@ -7,6 +7,8 @@ use App\Models\Employee;
 use App\Models\Presence;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Exports\EmployeeExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Http;
 
@@ -80,5 +82,21 @@ class PresenceController extends Controller
                 return response()->json("not found", 404);
             }
         }
+    }
+
+    public function print(Employee $employee, Request $request)
+    {
+        $pdf = Pdf::loadView('presence.print', [
+            "employee" => $employee,
+            "bulan" => $request->bulan
+        ]);
+
+        return $pdf->stream('presensi.pdf');
+    }
+
+    public function export(Employee $employee, Request $request)
+    {
+        $excel = app('excel');
+        return $excel->download(new EmployeeExport($employee, $request->bulan), 'users.xlsx');
     }
 }

@@ -22,7 +22,22 @@ class StoreSaleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'customer_id' => 'required',
+            'sale_date' => 'required',
+            'due_date' => 'required',
+            'code' => 'required',
+            'paid' => 'required',
+            "method" => "required",
+            "beneficiary_bank" => "required",
+            "beneficiary_ac_usd" => "required",
+            "bank_address" => "required",
+            "swift_code" => "required",
+            "beneficiary_name" => "required",
+            "beneficiary_address" => "required",
+            "phone" => "required",
+            "location" => "required",
+            "product_id.*" => "required",
+            "quantity.*" => "required",
         ];
     }
 }

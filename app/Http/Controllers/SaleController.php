@@ -43,33 +43,6 @@ class SaleController extends Controller
      */
     public function store(StoreSaleRequest $request)
     {
-        $request->validate([
-            'customer_id' => 'required',
-            'sale_date' => 'required',
-            'due_date' => 'required',
-            'code' => 'required',
-            'paid' => 'required',
-            "method" => "required",
-            "beneficiary_bank" => "required",
-            "beneficiary_ac_usd" => "required",
-            "bank_address" => "required",
-            "swift_code" => "required",
-            "beneficiary_name" => "required",
-            "beneficiary_address" => "required",
-            "phone" => "required",
-            "location" => "required",
-            "product_id.*" => "required",
-            "quantity.*" => "required",
-        ], [
-            'customer_id.required' => 'ID Customer tidak boleh kosong',
-            'sale_date.required' => 'Tanggal Pembelian tidak boleh kosong',
-            'due_date.required' => 'Tanggal Jatuh Tempo tidak boleh kosong',
-            'code.required' => 'Kode tidak boleh kosong',
-            'paid.required' => 'Bayar tidak boleh kosong',
-            'product_id.*.required' => 'Produk tidak boleh kosong',
-            'quantity.*.required' => 'Jumlah tidak boleh kosong'
-        ]);
-
         $sale = Sale::create([
             'customer_id' => $request->customer_id,
             'sale_date' => $request->sale_date,
@@ -148,12 +121,6 @@ class SaleController extends Controller
      */
     public function update(UpdateSaleRequest $request, Sale $sale)
     {
-        $request->validate([
-            'paid' => 'required',
-        ], [
-            'paid.required' => 'Paid tidak boleh kosong',
-        ]);
-
         $sale->update([
             'status' => $request->remain_bill == 0 ? "closed"  : "open",
             'remain_bill' => $request->remain_bill,

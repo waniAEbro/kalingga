@@ -71,16 +71,6 @@ class ProductionController extends Controller
      */
     public function update(UpdateProductionRequest $request, Product $product): RedirectResponse
     {
-        $request->validate([
-            'quantity_finished' => 'required',
-            'quantity_not_finished' => 'required',
-
-        ], [
-            'quantity_finished.required' => 'Tidak Boleh Kosong',
-            'quantity_not_finished.required' => 'Tidak Boleh Kosong',
-
-        ]);
-
         foreach ($request->sale_production_id as $key => $sale_production_id) {
             $quantity_finished = SaleProduction::find($sale_production_id)->quantity_finished - $request->sale_quantity_finished[$key];
 
@@ -96,50 +86,6 @@ class ProductionController extends Controller
         }
 
         if ($request->cek == "on") {
-            $request->validate([
-                'code' => 'required',
-
-                'supplier_id' => 'required',
-                'purchase_date' => 'required',
-                'due_date' => 'required',
-                'purchase_code' => 'required',
-                'total_bill' => 'required',
-                'paid' => 'required',
-
-                'method' => 'required',
-                "beneficiary_bank" => 'required',
-                "beneficiary_ac_usd" => 'required',
-                "bank_address" => 'required',
-                "swift_code" => 'required',
-                "beneficiary_name" => 'required',
-                "beneficiary_address" => 'required',
-                "phone" => 'required',
-
-                'location' => 'required',
-                'quantity_purchase' => 'required',
-            ], [
-                'code.required' => 'Tidak Boleh Kosong',
-
-                'supplier_id.required' => 'Tidak Boleh Kosong',
-                'purchase_date.required' => 'Tidak Boleh Kosong',
-                'due_date.required' => 'Tidak Boleh Kosong',
-                'purchase_code.required' => 'Tidak Boleh Kosong',
-                'total_bill.required' => 'Tidak Boleh Kosong',
-                'paid.required' => 'Tidak Boleh Kosong',
-
-                'method.required' => 'Tidak Boleh Kosong',
-                "beneficiary_bank.required" => 'Tidak Boleh Kosong',
-                "beneficiary_ac_usd.required" => 'Tidak Boleh Kosong',
-                "bank_address.required" => 'Tidak Boleh Kosong',
-                "swift_code.required" => 'Tidak Boleh Kosong',
-                "beneficiary_name.required" => 'Tidak Boleh Kosong',
-                "beneficiary_address.required" => 'Tidak Boleh Kosong',
-                "phone.required" => 'Tidak Boleh Kosong',
-
-                'location.required' => 'Tidak Boleh Kosong',
-                'quantity_purchase.required' => 'Tidak Boleh Kosong',
-            ]);
-
             $purchase = Purchase::create([
                 "supplier_id" => $request->supplier_id,
                 "purchase_date" => $request->purchase_date,

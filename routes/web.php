@@ -81,10 +81,10 @@ Route::middleware(['login.check'])->group(function () {
 
     Route::get("/purchases/{purchase}/print", [PurchaseController::class, "print"]);
 
-    Route::get("presence", [PresenceController::class, "index"]);
-    Route::get("presence/{employee}", [PresenceController::class, "show"]);
-    Route::get("presence/month", [PresenceController::class, "month"]);
-    Route::get("presence/{employee}/print", [PresenceController::class, "print"]);
+    Route::get("/presence", [PresenceController::class, "index"]);
+    Route::get("/presence/{employee}", [PresenceController::class, "show"]);
+    Route::post("/presence/{employee}/print", [PresenceController::class, "print"]);
+    Route::post("/presence/{employee}/excel", [PresenceController::class, "export"]);
 
     Route::get('/datatable', function () {
         return view('datatable');

@@ -21,8 +21,37 @@ class UpdateProductionRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        if ($this->cek == "on") {
+            return [
+                'quantity_finished' => 'required',
+                'quantity_not_finished' => 'required',
+
+                'code' => 'required',
+
+                'supplier_id' => 'required',
+                'purchase_date' => 'required',
+                'due_date' => 'required',
+                'purchase_code' => 'required',
+                'total_bill' => 'required',
+                'paid' => 'required',
+
+                'method' => 'required',
+                "beneficiary_bank" => 'required',
+                "beneficiary_ac_usd" => 'required',
+                "bank_address" => 'required',
+                "swift_code" => 'required',
+                "beneficiary_name" => 'required',
+                "beneficiary_address" => 'required',
+                "phone" => 'required',
+
+                'location' => 'required',
+                'quantity_purchase' => 'required'
+            ];
+        } else {
+            return [
+                'quantity_finished' => 'required',
+                'quantity_not_finished' => 'required'
+            ];
+        }
     }
 }
