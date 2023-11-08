@@ -34,8 +34,8 @@
                         <tr x-data="{ supplier: $el }" class="border-b">
                             <td id="number" class="p-2 text-center"></td>
                             <td class="p-2">
-                                <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'"
-                                    :value="$supplier" />
+                                <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'"
+                                    :value="$supplier" :new="'newSupplierModal(supplier)'" />
                                 @error('supplier_id.' . $index)
                                     <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
                                 @enderror
@@ -60,8 +60,8 @@
                     <tr x-data="{ supplier: $el }" class="border-b">
                         <td id="number" class="p-2 text-center"></td>
                         <td class="p-2">
-                            <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'"
-                                :new="'newSupplierModal()'" />
+                            <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'"
+                                :new="'newSupplierModal(supplier)'" />
                         </td>
                         <td class="p-2">
                             <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'"
@@ -77,7 +77,8 @@
             </tbody>
         </table>
 
-        <button type="button" x-data x-on:click="addNewSupplier(); set_number(); deleteBtnToggle()"
+        <button type="button" x-data
+            x-on:click="addNewSupplier(); set_number(); deleteBtnToggle(); await $nextTick(); setNewSuppliers()"
             class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
             New</button>
     </x-create-input-field>
@@ -85,10 +86,17 @@
 
 @push('script')
     <script>
+        let suppliers = {!! $suppliers !!}
+        let suppliersSelected = {}
+
+        suppliers.forEach(s => {
+            suppliersSelected[s.id] = s.name
+        })
+
         set_number();
         deleteBtnToggle();
 
-        function newSupplierModal() {
+        function newSupplierModal(supplierRow) {
             const modal = document.querySelector('#modal');
             document.querySelector('#modal-background').classList.remove('hidden');
 
@@ -137,10 +145,15 @@
                 <div class="absolute flex gap-2 bottom-4 right-[30px]">
                     <button type="button" onclick="hideModal()"
                         class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button>
-                        <button type="button" onclick="createSupplier()"
+                        <button id="create-supplier" onmouseover="toggleSupplierSaveButtonState()" type="button"
                         class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
                 </div>
             </div>`
+            console.log('pas buat modal', supplierRow)
+            document.getElementById('create-supplier').addEventListener('click', () => {
+                console.log('pas klik save', supplierRow)
+                createSupplier(supplierRow)
+            })
         }
 
         function addNewSupplier() {
@@ -151,7 +164,7 @@
             tableRow.innerHTML = `
                                         <td id="number" class="p-2 text-center"></td>
                                         <td class="p-2">
-                                            <x-select x-on:click="$nextTick();" x-init="await $nextTick(); setNewSuppliers()" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" :new="'newSupplierModal()'" />
+                                            <x-select x-init="await $nextTick(); setNewSuppliers()" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" :new="'newSupplierModal(supplier)'" />
                                         </td>
                                         <td class="p-2">
                                             <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
@@ -181,32 +194,20 @@
             }
         }
 
-        let suppliersBaru = {}
 
-        let suppliers = {!! $suppliers !!}
-
-        suppliers.forEach(e => {
-            suppliersBaru[e.id] = e.name
-        })
 
         function setNewSuppliers() {
             document.querySelectorAll(".supplier_id").forEach(e => {
-                e._x_dataStack[0].list = suppliersBaru
+                e._x_dataStack[0].list = suppliersSelected
             })
         }
 
-        async function createSupplier() {
+        async function createSupplier(supplierRow) {
             const name = document.getElementById('supplier_name_modal').value
             const email = document.getElementById('supplier_email_modal').value
             const phone = document.getElementById('supplier_phone_modal').value
             const code = document.getElementById('supplier_code_modal').value
             const address = document.getElementById('supplier_address_modal').value
-
-            console.log('name', name)
-            console.log('email', email)
-            console.log('phone', phone)
-            console.log('code', code)
-            console.log('address', address)
 
             const loading = document.querySelector('.loading');
             loading.classList.remove('hidden')
@@ -231,23 +232,21 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                const responseData = await response.json(); // Mengambil data JSON dari respons
+                suppliers = await response.json(); // Mengambil data JSON dari respons
+                console.log('dalam create supplier', supplierRow)
+                const supplierId = supplierRow.querySelector('#supplier_id')
+                const supplierClass = supplierRow.querySelector('.supplier_id')
+                suppliersSelected = {}
 
-                let responseBaru = {}
-
-                responseData.forEach(e => {
-                    responseBaru[e.id] = e.name
+                suppliers.forEach(e => {
+                    suppliersSelected[e.id] = e.name
                 })
-
-                suppliersBaru = responseBaru
 
                 setNewSuppliers()
 
-                document.querySelector(".supplier_id")._x_dataStack[0].selectedkey = responseData[responseData.length -
-                    1].id
-
-                document.querySelector(".supplier_id")._x_dataStack[0].selectedlabel = responseData[responseData
-                    .length - 1].name
+                supplierClass._x_dataStack[0].selectedkey = suppliers[suppliers.length - 1].id
+                supplierClass._x_dataStack[0].selectedlabel = suppliers[suppliers.length - 1].name
+                supplierId.value = suppliers[suppliers.length - 1].name
 
                 toastr.success(`${name} berhasil ditambahkan ke Supplier`)
                 loading.classList.add('hidden')
@@ -256,6 +255,23 @@
                 console.error('Terjadi kesalahan', error)
             }
 
+        }
+
+        function toggleSupplierSaveButtonState() {
+            const name = document.getElementById('supplier_name_modal').value
+            const email = document.getElementById('supplier_email_modal').value
+            const code = document.getElementById('supplier_code_modal').value
+            const phone = document.getElementById('supplier_phone_modal').value
+            const address = document.getElementById('supplier_address_modal').value
+            const saveButton = document.getElementById('create-supplier')
+
+            if (name && email && code && phone && address) {
+                saveButton.disabled = false
+                saveButton.style.cursor = 'pointer'
+            } else {
+                saveButton.disabled = true
+                saveButton.style.cursor = "not-allowed"
+            }
         }
     </script>
 @endpush
