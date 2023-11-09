@@ -27,7 +27,7 @@
                                 <td id="number-component" class="p-2 text-center"></td>
                                 <td class="w-40 p-2">
                                     <x-select x-on:click="getComponent(component)" x-init="getComponent(component)" :dataLists="$components->toArray()"
-                                        :new="'newComponentModal(component); await $nextTick(); setNewSuppliers();'" :name="'component_id[]'" :id="'component_id'" :value="$cp" />
+                                        :new="'newComponentModal(component); await $nextTick(); setSuppliersComponent();'" :name="'component_id[]'" :id="'component_id'" :value="$cp" />
                                     @error('component_id.' . $index)
                                         <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
                                     @enderror
@@ -56,7 +56,7 @@
                             <td id="number-component" class="p-2 text-center"></td>
                             <td class="w-40 p-2">
                                 <x-select x-on:click="getComponent(component); $nextTick();" :dataLists="$components->toArray()"
-                                    :new="'newComponentModal(component); await $nextTick(); setNewSuppliers();'" :name="'component_id[]'" :id="'component_id'" />
+                                    :new="'newComponentModal(component); await $nextTick(); setSuppliersComponent();'" :name="'component_id[]'" :id="'component_id'" />
                             </td>
                             <td class="p-2">
                                 <input step="0.001" x-ref="quantity" type="number" name="quantity[]" min="0"
@@ -100,7 +100,7 @@
                                 <td id="number-supplier" class="p-2 text-center"></td>
                                 <td class="p-2">
                                     <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" :value="$supplier"
-                                        :new="'newSupplierModal(supplier); setNewSuppliers()'" />
+                                        :new="'newSupplierModal(supplier)'" />
                                     @error('supplier_id.' . $index)
                                         <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
                                     @enderror
@@ -438,11 +438,11 @@
                                         <td id="number-component" class="p-2 text-center"></td>
                                         <td class="w-40 p-2">
                                             <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
-                                                :name="'component_id[]'" :new="'newComponentModal()'" :id="'component_id'" />
+                                                :name="'component_id[]'" :new="'newComponentModal(component); await $nextTick(); setSuppliersComponent();'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2">
                                             <input step="0.001" x-ref="quantity" type="number" name="quantity[]"
-                                                oninput="set_subtotal(this)" value="" :new="'newComponentModal(component); await $nextTick(); setNewSuppliers();'"
+                                                oninput="set_subtotal(this)" value="" 
                                                 class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         </td>
                                         <td id="unit" class="p-2"></td>
@@ -479,8 +479,7 @@
             subtotals.forEach(subtotalElement => {
                 let subtotalValue = parseFloat(subtotalElement.textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
                     '').replace(',', '.'));
-                console.log(subtotalElement.textContent.replace(/[^0-9\.,]/g, '').replace(/\./g,
-                    '').replace(',', '.'))
+                
                 total += isNaN(subtotalValue) ? 0 : subtotalValue;
             })
 
@@ -573,9 +572,7 @@
                         class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
                 </div>
             </div>`
-            console.log('pas buat modal', supplierRow)
             document.getElementById('create-supplier').addEventListener('click', () => {
-                console.log('pas klik save', supplierRow)
                 createSupplier(supplierRow)
             })
         }
@@ -660,10 +657,12 @@
                 createComponent(componentRow)
             })
             console.log('com modal', componentRow)
-
+            console.log('suppliers', suppliers)
+            console.log('suppliersSelected before', suppliersSelected)
             suppliers.forEach(e => {
                 suppliersSelected[e.id] = e.name
             })
+            console.log('suppliersSelected after', suppliersSelected)
             
             set_modal_supplier_number();
             modalSupplierDeleteBtnToggle();
@@ -718,7 +717,6 @@
                 }
 
                 suppliers = await response.json(); // Mengambil data JSON dari respons
-                console.log('dalam create supplier', supplierRow)
                 const supplierId = supplierRow.querySelector('#supplier_id')
                 const supplierClass = supplierRow.querySelector('.supplier_id')
                 suppliersSelected = {}
@@ -760,7 +758,6 @@
         }
 
         async function createComponent(componentRow) {
-            console.log('di create comp', componentRow)
             const name = document.getElementById('component_name').value
             const unit = document.getElementById('component_unit').value
             const price_per_unit = document.getElementById('price_per_unit').value
@@ -831,11 +828,9 @@
             const saveButton = document.getElementById('create-component')
 
             if (name && unit && price_supplier[0] && price_per_unit && supplier_id[0]) {
-                console.log('boleh save')
                 saveButton.disabled = false
                 saveButton.style.cursor = 'pointer'
             } else {
-                console.log('gk boleh save')
                 saveButton.disabled = true
                 saveButton.style.cursor = "not-allowed"
             }

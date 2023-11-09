@@ -14,7 +14,7 @@
 
                 <label for="supplier_id" class="block text-sm">Pemasok</label>
                 <div class="w-full mt-2 mb-3">
-                    <x-select x-on:click="getSupplier; await $nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id'"
+                    <x-select x-on:click="getSupplier()" :dataLists="$suppliers->toArray()" :name="'supplier_id'"
                         :id="'supplier_id'" :value="old('supplier_id')" :new="'newSupplierModal()'" />
                     @error('supplier_id')
                         <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
@@ -844,7 +844,7 @@
                                 <tr x-data="{ supplier: $el }" class="border-b">
                                     <td id="number-supplier-product" class="p-2 text-center"></td>
                                     <td class="p-2">
-                                        <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
+                                        <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
                                             :id="'supplier_id'" />
                                     </td>
                                     <td class="p-2">
@@ -1151,8 +1151,8 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                components = await fetchComponents()
-                products = await fetchProducts()
+                // components = await fetchComponents()
+                // products = await fetchProducts()
                 suppliers = await response.json(); // Mengambil data JSON dari respons
                 const supplierId = document.getElementById("supplier_id")
                 const supplierClass = document.querySelector('.supplier_id')

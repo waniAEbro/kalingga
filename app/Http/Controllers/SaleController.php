@@ -13,7 +13,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
+use App\Models\Component;
 use App\Models\SaleProduction;
+use App\Models\Supplier;
 
 class SaleController extends Controller
 {
@@ -33,6 +35,8 @@ class SaleController extends Controller
         return view('sales.create', [
             "customers" => Customer::get(),
             "products" => Product::get(),
+            "components" => Component::get(),
+            "suppliers" => Supplier::get(),
             "payment_sales" => PaymentSale::get(),
             "delivery_sales" => DeliverySale::get()
         ]);
