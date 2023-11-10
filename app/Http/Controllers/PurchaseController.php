@@ -49,7 +49,7 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request): RedirectResponse
     {
-        dd($request->all());
+        // dd($request->all());
         if ($request->component_id) {
             $request->validate(['component_id.*' => 'required', 'quantity.*' => 'required']);
         }

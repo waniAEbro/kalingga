@@ -62,19 +62,19 @@ class SaleController extends Controller
             DB::table('product_sale')->insert([
                 'product_id' => $id,
                 'sale_id' => $sale->id,
-                'quantity' => $request->quantity[$key],
+                'quantity' => $request->quantity_product[$key],
             ]);
 
             Production::where("product_id", $id)->update([
                 "quantity_finished" => 0,
-                "quantity_not_finished" => DB::raw("quantity_not_finished + " . $request->quantity[$key])
+                "quantity_not_finished" => DB::raw("quantity_not_finished + " . $request->quantity_product[$key])
             ]);
 
             SaleProduction::create([
                 "sale_id" => $sale->id,
                 "production_id" => Product::find($id)->production->id,
                 "quantity_finished" => 0,
-                "quantity_not_finished" => $request->quantity[$key]
+                "quantity_not_finished" => $request->quantity_product[$key]
             ]);
         }
 

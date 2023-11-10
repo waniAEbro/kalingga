@@ -132,8 +132,8 @@
                             <td class="px-4 py-2">${cp.name}</td>
                             <td class="px-4 py-2">${cp.pivot.quantity}</td>
                             <td class="px-4 py-2">${cp.unit}</td>
-                            <td class="px-4 py-2">${toRupiah(cp.price_per_unit)}</td>
-                            <td class="px-4 py-2">${toRupiah(cp.price_per_unit*cp.pivot.quantity)}</td>
+                            <td class="px-4 py-2">${toRupiah(cp.sell_price)}</td>
+                            <td class="px-4 py-2">${toRupiah(cp.sell_price*cp.pivot.quantity)}</td>
                         </tr>`;
             })
 
@@ -144,6 +144,30 @@
                         <td class="px-4 py-2"></td>
                         <td class="px-4 py-2 font-bold">Total</td>
                         <td class="px-4 py-2 font-bold">${toRupiah(components_price)}</td>
+                    </tr>`
+
+            let product_lists = '';
+            let product_price = 0;
+            purchase.products.forEach((p, i) => {
+                product_price += p.pivot.quantity * p.price_per_unit;
+                console.log(product_price)
+
+                product_lists += `<tr>
+                            <td class="px-4 py-2">${i+1}</td>
+                            <td class="px-4 py-2">${p.name}</td>
+                            <td class="px-4 py-2">${p.pivot.quantity}</td>
+                            <td class="px-4 py-2">${toRupiah(p.price_per_unit)}</td>
+                            <td class="px-4 py-2">${toRupiah(p.price_per_unit*p.pivot.quantity)}</td>
+                        </tr>`;
+            })
+
+            product_lists += `<tr class="border-gray-200 border-y-2">
+                        <td class="px-4 py-2"></td>
+                        <td class="px-4 py-2"></td>
+                        <td class="px-4 py-2"></td>
+                        <td class="px-4 py-2"></td>
+                        <td class="px-4 py-2 font-bold">Total</td>
+                        <td class="px-4 py-2 font-bold">${toRupiah(product_price)}</td>
                     </tr>`
 
             let history_lists = '';
@@ -273,7 +297,7 @@
                                     <th class="w-20 px-4 py-2 text-start">Komponen</th>
                                     <th class="w-20 px-4 py-2 text-start">Jumlah</th>
                                     <th class="w-10 px-4 py-2 text-start">Unit</th>
-                                    <th class="px-4 py-2 text-start">Harga per Satuan</th>
+                                    <th class="px-4 py-2 text-start">Harga</th>
                                     <th class="px-4 py-2 text-start">Subtotal</th>
                                 </tr>
                             </thead>
@@ -288,15 +312,14 @@
                             <thead class="border-gray-200 border-y-2">
                                 <tr>
                                     <th class="w-10 px-4 py-2">No</th>
-                                    <th class="w-20 px-4 py-2 text-start">Komponen</th>
+                                    <th class="w-20 px-4 py-2 text-start">Produk</th>
                                     <th class="w-20 px-4 py-2 text-start">Jumlah</th>
-                                    <th class="w-10 px-4 py-2 text-start">Unit</th>
-                                    <th class="px-4 py-2 text-start">Harga per Satuan</th>
+                                    <th class="px-4 py-2 text-start">Harga</th>
                                     <th class="px-4 py-2 text-start">Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                ${product_list}
+                                ${product_lists}
                             </tbody>
                         </table>
 

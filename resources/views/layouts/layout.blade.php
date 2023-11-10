@@ -154,8 +154,9 @@
             th.classList.add("px-4", "py-5", "font-[500]")
             th.innerText = columnName
             tr.appendChild(th)
-            if (columnName === "Aksi") th.classList.add('w-52')
+            if (columnName === "Aksi") th.classList.add('w-60')
             if (columnName === "Nomor") th.classList.add('w-28')
+            if (columnName === "Status") th.classList.add('w-20')
         })
         thead.appendChild(tr)
         return thead
@@ -175,15 +176,17 @@
             tr.id = "daftar-item";
             tr.height = "30px";
             tr.innerHTML += `<td class="px-4 py-2" class="p-4 rounded-l-lg"><div class="flex items-center justify-center gap-3 border-r h-7 border-slate-200">
-                ${state.page * state.rows - state.rows + index + 1}
+                ${state.page * state.rows - state.rows + index + 1}</div>
                 </td>`
             state.columnQuery.forEach(columnQuery => {
                 const query = "data." + columnQuery
                 const td = document.createElement("td")
                 state.menu == "presence" ? "" : td.classList.add("p-4", "break-words", columnQuery
-                    .replace(
-                        ".", "-"))
-                td.innerText = eval(query)
+                    .replace(".", "-"))
+
+                if (columnQuery == 'remain_bill' || columnQuery == 'total_bill') td.innerText =
+                    toRupiah(eval(query))
+                else td.innerText = eval(query)
 
                 tr.appendChild(td)
             })
