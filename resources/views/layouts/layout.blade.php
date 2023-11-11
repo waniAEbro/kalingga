@@ -68,6 +68,18 @@
         <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 </body>
 <script>
+    const state = {
+        allData: [],
+        data: [],
+        currentData: [],
+        columnName: [],
+        columnQuery: [],
+        page: 1,
+        rows: 5,
+        window: 5,
+        menu: ""
+    }
+
     const toastr = new Notyf({
         duration: 3000,
         dismissible: true,
@@ -98,18 +110,6 @@
     document.querySelectorAll(".rupiah").forEach(element => {
         element.innerText = toRupiah(element.innerText)
     });
-
-    const state = {
-        allData: [],
-        data: [],
-        currentData: [],
-        columnName: [],
-        columnQuery: [],
-        page: 1,
-        rows: 5,
-        window: 5,
-        menu: ""
-    }
 
     function searching(text = "") {
         let found = []
@@ -144,8 +144,9 @@
             th.innerText = columnName
             tr.appendChild(th)
             if (columnName === "Aksi") th.classList.add('w-60')
-            if (columnName === "Nomor") th.classList.add('w-28')
+            if (columnName === "Nomor") th.classList.add('w-20')
             if (columnName === "Status") th.classList.add('w-20')
+            if (columnName === "#") th.classList.add('w-12')
         })
         thead.appendChild(tr)
         return thead
@@ -164,8 +165,11 @@
                 "overflow-hidden", "drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]")
             tr.id = "daftar-item";
             tr.height = "30px";
-            tr.innerHTML += `<td class="px-4 py-2" class="p-4 rounded-l-lg"><div class="flex items-center justify-center gap-3 border-r h-7 border-slate-200">
-                ${state.page * state.rows - state.rows + index + 1}</div>
+            tr.innerHTML += `
+                <td>
+                    <div class="flex items-center justify-center gap-3 border-r h-7 border-slate-200">
+                        ${state.page * state.rows - state.rows + index + 1}
+                    </div>
                 </td>`
             state.columnQuery.forEach(columnQuery => {
                 const query = "data." + columnQuery
@@ -202,7 +206,7 @@
             </td>`
             } else if (state.columnName.includes("Aksi")) {
                 tr.innerHTML += `
-            <td class="px-4 py-2" onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
+            <td class="" onclick="stopPropagation(event)">
                 <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                     <a href="/${state.menu}/${ data.id }/edit" class="flex items-center gap-1 text-slate-600">
                         <span class="text-lg"><ion-icon name="create-outline"></ion-icon></span>Edit
@@ -239,66 +243,126 @@
     }
 
     function pageNumber() {
-        document.querySelector("#pagination-wrapper").innerHTML = ""
+        let pageNumbers = "";
         let pages = Math.ceil(state.data.length / state.rows);
-        if (state.page >= 4) {
-            const button1 = document.createElement('button')
-            const button2 = document.createElement('button')
-            button1.innerText = 1
-            button2.innerText = "..."
-            button1.classList.add("bg-gray-200", "hover:bg-gray-400", "text-gray-800", "font-bold", "py-2", "px-4",
-                "rounded-full", "focus:outline-none", "focus:ring-2", "focus:ring-gray-600",
-                "focus:ring-opacity-50")
-            button2.classList.add("bg-gray-400", "rounded-full", "py-2", "px-4", "text-white", "font-bold")
-            button1.addEventListener("click", function(e) {
-                state.page = parseInt(e.currentTarget.innerText)
-                paginate()
-                pageNumber()
-                buildTable()
-            })
-            document.querySelector("#pagination-wrapper").appendChild(button1)
-            document.querySelector("#pagination-wrapper").appendChild(button2)
-        }
-        for (i = state.page - 2; i < state.page + state.window && i <= pages; i++) {
-            if (i > 0) {
-                const button = document.createElement('button')
-                button.innerText = i
-                if (i == state.page) {
-                    button.classList.add("bg-gray-400", "rounded-full", "py-2", "px-4", "text-white", "font-bold")
-                } else {
-                    button.classList.add("bg-gray-200", "hover:bg-gray-400", "text-gray-800", "font-bold", "py-2",
-                        "px-4",
-                        "rounded-full", "focus:outline-none", "focus:ring-2", "focus:ring-gray-600",
-                        "focus:ring-opacity-50"
-                    )
-                    button.addEventListener("click", function(e) {
-                        state.page = parseInt(e.currentTarget.innerText)
-                        paginate()
-                        pageNumber()
-                        buildTable()
-                    })
+
+        if(pages){
+            let arrowLeft = `
+                <button 
+                    x-on:click="state.page = 1; paginate(); pageNumber(); buildTable();"
+                    class="px-3 flex items-center rounded ${state.page == 1 || 'hover:bg-gray-200'} transition-300 transition-all"
+                >
+                    <span class="material-symbols-outlined" style="font-size: 16px">keyboard_double_arrow_left</span>
+                </button>
+                <button 
+                    x-on:click="state.page = ${state.page - 1 || 1}; paginate(); pageNumber(); buildTable();"
+                    class="px-3 flex items-center rounded ${state.page == 1 || 'hover:bg-gray-200'} transition-300 transition-all"
+                >
+                    <span class="material-symbols-outlined" style="font-size: 16px">keyboard_arrow_left</span>
+                </button>
+            `
+            if(pages <= 8){
+                for (i = 1; i <= pages; i++) {
+                    pageNumbers +=
+                        `<button 
+                            x-on:click="state.page = ${i}; paginate(); pageNumber(); buildTable();" 
+                            class="px-4 
+                                ${state.page == i ? 
+                                    'flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded' : 
+                                    'flex items-center rounded hover:bg-gray-200 transition-300 transition-all'
+                                }"
+                        >
+                            ${i}
+                        </button>`
                 }
-                document.querySelector("#pagination-wrapper").appendChild(button)
+            }else{
+                if(state.page <= 4){
+                    for (i = 1; i <= 5; i++) {
+                        pageNumbers +=
+                            `<button 
+                                x-on:click="state.page = ${i}; paginate(); pageNumber(); buildTable();" 
+                                class="px-4 
+                                    ${state.page == i ? 
+                                        'flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded' : 
+                                        'flex items-center rounded hover:bg-gray-200 transition-300 transition-all'
+                                    }"
+                            >
+                                ${i}
+                            </button>`
+                    }
+    
+                    pageNumbers += `<div class="px-4 flex items-center">...</div>`
+    
+                    pageNumbers +=
+                            `<button 
+                                x-on:click="state.page = ${pages}; paginate(); pageNumber(); buildTable();" 
+                                class="px-4 flex items-center rounded hover:bg-gray-200 transition-300 transition-all"
+                            >
+                                ${pages}
+                            </button>`
+                }else if(state.page >= pages - 4){
+                    pageNumbers +=
+                            `<button 
+                                x-on:click="state.page = ${1}; paginate(); pageNumber(); buildTable();" 
+                                class="px-4 flex items-center rounded hover:bg-gray-200 transition-300 transition-all"
+                            >
+                                ${1}
+                            </button>`
+    
+                    pageNumbers += `<div class="px-4 flex items-center">...</div>`
+                    
+                    for (i = pages - 5; i <= pages; i++) {
+                        pageNumbers +=
+                            `<button 
+                                x-on:click="state.page = ${i}; paginate(); pageNumber(); buildTable();" 
+                                class="px-4 
+                                    ${state.page == i ? 
+                                        'flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded' : 
+                                        'flex items-center rounded hover:bg-gray-200 transition-300 transition-all'
+                                    }"
+                            >
+                            ${i}
+                            </button>`
+                        }
+                }else{
+                    pageNumbers += `<div class="px-4 flex items-center">...</div>`
+    
+                    for (i = state.page - 1; i <= state.page + 1; i++) {
+                        pageNumbers +=
+                            `<button 
+                                x-on:click="state.page = ${i}; paginate(); pageNumber(); buildTable();" 
+                                class="px-4 
+                                    ${state.page == i ? 
+                                        'flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded' : 
+                                        'flex items-center rounded hover:bg-gray-200 transition-300 transition-all'
+                                    }"
+                            >
+                            ${i}
+                            </button>`
+                        }
+                
+                    pageNumbers += `<div class="px-4 flex items-center">...</div>`
+                }
             }
+    
+            let arrowRight = `
+                <button 
+                    x-on:click="state.page = ${state.page + 1 == pages || pages}; paginate(); pageNumber(); buildTable();"
+                    class="px-3 flex items-center rounded ${state.page == pages || 'hover:bg-gray-200'} transition-300 transition-all"
+                >
+                    <span class="material-symbols-outlined" style="font-size: 16px">keyboard_arrow_right</span>
+                </button>
+                <button 
+                    x-on:click="state.page = ${pages}; paginate(); pageNumber(); buildTable();"
+                    class="px-3 flex items-center rounded ${state.page == pages || 'hover:bg-gray-200'} transition-300 transition-all"
+                >
+                    <span class="material-symbols-outlined" style="font-size: 16px">keyboard_double_arrow_right</span>
+                </button>
+            `
+
+            document.querySelector("#pagination-wrapper").innerHTML = arrowLeft + pageNumbers + arrowRight
         }
-        if (state.page < pages - 4) {
-            const button1 = document.createElement('button')
-            const button2 = document.createElement('button')
-            button1.innerText = pages
-            button2.innerText = "..."
-            button1.classList.add("bg-gray-200", "hover:bg-gray-400", "text-gray-800", "font-bold", "py-2", "px-4",
-                "rounded-full", "focus:outline-none", "focus:ring-2", "focus:ring-gray-600",
-                "focus:ring-opacity-50")
-            button2.classList.add("bg-gray-400", "rounded-full", "py-2", "px-4", "text-white", "font-bold")
-            button1.addEventListener("click", function(e) {
-                state.page = parseInt(e.currentTarget.innerText)
-                paginate()
-                pageNumber()
-                buildTable()
-            })
-            document.querySelector("#pagination-wrapper").appendChild(button2)
-            document.querySelector("#pagination-wrapper").appendChild(button1)
-        }
+
     }
 
     function hideModal() {
