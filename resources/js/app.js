@@ -1,5 +1,15 @@
 import * as Ably from 'ably';
-import toastr from 'toastr';
+import { Notyf } from 'notyf'
+
+const toastr = new Notyf({
+    duration: 3000,
+    dismissible: true,
+    ripple: true,
+    position: {
+        x: 'right',
+        y: 'top',
+    },
+});
 
 var realtime = new Ably.Realtime('f-eOvQ.531lyg:rYnJ7AxwNX3q7RlLJTLwpFdav5ybFJMhuYV6bVf90I8');
 var channel_in = realtime.channels.get('channel-in');
