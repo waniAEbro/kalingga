@@ -20,7 +20,7 @@ class Purchase extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["components", "supplier", "histories", "products","payment_purchases", "delivery_purchases"];
+    protected $with = ["components", "supplier", "histories", "products", "payment_purchases", "delivery_purchases"];
 
     public function supplier(): BelongsTo
     {
@@ -29,12 +29,12 @@ class Purchase extends Model
 
     public function components(): BelongsToMany
     {
-        return $this->belongsToMany(Component::class);
+        return $this->belongsToMany(Component::class)->withPivot("quantity");
     }
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot("quantity");
     }
 
     public function histories(): HasMany

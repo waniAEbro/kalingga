@@ -190,6 +190,9 @@
             const button = `<a href="/${state.menu}/${ data.id }/print" target="_blank" class="flex items-center gap-1 text-slate-600">
                         <span class="text-lg"><ion-icon name="print-outline"></ion-icon></span>Print
                     </a>`
+            const excelButton = `<a href="/${state.menu}/${ data.id }/export" target="_blank" class="flex items-center gap-1 text-slate-600">
+                        <span class="text-lg"><ion-icon name="document-outline"></ion-icon></span>Excel
+                    </a>`
             if (state.menu == "presence") {
                 tr.innerHTML += `
             <td class="px-4 py-2" onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
@@ -216,6 +219,7 @@
                         <span class="text-lg"><ion-icon name="create-outline"></ion-icon></span>Edit
                     </a>
                     ${state.menu == "sales" || state.menu == "purchases" ? button : ""}
+                    ${state.menu == "sales" || state.menu == "purchases" ? excelButton : ""}
                     <form action="/${state.menu}/${ data.id }" method="post">
                         @csrf
                         @method('delete')

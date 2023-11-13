@@ -1,17 +1,13 @@
 <?php
 
 use App\Models\Sale;
-use App\Models\Employee;
 use App\Models\Purchase;
-use App\Models\Supplier;
-use App\Models\Warehouse;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PresenceController;
@@ -41,16 +37,6 @@ Route::get('/index', function () {
     return view('index');
 })->middleware('login.check');
 
-// Route::get('/login', function () {
-//     return view('login');
-// });
-
-// Route::get('/register', function () {
-//     return view('register');
-// });
-
-// Route::get('/', [LoginController::class, 'index']);
-
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login/user', [LoginController::class, 'login']);
 Route::get('/register', [LoginController::class, 'register']);
@@ -78,8 +64,10 @@ Route::middleware(['login.check'])->group(function () {
     Route::get("/quotations", [QuotationController::class, "index"]);
 
     Route::get("/sales/{sale}/print", [SaleController::class, "print"]);
+    Route::get("/sales/{sale}/export", [SaleController::class, "export"]);
 
     Route::get("/purchases/{purchase}/print", [PurchaseController::class, "print"]);
+    Route::get("/purchases/{purchase}/export", [PurchaseController::class, "export"]);
 
     Route::get("/presence", [PresenceController::class, "index"]);
     Route::get("/presence/{employee}", [PresenceController::class, "show"]);

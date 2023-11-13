@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PurchaseExport;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Supplier;
@@ -49,7 +50,6 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request): RedirectResponse
     {
-        dd($request->all());
         if ($request->component_id) {
             $request->validate(['component_id.*' => 'required', 'quantity.*' => 'required']);
         }
@@ -176,5 +176,11 @@ class PurchaseController extends Controller
         ]);
 
         return $pdf->stream('quotation.pdf');
+    }
+
+    public function export(Purchase $purchase)
+    {
+        $excel = app('excel');
+        return $excel->download(new PurchaseExport($purchase), 'users.xlsx');
     }
 }

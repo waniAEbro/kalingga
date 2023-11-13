@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SaleExport;
 use App\Models\Sale;
 use App\Models\PaymentSale;
 use App\Models\Product;
@@ -157,5 +158,11 @@ class SaleController extends Controller
         ]);
 
         return $pdf->stream('quotation.pdf');
+    }
+
+    public function excel(Sale $sale)
+    {
+        $excel = app('excel');
+        return $excel->download(new SaleExport($sale), 'users.xlsx');
     }
 }
