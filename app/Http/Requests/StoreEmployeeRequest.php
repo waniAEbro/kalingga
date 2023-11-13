@@ -23,7 +23,7 @@ class StoreEmployeeRequest extends FormRequest
     {
         return [
             'employee_name' => 'required',
-            'rfid' => 'required|unique:employees'
+            'rfid' => 'required|unique:employees,rfid',
         ];
     }
 }

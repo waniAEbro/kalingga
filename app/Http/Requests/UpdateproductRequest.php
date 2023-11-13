@@ -28,8 +28,8 @@ class UpdateProductRequest extends FormRequest
             "price_supplier.*" => 'required',
 
             'name' => 'required',
-            'code' => 'unique:products|required',
-            'rfid' => 'unique:products|required',
+            'code' => 'unique:products,code,' . $this->product->id . '|required',
+            'rfid' => 'unique:products,rfid,' . $this->product->id . '|required',
             'logo' => 'required',
             'length' => 'required',
             'width' => 'required',

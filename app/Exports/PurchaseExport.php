@@ -30,11 +30,17 @@ class PurchaseExport implements FromView, ShouldAutoSize, WithStyles
     public function styles(Worksheet $sheet)
     {
         return [
-            "A1:B3" => [
+            "A1:A3" => [
                 "alignment" => [
                     "horizontal" => "center",
                     "vertical" => "center",
                 ],
+            ],
+            "B1:F3" => [
+                "alignment" => [
+                    "horizontal" => "right",
+                    "vertical" => "center",
+                ]
             ]
         ];
     }

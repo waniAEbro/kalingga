@@ -239,20 +239,8 @@ class ProductController extends Controller
         return redirect("/products");
     }
 
-    public function storeapi(Request $request)
+    public function storeapi(StoreProductRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'code' => 'unique:products|required',
-            'rfid' => 'unique:products|required',
-        ], [
-            'code.unique' => 'Kode sudah dipakai',
-            'rfid.unique' => 'RFID sudah dipakai',
-        ]);
-
-        if ($validator->fails()) {
-            return $validator->errors();
-        }
-
         $pack = Pack::create([
             "cost" => $request->pack_cost,
             "outer_length" => $request->pack_outer_length,

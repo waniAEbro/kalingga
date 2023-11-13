@@ -14,8 +14,8 @@
 
                 <label for="supplier_id" class="block text-sm">Pemasok</label>
                 <div class="w-full mt-2 mb-3">
-                    <x-select x-on:click="getSupplier()" :dataLists="$suppliers->toArray()" :name="'supplier_id'"
-                        :id="'supplier_id'" :value="old('supplier_id')" :new="'newSupplierModal()'" />
+                    <x-select x-on:click="getSupplier()" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'"
+                        :value="old('supplier_id')" :new="'newSupplierModal()'" />
                     @error('supplier_id')
                         <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
                     @enderror
@@ -84,7 +84,9 @@
                                         @enderror
                                     </td>
                                     <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
-                                            x-init="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)" oninput="set_subtotal(this)"
+                                            x-init="getComponent(component);
+                                            await $nextTick();
+                                            set_subtotal($refs.quantity)" oninput="set_subtotal(this)"
                                             value="{{ old('quantity', [])[$index] }}" step="0.0001"
                                             class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         @error('quantity.' . $index)
@@ -141,7 +143,7 @@
                                             oninput="subTotalProduk(this)" value="{{ old('quantity_product', [])[$index] }}"
                                             x-init="getProduct(product);
                                             await $nextTick();
-                                            subTotalProduk($refs.quantity)" step="0.0001"
+                                            subTotalProduk($refs.quantity)" step="1"
                                             class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         @error('quantity_product.' . $index)
                                             <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
@@ -401,7 +403,7 @@
                                                 :name="'product_id[]'" :id="'product_id'" :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); '" />
                                         </td>
                                         <td class="p-2"><input type="number" name="quantity_product[]"
-                                                oninput="subTotalProduk(this)" value="0" step="0.0001"
+                                                oninput="subTotalProduk(this)" value="0" step="1"
                                                 class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         </td>
                                         <td id="price" class="p-2"></td>
@@ -1089,7 +1091,7 @@
                 }
 
                 components = await response.json(); // Mengambil data JSON dari respons
-                
+
                 const supplierId = document.querySelector("#supplier_id").value
                 const componentId = componentRow.querySelector('#component_id')
                 const componentClass = componentRow.querySelector('.component_id')
@@ -1291,11 +1293,11 @@
                     })
                 })
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+                products = await response.json();
 
-                products = await response.json(); // Mengambil data JSON dari respons
+                if (!response.ok) {
+                    throw products;
+                }
 
                 if (products.rfid || products.code) throw products;
 
@@ -1328,9 +1330,8 @@
                 hideModal()
             } catch (error) {
                 loading.classList.add('hidden')
-                console.log('Terjadi kesalahan', error)
-                modal.querySelector('#rfid-error').innerHTML = error.rfid || ''
-                modal.querySelector('#code-error').innerHTML = error.code || ''
+                modal.querySelector('#rfid-error').innerHTML = error.errors.rfid || ''
+                modal.querySelector('#code-error').innerHTML = error.errors.code || ''
             }
         }
 
