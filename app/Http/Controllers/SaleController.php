@@ -14,7 +14,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
+use App\Models\Component;
 use App\Models\SaleProduction;
+use App\Models\Supplier;
 
 class SaleController extends Controller
 {
@@ -34,6 +36,8 @@ class SaleController extends Controller
         return view('sales.create', [
             "customers" => Customer::get(),
             "products" => Product::get(),
+            "components" => Component::get(),
+            "suppliers" => Supplier::get(),
             "payment_sales" => PaymentSale::get(),
             "delivery_sales" => DeliverySale::get()
         ]);
@@ -59,19 +63,19 @@ class SaleController extends Controller
             DB::table('product_sale')->insert([
                 'product_id' => $id,
                 'sale_id' => $sale->id,
-                'quantity' => $request->quantity[$key],
+                'quantity' => $request->quantity_product[$key],
             ]);
 
             Production::where("product_id", $id)->update([
                 "quantity_finished" => 0,
-                "quantity_not_finished" => DB::raw("quantity_not_finished + " . $request->quantity[$key])
+                "quantity_not_finished" => DB::raw("quantity_not_finished + " . $request->quantity_product[$key])
             ]);
 
             SaleProduction::create([
                 "sale_id" => $sale->id,
                 "production_id" => Product::find($id)->production->id,
                 "quantity_finished" => 0,
-                "quantity_not_finished" => $request->quantity[$key]
+                "quantity_not_finished" => $request->quantity_product[$key]
             ]);
         }
 

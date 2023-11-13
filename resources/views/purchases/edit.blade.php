@@ -66,7 +66,7 @@
                                 <td id="unit" class="p-2">{{ $cs->unit }}</td>
                                 <td id="price" x-ref="price" class="p-2 rupiah">{{ $cs->price_per_unit }}</td>
                                 <td id="subtotal"
-                                    x-text="toRupiah(parseInt($refs.quantity.innerText) * parseInt($refs.price.innerText.replace(/[^0-9\.,]/g, '').replace(/[^0-9\.,]/g, '').replace(/\./g,
+                                    x-text="toRupiah(parseInt($refs.quantity.innerText) * parseFloat($refs.price.innerText.replace(/[^0-9\.,]/g, '').replace(/[^0-9\.,]/g, '').replace(/\./g,
                     '').replace(',', '.')))"
                                     class="p-2"></td>
                             </tr>

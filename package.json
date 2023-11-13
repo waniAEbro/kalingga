@@ -19,6 +19,7 @@
         "ably": "^1.2.46",
         "flowbite-datepicker": "^1.2.2",
         "jquery": "^3.7.1",
+        "notyf": "^3.10.0",
         "toastr": "^2.1.4"
     }
 }

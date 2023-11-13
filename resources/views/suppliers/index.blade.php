@@ -3,10 +3,10 @@
 @section('content')
     {{-- @dd($suppliers) --}}
     <x-data-list>
-        <div class="h-[550px] relative">
+        <div class="h-[500px] relative">
             <table class="w-full mt-5 border-separate table-fixed border-spacing-y-3">
             </table>
-            <div id="pagination-wrapper" class="absolute bottom-0 flex h-10 gap-2 my-5 text-sm"></div>
+            <div x-data id="pagination-wrapper" class="absolute bottom-0 flex h-10 gap-2 text-sm"></div>
         </div>
 
     </x-data-list>
@@ -48,23 +48,23 @@
         
                     <div class="px-[30px] py-[20px] text-sm">
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
-                            <div class="font-bold w-40 flex justify-between">Nama Pemasok<div>:</div></div>
+                            <div class="flex justify-between w-40 font-bold">Nama Pemasok<div>:</div></div>
                             <div class="">${supplier.name}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
-                            <div class="font-bold w-40 flex justify-between">Email<div>:</div></div>
+                            <div class="flex justify-between w-40 font-bold">Email<div>:</div></div>
                             <div class="">${supplier.email}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
-                            <div class="font-bold w-40 flex justify-between">No Hp<div>:</div></div>
+                            <div class="flex justify-between w-40 font-bold">No Hp<div>:</div></div>
                             <div class="">${supplier.phone}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
-                            <div class="font-bold w-40 flex justify-between">Kode Pemasok<div>:</div></div>
+                            <div class="flex justify-between w-40 font-bold">Kode Pemasok<div>:</div></div>
                             <div class="">${supplier.code}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
-                            <div class="font-bold w-40 flex justify-between">Alamat<div>:</div></div>
+                            <div class="flex justify-between w-40 font-bold">Alamat<div>:</div></div>
                             <div class="">${supplier.address}</div>
                         </div>
                     </div>

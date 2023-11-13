@@ -14,7 +14,7 @@
 
                 <label for="supplier_id" class="block text-sm">Pemasok</label>
                 <div class="w-full mt-2 mb-3">
-                    <x-select x-on:click="getSupplier; await $nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id'"
+                    <x-select x-on:click="getSupplier()" :dataLists="$suppliers->toArray()" :name="'supplier_id'"
                         :id="'supplier_id'" :value="old('supplier_id')" :new="'newSupplierModal()'" />
                     @error('supplier_id')
                         <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
@@ -84,9 +84,7 @@
                                         @enderror
                                     </td>
                                     <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
-                                            x-init="getComponent(component);
-                                            await $nextTick();
-                                            set_subtotal($refs.quantity)" oninput="set_subtotal(this)"
+                                            x-init="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)" oninput="set_subtotal(this)"
                                             value="{{ old('quantity', [])[$index] }}" step="0.0001"
                                             class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         @error('quantity.' . $index)
@@ -670,7 +668,7 @@
                 <div class="absolute flex gap-2 bottom-4 right-[30px]">
                     <button type="button" onclick="hideModal()"
                         class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button>
-                        <button type="button" onclick="createSupplier()"
+                        <button id="create-supplier" type="button" onclick="createSupplier()" onmouseover="toggleSupplierSaveButtonState()"
                         class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
                 </div>
             </div>`
@@ -724,12 +722,12 @@
                             <tr x-data="{ supplier: $el }" class="border-b">
                                 <td id="modal-supplier-number" class="p-2 text-center"></td>
                                 <td class="p-2">
-                                    <x-select x-on:click="toggleComponentSaveButtonState()" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
+                                    <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
                                         :id="'supplier_id_component'" />
                                 </td>
                                 <td class="p-2">
                                     <x-input-with-desc :desc="'Rp'" :name="'price_supplier_component[]'" :type="'number'" class="price_supplier_component"
-                                        :placeholder="'1000'" oninput="toggleComponentSaveButtonState()" />
+                                        :placeholder="'1000'" />
                                 </td>
                                 <td id="aksi" class="p-2">
                                     <button type="button"
@@ -748,7 +746,7 @@
                 <div class="absolute flex gap-2 bottom-4 right-[30px]">
                     <button type="button" onclick="hideModal()"
                         class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button>
-                    <button id="create-component" type="button"
+                    <button id="create-component" type="button" onmouseover="toggleComponentSaveButtonState()"
                         class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
                 </div>
             </div>`
@@ -761,7 +759,6 @@
                 suppliersSelected[e.id] = e.name
             })
 
-            toggleComponentSaveButtonState()
             set_modal_supplier_number();
             supplierDeleteBtnToggle();
         }
@@ -847,7 +844,7 @@
                                 <tr x-data="{ supplier: $el }" class="border-b">
                                     <td id="number-supplier-product" class="p-2 text-center"></td>
                                     <td class="p-2">
-                                        <x-select x-on:click="$nextTick();" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
+                                        <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
                                             :id="'supplier_id'" />
                                     </td>
                                     <td class="p-2">
@@ -889,12 +886,12 @@
                             <div class="flex w-full gap-3">
                                 <div>
                                     <x-input-with-desc :desc="'RFID'" :name="'rfid'" :value="0" />
-                                    <div id="rfid-error" class="text-red-500 text-xs mt-1 italic"></div>
+                                    <div id="rfid-error" class="mt-1 text-xs italic text-red-500"></div>
                                 </div>
                                 <div>
                                     <x-input-with-desc :desc="'Produk'" :name="'code'" :type="'text'"
                                     :value="0" />
-                                    <div id="code-error" class="text-red-500 text-xs mt-1 italic"></div>
+                                    <div id="code-error" class="mt-1 text-xs italic text-red-500"></div>
                                 </div>
                                 <x-input-with-desc :desc="'Barcode'" :name="'barcode'" :type="'number'"
                                     :value="0" />
@@ -1092,7 +1089,7 @@
                 }
 
                 components = await response.json(); // Mengambil data JSON dari respons
-                console.log(components)
+                
                 const supplierId = document.querySelector("#supplier_id").value
                 const componentId = componentRow.querySelector('#component_id')
                 const componentClass = componentRow.querySelector('.component_id')
@@ -1154,8 +1151,8 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                components = await fetchComponents()
-                products = await fetchProducts()
+                // components = await fetchComponents()
+                // products = await fetchProducts()
                 suppliers = await response.json(); // Mengambil data JSON dari respons
                 const supplierId = document.getElementById("supplier_id")
                 const supplierClass = document.querySelector('.supplier_id')
@@ -1337,38 +1334,6 @@
             }
         }
 
-        async function fetchComponents() {
-            try {
-                const res = await fetch('http://127.0.0.1:8000/api/components');
-
-                if (!res.ok) {
-                    throw new Error(`Gagal mengambil data: ${res.status}`);
-                }
-
-                const data = await res.json();
-                return data;
-            } catch (error) {
-                console.error('Terjadi kesalahan:', error);
-                throw error; // Anda dapat melempar kesalahan ini lagi atau menangani sesuai kebutuhan.
-            }
-        }
-
-        async function fetchProducts() {
-            try {
-                const res = await fetch('http://127.0.0.1:8000/api/products');
-
-                if (!res.ok) {
-                    throw new Error(`Gagal mengambil data: ${res.status}`);
-                }
-
-                const data = await res.json();
-                return data;
-            } catch (error) {
-                console.error('Terjadi kesalahan:', error);
-                throw error; // Anda dapat melempar kesalahan ini lagi atau menangani sesuai kebutuhan.
-            }
-        }
-
         function toggleComponentSaveButtonState() {
             const name = document.getElementById('component_name').value
             const unit = document.getElementById('component_unit').value
@@ -1384,6 +1349,23 @@
                 saveButton.style.cursor = 'pointer'
             } else {
                 console.log('gk boleh save')
+                saveButton.disabled = true
+                saveButton.style.cursor = "not-allowed"
+            }
+        }
+
+        function toggleSupplierSaveButtonState() {
+            const name = document.getElementById('supplier_name_modal').value
+            const email = document.getElementById('supplier_email_modal').value
+            const code = document.getElementById('supplier_code_modal').value
+            const phone = document.getElementById('supplier_phone_modal').value
+            const address = document.getElementById('supplier_address_modal').value
+            const saveButton = document.getElementById('create-supplier')
+
+            if (name && email && code && phone && address) {
+                saveButton.disabled = false
+                saveButton.style.cursor = 'pointer'
+            } else {
                 saveButton.disabled = true
                 saveButton.style.cursor = "not-allowed"
             }
