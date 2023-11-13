@@ -28,8 +28,8 @@ class StoreProductRequest extends FormRequest
             "price_supplier.*" => 'required',
 
             'name' => 'required',
-            'code' => 'unique:products|required',
-            'rfid' => 'unique:products|required',
+            'code' => 'unique:products,code|required',
+            'rfid' => 'unique:products,rfid|required',
             'logo' => 'required',
             'length' => 'required',
             'width' => 'required',

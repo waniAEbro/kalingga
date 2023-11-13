@@ -98,18 +98,16 @@
                                                 class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                     </td>
                                 </tr>
-                                @endforeach
+                            @endforeach
                         @else
                             <tr x-data="{ product: $el }" class="border-b">
                                 <td id="number-product" class="p-2 text-center"></td>
                                 <td class="w-40 p-2">
                                     <x-select x-on:click="getProduct(product); await $nextTick(); setProduk();"
-                                        :dataLists="$products->toArray()" :name="'product_id[]'" :id="'product_id'"
-                                        :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); '" />
+                                        :dataLists="$products->toArray()" :name="'product_id[]'" :id="'product_id'" :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); '" />
                                 </td>
                                 <td class="p-2"><input x-ref="quantity" type="number" name="quantity_product[]"
-                                        oninput="subTotalProduk(this)" value="0"
-                                        x-init="getProduct(product);
+                                        oninput="subTotalProduk(this)" value="0" x-init="getProduct(product);
                                         await $nextTick();
                                         subTotalProduk($refs.quantity)" step="0.0001"
                                         class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
@@ -334,13 +332,12 @@
                     })
                 })
 
+                customers = await response.json();
+
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    throw customers;
                 }
 
-                // components = await fetchComponents()
-                // products = await fetchProducts()
-                customers = await response.json(); // Mengambil data JSON dari respons
                 const customerId = document.getElementById("customer_id")
                 const customerClass = document.querySelector('.customer_id')
                 console.log('customers', customers)
@@ -482,11 +479,12 @@
                     })
                 })
 
+                products = await response.json(); // Mengambil data JSON dari respons
+
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    throw products;
                 }
 
-                products = await response.json(); // Mengambil data JSON dari respons
 
                 if (products.rfid || products.code) throw products;
 
@@ -495,13 +493,6 @@
                 const productClass = productRow.querySelector('.product_id')
                 selectedProduct = {}
 
-                // // ngecek apakah produk yang baru dimasukin memiliki pemasok yang sama dengan pemasok yang dipilih
-                // if (products[products.length - 1].suppliers.find(s => s.id == supplierId)) {
-                //     // ngambil semua produk yang sesuai dengan pemasok yang dipilih
-                //     const supplierProduct = products.filter(prod => prod.suppliers.find(suppl => suppl.id ==
-                //         supplierId))
-
-                //     }
                 products.forEach(e => {
                     selectedProduct[e.id] = e.name
                 })
@@ -520,9 +511,8 @@
                 hideModal()
             } catch (error) {
                 loading.classList.add('hidden')
-                console.log('Terjadi kesalahan', error)
-                modal.querySelector('#rfid-error').innerHTML = error.rfid || ''
-                modal.querySelector('#code-error').innerHTML = error.code || ''
+                modal.querySelector('#rfid-error').innerHTML = error.errors.rfid || ''
+                modal.querySelector('#code-error').innerHTML = error.errors.code || ''
             }
         }
 

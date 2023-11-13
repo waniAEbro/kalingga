@@ -38,8 +38,15 @@ class EmployeeExport implements FromView, ShouldAutoSize, WithStyles, WithEvents
     public function styles(Worksheet $sheet)
     {
         return [
+            "A1" => [
+                "font" => ["bold" => true],
+                "alignment" => ["horizontal" => "center"],
+            ],
+            "A3:A4" => [
+                "font" => ["bold" => true],
+            ],
             // Style the first row as bold text.
-            1    => ['font' => ['bold' => true]],
+            6    => ['font' => ['bold' => true]],
         ];
     }
 
@@ -47,10 +54,10 @@ class EmployeeExport implements FromView, ShouldAutoSize, WithStyles, WithEvents
     {
         return [
             AfterSheet::class => function (AfterSheet $event) {
-                $column_d = $event->sheet->getDelegate()->rangeToArray("D2:D" . $event->sheet->getDelegate()->getHighestRow());
+                $column_d = $event->sheet->getDelegate()->rangeToArray("D6:D" . $event->sheet->getDelegate()->getHighestRow());
 
                 foreach ($column_d as $rowIndex => $row) {
-                    $cellCoordinate = 'A' . ($rowIndex + 2) . ":" . "D" . ($rowIndex + 2); // +2 because rows are 1-based not 0-based
+                    $cellCoordinate = 'A' . ($rowIndex + 6) . ":" . "D" . ($rowIndex + 6); // +2 because rows are 1-based not 0-based
                     $cellValue = $row[0];
 
                     if ($cellValue == "Telat") {

@@ -1,6 +1,20 @@
 <table>
     <thead>
         <tr>
+            <th colspan="4">Presensi Pegawai</th>
+        </tr>
+        <tr></tr>
+        <tr>
+            <th>Nama Pegawai</th>
+            <th>{{ $employee->employee_name }}</th>
+        </tr>
+        <tr>
+            <th>Bulan</th>
+            <th>{{ Carbon\Carbon::createFromFormat('Y-m', $bulan)->format('F') . ' ' . Carbon\Carbon::createFromFormat('Y-m', $bulan)->year }}
+            </th>
+        </tr>
+        <tr></tr>
+        <tr>
             <th>Tanggal</th>
             <th>Masuk</th>
             <th>Pulang</th>

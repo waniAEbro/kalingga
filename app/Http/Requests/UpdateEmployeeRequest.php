@@ -23,7 +23,7 @@ class UpdateEmployeeRequest extends FormRequest
     {
         return [
             'employee_name' => 'required',
-            'rfid' => 'required|unique:employees'
+            'rfid' => 'required|unique:employees,rfid,' . $this->employee->id,
         ];
     }
 }

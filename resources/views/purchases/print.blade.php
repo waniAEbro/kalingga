@@ -114,6 +114,7 @@
             </tr>
         </tbody>
     </table>
+
     <h1 class="header">Komponen</h1>
     <table>
         <thead>
@@ -132,9 +133,35 @@
                     <td>{{ $no + 1 }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->pivot->quantity }}</td>s
-                    <td>{{ $item->price_per_unit }}</td>
+                    <td>{{ $item->suppliers->find($purchase->supplier_id)->pivot->price_per_unit }}</td>
                     <td>{{ $item->unit }}</td>
-                    <td>{{ $item->pivot->quantity * $item->price_per_unit }}</td>
+                    <td>{{ $item->pivot->quantity * $item->suppliers->find($purchase->supplier_id)->pivot->price_per_unit }}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <h1 class="header">Produk</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>SubTotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($purchase->products as $no => $item)
+                <tr>
+                    <td>{{ $no + 1 }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->pivot->quantity }}</td>s
+                    <td>{{ $item->suppliers->find($purchase->supplier_id)->pivot->price_per_unit }}</td>
+                    <td>{{ $item->pivot->quantity * $item->suppliers->find($purchase->supplier_id)->pivot->price_per_unit }}
+                    </td>
                 </tr>
             @endforeach
         </tbody>
@@ -168,13 +195,18 @@
         <tbody>
             <tr>
                 <td>
-                    <p style="margin:0"><b>Payment method T/T to {{ $purchase->payment_purchases->beneficiary_name }}</b></p>
+                    <p style="margin:0"><b>Payment method T/T to
+                            {{ $purchase->payment_purchases->beneficiary_name }}</b></p>
                     <p style="margin:0"><b>BANK DETAILS</b></p>
-                    <p style="margin:0"><b>Beneficiary's Bank : {{ $purchase->payment_purchases->beneficiary_bank }}</b></p>
-                    <p style="margin:0"><b>Beneficiary's A/C USD : {{ $purchase->payment_purchases->beneficiary_ac_usd }}</b></p>
+                    <p style="margin:0"><b>Beneficiary's Bank :
+                            {{ $purchase->payment_purchases->beneficiary_bank }}</b></p>
+                    <p style="margin:0"><b>Beneficiary's A/C USD :
+                            {{ $purchase->payment_purchases->beneficiary_ac_usd }}</b></p>
                     <p style="margin:0">Bank Add. : {{ $purchase->payment_purchases->bank_address }}</p>
                     <p style="margin:0">Swift Code : <b>{{ $purchase->payment_purchases->swift_code }}</b></p>
-                    <p style="margin:0">Beneficiary's Name : <b></b>{{ $purchase->payment_purchases->beneficiary_name }}</p>
+                    <p style="margin:0">Beneficiary's Name :
+                        <b></b>{{ $purchase->payment_purchases->beneficiary_name }}
+                    </p>
                     <p style="margin:0">Address : {{ $purchase->payment_purchases->beneficiary_address }}</p>
                     <p style="margin:0">Phone : {{ $purchase->payment_purchases->phone }}</p>
                 </td>
