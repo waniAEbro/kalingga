@@ -28,6 +28,7 @@ return new class extends Migration
             $table->foreignId("productioncosts_id")->constrained("production_costs")->onDelete("cascade");
             $table->foreignId("othercosts_id")->constrained("other_costs")->onDelete("cascade");
             $table->bigInteger("cbm");
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

@@ -29,6 +29,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet" />
     @stack('head')
     <style>
         ion-icon {
@@ -66,8 +69,24 @@
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+        <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 </body>
 <script>
+    FilePond.registerPlugin(FilePondPluginImagePreview);
+    
+    FilePond.create(document.querySelector('input[name="product_image"]'));
+
+    FilePond.setOptions({
+        server: {
+            process: '/tmp-upload',
+            revert: '/tmp-delete',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        }
+    })
+
     const state = {
         allData: [],
         data: [],

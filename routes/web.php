@@ -95,4 +95,7 @@ Route::middleware(['login.check'])->group(function () {
     });
 
     Route::get('/users', [LoginController::class, 'index_user']);
+
+    Route::post('/tmp-upload', [ProductController::class, 'tmpUpload']);
+    Route::delete('/tmp-delete', [ProductController::class, 'tmpDelete']);
 });

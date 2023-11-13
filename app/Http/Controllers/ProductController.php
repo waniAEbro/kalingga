@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\TemporaryFile;
 
 class ProductController extends Controller
 {
@@ -118,6 +120,19 @@ class ProductController extends Controller
                 "price_per_unit" => $request->price_supplier[$index]
             ]);
         }
+
+        $tmp_file = TemporaryFile::where('folder', $request->product_image)->first();
+
+        if($tmp_file){
+            Storage::copy('products/tmp/' . $tmp_file->folder. '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
+            Product::where("id", $product->id)->first()->update([
+                'image' => $tmp_file->folder. '/' . $tmp_file->file
+            ]);
+        }
+
+        Storage::deleteDirectory('products/tmp');
+        TemporaryFile::truncate();
+
         return redirect("/products");
     }
 
@@ -220,6 +235,19 @@ class ProductController extends Controller
                 "price_per_unit" => $request->price_supplier[$index]
             ]);
         }
+
+        $tmp_file = TemporaryFile::where('folder', $request->product_image)->first();
+
+        if($tmp_file){
+            Storage::deleteDirectory('public/' . substr($product->image, 0, strpos($product->image, '/')));
+            Storage::copy('products/tmp/' . $tmp_file->folder. '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
+            Product::where("id", $product->id)->first()->update([
+                'image' => $tmp_file->folder. '/' . $tmp_file->file
+            ]);
+        }
+        
+        Storage::deleteDirectory('products/tmp');
+        TemporaryFile::truncate();
 
         return redirect("/products");
     }
@@ -336,5 +364,32 @@ class ProductController extends Controller
     public function indexapi()
     {
         return response()->json(Product::get(), 200);
+    }
+
+    public function tmpUpload(Request $request)
+    {
+        // dd($request)
+        if($request->hasFile('product_image')){
+            $image = $request->file('product_image');
+            $file_name = $image->getClientOriginalName();
+            $folder = uniqid('product', true);
+            $image->storeAs('products/tmp/' . $folder, $file_name);
+            TemporaryFile::create([
+                'folder' => $folder,
+                'file' => $file_name
+            ]);
+            return $folder;
+            // return $file_name;
+        }
+    }
+
+    public function tmpDelete()
+    {
+        $tmp_file = TemporaryFile::where('folder', request()->getContent())->first();
+        if($tmp_file){
+            Storage::deleteDirectory('products/tmp/' . $tmp_file->folder);
+            $tmp_file->delete();
+            return response('');
+        }
     }
 }

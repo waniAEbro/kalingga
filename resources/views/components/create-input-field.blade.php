@@ -12,7 +12,7 @@
     </style>
 @endpush
 <div class="{{ $width }} h-fit relative bg-white rounded-xl px-4 pt-6 pb-20 drop-shadow-lg">
-    <form method="POST" action="/{{ $action }}">
+    <form method="POST" action="/{{ $action }}" enctype="multipart/form-data">
         @csrf
 
         {{ $slot }}
