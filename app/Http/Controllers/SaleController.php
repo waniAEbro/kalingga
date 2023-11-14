@@ -164,7 +164,7 @@ class SaleController extends Controller
         return $pdf->stream('quotation.pdf');
     }
 
-    public function excel(Sale $sale)
+    public function export(Sale $sale)
     {
         $excel = app('excel');
         return $excel->download(new SaleExport($sale), 'users.xlsx');
