@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\PresenceController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\WarehouseController;
 
 /*
@@ -35,6 +36,4 @@ Route::post("/component", [ComponentController::class, "storeapi"]);
 Route::post("/suppliers", [SupplierController::class, "storeapi"]);
 Route::post("/customers", [CustomerController::class, "storeapi"]);
 
-Route::get("/components", [ComponentController::class, "indexapi"]);
-Route::get("/products", [ProductController::class, "indexapi"]);
-
+Route::post("/purchase", [PurchaseController::class, "storeapi"]);

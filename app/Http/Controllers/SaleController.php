@@ -67,7 +67,7 @@ class SaleController extends Controller
             ]);
 
             Production::where("product_id", $id)->update([
-                "quantity_finished" => 0,
+                "quantity_finished" => DB::raw("quantity_finished + 0"),
                 "quantity_not_finished" => DB::raw("quantity_not_finished + " . $request->quantity_product[$key])
             ]);
 

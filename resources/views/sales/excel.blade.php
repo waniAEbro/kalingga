@@ -76,6 +76,9 @@
                 #
             </th>
             <th>
+                Image
+            </th>
+            <th>
                 Name
             </th>
             <th>
@@ -93,6 +96,9 @@
                 <td>
                     {{ $index + 1 }}
                 </td>
+                <td><img style="width: 50%;"
+                        src="{{ public_path($product->image ? '/storage/' . $product->image : '/img/default-placeholder.png') }}"
+                        alt=""></td>
                 <td>
                     {{ $product->name }}
                 </td>

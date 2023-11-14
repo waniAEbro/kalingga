@@ -147,6 +147,7 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th>Gambar</th>
                 <th>Name</th>
                 <th>Quantity</th>
                 <th>Price</th>
@@ -157,6 +158,9 @@
             @foreach ($purchase->products as $no => $item)
                 <tr>
                     <td>{{ $no + 1 }}</td>
+                    <td><img style="width: 50%;"
+                            src="{{ public_path($item->image ? '/storage/' . $item->image : '/img/default-placeholder.png') }}"
+                            alt=""></td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->pivot->quantity }}</td>s
                     <td>{{ $item->suppliers->find($purchase->supplier_id)->pivot->price_per_unit }}</td>

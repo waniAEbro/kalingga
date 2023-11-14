@@ -14,6 +14,7 @@ use App\Models\DeliveryPurchase;
 use App\Models\ComponentPurchase;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePurchaseAPI;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
@@ -182,5 +183,62 @@ class PurchaseController extends Controller
     {
         $excel = app('excel');
         return $excel->download(new PurchaseExport($purchase), 'users.xlsx');
+    }
+
+    public function storeapi(StorePurchaseAPI $request)
+    {
+        $purchase = Purchase::create([
+            'supplier_id' => $request->supplier_id,
+            'purchase_date' => $request->purchase_date,
+            'due_date' => $request->due_date,
+            'status' => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
+            'remain_bill' => $request->total_bill - $request->paid,
+            'total_bill' => $request->total_bill,
+            'paid' => $request->paid,
+            "code" => $request->code
+        ]);
+
+        DB::table("product_purchase")->insert([
+            "product_id" => $request->product_id,
+            "purchase_id" => $purchase->id,
+            "quantity" => $request->quantity_purchase,
+        ]);
+
+        PurchaseHistory::create([
+            "purchase_id" => $purchase->id,
+            "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
+            "payment" => $request->paid
+        ]);
+
+        PaymentPurchase::create([
+            "purchase_id" => $purchase->id,
+            "method" => $request->method,
+            "beneficiary_bank" => $request->beneficiary_bank,
+            "beneficiary_ac_usd" => $request->beneficiary_ac_usd,
+            "bank_address" => $request->bank_address,
+            "swift_code" => $request->swift_code,
+            "beneficiary_name" => $request->beneficiary_name,
+            "beneficiary_address" => $request->beneficiary_address,
+            "phone" => $request->phone,
+        ]);
+
+        DeliveryPurchase::create([
+            "purchase_id" => $purchase->id,
+            "location" => $request->location,
+        ]);
+
+        $product = Product::find($request->product_id);
+
+        $product->production->update([
+            "quantity_not_finished" => DB::raw("quantity_not_finished - " . $request->quantity_purchase)
+        ]);
+
+        $product->production->saleProductions->find($request->sale_production_id)->update([
+            "quantity_not_finished" => DB::raw("quantity_not_finished - " . $request->quantity_purchase)
+        ]);
+
+        $product = Product::find($request->product_id);
+
+        return response()->json($product);
     }
 }
