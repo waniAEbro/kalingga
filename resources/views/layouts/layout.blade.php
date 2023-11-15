@@ -73,20 +73,7 @@
         <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 </body>
 <script>
-    FilePond.registerPlugin(FilePondPluginImagePreview);
-
-    FilePond.create(document.querySelector('input[name="product_image"]'));
-
-    FilePond.setOptions({
-        server: {
-            process: '/tmp-upload',
-            revert: '/tmp-delete',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            }
-        }
-    })
-
+    
     const state = {
         allData: [],
         data: [],
@@ -110,6 +97,24 @@
         },
     });
 
+    setFilepond();
+
+    function setFilepond() {
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+    
+        FilePond.create(document.querySelector('input[name="product_image"]'));
+    
+        FilePond.setOptions({
+            server: {
+                process: '/tmp-upload',
+                revert: '/tmp-delete',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            }
+        })
+    }
+    
     function update_bill(element) {
         let total = document.querySelector('#total_bill').value;
         if (parseInt(element.value) >= parseInt(total)) {
@@ -125,6 +130,14 @@
             currency: 'IDR',
         }).format(number);
         return rupiahFormat
+    }
+
+    function toUSD(number) {
+        let USDFormat = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'USD',
+        }).format(number);
+        return USDFormat
     }
 
     document.querySelectorAll(".rupiah").forEach(element => {
@@ -190,36 +203,36 @@
 
                 state.currentData.forEach((data) => {
                     product_grid.innerHTML += `
-                                            <div class="p-5 rounded-lg bg-white">
-                                                    <div class="rounded-md overflow-hidden h-36 bg-center bg-cover relative"
+                                            <div class="p-5 bg-white rounded-lg">
+                                                    <div class="relative overflow-hidden bg-center bg-cover rounded-md h-36"
                                                         style="background-image: url('${data.image ? `/storage/${data.image}` : '/img/default-placeholder.png'}')">
                                                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                                                             <div class="absolute bottom-3 left-3">
                                                                 <div class="text-white">${data.name}</div>
-                                                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                                                <div class="text-sm text-gray-300">Perkayuan</div>
                                                             </div>
                                                         </div>
                                                     </div>
         
-                                                    <div class="flex mt-5 text-gray-600 text-sm items-center">
+                                                    <div class="flex items-center mt-5 text-sm text-gray-600">
                                                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                                                         <div>: ${data.code}</div>
                                                     </div>
         
-                                                    <div class="flex mt-3 text-gray-600 text-sm items-center">
+                                                    <div class="flex items-center mt-3 text-sm text-gray-600">
                                                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                                                         <div>: ${data.rfid}</div>
                                                     </div>
         
-                                                    <div class="flex mt-3 text-gray-600 text-sm items-center">
-                                                        <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
+                                                    <div class="flex items-center mt-3 text-sm text-gray-600">
+                                                        <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga</span></div>
                                                         <div>: ${toRupiah(data.sell_price)}</div>
                                                     </div>
         
                                                     <hr class="mt-5">
         
                                                     <div class="flex gap-3 mt-5 text-sm">
-                                                        <button class="flex items-center"><ion-icon name="eye-outline"></ion-icon><span class="ml-2">Preview</span></button>
+                                                        <button onclick="show(${data.id})" class="flex items-center"><ion-icon name="eye-outline"></ion-icon><span class="ml-2">Preview</span></button>
                                                         <a href="/${state.menu}/${ data.id }/edit" class="flex items-center"><ion-icon name="create-outline"></ion-icon><span class="ml-2">Edit</span></a>
                                                         <form action="/${state.menu}/${ data.id }" method="post">
                                                             @csrf
@@ -349,7 +362,7 @@
             pages = Math.ceil(state.data.length / state.rows);
         }
 
-        if (pages) {
+        if (pages > 1) {
             let arrowLeft = `
                 <button 
                     x-on:click="state.page = 1; paginate(); pageNumber(); buildTable();"
@@ -394,12 +407,12 @@
                             </button>`
                     }
 
-                    pageNumbers += `<div class="px-4 flex items-center">...</div>`
+                    pageNumbers += `<div class="flex items-center px-4">...</div>`
 
                     pageNumbers +=
                         `<button 
                                 x-on:click="state.page = ${pages}; paginate(); pageNumber(); buildTable();" 
-                                class="px-4 flex items-center rounded hover:bg-gray-200 transition-300 transition-all"
+                                class="flex items-center px-4 transition-all rounded hover:bg-gray-200 transition-300"
                             >
                                 ${pages}
                             </button>`
@@ -407,12 +420,12 @@
                     pageNumbers +=
                         `<button 
                                 x-on:click="state.page = 1; paginate(); pageNumber(); buildTable();" 
-                                class="px-4 flex items-center rounded hover:bg-gray-200 transition-300 transition-all"
+                                class="flex items-center px-4 transition-all rounded hover:bg-gray-200 transition-300"
                             >
                                 1
                             </button>`
 
-                    pageNumbers += `<div class="px-4 flex items-center">...</div>`
+                    pageNumbers += `<div class="flex items-center px-4">...</div>`
 
                     for (i = pages - 5; i <= pages; i++) {
                         pageNumbers +=
@@ -428,7 +441,7 @@
                             </button>`
                     }
                 } else {
-                    pageNumbers += `<div class="px-4 flex items-center">...</div>`
+                    pageNumbers += `<div class="flex items-center px-4">...</div>`
 
                     for (i = state.page - 1; i <= state.page + 1; i++) {
                         pageNumbers +=
@@ -444,7 +457,7 @@
                             </button>`
                     }
 
-                    pageNumbers += `<div class="px-4 flex items-center">...</div>`
+                    pageNumbers += `<div class="flex items-center px-4">...</div>`
                 }
             }
 
@@ -464,6 +477,8 @@
             `
 
             document.querySelector("#pagination-wrapper").innerHTML = arrowLeft + pageNumbers + arrowRight
+        } else {
+            document.querySelector("#pagination-wrapper").innerHTML = '';
         }
 
     }
@@ -474,9 +489,6 @@
 
         modal.classList.remove('opacity-100', 'z-40');
         modal.classList.add('opacity-0', '-z-40');
-
-        // modal.classList.remove('z-20');
-        // modal.classList.add('-z-20');
     }
 </script>
 @stack('script')

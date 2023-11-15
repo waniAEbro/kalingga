@@ -5,7 +5,7 @@
     <h1 class="text-lg font my-7 font-[500]">Buat Produk</h1>
 
     <x-create-input-field :action="'products'" :width="'w-full'">
-        <div class="w-full flex">
+        <div class="flex w-full">
             <div>
                 <h1 class="mb-3 text-xl font-bold">Komponen</h1>
 
@@ -14,7 +14,7 @@
                         <tr class="border-b-2">
                             <th class="w-10 p-2 text-center">#</th>
                             <th class="w-40 p-2">Komponen</th>
-                            <th class="p-2 w-24">Jumlah</th>
+                            <th class="w-24 p-2">Jumlah</th>
                             <th class="p-2 w-14">Unit</th>
                             <th class="p-2">Harga</th>
                             <th class="p-2">Subtotal</th>

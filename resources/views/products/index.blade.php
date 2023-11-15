@@ -5,30 +5,30 @@
         <div class="relative">
             {{-- <table class="w-full mt-5 border-separate table-fixed border-spacing-y-3">
             </table> --}}
-            <div id="product-grid" class="mt-10 pb-20 grid grid-cols-4 gap-5">
+            <div id="product-grid" class="grid grid-cols-4 gap-5 pb-20 mt-10">
 
-                {{-- <div class="p-5 rounded-lg bg-white">
-                    <div class="rounded-md overflow-hidden h-36 bg-bottom bg-cover relative"
+                {{-- <div class="p-5 bg-white rounded-lg">
+                    <div class="relative overflow-hidden bg-bottom bg-cover rounded-md h-36"
                         style="background-image: url('/img/ilustrasi.png')">
                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                             <div class="absolute bottom-3 left-3">
                                 <div class="text-white">Kursi</div>
-                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                <div class="text-sm text-gray-300">Perkayuan</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex mt-5 text-gray-600 text-sm">
+                    <div class="flex mt-5 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                         <div>: sdfsdf</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                         <div>: sdfs234df</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
                         <div>: Rp30.000,00</div>
                     </div>
@@ -42,28 +42,28 @@
                     </div>
                 </div>
 
-                <div class="p-5 rounded-lg bg-white">
-                    <div class="rounded-md overflow-hidden h-36 bg-bottom bg-cover relative"
+                <div class="p-5 bg-white rounded-lg">
+                    <div class="relative overflow-hidden bg-bottom bg-cover rounded-md h-36"
                         style="background-image: url('/img/ilustrasi.png')">
                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                             <div class="absolute bottom-3 left-3">
                                 <div class="text-white">Kursi</div>
-                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                <div class="text-sm text-gray-300">Perkayuan</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex mt-5 text-gray-600 text-sm">
+                    <div class="flex mt-5 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                         <div>: sdfsdf</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                         <div>: sdfs234df</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
                         <div>: Rp30.000,00</div>
                     </div>
@@ -77,28 +77,28 @@
                     </div>
                 </div>
 
-                <div class="p-5 rounded-lg bg-white">
-                    <div class="rounded-md overflow-hidden h-36 bg-bottom bg-cover relative"
+                <div class="p-5 bg-white rounded-lg">
+                    <div class="relative overflow-hidden bg-bottom bg-cover rounded-md h-36"
                         style="background-image: url('/img/ilustrasi.png')">
                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                             <div class="absolute bottom-3 left-3">
                                 <div class="text-white">Kursi</div>
-                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                <div class="text-sm text-gray-300">Perkayuan</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex mt-5 text-gray-600 text-sm">
+                    <div class="flex mt-5 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                         <div>: sdfsdf</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                         <div>: sdfs234df</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
                         <div>: Rp30.000,00</div>
                     </div>
@@ -112,28 +112,28 @@
                     </div>
                 </div>
 
-                <div class="p-5 rounded-lg bg-white">
-                    <div class="rounded-md overflow-hidden h-36 bg-bottom bg-cover relative"
+                <div class="p-5 bg-white rounded-lg">
+                    <div class="relative overflow-hidden bg-bottom bg-cover rounded-md h-36"
                         style="background-image: url('/img/ilustrasi.png')">
                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                             <div class="absolute bottom-3 left-3">
                                 <div class="text-white">Kursi</div>
-                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                <div class="text-sm text-gray-300">Perkayuan</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex mt-5 text-gray-600 text-sm">
+                    <div class="flex mt-5 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                         <div>: sdfsdf</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                         <div>: sdfs234df</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
                         <div>: Rp30.000,00</div>
                     </div>
@@ -147,28 +147,28 @@
                     </div>
                 </div>
 
-                <div class="p-5 rounded-lg bg-white">
-                    <div class="rounded-md overflow-hidden h-36 bg-bottom bg-cover relative"
+                <div class="p-5 bg-white rounded-lg">
+                    <div class="relative overflow-hidden bg-bottom bg-cover rounded-md h-36"
                         style="background-image: url('/img/ilustrasi.png')">
                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                             <div class="absolute bottom-3 left-3">
                                 <div class="text-white">Kursi</div>
-                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                <div class="text-sm text-gray-300">Perkayuan</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex mt-5 text-gray-600 text-sm">
+                    <div class="flex mt-5 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                         <div>: sdfsdf</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                         <div>: sdfs234df</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
                         <div>: Rp30.000,00</div>
                     </div>
@@ -182,28 +182,28 @@
                     </div>
                 </div>
 
-                <div class="p-5 rounded-lg bg-white">
-                    <div class="rounded-md overflow-hidden h-36 bg-bottom bg-cover relative"
+                <div class="p-5 bg-white rounded-lg">
+                    <div class="relative overflow-hidden bg-bottom bg-cover rounded-md h-36"
                         style="background-image: url('/img/ilustrasi.png')">
                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                             <div class="absolute bottom-3 left-3">
                                 <div class="text-white">Kursi</div>
-                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                <div class="text-sm text-gray-300">Perkayuan</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex mt-5 text-gray-600 text-sm">
+                    <div class="flex mt-5 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                         <div>: sdfsdf</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                         <div>: sdfs234df</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
                         <div>: Rp30.000,00</div>
                     </div>
@@ -217,28 +217,28 @@
                     </div>
                 </div>
 
-                <div class="p-5 rounded-lg bg-white">
-                    <div class="rounded-md overflow-hidden h-36 bg-bottom bg-cover relative"
+                <div class="p-5 bg-white rounded-lg">
+                    <div class="relative overflow-hidden bg-bottom bg-cover rounded-md h-36"
                         style="background-image: url('/img/ilustrasi.png')">
                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                             <div class="absolute bottom-3 left-3">
                                 <div class="text-white">Kursi</div>
-                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                <div class="text-sm text-gray-300">Perkayuan</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex mt-5 text-gray-600 text-sm">
+                    <div class="flex mt-5 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                         <div>: sdfsdf</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                         <div>: sdfs234df</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
                         <div>: Rp30.000,00</div>
                     </div>
@@ -252,28 +252,28 @@
                     </div>
                 </div>
 
-                <div class="p-5 rounded-lg bg-white">
-                    <div class="rounded-md overflow-hidden h-36 bg-bottom bg-cover relative"
+                <div class="p-5 bg-white rounded-lg">
+                    <div class="relative overflow-hidden bg-bottom bg-cover rounded-md h-36"
                         style="background-image: url('/img/ilustrasi.png')">
                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                             <div class="absolute bottom-3 left-3">
                                 <div class="text-white">Kursi</div>
-                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                <div class="text-sm text-gray-300">Perkayuan</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex mt-5 text-gray-600 text-sm">
+                    <div class="flex mt-5 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                         <div>: sdfsdf</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                         <div>: sdfs234df</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
                         <div>: Rp30.000,00</div>
                     </div>
@@ -287,28 +287,28 @@
                     </div>
                 </div>
 
-                <div class="p-5 rounded-lg bg-white">
-                    <div class="rounded-md overflow-hidden h-36 bg-bottom bg-cover relative"
+                <div class="p-5 bg-white rounded-lg">
+                    <div class="relative overflow-hidden bg-bottom bg-cover rounded-md h-36"
                         style="background-image: url('/img/ilustrasi.png')">
                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                             <div class="absolute bottom-3 left-3">
                                 <div class="text-white">Kursi</div>
-                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                <div class="text-sm text-gray-300">Perkayuan</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex mt-5 text-gray-600 text-sm">
+                    <div class="flex mt-5 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                         <div>: sdfsdf</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                         <div>: sdfs234df</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
                         <div>: Rp30.000,00</div>
                     </div>
@@ -322,28 +322,28 @@
                     </div>
                 </div>
 
-                <div class="p-5 rounded-lg bg-white">
-                    <div class="rounded-md overflow-hidden h-36 bg-bottom bg-cover relative"
+                <div class="p-5 bg-white rounded-lg">
+                    <div class="relative overflow-hidden bg-bottom bg-cover rounded-md h-36"
                         style="background-image: url('/img/ilustrasi.png')">
                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                             <div class="absolute bottom-3 left-3">
                                 <div class="text-white">Kursi</div>
-                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                <div class="text-sm text-gray-300">Perkayuan</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex mt-5 text-gray-600 text-sm">
+                    <div class="flex mt-5 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                         <div>: sdfsdf</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                         <div>: sdfs234df</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
                         <div>: Rp30.000,00</div>
                     </div>
@@ -357,28 +357,28 @@
                     </div>
                 </div>
 
-                <div class="p-5 rounded-lg bg-white">
-                    <div class="rounded-md overflow-hidden h-36 bg-bottom bg-cover relative"
+                <div class="p-5 bg-white rounded-lg">
+                    <div class="relative overflow-hidden bg-bottom bg-cover rounded-md h-36"
                         style="background-image: url('/img/ilustrasi.png')">
                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                             <div class="absolute bottom-3 left-3">
                                 <div class="text-white">Kursi</div>
-                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                <div class="text-sm text-gray-300">Perkayuan</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex mt-5 text-gray-600 text-sm">
+                    <div class="flex mt-5 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                         <div>: sdfsdf</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                         <div>: sdfs234df</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
                         <div>: Rp30.000,00</div>
                     </div>
@@ -392,28 +392,28 @@
                     </div>
                 </div>
 
-                <div class="p-5 rounded-lg bg-white">
-                    <div class="rounded-md overflow-hidden h-36 bg-bottom bg-cover relative"
+                <div class="p-5 bg-white rounded-lg">
+                    <div class="relative overflow-hidden bg-bottom bg-cover rounded-md h-36"
                         style="background-image: url('/img/ilustrasi.png')">
                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                             <div class="absolute bottom-3 left-3">
                                 <div class="text-white">Kursi</div>
-                                <div class="text-gray-300 text-sm">Perkayuan</div>
+                                <div class="text-sm text-gray-300">Perkayuan</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex mt-5 text-gray-600 text-sm">
+                    <div class="flex mt-5 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="pricetags-outline"></ion-icon><span class="ml-2">Kode Produk</span></div>
                         <div>: sdfsdf</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="hardware-chip-outline"></ion-icon><span class="ml-2">Kode RFID</span></div>
                         <div>: sdfs234df</div>
                     </div>
 
-                    <div class="flex mt-3 text-gray-600 text-sm">
+                    <div class="flex mt-3 text-sm text-gray-600">
                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga Jual</span></div>
                         <div>: Rp30.000,00</div>
                     </div>
@@ -435,474 +435,7 @@
 
 @push('script')
     <script>
-        // state.columnName = ["Nomor", "Nama Produk", "Kode Produk", "RFID", "Harga Jual", "Aksi"]
-
-        // document.querySelector(".table-fixed").appendChild(buildHeader())
-
         const products = {!! $products !!}
-        // const products = [{
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'gelas',
-        //         code: 'asdf234',
-        //         rfid: 'ac',
-        //         sell_price: '24'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        //     {
-        //         name: 'rasikh',
-        //         code: 'asdf234',
-        //         rfid: 'ab',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'imam',
-        //         code: 'makan234',
-        //         rfid: 'ac',
-        //         sell_price: '2223433454232'
-        //     },
-        //     {
-        //         name: 'rido',
-        //         code: 'laper',
-        //         rfid: 'aa',
-        //         sell_price: '234'
-        //     },
-        //     {
-        //         name: 'hape',
-        //         code: 'aduh',
-        //         rfid: 'ad',
-        //         sell_price: '679'
-        //     },
-        // ]
 
         state.menu = "products"
         state.columnQuery = ["name", "code", "rfid", "sell_price"]
@@ -1299,7 +832,8 @@
                     <div class="flex justify-end w-full mt-8 text-xs">
                         <div class="w-60">
                             <div class="grid w-full grid-cols-2 mb-2 font-bold">HPP<span>: ${hpp}</span></div>
-                            <div class="grid w-full grid-cols-2 font-bold">Harga Jual<span>: ${toRupiah(product.sell_price)}</span></div>
+                            <div class="grid w-full grid-cols-2 font-bold mb-2">Harga Jual<span>: ${toRupiah(product.sell_price)}</span></div>
+                            <div class="grid w-full grid-cols-2 font-bold">Harga Jual USD<span>: ${toUSD(product.sell_price)}</span></div>
                         </div>
                     </div>
                 </div>

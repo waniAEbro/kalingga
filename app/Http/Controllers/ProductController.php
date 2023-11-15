@@ -346,6 +346,18 @@ class ProductController extends Controller
             ]);
         }
 
+        $tmp_file = TemporaryFile::latest()->first();
+
+        if($tmp_file){
+            Storage::copy('products/tmp/' . $tmp_file->folder. '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
+            Product::where("id", $product->id)->first()->update([
+                'image' => $tmp_file->folder. '/' . $tmp_file->file
+            ]);
+        }
+
+        Storage::deleteDirectory('products/tmp');
+        TemporaryFile::truncate();
+
         return response()->json(Product::get(), 200);
     }
 
