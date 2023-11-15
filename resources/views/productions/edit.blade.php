@@ -41,7 +41,7 @@
                             <td class="p-4">{{ $sale_production->sale->customer->name }}</td>
                             <td class="p-4">
                                 <x-input :name="'sale_quantity_not_finished[]'" :type="'number'" :placeholder="'0'" readonly
-                                    :value="$sale_production->quantity_not_finished" class="sale_quantity_not_finished-{{ $sale_production->id }}" />
+                                    :value="$sale_production->quantity_not_finished" class="sale_quantity_not_finished id-{{ $sale_production->id }}" />
                             </td>
                             <td class="p-4 rounded-r-lg">
                                 <x-input :name="'sale_quantity_finished[]'" :type="'number'"
@@ -92,10 +92,10 @@
             const quantity_not_finished = sale_production.quantity_not_finished - selisih_finish;
 
             if (quantity_not_finished <= 0) {
-                parent.querySelector('.sale_quantity_not_finished').value = 0;
+                parent.querySelector('.id-' + id).value = 0;
                 e.value = maks;
             } else {
-                parent.querySelector('.sale_quantity_not_finished').value = quantity_not_finished;
+                parent.querySelector('.id-' + id).value = quantity_not_finished;
             }
 
             setQuantityProduction()
@@ -204,11 +204,12 @@
                     throw purchase
                 }
 
-                console.log(purchase)
-
                 document.querySelector("#quantity_not_finished").value = purchase.production.quantity_not_finished
-                document.querySelector(".sale_quantity_not_finished-" + id).value = purchase.production.sale_productions
+                document.querySelector(".id-" + id).value = purchase.production.sale_productions
                     .find(sale_production => sale_production.id == id).quantity_not_finished
+
+                product = purchase
+
                 loading.classList.add('hidden')
                 hideModal()
             } catch (error) {
@@ -222,7 +223,7 @@
 
         function showModalPurchase(id, index, e) {
             const parent = e.parentElement.parentElement
-            const quantity_not_finished = parent.querySelector('.sale_quantity_not_finished-' + id).value;
+            const quantity_not_finished = parent.querySelector('.id-' + id).value;
             const quantity_finished = parent.querySelector('.sale_quantity_finished').value;
             const modal = document.querySelector('#modal');
             document.querySelector('#modal-background').classList.remove('hidden');
