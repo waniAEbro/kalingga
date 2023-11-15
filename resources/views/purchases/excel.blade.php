@@ -143,6 +143,11 @@
                     {{ $index + 1 }}
                 </td>
                 <td>
+                    <img style="width: 10%;"
+                        src="{{ public_path($product->image ? '/storage/' . $product->image : '/img/default-placeholder.png') }}"
+                        alt="">
+                </td>
+                <td>
                     {{ $product->name }}
                 </td>
                 <td>
@@ -151,7 +156,6 @@
                 <td>
                     {{ $product->suppliers->find($purchase->supplier_id)->pivot->price_per_unit }}
                 </td>
-                <td></td>
                 <td>
                     {{ $product->pivot->quantity * $product->suppliers->find($purchase->supplier_id)->pivot->price_per_unit }}
                 </td>

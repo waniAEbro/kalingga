@@ -71,59 +71,14 @@ class ProductionController extends Controller
      */
     public function update(UpdateProductionRequest $request, Product $product): RedirectResponse
     {
+        Production::where("product_id", $product->id)->update([
+            "quantity_finished" => $request->quantity_finished,
+            "quantity_not_finished" => $request->quantity_not_finished,
+        ]);
         foreach ($request->sale_production_id as $key => $sale_production_id) {
-            $quantity_finished = SaleProduction::find($sale_production_id)->quantity_finished - $request->sale_quantity_finished[$key];
-
-            Production::where("product_id", $product->id)->update([
-                "quantity_finished" => (int)$request->quantity_finished - $quantity_finished,
-                "quantity_not_finished" => (int)$request->quantity_not_finished + $quantity_finished,
-            ]);
-
             DB::table("sale_productions")->where("id", $sale_production_id)->update([
                 "quantity_not_finished" => $request->sale_quantity_not_finished[$key],
                 "quantity_finished" => $request->sale_quantity_finished[$key]
-            ]);
-        }
-
-        if ($request->cek == "on") {
-            $purchase = Purchase::create([
-                "supplier_id" => $request->supplier_id,
-                "purchase_date" => $request->purchase_date,
-                "due_date" => $request->due_date,
-                "code" => $request->purchase_code,
-                "remain_bill" => $request->total_bill - $request->paid,
-                "total_bill" => $request->total_bill,
-                "paid" => $request->paid,
-                "status" => $request->total_bill - $request->paid == 0 ? "closed"  : "open",
-            ]);
-
-            PurchaseHistory::create([
-                "purchase_id" => $purchase->id,
-                "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
-                "payment" => $request->paid
-            ]);
-
-            PaymentPurchase::create([
-                "purchase_id" => $purchase->id,
-                "method" => $request->method,
-                "beneficiary_bank" => $request->beneficiary_bank,
-                "beneficiary_ac_usd" => $request->beneficiary_ac_usd,
-                "bank_address" => $request->bank_address,
-                "swift_code" => $request->swift_code,
-                "beneficiary_name" => $request->beneficiary_name,
-                "beneficiary_address" => $request->beneficiary_address,
-                "phone" => $request->phone,
-            ]);
-
-            DeliveryPurchase::create([
-                "purchase_id" => $purchase->id,
-                "location" => $request->location,
-            ]);
-
-            DB::table("product_purchase")->insert([
-                "product_id" => $product->id,
-                "purchase_id" => $purchase->id,
-                "quantity" => $request->quantity_purchase
             ]);
         }
 

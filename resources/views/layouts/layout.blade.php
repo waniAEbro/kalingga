@@ -228,9 +228,9 @@
                                                         <div class="flex items-center"><ion-icon name="cash-outline"></ion-icon><span class="ml-2">Harga</span></div>
                                                         <div>: ${toRupiah(data.sell_price)}</div>
                                                     </div>
-        
+
                                                     <hr class="mt-5">
-        
+
                                                     <div class="flex gap-3 mt-5 text-sm">
                                                         <button onclick="show(${data.id})" class="flex items-center"><ion-icon name="eye-outline"></ion-icon><span class="ml-2">Preview</span></button>
                                                         <a href="/${state.menu}/${ data.id }/edit" class="flex items-center"><ion-icon name="create-outline"></ion-icon><span class="ml-2">Edit</span></a>
@@ -364,13 +364,13 @@
 
         if (pages > 1) {
             let arrowLeft = `
-                <button 
+                <button
                     x-on:click="state.page = 1; paginate(); pageNumber(); buildTable();"
                     class="px-3 flex items-center rounded ${state.page == 1 || 'hover:bg-gray-200'} transition-300 transition-all"
                 >
                     <span class="material-symbols-outlined" style="font-size: 16px">keyboard_double_arrow_left</span>
                 </button>
-                <button 
+                <button
                     x-on:click="state.page = ${state.page - 1 || 1}; paginate(); pageNumber(); buildTable();"
                     class="px-3 flex items-center rounded ${state.page == 1 || 'hover:bg-gray-200'} transition-300 transition-all"
                 >
@@ -380,11 +380,11 @@
             if (pages <= 8) {
                 for (i = 1; i <= pages; i++) {
                     pageNumbers +=
-                        `<button 
-                            x-on:click="state.page = ${i}; paginate(); pageNumber(); buildTable();" 
-                            class="px-4 
-                                ${state.page == i ? 
-                                    'flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded' : 
+                        `<button
+                            x-on:click="state.page = ${i}; paginate(); pageNumber(); buildTable();"
+                            class="px-4
+                                ${state.page == i ?
+                                    'flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded' :
                                     'flex items-center rounded hover:bg-gray-200 transition-300 transition-all'
                                 }"
                         >
@@ -395,11 +395,11 @@
                 if (state.page <= 4) {
                     for (i = 1; i <= 5; i++) {
                         pageNumbers +=
-                            `<button 
-                                x-on:click="state.page = ${i}; paginate(); pageNumber(); buildTable();" 
-                                class="px-4 
-                                    ${state.page == i ? 
-                                        'flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded' : 
+                            `<button
+                                x-on:click="state.page = ${i}; paginate(); pageNumber(); buildTable();"
+                                class="px-4
+                                    ${state.page == i ?
+                                        'flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded' :
                                         'flex items-center rounded hover:bg-gray-200 transition-300 transition-all'
                                     }"
                             >
@@ -429,11 +429,11 @@
 
                     for (i = pages - 5; i <= pages; i++) {
                         pageNumbers +=
-                            `<button 
-                                x-on:click="state.page = ${i}; paginate(); pageNumber(); buildTable();" 
-                                class="px-4 
-                                    ${state.page == i ? 
-                                        'flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded' : 
+                            `<button
+                                x-on:click="state.page = ${i}; paginate(); pageNumber(); buildTable();"
+                                class="px-4
+                                    ${state.page == i ?
+                                        'flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded' :
                                         'flex items-center rounded hover:bg-gray-200 transition-300 transition-all'
                                     }"
                             >
@@ -445,30 +445,30 @@
 
                     for (i = state.page - 1; i <= state.page + 1; i++) {
                         pageNumbers +=
-                            `<button 
-                                x-on:click="state.page = ${i}; paginate(); pageNumber(); buildTable();" 
-                                class="px-4 
-                                    ${state.page == i ? 
-                                        'flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded' : 
+                            `<button
+                                x-on:click="state.page = ${i}; paginate(); pageNumber(); buildTable();"
+                                class="px-4
+                                    ${state.page == i ?
+                                        'flex items-center bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] rounded' :
                                         'flex items-center rounded hover:bg-gray-200 transition-300 transition-all'
                                     }"
                             >
                             ${i}
                             </button>`
-                    }
+                        }
 
                     pageNumbers += `<div class="flex items-center px-4">...</div>`
                 }
             }
 
             let arrowRight = `
-                <button 
+                <button
                     x-on:click="state.page = ${state.page + 1 == pages || pages}; paginate(); pageNumber(); buildTable();"
                     class="px-3 flex items-center rounded ${state.page == pages || 'hover:bg-gray-200'} transition-300 transition-all"
                 >
                     <span class="material-symbols-outlined" style="font-size: 16px">keyboard_arrow_right</span>
                 </button>
-                <button 
+                <button
                     x-on:click="state.page = ${pages}; paginate(); pageNumber(); buildTable();"
                     class="px-3 flex items-center rounded ${state.page == pages || 'hover:bg-gray-200'} transition-300 transition-all"
                 >

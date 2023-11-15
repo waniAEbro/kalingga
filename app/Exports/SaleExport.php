@@ -21,7 +21,12 @@ class SaleExport implements FromView, ShouldAutoSize, WithStyles
     {
         return [
             // Style the first row as bold text.
-            1    => ['font' => ['bold' => true]],
+            "A1:B3" => [
+                "alignment" => [
+                    "horizontal" => "center",
+                    "vertical" => "center",
+                ],
+            ]
         ];
     }
 

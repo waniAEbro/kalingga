@@ -229,7 +229,7 @@
                                                 :name="'product_id[]'" :id="'product_id'" :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); setFilepond() '" />
                                         </td>
                                         <td class="p-2"><input id="quantity" type="number" name="quantity_product[]"
-                                                oninput="subTotalProduk(this)" value="0" step="0.0001"
+                                                oninput="subTotalProduk(this)" value="0" step="1"
                                                 class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         </td>
                                         <td id="price" class="p-2"></td>

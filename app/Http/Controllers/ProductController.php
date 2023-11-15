@@ -123,10 +123,10 @@ class ProductController extends Controller
 
         $tmp_file = TemporaryFile::where('folder', $request->product_image)->first();
 
-        if($tmp_file){
-            Storage::copy('products/tmp/' . $tmp_file->folder. '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
+        if ($tmp_file) {
+            Storage::copy('products/tmp/' . $tmp_file->folder . '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
             Product::where("id", $product->id)->first()->update([
-                'image' => $tmp_file->folder. '/' . $tmp_file->file
+                'image' => $tmp_file->folder . '/' . $tmp_file->file
             ]);
         }
 
@@ -238,14 +238,14 @@ class ProductController extends Controller
 
         $tmp_file = TemporaryFile::where('folder', $request->product_image)->first();
 
-        if($tmp_file){
+        if ($tmp_file) {
             Storage::deleteDirectory('public/' . substr($product->image, 0, strpos($product->image, '/')));
-            Storage::copy('products/tmp/' . $tmp_file->folder. '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
+            Storage::copy('products/tmp/' . $tmp_file->folder . '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
             Product::where("id", $product->id)->first()->update([
-                'image' => $tmp_file->folder. '/' . $tmp_file->file
+                'image' => $tmp_file->folder . '/' . $tmp_file->file
             ]);
         }
-        
+
         Storage::deleteDirectory('products/tmp');
         TemporaryFile::truncate();
 
@@ -361,15 +361,10 @@ class ProductController extends Controller
         return response()->json(Product::get(), 200);
     }
 
-    public function indexapi()
-    {
-        return response()->json(Product::get(), 200);
-    }
-
     public function tmpUpload(Request $request)
     {
         // dd($request)
-        if($request->hasFile('product_image')){
+        if ($request->hasFile('product_image')) {
             $image = $request->file('product_image');
             $file_name = $image->getClientOriginalName();
             $folder = uniqid('product', true);
@@ -386,7 +381,7 @@ class ProductController extends Controller
     public function tmpDelete()
     {
         $tmp_file = TemporaryFile::where('folder', request()->getContent())->first();
-        if($tmp_file){
+        if ($tmp_file) {
             Storage::deleteDirectory('products/tmp/' . $tmp_file->folder);
             $tmp_file->delete();
             return response('');

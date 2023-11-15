@@ -67,7 +67,6 @@
             border-left: none;
             border-right: none;
         }
-
     </style>
 </head>
 
@@ -125,6 +124,7 @@
         <thead style="page-break-inside: auto;">
             <tr>
                 <th rowspan="2">#</th>
+                <th rowspan="2">Image</th>
                 <th rowspan="2">Artikelnummer</th>
                 <th rowspan="2">Artikelomschrijving</th>
                 <th colspan="3">Dimension (cm)</th>
@@ -142,6 +142,9 @@
             @foreach ($sale->products as $no => $item)
                 <tr>
                     <td>{{ $no + 1 }}</td>
+                    <td><img style="width: 50%;"
+                            src="{{ public_path($item->image ? '/storage/' . $item->image : '/img/default-placeholder.png') }}"
+                            alt=""></td>
                     <td>{{ $item->code }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->length }}</td>
@@ -184,7 +187,8 @@
                     <p style="margin:0"><b>Payment method T/T to {{ $sale->payment_sales->beneficiary_name }}</b></p>
                     <p style="margin:0"><b>BANK DETAILS</b></p>
                     <p style="margin:0"><b>Beneficiary's Bank : {{ $sale->payment_sales->beneficiary_bank }}</b></p>
-                    <p style="margin:0"><b>Beneficiary's A/C USD : {{ $sale->payment_sales->beneficiary_ac_usd }}</b></p>
+                    <p style="margin:0"><b>Beneficiary's A/C USD : {{ $sale->payment_sales->beneficiary_ac_usd }}</b>
+                    </p>
                     <p style="margin:0">Bank Add. : {{ $sale->payment_sales->bank_address }}</p>
                     <p style="margin:0">Swift Code : <b>{{ $sale->payment_sales->swift_code }}</b></p>
                     <p style="margin:0">Beneficiary's Name : <b></b>{{ $sale->payment_sales->beneficiary_name }}</p>
