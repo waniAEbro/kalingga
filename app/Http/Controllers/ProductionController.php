@@ -3,18 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Purchase;
-use App\Models\Supplier;
 use App\Models\Production;
-use App\Models\PaymentPurchase;
-use App\Models\PurchaseHistory;
-use App\Models\DeliveryPurchase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreProductionRequest;
 use App\Http\Requests\UpdateProductionRequest;
-use App\Models\SaleProduction;
 
 class ProductionController extends Controller
 {
@@ -76,7 +70,7 @@ class ProductionController extends Controller
             "quantity_not_finished" => $request->quantity_not_finished,
         ]);
         foreach ($request->sale_production_id as $key => $sale_production_id) {
-            DB::table("sale_productions")->where("id", $sale_production_id)->update([
+            DB::table("sale_production")->where("id", $sale_production_id)->update([
                 "quantity_not_finished" => $request->sale_quantity_not_finished[$key],
                 "quantity_finished" => $request->sale_quantity_finished[$key]
             ]);

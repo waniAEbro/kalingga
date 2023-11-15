@@ -77,6 +77,17 @@ class PurchaseController extends Controller
                     "purchase_id" => $purchase->id,
                     "quantity" => $request->quantity[$index],
                 ]);
+
+                $delivery_component = DB::table("delivery_components")->insertGetId([
+                    "component_id" => $id,
+                    "total" => $request->quantity[$index],
+                    "remain" => $request->quantity[$index],
+                ]);
+
+                DB::table("delivery_component_purchase")->insert([
+                    "delivery_component_id" => $delivery_component,
+                    "purchase_id" => $purchase->id,
+                ]);
             }
         }
 
@@ -87,14 +98,27 @@ class PurchaseController extends Controller
                     "purchase_id" => $purchase->id,
                     "quantity" => $request->quantity_product[$index],
                 ]);
+
+                $delivery_product = DB::table("delivery_products")->insertGetId([
+                    "product_id" => $id,
+                    "total" => $request->quantity_product[$index],
+                    "remain" => $request->quantity_product[$index],
+                ]);
+
+                DB::table("delivery_product_purchase")->insert([
+                    "delivery_product_id" => $delivery_product,
+                    "purchase_id" => $purchase->id,
+                ]);
             }
         }
 
-        PurchaseHistory::create([
-            "purchase_id" => $purchase->id,
-            "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
-            "payment" => $request->paid
-        ]);
+        if ($request->paid > 0) {
+            PurchaseHistory::create([
+                "purchase_id" => $purchase->id,
+                "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
+                "payment" => $request->paid
+            ]);
+        }
 
         PaymentPurchase::create([
             "purchase_id" => $purchase->id,
@@ -142,6 +166,22 @@ class PurchaseController extends Controller
      */
     public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
+        if ($request->delivered_component) {
+            foreach ($request->delivered_component as $index => $delivered) {
+                DB::table("delivery_components")->where("component_id", $purchase->components[$index]->id)->update([
+                    "delivered" => $delivered,
+                    "remain" => $request->remain_component[$index]
+                ]);
+            }
+        }
+        if ($request->delivered_product) {
+            foreach ($request->delivered_product as $index => $delivered) {
+                DB::table("delivery_products")->where("product_id", $purchase->products[$index]->id)->update([
+                    "delivered" => $delivered,
+                    "remain" => $request->remain_product[$index]
+                ]);
+            }
+        }
         $purchase->update([
             'status' => $purchase->remain_bill - $request->paid == 0 ? "closed"  : "open",
             'remain_bill' => $purchase->remain_bill - $request->paid,
@@ -150,11 +190,13 @@ class PurchaseController extends Controller
 
         $count = PurchaseHistory::where("purchase_id", $purchase->id)->count();
 
-        PurchaseHistory::create([
-            "purchase_id" => $purchase->id,
-            "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count + 1,
-            "payment" => $request->paid
-        ]);
+        if ($request->paid > 0) {
+            PurchaseHistory::create([
+                "purchase_id" => $purchase->id,
+                "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count + 1,
+                "payment" => $request->paid
+            ]);
+        }
 
         return redirect("/purchases");
     }
@@ -204,11 +246,24 @@ class PurchaseController extends Controller
             "quantity" => $request->quantity_purchase,
         ]);
 
-        PurchaseHistory::create([
-            "purchase_id" => $purchase->id,
-            "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
-            "payment" => $request->paid
+        $delivery_product = DB::table("delivery_products")->insertGetId([
+            "product_id" => $request->product_id,
+            "total" => $request->quantity_purchase,
+            "remain" => $request->quantity_purchase,
         ]);
+
+        DB::table("delivery_product_purchase")->insert([
+            "delivery_product_id" => $delivery_product,
+            "purchase_id" => $purchase->id,
+        ]);
+
+        if ($request->paid > 0) {
+            PurchaseHistory::create([
+                "purchase_id" => $purchase->id,
+                "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
+                "payment" => $request->paid
+            ]);
+        }
 
         PaymentPurchase::create([
             "purchase_id" => $purchase->id,
@@ -233,7 +288,7 @@ class PurchaseController extends Controller
             "quantity_not_finished" => DB::raw("quantity_not_finished - " . $request->quantity_purchase)
         ]);
 
-        $product->production->saleProductions->find($request->sale_production_id)->update([
+        DB::table("production_sale")->where("sale_id", $request->sale_production_id)->update([
             "quantity_not_finished" => DB::raw("quantity_not_finished - " . $request->quantity_purchase)
         ]);
 

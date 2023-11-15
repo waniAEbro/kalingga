@@ -30,4 +30,9 @@ class Component extends Model
     {
         return $this->belongsToMany(Purchase::class, "component_purchase")->withPivot("quantity");
     }
+
+    public function deliveryComponents()
+    {
+        return $this->hasMany(DeliveryComponent::class);
+    }
 }

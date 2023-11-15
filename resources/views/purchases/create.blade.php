@@ -174,7 +174,7 @@
                     </div>
                     <div class="w-40">
                         <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
-                            :value="old('paid')" oninput="batasBayar(this)" />
+                            :value="old('paid') ?? 0" oninput="batasBayar(this)" />
                     </div>
                 </div>
             </div>

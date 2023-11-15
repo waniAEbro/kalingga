@@ -15,13 +15,6 @@ class ComponentSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 5000; $i++) {
-            DB::table('components')->insert([
-                'name' => "Component $i",
-                'price_per_unit' => rand(1000, 90000),
-                'unit' => 'm'
-                // Tambahkan kolom lain sesuai kebutuhan
-            ]);
-        }
+        //
     }
 }

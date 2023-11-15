@@ -19,8 +19,7 @@ class ComponentFactory extends Factory
         return [
             "name" => fake()->name(),
             "unit" => fake()->randomLetter(),
-            "price_per_unit" => fake()->numberBetween(1000, 10000000),
-            "supplier_id" => fake()->numberBetween(1, 25)
+            "price_per_unit" => fake()->numberBetween(1000, 10000000)
         ];
     }
 }

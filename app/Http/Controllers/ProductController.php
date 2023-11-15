@@ -239,7 +239,9 @@ class ProductController extends Controller
         $tmp_file = TemporaryFile::where('folder', $request->product_image)->first();
 
         if ($tmp_file) {
-            Storage::deleteDirectory('public/' . substr($product->image, 0, strpos($product->image, '/')));
+            if ($product->image) {
+                Storage::deleteDirectory('public/' . substr($product->image, 0, strpos($product->image, '/')));
+            }
             Storage::copy('products/tmp/' . $tmp_file->folder . '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
             Product::where("id", $product->id)->first()->update([
                 'image' => $tmp_file->folder . '/' . $tmp_file->file
@@ -348,10 +350,10 @@ class ProductController extends Controller
 
         $tmp_file = TemporaryFile::latest()->first();
 
-        if($tmp_file){
-            Storage::copy('products/tmp/' . $tmp_file->folder. '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
+        if ($tmp_file) {
+            Storage::copy('products/tmp/' . $tmp_file->folder . '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
             Product::where("id", $product->id)->first()->update([
-                'image' => $tmp_file->folder. '/' . $tmp_file->file
+                'image' => $tmp_file->folder . '/' . $tmp_file->file
             ]);
         }
 
