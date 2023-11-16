@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="text-lg font my-7 font-[500]">Edit Sales</h1>
 
-    <x-edit-input-field :action="'sales'" :items="$sales" :width="'w-full'" :sisa="$sales->remain_bill">
+    <x-edit-input-field :action="'sales'" :items="$sales" :width="'w-full'">
         <div class="flex gap-5">
             <div>
                 <x-input type="date" :name="'sale_date'" :label="'Tanggal Penjualan'" :value="$sales->sale_date" readonly :inputParentClass="'mb-3'"
@@ -58,6 +58,9 @@
                             <th class="p-2">Jumlah</th>
                             <th class="p-2">Harga Per Produk</th>
                             <th class="p-2">Subtotal</th>
+                            <th class="p-2">Delivered</th>
+                            <th class="p-2">Remain</th>
+                            <th class="p-2">Total</th>
                         </tr>
                     </thead>
                     <tbody id="salesBody">
@@ -68,9 +71,34 @@
                                 <td id="quantity" class="p-2" x-ref="quantity">{{ $product->pivot->quantity }}</td>
                                 <td id="price" x-ref="price" class="p-2 rupiah">{{ $product->sell_price }}</td>
                                 <td class="p-2 rupiah"
-                                    x-text="toRupiah(parseInt($refs.quantity.innerText) * parseInt($refs.price.innerText.replace(/[^0-9\.,]/g, '').replace(/[^0-9\.,]/g, '').replace(/\./g,
-                    '').replace(',', '.')))">
+                                    x-text="toRupiah(parseInt($refs.quantity.innerText) * parseInt($refs.price.innerText.replace(/[^0-9\.,]/g, '').replace(/[^0-9\.,]/g, '').replace(/\./g, '').replace(',', '.')))">
                                     {{ $sales->total_bill }}</td>
+                                <td class="p-2">
+                                    <x-input :name="'delivered_product[]'" step="1" min="0"
+                                        max="{{ $sales->deliveryProducts->where('product_id', $product->id)->first()->total ?? 0 }}"
+                                        :min="$sales->deliveryProducts->where('product_id', $product->id)->first()
+                                            ->delivered ?? 0" :placeholder="'0'" :value="$sales->deliveryProducts->where('product_id', $product->id)->first()
+                                            ->delivered ?? 0" :type="'number'"
+                                        oninput="setDeliveredProduct(this)" class="delivered_product"></x-input>
+                                </td>
+                                <td class="p-2">
+                                    <x-input :name="'remain_product[]'" step="1" min="0"
+                                        max="{{ $sales->deliveryProducts->where('product_id', $product->id)->first()->total ?? 0 }}"
+                                        min="$sales->deliveryProducts->where('product_id', $product->id)->first()
+                                        ->remain ?? 0"
+                                        :placeholder="'0'" :value="$sales->deliveryProducts->where('product_id', $product->id)->first()
+                                            ->remain ?? 0" :type="'number'" readonly
+                                        class="remain_product bg-slate-100"></x-input>
+                                </td>
+                                <td class="p-2">
+                                    <x-input :name="'total_product[]'" step="1" min="0"
+                                        max="{{ $sales->deliveryProducts->where('product_id', $product->id)->first()->total ?? 0 }}"
+                                        min="$sales->deliveryProducts->where('product_id', $product->id)->first()
+                                        ->total ?? 0"
+                                        :placeholder="'0'" :value="$sales->deliveryProducts->where('product_id', $product->id)->first()
+                                            ->total ?? 0" :type="'number'" readonly
+                                        class="total_product bg-slate-100"></x-input>
+                                </td>
                             </tr>
                         @endforeach
                         @if (!$sales->remain_bill)
@@ -116,6 +144,30 @@
                     </table>
                 </div>
 
+                <h1 class="text-xl font-bold text-center m-4">History Pengiriman</h1>
+
+                <div class="w-full">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b-2">
+                                <th class="p-2">#</th>
+                                <th class="p-2">Tanggal</th>
+                                <th class="p-2">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($sales->deliveryHistories as $i => $history)
+                                <tr class="border-b">
+                                    <td class="p-2">{{ $i + 1 }}</td>
+                                    <td class="p-2">
+                                        {{ date('Y-m-d', strtotime($history->created_at)) }}</td>
+                                    <td class="p-2">{{ $history->description }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
                 <div class="flex justify-end w-full gap-5 mt-10">
                     @if ($sales->remain_bill)
                         <div class="w-40">
@@ -149,6 +201,15 @@
 
             sisa_sekarang = sisa_sebelumnya - element.value;
             document.querySelector('#remain_bill').value = sisa_sekarang;
+        }
+
+        function setDeliveredProduct(e) {
+            if (e.value > e.max) e.value = e.max
+            if (e.value < e.min) e.value = e.min
+            const parent = e.parentElement.parentElement.parentElement
+            const total = parent.querySelector(".total_product").value
+            const remain = total - e.value
+            parent.querySelector(".remain_product").value = remain
         }
 
         function total_bayar() {

@@ -126,7 +126,7 @@
                                     @foreach ($purchase->components as $i => $cs)
                                         <tr id="tr" x-data="" class="border-b">
                                             <td id="number" class="p-2">{{ $i + 1 }}</td>
-                                            <td class="w-40 p-2">{{ $cs->name }}</td>
+                                            <td class="p-2">{{ $cs->name }}</td>
                                             <td id="quantity" class="p-2" x-ref="quantity">{{ $cs->pivot->quantity }}
                                             </td>
                                             <td id="unit" class="p-2">{{ $cs->unit }}</td>
@@ -137,28 +137,40 @@
                                                 x-text="toRupiah(parseFloat($refs.quantity.innerText) * parseFloat($refs.price.innerText.replace(/[^0-9\.,]/g, '').replace(/[^0-9\.,]/g, '').replace(/\./g,'').replace(',', '.')))"
                                                 class="p-2"></td>
                                             <td class="p-2">
-                                                <x-input :name="'delivered_component[]'" step="1" min="0"
-                                                    max="{{ $purchase->deliveryComponents->where('component_id', $cs->id)->first()->total ?? 0 }}"
-                                                    :placeholder="'0'" :value="$purchase->deliveryComponents
+                                                <x-input :name="'delivered_component[]'" :step="0.00001" :min="number_format(
+                                                    $purchase->deliveryComponents
                                                         ->where('component_id', $cs->id)
-                                                        ->first()->delivered ?? 0"
+                                                        ->first()->delivered,
+                                                    5,
+                                                ) ?? 0"
+                                                    max="{{ number_format($purchase->deliveryComponents->where('component_id', $cs->id)->first()->total, 5) ?? 0 }}"
+                                                    :placeholder="'0'" :value="number_format(
+                                                        $purchase->deliveryComponents
+                                                            ->where('component_id', $cs->id)
+                                                            ->first()->delivered,
+                                                        5,
+                                                    ) ?? 0"
                                                     oninput="setDeliveredComponent(this)" :type="'number'"
                                                     class="delivered_component"></x-input>
                                             </td>
                                             <td class="p-2">
-                                                <x-input :name="'remain_component[]'" step="1" min="0"
-                                                    max="{{ $purchase->deliveryComponents->where('component_id', $cs->id)->first()->total ?? 0 }}"
-                                                    readonly :placeholder="'0'" :value="$purchase->deliveryComponents
-                                                        ->where('component_id', $cs->id)
-                                                        ->first()->remain ?? 0" :type="'number'"
+                                                <x-input :name="'remain_component[]'" step="1" readonly :placeholder="'0'"
+                                                    :value="number_format(
+                                                        $purchase->deliveryComponents
+                                                            ->where('component_id', $cs->id)
+                                                            ->first()->remain,
+                                                        5,
+                                                    ) ?? 0" :type="'number'"
                                                     class="remain_component bg-slate-100"></x-input>
                                             </td>
                                             <td class="p-2">
-                                                <x-input :name="'total_component[]'" step="1" min="0"
-                                                    max="{{ $purchase->deliveryComponents->where('component_id', $cs->id)->first()->total ?? 0 }}"
-                                                    readonly :placeholder="'0'" :value="$purchase->deliveryComponents
-                                                        ->where('component_id', $cs->id)
-                                                        ->first()->total ?? 0" :type="'number'"
+                                                <x-input :name="'total_component[]'" step="1" readonly :placeholder="'0'"
+                                                    :value="number_format(
+                                                        $purchase->deliveryComponents
+                                                            ->where('component_id', $cs->id)
+                                                            ->first()->total,
+                                                        5,
+                                                    ) ?? 0" :type="'number'"
                                                     class="total_component bg-slate-100"></x-input>
                                             </td>
                                         </tr>
@@ -197,7 +209,7 @@
                                     @foreach ($purchase->products as $i => $cs)
                                         <tr id="tr" x-data="" class="border-b">
                                             <td id="number" class="p-2">{{ $i + 1 }}</td>
-                                            <td class="w-40 p-2">{{ $cs->name }}</td>
+                                            <td class="p-2">{{ $cs->name }}</td>
                                             <td id="quantity" class="p-2" x-ref="quantity">
                                                 {{ $cs->pivot->quantity }}
                                             </td>
@@ -208,7 +220,9 @@
                                                 x-text="toRupiah(parseFloat($refs.quantity.innerText) * parseFloat($refs.price.innerText.replace(/[^0-9\.,]/g, '').replace(/[^0-9\.,]/g, '').replace(/\./g,'').replace(',', '.')))"
                                                 class="p-2"></td>
                                             <td class="p-2">
-                                                <x-input :name="'delivered_product[]'" step="1" min="0"
+                                                <x-input :name="'delivered_product[]'" :step="0.00001" :min="$purchase->deliveryProducts
+                                                    ->where('product_id', $cs->id)
+                                                    ->first()->delivered ?? 0"
                                                     max="{{ $purchase->deliveryProducts->where('product_id', $cs->id)->first()->total ?? 0 }}"
                                                     :placeholder="'0'" :value="$purchase->deliveryProducts
                                                         ->where('product_id', $cs->id)
@@ -310,6 +324,33 @@
                             </div>
                         </div>
                     </div>
+
+                    <h1 class="text-xl font-bold text-center m-4">History Pengiriman</h1>
+                    <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+                        <div class="grid grid-cols-1">
+                            <div class="px-4">
+                                <table class="w-full text-left">
+                                    <thead>
+                                        <tr class="border-b-2">
+                                            <th class="p-2">#</th>
+                                            <th class="p-2">Tanggal</th>
+                                            <th class="p-2">Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($purchase->historyDeliveries as $i => $history)
+                                            <tr class="border-b">
+                                                <td class="p-2">{{ $i + 1 }}</td>
+                                                <td class="p-2">
+                                                    {{ date('Y-m-d', strtotime($history->created_at)) }}</td>
+                                                <td class="p-2">{{ $history->description }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -331,10 +372,10 @@
     <script>
         function setDeliveredComponent(e) {
             if (e.value > e.max) e.value = e.max
-            if (e.value < 0) e.value = 0
+            if (e.value < e.min) e.value = e.min
             const parent = e.parentElement.parentElement.parentElement
             const total = parent.querySelector(".total_component").value
-            const remain = total - e.value
+            const remain = (total - e.value).toFixed(5)
             parent.querySelector(".remain_component").value = remain
         }
 
@@ -343,7 +384,7 @@
             if (e.value < 0) e.value = 0
             const parent = e.parentElement.parentElement.parentElement
             const total = parent.querySelector(".total_product").value
-            const remain = total - e.value
+            const remain = (total - e.value).toFixed(5)
             parent.querySelector(".remain_product").value = remain
         }
 
@@ -351,11 +392,10 @@
             let sisa_sebelumnya = {!! $purchase->remain_bill !!}
 
             let total = document.querySelector('#total_bill').value || 0;
-            let sisa_sekarang = sisa_sebelumnya - element.value;
 
             if (element.value > sisa_sebelumnya) element.value = sisa_sebelumnya
 
-            sisa_sekarang = sisa_sebelumnya - element.value;
+            let sisa_sekarang = (sisa_sebelumnya - element.value).toFixed(5);
             document.querySelector('#remain_bill').value = sisa_sekarang;
         }
 

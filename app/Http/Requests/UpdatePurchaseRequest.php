@@ -21,8 +21,31 @@ class UpdatePurchaseRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'paid' => 'required',
-        ];
+        if ($this->paid) {
+            return [
+                "paid" => "required"
+            ];
+        } else if ($this->delivered_product && $this->delivered_component) {
+            return [
+                "delivered_product.*" => "required",
+                "remain_product.*" => "required",
+                "total_product.*" => "required",
+                "delivered_component.*" => "required",
+                "remain_component.*" => "required",
+                "total_component.*" => "required",
+            ];
+        } else if ($this->delivered_product) {
+            return [
+                "delivered_product.*" => "required",
+                "remain_product.*" => "required",
+                "total_product.*" => "required"
+            ];
+        } else {
+            return [
+                "delivered_component.*" => "required",
+                "remain_component.*" => "required",
+                "total_component.*" => "required",
+            ];
+        }
     }
 }

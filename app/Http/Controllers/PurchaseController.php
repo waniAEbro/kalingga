@@ -18,6 +18,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StorePurchaseAPI;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
+use App\Models\HistoryDeliveryPurchase;
 
 class PurchaseController extends Controller
 {
@@ -173,6 +174,11 @@ class PurchaseController extends Controller
                     "delivered" => $delivered,
                     "remain" => $request->remain_component[$index]
                 ]);
+
+                HistoryDeliveryPurchase::create([
+                    "purchase_id" => $purchase->id,
+                    "description" => $purchase->components[$index]->name . " sebanyak " . $delivered . " " . $purchase->components[$index]->unit . " telah diterima"
+                ]);
             }
         }
         if ($request->delivered_product) {
@@ -181,22 +187,29 @@ class PurchaseController extends Controller
                     "delivered" => $delivered,
                     "remain" => $request->remain_product[$index]
                 ]);
+
+                HistoryDeliveryPurchase::create([
+                    "purchase_id" => $purchase->id,
+                    "description" => $purchase->products[$index]->name . " sebanyak " . $delivered . " " . $purchase->products[$index]->unit . " telah diterima"
+                ]);
             }
         }
-        $purchase->update([
-            'status' => $purchase->remain_bill - $request->paid == 0 ? "closed"  : "open",
-            'remain_bill' => DB::raw("remain_bill - " . $request->paid),
-            'paid' => $purchase->paid + $request->paid,
-        ]);
-
-        $count = PurchaseHistory::where("purchase_id", $purchase->id)->count();
-
-        if ($request->paid > 0) {
-            PurchaseHistory::create([
-                "purchase_id" => $purchase->id,
-                "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count + 1,
-                "payment" => $request->paid
+        if ($request->paid) {
+            $purchase->update([
+                'status' => $purchase->remain_bill - $request->paid == 0 ? "closed"  : "open",
+                'remain_bill' => $purchase->remain_bill - $request->paid,
+                'paid' => $purchase->paid + $request->paid,
             ]);
+
+            $count = PurchaseHistory::where("purchase_id", $purchase->id)->count();
+
+            if ($request->paid > 0) {
+                PurchaseHistory::create([
+                    "purchase_id" => $purchase->id,
+                    "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count + 1,
+                    "payment" => $request->paid
+                ]);
+            }
         }
 
         return redirect("/purchases");

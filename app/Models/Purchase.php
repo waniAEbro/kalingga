@@ -20,7 +20,7 @@ class Purchase extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["components", "supplier", "histories", "products", "payment_purchases", "delivery_purchases", "deliveryComponents", "deliveryProducts"];
+    protected $with = ["components", "supplier", "histories", "products", "payment_purchases", "delivery_purchases", "deliveryComponents", "deliveryProducts", "historyDeliveries"];
 
     public function supplier(): BelongsTo
     {

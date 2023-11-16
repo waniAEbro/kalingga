@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('delivery_components', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("delivered")->default(0);
-            $table->bigInteger("total")->default(0);
-            $table->bigInteger("remain")->default(0);
+            $table->double("delivered")->default(0);
+            $table->double("total")->default(0);
+            $table->double("remain")->default(0);
             $table->foreignId("component_id")->constrained("components")->cascadeOnDelete();
             $table->timestamps();
         });

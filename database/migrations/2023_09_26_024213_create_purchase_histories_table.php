@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("purchase_id")->constrained("purchases")->onDelete("cascade");
             $table->text("description");
-            $table->bigInteger("payment");
+            $table->double("payment");
             $table->timestamps();
         });
     }

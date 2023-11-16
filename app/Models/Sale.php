@@ -23,7 +23,7 @@ class Sale extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["customer", "histories", "payment_sales", "delivery_sales"];
+    protected $with = ["customer", "histories", "payment_sales", "delivery_sales", "deliveryProducts", "deliveryHistories"];
 
     public function customer(): BelongsTo
     {

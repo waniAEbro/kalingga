@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("sale_id")->constrained("sales")->onDelete("cascade");
             $table->text("description");
-            $table->bigInteger("payment");
+            $table->double("payment");
             $table->timestamps();
         });
     }
