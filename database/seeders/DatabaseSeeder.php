@@ -31,10 +31,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Supplier::factory(1000)->create();
-        Customer::factory(1000)->create();
-        Component::factory(1000)->create();
-        ComponentSupplier::factory(1000)->create();
+        // Supplier::factory(1000)->create();
+        // Customer::factory(1000)->create();
+        // Component::factory(1000)->create();
+        // ComponentSupplier::factory(1000)->create();
 
         Employee::create([
             "employee_name" => "Imam",

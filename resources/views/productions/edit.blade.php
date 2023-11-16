@@ -111,6 +111,12 @@
                     supplier_id).phone;
                 document.getElementById("price_purchase").value = product.suppliers.find(supplier => supplier.id ==
                     supplier_id).pivot.price_per_unit;
+
+                const quantity_purchase = document.getElementById("quantity_purchase").value;
+                const price_purchase = document.getElementById('price_purchase').value;
+                const subtotal = quantity_purchase * price_purchase;
+                document.getElementById('subtotal').innerHTML = subtotal;
+                document.getElementById('total_bill').value = subtotal;
             } else {
                 document.getElementById('supplier_address').value = '';
                 document.getElementById('supplier_email').value = '';
@@ -119,7 +125,6 @@
         }
 
         function setSubtotal(element) {
-            console.log(element.value)
             if (parseInt(element.value) >= parseInt(element.max)) {
                 element.value = element.max;
             } else if (parseInt(element.value) <= 0) {

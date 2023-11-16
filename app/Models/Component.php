@@ -35,4 +35,9 @@ class Component extends Model
     {
         return $this->hasMany(DeliveryComponent::class);
     }
+
+    public function categoryComponent(): BelongsTo
+    {
+        return $this->belongsTo(CategoryComponent::class);
+    }
 }
