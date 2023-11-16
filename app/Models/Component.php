@@ -14,7 +14,7 @@ class Component extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["suppliers"];
+    protected $with = ["suppliers", "category"];
 
     public function products(): BelongsToMany
     {
@@ -36,8 +36,8 @@ class Component extends Model
         return $this->hasMany(DeliveryComponent::class);
     }
 
-    public function categoryComponent(): BelongsTo
+    public function category()
     {
-        return $this->belongsTo(CategoryComponent::class);
+        return $this->belongsTo(CategoryComponent::class, "category_component_id", "id");
     }
 }

@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Sale;
+use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\Supplier;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
@@ -79,7 +81,7 @@ Route::middleware(['login.check'])->group(function () {
     });
 
     Route::get('/dashboard', function () {
-        return view('dashboard', ["salesNotDone" => Sale::where("status", "open")->get(), "sales" => Sale::get(), "purchases" => Purchase::get()]);
+        return view('dashboard', ["salesNotDone" => Sale::where("status", "open")->get(), "sales" => Sale::get(), "purchases" => Purchase::get(), "products" => Product::get(), "suppliers" => Supplier::get()]);
     });
 
     Route::get('/users', [LoginController::class, 'index_user']);

@@ -1,60 +1,100 @@
 @extends('layouts.layout')
 
 @section('content')
-    <h1 class="text-lg font my-7 font-[500]">Create Purchases</h1>
-
-    <x-create-input-field :action="'purchases'" :width="'w-full'">
-        <div class="flex gap-5 text-sm">
-            <div>
-                <label for="purchase_date" class="block text-sm">Tanggal Pembelian</label>
-                <x-input type="date" :name="'purchase_date'" :inputParentClass="'mb-3'" :value="old('purchase_date') ?? Carbon\Carbon::now()->format('Y-m-d')" />
-
-                <label for="due_date" class="block text-sm">Tanggal Jatuh Tempo</label>
-                <x-input type="date" :name="'due_date'" :inputParentClass="'mb-3'" :value="old('due_date') ?? Carbon\Carbon::now()->format('Y-m-d')" />
-
-                <label for="supplier_id" class="block text-sm">Pemasok</label>
-                <div class="w-full mt-2 mb-3">
-                    <x-select x-on:click="getSupplier()" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'"
-                        :value="old('supplier_id')" :new="'newSupplierModal()'" />
-                    @error('supplier_id')
-                        <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
-                    @enderror
+    <form action="/purchases" method="POST">
+        @csrf
+        <h1 class="text-xl font-bold text-center m-4">Data Transaksi</h1>
+        <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+            <div class="grid grid-cols-2">
+                <div class="px-4">
+                    <label for="purchase_date" class="block text-sm">Tanggal Pembelian</label>
+                    <x-input type="date" :name="'purchase_date'" :inputParentClass="'mb-3'" :value="old('purchase_date') ?? Carbon\Carbon::now()->format('Y-m-d')" />
                 </div>
 
-                <x-input :name="'supplier_address'" :label="'Alamat Pemasok'" readonly class="mb-3 bg-slate-100" />
+                <div class="px-4">
+                    <label for="due_date" class="block text-sm">Tanggal Jatuh Tempo</label>
+                    <x-input type="date" :name="'due_date'" :inputParentClass="'mb-3'" :value="old('due_date') ?? Carbon\Carbon::now()->format('Y-m-d')" />
+                </div>
 
-                <x-input :name="'supplier_email'" :label="'Email Pemasok'" readonly class="mb-3 bg-slate-100" />
-
-                <x-input :name="'supplier_phone'" :label="'No Hp Pemasok'" readonly class="mb-3 bg-slate-100" />
-
-                <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" :inputParentClass="'mb-3'" :value="old('code') ?? 0" />
-
-                <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :inputParentClass="'mb-3'" :value="old('method') ?? 0" />
-
-                <x-input :name="'beneficiary_bank'" :type="'text'" :label="'Beneficiary\'s Bank'" :inputParentClass="'mb-3'" :value="old('beneficiary_bank') ?? 0" />
-
-                <x-input :name="'beneficiary_ac_usd'" :type="'text'" :label="'Beneficiary A/C USD'" :inputParentClass="'mb-3'" :value="old('beneficiary_ac_usd') ?? 0" />
-
-                <x-input :name="'bank_address'" :type="'text'" :label="'Bank Address'" :inputParentClass="'mb-3'" :value="old('bank_address') ?? 0" />
-
-                <x-input :name="'swift_code'" :type="'text'" :label="'Swift Code'" :inputParentClass="'mb-3'" :value="old('swift_code') ?? 0" />
-
-                <x-input :name="'beneficiary_name'" :type="'text'" :label="'Beneificiary Name'" :inputParentClass="'mb-3'" :value="old('beneficiary_name') ?? 0" />
-
-                <x-input :name="'beneficiary_address'" :type="'text'" :label="'Beneficiary\'s Address'" :inputParentClass="'mb-3'" :value="old('beneficiary_address') ?? 0" />
-
-                <x-input :name="'phone'" :type="'text'" :label="'Phone'" :inputParentClass="'mb-3'" :value="old('phone') ?? 0" />
-
-                <div class="flex w-full gap-3 my-3">
-                    <div class="flex-1">
-                        <x-input-textarea :name="'location'" :label="'Lokasi Pengiriman'" :placeholder="'location'" :value="old('location') ?? 0" />
-                    </div>
+                <div class="px-4 col-span-2 mt-2">
+                    <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" :inputParentClass="'mb-3'" :value="old('code') ?? 0" />
                 </div>
             </div>
+        </div>
 
-            <div class="divider divider-horizontal"></div>
+        <h1 class="text-xl font-bold text-center m-4">Data Diri Supplier</h1>
+        <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+            <div class="grid grid-cols-3">
+                <div class="col-span-3 px-4">
+                    <label for="supplier_id" class="block text-sm">Pemasok</label>
+                    <div class="w-full mt-2 mb-3">
+                        <x-select x-on:click="getSupplier()" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'"
+                            :value="old('supplier_id')" :new="'newSupplierModal()'" />
+                        @error('supplier_id')
+                            <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="px-4 mt-2">
+                    <x-input :name="'supplier_address'" :label="'Alamat Pemasok'" readonly class="mb-3 bg-slate-100" />
+                </div>
+                <div class="px-4 mt-2">
+                    <x-input :name="'supplier_email'" :label="'Email Pemasok'" readonly class="mb-3 bg-slate-100" />
+                </div>
+                <div class="px-4 mt-2">
+                    <x-input :name="'supplier_phone'" :label="'No Hp Pemasok'" readonly class="mb-3 bg-slate-100" />
+                </div>
+            </div>
+        </div>
 
-            <div class="w-full">
+        <h1 class="text-xl font-bold text-center m-4">Data Pembayaran</h1>
+        <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+            <div class="grid grid-cols-3">
+                <div class="col-span-3 px-4">
+                    <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :inputParentClass="'mb-3'"
+                        :value="old('method') ?? 0" />
+                </div>
+
+                <div class="px-4 mt-2">
+                    <x-input :name="'beneficiary_bank'" :type="'text'" :label="'Beneficiary\'s Bank'" :inputParentClass="'mb-3'"
+                        :value="old('beneficiary_bank') ?? 0" />
+                </div>
+
+                <div class="px-4 mt-2">
+                    <x-input :name="'beneficiary_ac_usd'" :type="'text'" :label="'Beneficiary A/C USD'" :inputParentClass="'mb-3'"
+                        :value="old('beneficiary_ac_usd') ?? 0" />
+                </div>
+
+                <div class="px-4 mt-2">
+                    <x-input :name="'bank_address'" :type="'text'" :label="'Bank Address'" :inputParentClass="'mb-3'"
+                        :value="old('bank_address') ?? 0" />
+                </div>
+
+                <div class="px-4 mt-2">
+                    <x-input :name="'swift_code'" :type="'text'" :label="'Swift Code'" :inputParentClass="'mb-3'"
+                        :value="old('swift_code') ?? 0" />
+                </div>
+                <div class="px-4 mt-2">
+                    <x-input :name="'beneficiary_name'" :type="'text'" :label="'Beneificiary Name'" :inputParentClass="'mb-3'"
+                        :value="old('beneficiary_name') ?? 0" />
+                </div>
+                <div class="px-4 mt-2">
+                    <x-input :name="'beneficiary_address'" :type="'text'" :label="'Beneficiary\'s Address'" :inputParentClass="'mb-3'"
+                        :value="old('beneficiary_address') ?? 0" />
+                </div>
+                <div class="px-4 mt-2">
+                    <x-input :name="'phone'" :type="'text'" :label="'Phone'" :inputParentClass="'mb-3'"
+                        :value="old('phone') ?? 0" />
+                </div>
+                <div class="px-4 mt-2 col-span-2">
+                    <x-input-textarea :name="'location'" :label="'Lokasi Pengiriman'" :placeholder="'location'" :value="old('location') ?? 0" />
+                </div>
+            </div>
+        </div>
+
+        <h1 class="text-xl font-bold text-center m-4">Data Keranjang</h1>
+        <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+            <div class="grid grid-cols-1 px-4">
                 <h1 class="mb-3 text-xl font-bold">Komponen</h1>
 
                 <table class="w-full text-left table-fixed">
@@ -140,10 +180,11 @@
                                         @enderror
                                     </td>
                                     <td class="p-2"><input x-ref="quantity" type="number" name="quantity_product[]"
-                                            oninput="subTotalProduk(this)" value="{{ old('quantity_product', [])[$index] }}"
-                                            x-init="getProduct(product);
+                                            oninput="subTotalProduk(this)"
+                                            value="{{ old('quantity_product', [])[$index] }}" x-init="getProduct(product);
                                             await $nextTick();
-                                            subTotalProduk($refs.quantity)" step="1"
+                                            subTotalProduk($refs.quantity)"
+                                            step="1"
                                             class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         @error('quantity_product.' . $index)
                                             <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
@@ -167,19 +208,35 @@
                     x-on:click="addNewProduct(); set_number_product(); await $nextTick(); setProduk()"
                     class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
                     New</button>
+            </div>
+        </div>
 
-                <div class="flex justify-end gap-3 mt-10">
-                    <div class="w-40">
-                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bayar'" :type="'number'" readonly />
-                    </div>
-                    <div class="w-40">
-                        <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
-                            :value="old('paid') ?? 0" oninput="batasBayar(this)" />
-                    </div>
+        <h1 class="text-xl font-bold text-center m-4">Data Keranjang</h1>
+        <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+            <div class="grid grid-cols-2">
+                <div class="px-4">
+                    <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bayar'" :type="'number'" readonly />
+                </div>
+                <div class="px-4">
+                    <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'" :value="old('paid') ?? 0"
+                        oninput="batasBayar(this)" />
                 </div>
             </div>
         </div>
-    </x-create-input-field>
+
+        <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+            <div class="grid grid-cols-2">
+                <div class="px-4">
+                    <a href="/purchases"><button type="button"
+                            class="w-full  py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button></a>
+                </div>
+                <div class="px-4">
+                    <button type="submit"
+                        class="w-full py-2 px-5 border text-[#F7F9F9] bg-[#064e3be1] text-sm rounded-lg">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </form>
 @endsection
 @push('script')
     <script>
