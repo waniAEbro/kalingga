@@ -59,13 +59,14 @@
                                 <tr x-data="{ component: $el }" class="border-b">
                                     <td id="number-component" class="p-2 text-center"></td>
                                     <td class="w-40 p-2">
-                                        <x-select x-on:click="getComponent(component);" :dataLists="$components->toArray()"
-                                            :value="$cp->id" :label="$cp->name" :new="'newComponentModal(component); await $nextTick(); setSuppliersComponent();'" :name="'component_id[]'"
-                                            :id="'component_id'" />
+                                        <x-select x-on:click="getComponent(component);" :dataLists="$components->toArray()" :value="$cp->id"
+                                            :label="$cp->name" :new="'newComponentModal(component); await $nextTick(); setSuppliersComponent();'" :name="'component_id[]'" :id="'component_id'" />
                                     </td>
                                     <td class="p-2">
-                                        <input step="0.001" x-init="getComponent(component); set_subtotal($el);" x-ref="quantity" type="number" name="quantity[]"
-                                            min="0" oninput="set_subtotal(this)" value="{{ $cp->pivot->quantity }}"
+                                        <input step="0.001" x-init="getComponent(component);
+                                        set_subtotal($el);" x-ref="quantity" type="number"
+                                            name="quantity[]" min="0" oninput="set_subtotal(this)"
+                                            value="{{ $cp->pivot->quantity }}"
                                             class="w-20 px-2 py-2 transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                     </td>
                                     <td id="unit" class="p-2"></td>
@@ -134,11 +135,12 @@
                                 <tr x-data="{ supplier: $el }" class="border-b">
                                     <td id="number-supplier" class="p-2 text-center"></td>
                                     <td class="p-2">
-                                        <x-select :value="$sp->id" :label="$sp->name" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" :new="'newSupplierModal(supplier)'" />
+                                        <x-select :value="$sp->id" :label="$sp->name" :dataLists="$suppliers->toArray()"
+                                            :name="'supplier_id[]'" :id="'supplier_id'" :new="'newSupplierModal(supplier)'" />
                                     </td>
                                     <td class="p-2">
-                                        <x-input-with-desc :value="$sp->pivot->price_per_unit" :desc="'Rp'" :name="'price_supplier[]'" :type="'number'"
-                                            :placeholder="'1000'" />
+                                        <x-input-with-desc :value="$sp->pivot->price_per_unit" :desc="'Rp'" :name="'price_supplier[]'"
+                                            :type="'number'" :placeholder="'1000'" />
                                     </td>
                                     <td id="aksi" class="p-2">
                                         <button type="button"
@@ -648,6 +650,10 @@
                             <x-input-with-desc :desc="'Rp'" :name="'price_per_unit'" :type="'number'"
                                 :label="'Harga Per Unit'" :placeholder="'1000'" :value="old('price_per_unit')" />
                         </div>
+                        <div class="flex-initial w-64">
+                            <label for="category_id" class="block text-sm mb-2">Kategori</label>
+                            <x-select :dataLists="$categories->toArray()" :name="'category_id'" :id="'category_id'" />
+                        </div>
                     </div>
 
                     <table class="w-full mt-5 text-left table-fixed">
@@ -695,13 +701,9 @@
             document.getElementById('create-component').addEventListener('click', () => {
                 createComponent(componentRow)
             })
-            console.log('com modal', componentRow)
-            console.log('suppliers', suppliers)
-            console.log('suppliersSelected before', suppliersSelected)
             suppliers.forEach(e => {
                 suppliersSelected[e.id] = e.name
             })
-            console.log('suppliersSelected after', suppliersSelected)
 
             set_modal_supplier_number();
             modalSupplierDeleteBtnToggle();
@@ -803,6 +805,7 @@
             const supplier_id = Array.from(document.querySelectorAll('#supplier_id_component')).map(e => e.value)
             const price_supplier = Array.from(document.querySelectorAll('.price_supplier_component')).map(e => e
                 .value)
+            const category_id = document.getElementById('category_id').value
 
             const loading = document.querySelector('.loading');
             loading.classList.remove('hidden')
@@ -819,7 +822,8 @@
                         price_per_unit,
                         unit,
                         supplier_id,
-                        price_supplier
+                        price_supplier,
+                        category_id
                     })
                 })
 

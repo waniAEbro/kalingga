@@ -165,12 +165,12 @@ class SaleController extends Controller
             "sale" => $sale
         ]);
 
-        return $pdf->stream('quotation.pdf');
+        return $pdf->stream("quotation-sales-" . $sale->code . '.pdf');
     }
 
     public function export(Sale $sale)
     {
         $excel = app('excel');
-        return $excel->download(new SaleExport($sale), 'users.xlsx');
+        return $excel->download(new SaleExport($sale), "quotation-sales-" . $sale->code . '.xlsx');
     }
 }

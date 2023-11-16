@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\PurchaseExport;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use App\Models\Component;
+use App\Exports\PurchaseExport;
 use App\Models\PaymentPurchase;
 use App\Models\PurchaseHistory;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DeliveryPurchase;
-use App\Models\ComponentPurchase;
+use App\Models\CategoryComponent;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePurchaseAPI;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\StorePurchaseAPI;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
 
@@ -42,7 +42,8 @@ class PurchaseController extends Controller
             "components" => Component::get(),
             "products" => Product::get(),
             "payment_purchases" => PaymentPurchase::get(),
-            "delivery_purchases" => DeliveryPurchase::get()
+            "delivery_purchases" => DeliveryPurchase::get(),
+            "categories" => CategoryComponent::get(),
         ]);
     }
 
@@ -184,8 +185,8 @@ class PurchaseController extends Controller
         }
         $purchase->update([
             'status' => $purchase->remain_bill - $request->paid == 0 ? "closed"  : "open",
-            'remain_bill' => $purchase->remain_bill - $request->paid,
-            'paid' => $request->paid + $purchase->paid,
+            'remain_bill' => DB::raw("remain_bill - " . $request->paid),
+            'paid' => $purchase->paid + $request->paid,
         ]);
 
         $count = PurchaseHistory::where("purchase_id", $purchase->id)->count();
@@ -218,13 +219,13 @@ class PurchaseController extends Controller
             "purchase" => $purchase
         ]);
 
-        return $pdf->stream('quotation.pdf');
+        return $pdf->stream("quotation-purchases-" . $purchase->code . '.pdf');
     }
 
     public function export(Purchase $purchase)
     {
         $excel = app('excel');
-        return $excel->download(new PurchaseExport($purchase), 'users.xlsx');
+        return $excel->download(new PurchaseExport($purchase), "quotation-purchases-" . $purchase->code . '.xlsx');
     }
 
     public function storeapi(StorePurchaseAPI $request)

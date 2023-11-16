@@ -626,6 +626,10 @@
                             <x-input-with-desc :desc="'Rp'" :name="'price_per_unit'" :type="'number'"
                                 :label="'Harga Per Unit'" :placeholder="'1000'" :value="old('price_per_unit')" />
                         </div>
+                        <div class="flex-initial w-64">
+                            <label for="category_id" class="block text-sm mb-2">Kategori</label>
+                            <x-select :dataLists="$categories->toArray()" :name="'category_id'" :id="'category_id'" />
+                        </div>
                     </div>
 
                     <table class="w-full mt-5 text-left table-fixed">
@@ -673,13 +677,6 @@
             document.getElementById('create-component').addEventListener('click', () => {
                 createComponent(componentRow)
             })
-            console.log('com modal', componentRow)
-            console.log('suppliers', suppliers)
-            console.log('suppliersSelected before', suppliersSelected)
-            suppliers.forEach(e => {
-                suppliersSelected[e.id] = e.name
-            })
-            console.log('suppliersSelected after', suppliersSelected)
 
             set_modal_supplier_number();
             modalSupplierDeleteBtnToggle();
@@ -778,6 +775,7 @@
             const name = document.getElementById('component_name').value
             const unit = document.getElementById('component_unit').value
             const price_per_unit = document.getElementById('price_per_unit').value
+            const category_id = document.getElementById("category_id").value
             const supplier_id = Array.from(document.querySelectorAll('#supplier_id_component')).map(e => e.value)
             const price_supplier = Array.from(document.querySelectorAll('.price_supplier_component')).map(e => e
                 .value)
@@ -797,7 +795,8 @@
                         price_per_unit,
                         unit,
                         supplier_id,
-                        price_supplier
+                        price_supplier,
+                        category_id
                     })
                 })
 

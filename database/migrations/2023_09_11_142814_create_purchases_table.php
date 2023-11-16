@@ -17,9 +17,9 @@ return new class extends Migration
             $table->date("purchase_date");
             $table->date("due_date");
             $table->text("status");
-            $table->float("remain_bill");
-            $table->float("total_bill");
-            $table->float("paid");
+            $table->double("remain_bill");
+            $table->double("total_bill");
+            $table->double("paid");
             $table->text("code");
             $table->timestamps();
         });
