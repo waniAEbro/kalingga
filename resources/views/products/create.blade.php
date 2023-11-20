@@ -27,7 +27,7 @@
                                 <tr x-data="{ component: $el }" class="border-b">
                                     <td id="number-component" class="p-2 text-center"></td>
                                     <td class="w-40 p-2">
-                                        <x-select x-on:click="getComponent(component)" x-init="getComponent(component)"
+                                        <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)"
                                             :dataLists="$components->toArray()" :new="'newComponentModal(component); await $nextTick(); setSuppliersComponent();'" :name="'component_id[]'" :id="'component_id'"
                                             :value="$cp" />
                                         @error('component_id.' . $index)
@@ -58,7 +58,7 @@
                             <tr x-data="{ component: $el }" class="border-b">
                                 <td id="number-component" class="p-2 text-center"></td>
                                 <td class="w-40 p-2">
-                                    <x-select x-on:click="getComponent(component); $nextTick();" :dataLists="$components->toArray()"
+                                    <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
                                         :new="'newComponentModal(component); await $nextTick(); setSuppliersComponent();'" :name="'component_id[]'" :id="'component_id'" />
                                 </td>
                                 <td class="p-2">
@@ -130,7 +130,7 @@
                             <tr x-data="{ supplier: $el }" class="border-b">
                                 <td id="number-supplier" class="p-2 text-center"></td>
                                 <td class="p-2">
-                                    <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" :new="'newSupplierModal(supplier)'" />
+                                    <x-select  :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" :new="'newSupplierModal(supplier)'" />
                                 </td>
                                 <td class="p-2">
                                     <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'"

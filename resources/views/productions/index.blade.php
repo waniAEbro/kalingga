@@ -32,7 +32,7 @@
         buildTable()
 
         function show(id) {
-            const production = productions.find(data => data.id === id);
+            const product = products.find(data => data.id === id);
             console.log(id)
 
             const modal = document.querySelector('#modal');
@@ -52,23 +52,23 @@
                     <div class="px-[30px] py-[20px] text-sm">
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
                             <div class="font-bold w-40 flex justify-between">Kode Produksi<div>:</div></div>
-                            <div class="">${production.code}</div>
+                            <div class="">${product.code}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
                             <div class="font-bold w-40 flex justify-between">Nama Produk<div>:</div></div>
-                            <div class="">${production.product.name}</div>
+                            <div class="">${product.name}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
                             <div class="font-bold w-40 flex justify-between">Jumlah Belum Selesai<div>:</div></div>
-                            <div class="">${production.quantity_not_finished}</div>
+                            <div class="">${product.production.quantity_not_finished}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
                             <div class="font-bold w-40 flex justify-between">Jumlah Selesai<div>:</div></div>
-                            <div class="">${production.quantity_finished}</div>
+                            <div class="">${product.production.quantity_finished}</div>
                         </div>
                         <div class="grid grid-cols-[1fr_1fr] mb-1">
                             <div class="font-bold w-40 flex justify-between">Total<div>:</div></div>
-                            <div class="">${production.quantity_finished+production.quantity_not_finished}</div>
+                            <div class="">${product.production.quantity_finished+product.production.quantity_not_finished}</div>
                         </div>
                     </div>
 

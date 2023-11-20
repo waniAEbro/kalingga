@@ -13,22 +13,22 @@ return new class extends Migration
     {
         Schema::create('packs', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("cost");
-            $table->double("outer_length");
-            $table->double("outer_width");
-            $table->double("outer_height");
-            $table->double("inner_length");
-            $table->double("inner_width");
-            $table->double("inner_height");
-            $table->double("nw");
-            $table->double("gw");
-            $table->bigInteger("box_price");
-            $table->bigInteger("box_hardware");
-            $table->bigInteger("assembling");
-            $table->bigInteger("stiker");
-            $table->bigInteger("hagtag");
-            $table->bigInteger("maintenance");
-            $table->bigInteger("total");
+            $table->bigInteger('cost');
+            $table->double('outer_length');
+            $table->double('outer_width');
+            $table->double('outer_height');
+            $table->double('inner_length');
+            $table->double('inner_width');
+            $table->double('inner_height');
+            $table->double('nw');
+            $table->double('gw');
+            $table->bigInteger('box_price');
+            $table->bigInteger('box_hardware');
+            $table->bigInteger('assembling');
+            $table->bigInteger('stiker');
+            $table->bigInteger('hagtag');
+            $table->bigInteger('maintenance');
+            $table->bigInteger('total');
             $table->timestamps();
         });
     }

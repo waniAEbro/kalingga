@@ -13,7 +13,7 @@ class SupplierSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 5000; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
             DB::table('suppliers')->insert([
                 'name' => "name $i",
                 'email' => "lala$i@gmail.com",

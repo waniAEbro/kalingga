@@ -48,9 +48,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             PermissionSeeder::class, 
-            // ComponentSeeder::class, 
-            // SupplierSeeder::class, 
-            // ProductSeeder::class
+            ComponentSeeder::class, 
+            SupplierSeeder::class, 
+            ProductSeeder::class
         ]);
     }
 }

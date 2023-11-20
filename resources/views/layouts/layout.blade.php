@@ -63,7 +63,7 @@
         </div>
 
         <div id="modal"
-            class="absolute text-[#161414] -z-40 translate-x-1/2 top-20 right-1/2 rounded-xl transition-opacity duration-300 opacity-0">
+            class="fixed text-[#161414] -z-40 translate-x-1/2 top-20 right-1/2 rounded-xl transition-opacity duration-300 opacity-0">
 
         </div>
 
@@ -73,7 +73,6 @@
         <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 </body>
 <script>
-    
     const state = {
         allData: [],
         data: [],
@@ -101,9 +100,9 @@
 
     function setFilepond() {
         FilePond.registerPlugin(FilePondPluginImagePreview);
-    
+
         FilePond.create(document.querySelector('input[name="product_image"]'));
-    
+
         FilePond.setOptions({
             server: {
                 process: '/tmp-upload',
@@ -114,7 +113,7 @@
             }
         })
     }
-    
+
     function update_bill(element) {
         let total = document.querySelector('#total_bill').value;
         if (parseInt(element.value) >= parseInt(total)) {
@@ -209,7 +208,6 @@
                                                         <div class="absolute w-full h-full bg-gradient-to-t from-gray-800">
                                                             <div class="absolute bottom-3 left-3">
                                                                 <div class="text-white">${data.name}</div>
-                                                                <div class="text-sm text-gray-300">Perkayuan</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -252,11 +250,10 @@
                 tbody.id = "table-body"
                 state.currentData.forEach((data, index) => {
                     const tr = document.createElement("tr")
-                    tr.classList.add("cursor-pointer", "text-sm", "bg-white", "hover:scale-[1.01]",
-                        "transition-all",
-                        "overflow-hidden", "drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]")
+                    tr.classList.add("cursor-pointer", "text-sm", "bg-white", "transition-all", "drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]")
                     tr.id = "daftar-item";
                     tr.height = "30px";
+                    tr.setAttribute('x-data', '{ open: false }')
                     tr.innerHTML += `
                         <td>
                             <div class="flex items-center justify-center gap-3 border-r h-7 border-slate-200">
@@ -277,12 +274,22 @@
 
                         tr.appendChild(td)
                     })
-                    const button = `<a href="/${state.menu}/${ data.id }/print" target="_blank" class="flex items-center gap-1 text-slate-600">
-                                <span class="text-lg"><ion-icon name="print-outline"></ion-icon></span>Print
-                            </a>`
-                    const excelButton = `<a href="/${state.menu}/${ data.id }/export" target="_blank" class="flex items-center gap-1 text-slate-600">
-                                <span class="text-lg"><ion-icon name="document-outline"></ion-icon></span>Excel
-                            </a>`
+                    
+                    const download = `
+                            <button x-on:click="open = !open" class="flex items-center gap-1 text-slate-600 relative">
+                                <span class="text-lg"><ion-icon name="download-outline"></ion-icon></span>
+                                Unduh
+                                <div x-show="open" x-transition x-on:click.outside="open = false" class="absolute left-0 -top-24 bg-white  rounded-lg border-2 border-slate-300 p-2">
+                                    <a href="/${state.menu}/${ data.id }/print" target="_blank" class="flex hover:bg-slate-100 rounded-md p-1 rounded w-20 items-center gap-1 text-slate-600">
+                                        <span class="text-lg flex items-center"><ion-icon name="print-outline"></ion-icon></span>
+                                        Pdf
+                                    </a>
+                                    <a href="/${state.menu}/${ data.id }/export" target="_blank" class="mt-1 flex w-20 items-center p-1 hover:bg-slate-100 rounded-md gap-1 text-slate-600">
+                                        <span class="text-lg flex items-center"><ion-icon name="document-outline"></ion-icon></span>
+                                        Excel
+                                    </a>
+                                </div>
+                            </button>`
                     if (state.menu == "presence") {
                         tr.innerHTML += `
                     <td class="px-4 py-2" onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
@@ -305,15 +312,14 @@
                         tr.innerHTML += `
                     <td class="" onclick="stopPropagation(event)">
                         <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
-                            <a href="/${state.menu}/${ data.id }/edit" class="flex items-center gap-1 text-slate-600">
+                            <a href="/${state.menu}/${ data.id }/edit" class="flex items-center gap-1 text-slate-600 hover:opacity-70">
                                 <span class="text-lg"><ion-icon name="create-outline"></ion-icon></span>Edit
                             </a>
-                            ${state.menu == "sales" || state.menu == "purchases" ? button : ""}
-                            ${state.menu == "sales" || state.menu == "purchases" ? excelButton : ""}
+                            ${state.menu == "sales" || state.menu == "purchases" ? download : ""}
                             <form action="/${state.menu}/${ data.id }" method="post">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="flex items-center gap-1 text-red-700"><span
+                                <button type="submit" class="flex items-center gap-1 text-red-700 hover:opacity-70"><span
                                         class="text-lg"><ion-icon name="trash-outline"></ion-icon></span>Hapus</button>
                             </form>
                         </div>
@@ -455,7 +461,7 @@
                             >
                             ${i}
                             </button>`
-                        }
+                    }
 
                     pageNumbers += `<div class="flex items-center px-4">...</div>`
                 }

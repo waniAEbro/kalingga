@@ -21,7 +21,7 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 1000; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             // Simpan data ke tabel 'pack'
             $pack = Pack::create([
                 "cost" => rand(50, 200),

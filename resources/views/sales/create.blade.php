@@ -72,7 +72,7 @@
                                 <tr x-data="{ product: $el }" class="border-b">
                                     <td id="number-product" class="p-2 text-center"></td>
                                     <td class="w-40 p-2">
-                                        <x-select x-on:click="getProduct(product); await $nextTick(); setProduk();"
+                                        <x-select x-on:click="getProduct(product); await $nextTick(); setProduk(); subTotalProduk($refs.quantity)"
                                             :dataLists="$products->toArray()" :name="'product_id[]'" :value="$product" :id="'product_id'"
                                             :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); setFilepond() '" />
                                         @error('product_id.' . $index)
@@ -80,7 +80,10 @@
                                         @enderror
                                     </td>
                                     <td class="p-2"><input x-ref="quantity" type="number" name="quantity_product[]"
-                                            oninput="subTotalProduk(this)" value="{{ old('quantity_product', [])[$index] }}" x-init="getProduct(product); await $nextTick(); subTotalProduk($refs.quantity)"  step="0.0001"
+                                            oninput="subTotalProduk(this)" value="{{ old('quantity_product', [])[$index] }}"
+                                            x-init="getProduct(product);
+                                            await $nextTick();
+                                            subTotalProduk($refs.quantity)" step="0.0001"
                                             class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         @error('quantity_product.' . $index)
                                             <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
@@ -100,11 +103,13 @@
                             <tr x-data="{ product: $el }" class="border-b">
                                 <td id="number-product" class="p-2 text-center"></td>
                                 <td class="w-40 p-2">
-                                    <x-select x-on:click="getProduct(product); await $nextTick(); setProduk();"
+                                    <x-select x-on:click="getProduct(product); await $nextTick(); setProduk(); subTotalProduk($refs.quantity)"
                                         :dataLists="$products->toArray()" :name="'product_id[]'" :id="'product_id'" :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); setFilepond() '" />
                                 </td>
                                 <td class="p-2"><input x-ref="quantity" type="number" name="quantity_product[]"
-                                        oninput="subTotalProduk(this)" value="0" x-init="getProduct(product); await $nextTick(); subTotalProduk($refs.quantity)" step="0.0001"
+                                        oninput="subTotalProduk(this)" value="0" x-init="getProduct(product);
+                                        await $nextTick();
+                                        subTotalProduk($refs.quantity)" step="0.0001"
                                         class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                 </td>
                                 <td id="price" class="p-2"></td>
@@ -225,10 +230,10 @@
             productRow.innerHTML = `
                                         <td id="number-product" class="p-2 text-center"></td>
                                         <td class="w-40 p-2">
-                                            <x-select x-on:click="getProduct(product); await $nextTick(); setProduk();"  x-init="await $nextTick(); setProduk();" :dataLists="$products->toArray()"
+                                            <x-select x-on:click="getProduct(product); await $nextTick(); setProduk(); subTotalProduk($refs.quantity)"  x-init="await $nextTick(); setProduk();" :dataLists="$products->toArray()"
                                                 :name="'product_id[]'" :id="'product_id'" :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); setFilepond() '" />
                                         </td>
-                                        <td class="p-2"><input id="quantity" type="number" name="quantity_product[]"
+                                        <td class="p-2"><input x-ref="quantity" id="quantity" type="number" name="quantity_product[]"
                                                 oninput="subTotalProduk(this)" value="0" step="1"
                                                 class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         </td>
@@ -493,10 +498,10 @@
                 hideModal()
             } catch (error) {
                 loading.classList.add('hidden')
-                if(error.errors.rfid || error.errors.code){
+                if (error.errors.rfid || error.errors.code) {
                     modal.querySelector('#rfid-error').innerHTML = error.errors.rfid || ''
                     modal.querySelector('#code-error').innerHTML = error.errors.code || ''
-                }else{
+                } else {
                     console.log(error.message)
                 }
             }
@@ -541,7 +546,7 @@
                                     <tr x-data="{ component: $el }" class="border-b">
                                         <td id="number-component-product" class="p-2 text-center"></td>
                                         <td class="w-40 p-2">
-                                            <x-select x-on:click="getComponentProduct(component); set_subtotal_product(component)" :dataLists="$components->toArray()"
+                                            <x-select x-on:click="getComponentProduct(component); set_subtotal_product($refs.quantity)" :dataLists="$components->toArray()"
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2">
@@ -771,7 +776,7 @@
 
                         <div class="divider"></div>
 
-                        <div class="flex justify-end gap-3 mt-5">
+                        <div class="flex justify-end gap-3 my-5">
                             <div class="w-52">
                                 <x-input-with-desc :desc="'Rp'" :label="'HPP'" :name="'hpp'"
                                     :type="'number'" :value="0" />
@@ -870,7 +875,7 @@
 
         function getProduct(tr) {
             const productId = tr.querySelector('#product_id');
-            
+
             if (productId.value) {
                 const product = products.find(product => product.id == productId.value)
                 const price = tr.querySelector('#price').innerText = toRupiah(product.sell_price);
@@ -905,7 +910,7 @@
             const price = tr.querySelector('#price').innerText.replace(/[^0-9\.,]/g, '').replace(/\./g, '').replace(',',
                 '.');
             const subtotal = tr.querySelector('#subtotal');
-            subtotal.innerText = toRupiah(parseInt(price) * parseFloat(e.value));
+            subtotal.innerText = toRupiah(parseInt(price) * parseFloat(e.value) || 0);
             set_total();
         }
 
