@@ -17,6 +17,10 @@
                 <x-input-with-desc :desc="'Rp'" :name="'price_per_unit'" :type="'number'" :label="'Harga Per Unit'"
                     :placeholder="'1000'" :value="old('price_per_unit')" />
             </div>
+            <div class="flex-initial w-64">
+                <label for="category_id" class="block text-sm mb-2">Kategori</label>
+                <x-select :dataLists="$categories->toArray()" :name="'category_id'" :id="'category_id'" :new="'newCategoryModal()'" />
+            </div>
         </div>
 
         <table class="w-full mt-5 text-left table-fixed">
@@ -34,8 +38,8 @@
                         <tr x-data="{ supplier: $el }" class="border-b">
                             <td id="number" class="p-2 text-center"></td>
                             <td class="p-2">
-                                <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'"
-                                    :value="$supplier" :new="'newSupplierModal(supplier)'" />
+                                <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" :value="$supplier"
+                                    :new="'newSupplierModal(supplier)'" />
                                 @error('supplier_id.' . $index)
                                     <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
                                 @enderror
@@ -60,8 +64,7 @@
                     <tr x-data="{ supplier: $el }" class="border-b">
                         <td id="number" class="p-2 text-center"></td>
                         <td class="p-2">
-                            <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'"
-                                :new="'newSupplierModal(supplier)'" />
+                            <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" :new="'newSupplierModal(supplier)'" />
                         </td>
                         <td class="p-2">
                             <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'"
@@ -87,14 +90,99 @@
 @push('script')
     <script>
         let suppliers = {!! $suppliers !!}
+        let categories = {!! $categories !!}
         let suppliersSelected = {}
+        let categoriesSelected = {}
 
         suppliers.forEach(s => {
             suppliersSelected[s.id] = s.name
         })
 
+        categories.forEach(s => {
+            categoriesSelected[s.id] = s.name
+        })
+
         set_number();
         deleteBtnToggle();
+
+        function newCategoryModal() {
+            const modal = document.querySelector('#modal');
+            document.querySelector('#modal-background').classList.remove('hidden');
+
+            modal.classList.remove('opacity-0', '-z-40');
+            modal.classList.add('opacity-100', 'z-40');
+
+            modal.innerHTML = `
+            <div class="w-[600px] bg-white h-fit rounded-xl pb-20 relative">
+                <div
+                    class="py-[20px] px-[30px] w-full relative border-b-2 border-gray-200 flex justify-between items-center">
+                    <div class="text-xl font-bold">Tambah Kategori Baru</div>
+                    <div onclick="hideModal()"
+                        class="absolute flex items-center p-1 text-2xl rounded-full cursor-pointer right-5 hover:bg-slate-100">
+                        <ion-icon name="close-outline"></ion-icon>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <x-input :label="'Nama Kategori'" :placeholder="'0'" :type="'text'" :name="'category_name'" />
+                </div>
+                <div class="absolute flex gap-2 bottom-4 right-[30px]">
+                    <button type="button" onclick="hideModal()"
+                        class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button>
+                        <button id="create-category" type="button" onclick="createCategory()"
+                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
+                </div>
+            </div>
+            `
+        }
+
+        async function createCategory() {
+            const modal = document.querySelector('#modal');
+
+            const name = modal.querySelector("#category_name").value
+
+            try {
+                const response = await fetch("/api/categories", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name
+                    })
+                })
+
+                categories = await response.json()
+
+                if (!response.ok) {
+                    throw categories
+                }
+
+                categoriesSelected = {}
+
+                categories.forEach(e => {
+                    categoriesSelected[e.id] = e.name
+                })
+
+                setNewCategories()
+
+                const categoryId = document.querySelector('.category_id')
+                document.getElementById("category_id").value = categories[categories.length - 1].name
+                categoryId._x_dataStack[0].selectedkey = categories[categories.length - 1].id
+                categoryId._x_dataStack[0].selectedlabel = categories[categories.length - 1].name
+
+                toastr.success(`${name} berhasil ditambahkan ke Kategori`)
+                hideModal()
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        function setNewCategories() {
+            document.querySelectorAll(".category_id").forEach(e => {
+                e._x_dataStack[0].list = categoriesSelected
+            })
+        }
 
         function newSupplierModal(supplierRow) {
             const modal = document.querySelector('#modal');
@@ -194,8 +282,6 @@
             }
         }
 
-
-
         function setNewSuppliers() {
             document.querySelectorAll(".supplier_id").forEach(e => {
                 e._x_dataStack[0].list = suppliersSelected
@@ -232,8 +318,7 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                suppliers = await response.json(); // Mengambil data JSON dari respons
-                console.log('dalam create supplier', supplierRow)
+                suppliers = await response.json();
                 const supplierId = supplierRow.querySelector('#supplier_id')
                 const supplierClass = supplierRow.querySelector('.supplier_id')
                 suppliersSelected = {}

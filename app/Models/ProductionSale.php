@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class SaleProduction extends Model
+class ProductionSale extends Model
 {
     use HasFactory;
+
+    protected $table = "production_sale";
 
     protected $guarded = ["id"];
 

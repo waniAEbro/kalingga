@@ -9,7 +9,7 @@
             <div
                 class="w-full group-hover:scale-110 transition duration-500 h-40 p-5 rounded-xl shadow-[0px_3px_20px_#0000000b] absolute -top-3 bg-white">
                 <ion-icon class="text-3xl text-red-500" name="bar-chart-outline"></ion-icon>
-                <h1 id="pembayaran_jatuh_tempo" class="font-bold text-2xl mt-4 text-[#1E293B]">800</h1>
+                <h1 id="total_penjualan" class="font-bold text-2xl mt-4 text-[#1E293B]">800</h1>
                 <div class="text-[#707E94] mt-2">Total Penjualan</div>
             </div>
         </div>
@@ -20,7 +20,7 @@
             <div
                 class="w-full group-hover:scale-110 transition duration-500 h-40 p-5 rounded-xl shadow-[0px_3px_20px_#0000000b] absolute -top-3 bg-white">
                 <ion-icon class="text-3xl text-yellow-500" name="cube-outline"></ion-icon>
-                <h1 id="pembayaran_belum_selesai" class="font-bold text-2xl mt-4 text-[#1E293B]">234234</h1>
+                <h1 id="total produk" class="font-bold text-2xl mt-4 text-[#1E293B]">{{ $products->count() }}</h1>
                 <div class="text-[#707E94] mt-2">Total Produk</div>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <div
                 class="w-full group-hover:scale-110 transition duration-500 h-40 p-5 rounded-xl shadow-[0px_3px_20px_#0000000b] absolute -top-3 bg-white">
                 <ion-icon class="text-3xl text-green-600" name="boat-outline"></ion-icon>
-                <h1 id="pembayaran_lunas" class="font-bold text-2xl mt-4 text-[#1E293B]">23423</h1>
+                <h1 id="total supplier" class="font-bold text-2xl mt-4 text-[#1E293B]">{{ $suppliers->count() }}</h1>
                 <div class="text-[#707E94] mt-2">Total Supplier</div>
             </div>
         </div>
@@ -80,8 +80,11 @@
 @push('script')
     <script>
         const sales = {!! $sales !!}
-
         const purchases = {!! $purchases !!}
+
+        const total_sales = sales.reduce((total, current) => total + current.total_bill, 0)
+
+        document.querySelector("#total_penjualan").innerHTML = toRupiah(total_sales)
 
         const currentYear = Number(new Date().getFullYear())
 

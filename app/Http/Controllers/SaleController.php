@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
 use App\Models\Component;
-use App\Models\SaleProduction;
+use App\Models\HistoryDeliverySale;
+use App\Models\ProductionSale;
 use App\Models\Supplier;
 
 class SaleController extends Controller
@@ -66,12 +67,23 @@ class SaleController extends Controller
                 'quantity' => $request->quantity_product[$key],
             ]);
 
+            $delivery_product = DB::table("delivery_products")->insertGetId([
+                "product_id" => $id,
+                "total" => $request->quantity_product[$key],
+                "remain" => $request->quantity_product[$key],
+            ]);
+
+            DB::table("delivery_product_sale")->insert([
+                "delivery_product_id" => $delivery_product,
+                "sale_id" => $sale->id,
+            ]);
+
             Production::where("product_id", $id)->update([
                 "quantity_finished" => DB::raw("quantity_finished + 0"),
                 "quantity_not_finished" => DB::raw("quantity_not_finished + " . $request->quantity_product[$key])
             ]);
 
-            SaleProduction::create([
+            ProductionSale::create([
                 "sale_id" => $sale->id,
                 "production_id" => Product::find($id)->production->id,
                 "quantity_finished" => 0,
@@ -79,11 +91,13 @@ class SaleController extends Controller
             ]);
         }
 
-        SaleHistory::create([
-            "sale_id" => $sale->id,
-            "description" => $sale->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
-            "payment" => $request->paid
-        ]);
+        if ($request->paid > 0) {
+            SaleHistory::create([
+                "sale_id" => $sale->id,
+                "description" => $sale->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
+                "payment" => $request->paid
+            ]);
+        }
 
         PaymentSale::create([
             "sale_id" => $sale->id,
@@ -126,19 +140,37 @@ class SaleController extends Controller
      */
     public function update(UpdateSaleRequest $request, Sale $sale)
     {
-        $sale->update([
-            'status' => $request->remain_bill == 0 ? "closed"  : "open",
-            'remain_bill' => $request->remain_bill,
-            'paid' => $request->paid,
-        ]);
+        if ($request->paid) {
+            $sale->update([
+                'status' => $request->remain_bill == 0 ? "closed"  : "open",
+                'remain_bill' => $request->remain_bill,
+                'paid' => $request->paid,
+            ]);
 
-        $count = SaleHistory::where("sale_id", $sale->id)->count();
+            $count = SaleHistory::where("sale_id", $sale->id)->count();
 
-        SaleHistory::create([
-            "sale_id" => $sale->id,
-            "description" => $sale->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count + 1,
-            "payment" => $request->paid
-        ]);
+            if ($request->paid > 0) {
+                SaleHistory::create([
+                    "sale_id" => $sale->id,
+                    "description" => $sale->status == "closed" ? "Pembayaran Lunas" : "Pembayaran ke-" . $count + 1,
+                    "payment" => $request->paid
+                ]);
+            }
+        }
+
+        if ($request->delivered_product) {
+            foreach ($request->delivered_product as $index => $delivered) {
+                DB::table("delivery_products")->where("product_id", $sale->products[$index]->id)->update([
+                    "delivered" => $delivered,
+                    "remain" => $request->remain_product[$index]
+                ]);
+
+                HistoryDeliverySale::create([
+                    "sale_id" => $sale->id,
+                    "description" => $sale->products[$index]->name . " sebanyak " . $delivered . " pcs telah dikirim",
+                ]);
+            }
+        }
 
         return redirect("/sales");
     }
@@ -149,7 +181,7 @@ class SaleController extends Controller
     public function destroy(Sale $sale)
     {
         DB::table("product_sale")->where("sale_id", $sale->id)->delete();
-        SaleProduction::where("sale_id", $sale->id)->delete();
+        ProductionSale::where("sale_id", $sale->id)->delete();
         SaleHistory::where("sale_id", $sale->id)->delete();
         $sale->delete();
         return redirect("/sales");
@@ -161,12 +193,12 @@ class SaleController extends Controller
             "sale" => $sale
         ]);
 
-        return $pdf->stream('quotation.pdf');
+        return $pdf->stream("quotation-sales-" . $sale->code . '.pdf');
     }
 
     public function export(Sale $sale)
     {
         $excel = app('excel');
-        return $excel->download(new SaleExport($sale), 'users.xlsx');
+        return $excel->download(new SaleExport($sale), "quotation-sales-" . $sale->code . '.xlsx');
     }
 }

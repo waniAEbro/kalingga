@@ -22,11 +22,6 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'component_id.*' => 'required',
-            'quantity.*' => 'required',
-            "supplier_id.*" => 'required',
-            "price_supplier.*" => 'required',
-
             'name' => 'required',
             'code' => 'unique:products,code|required',
             'rfid' => 'unique:products,rfid|required',

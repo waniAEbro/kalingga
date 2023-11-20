@@ -60,4 +60,14 @@ class Product extends Model
     {
         return $this->belongsTo(OtherCost::class, "othercosts_id", "id");
     }
+
+    public function purchases()
+    {
+        return $this->belongsToMany(Purchase::class);
+    }
+
+    public function deliveryProducts()
+    {
+        return $this->hasMany(DeliveryProduct::class);
+    }
 }

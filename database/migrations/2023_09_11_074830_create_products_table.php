@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string("code")->unique();
             $table->text("name");
             $table->string("rfid")->unique();
-            $table->bigInteger("sell_price");
-            $table->bigInteger("sell_price_usd");
+            $table->double("sell_price");
+            $table->double("sell_price_usd");
             $table->double("length");
             $table->double("width");
             $table->double("height");

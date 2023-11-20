@@ -21,8 +21,16 @@ class UpdateSaleRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'paid' => 'required'
-        ];
+        if ($this->paid) {
+            return [
+                "paid" => "required"
+            ];
+        } else {
+            return [
+                "delivered_product" => "required",
+                "remain_product" => "required",
+                "total_product" => "required"
+            ];
+        }
     }
 }

@@ -83,7 +83,7 @@
                                             oninput="subTotalProduk(this)" value="{{ old('quantity_product', [])[$index] }}"
                                             x-init="getProduct(product);
                                             await $nextTick();
-                                            subTotalProduk($refs.quantity)" step="0.0001"
+                                            subTotalProduk($refs.quantity)" step="1"
                                             class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         @error('quantity_product.' . $index)
                                             <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
@@ -109,7 +109,7 @@
                                 <td class="p-2"><input x-ref="quantity" type="number" name="quantity_product[]"
                                         oninput="subTotalProduk(this)" value="0" x-init="getProduct(product);
                                         await $nextTick();
-                                        subTotalProduk($refs.quantity)" step="0.0001"
+                                        subTotalProduk($refs.quantity)" step="1"
                                         class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                 </td>
                                 <td id="price" class="p-2"></td>
@@ -136,7 +136,7 @@
                     </div>
                     <div class="w-40">
                         <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
-                            :value="old('paid') ?? null" onInput="update_bill(this)" />
+                            :value="old('paid') ?? 0" onInput="update_bill(this)" />
                         {{-- @error('quantity.' . $index)
                                             <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
                                         @enderror --}}
@@ -179,7 +179,7 @@
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2">
-                                            <input id="quantity" step="0.001" x-ref="quantity" type="number" name="quantity[]"
+                                            <input id="quantity" step="1" x-ref="quantity" type="number" name="quantity[]"
                                                 oninput="set_subtotal_product(this)" value=""
                                                 class="w-20 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         </td>
@@ -550,7 +550,7 @@
                                                 :name="'component_id[]'" :id="'component_id'" />
                                         </td>
                                         <td class="p-2">
-                                            <input id="quantity" step="0.001" x-ref="quantity" type="number" name="quantity[]"
+                                            <input id="quantity" step="1" x-ref="quantity" type="number" name="quantity[]"
                                                 min="0" oninput="set_subtotal_product(this)" value=""
                                                 class="w-20 px-2 py-2 transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
                                         </td>

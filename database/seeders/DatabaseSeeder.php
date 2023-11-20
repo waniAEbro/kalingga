@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\ComponentSupplier;
 use App\Models\User;
 use App\Models\Customer;
 use App\Models\Supplier;
@@ -30,9 +31,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // Supplier::factory(25)->create();
-        // Component::factory(100)->create();
-        // Customer::factory(100)->create();
+        // Supplier::factory(1000)->create();
+        // Customer::factory(1000)->create();
+        // Component::factory(1000)->create();
+        // ComponentSupplier::factory(1000)->create();
 
         Employee::create([
             "employee_name" => "Imam",
@@ -47,10 +49,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            PermissionSeeder::class, 
-            ComponentSeeder::class, 
-            SupplierSeeder::class, 
-            ProductSeeder::class
+            PermissionSeeder::class,
+            // ComponentSeeder::class, 
+            // SupplierSeeder::class, 
+            // ProductSeeder::class
         ]);
     }
 }

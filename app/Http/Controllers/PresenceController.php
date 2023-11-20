@@ -6,20 +6,18 @@ use Carbon\Carbon;
 use App\Models\Employee;
 use App\Models\Presence;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Exports\EmployeeExport;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Http;
 
 class PresenceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): View
+    public function index(): View
     {
-        return view("presence.index", ["employees" => Employee::all(), "request" => $request->all()]);
+        return view("presence.index", ["employees" => Employee::all()]);
     }
 
     public function show(Employee $employee): View
@@ -91,12 +89,12 @@ class PresenceController extends Controller
             "bulan" => $request->bulan
         ]);
 
-        return $pdf->stream('presensi.pdf');
+        return $pdf->stream("presensi-" . $employee->employee_name . "-" . $request->bulan . '.pdf');
     }
 
     public function export(Employee $employee, Request $request)
     {
         $excel = app('excel');
-        return $excel->download(new EmployeeExport($employee, $request->bulan), 'users.xlsx');
+        return $excel->download(new EmployeeExport($employee, $request->bulan), "presensi-" . $employee->employee_name . "-" . $request->bulan . '.xlsx');
     }
 }

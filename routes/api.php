@@ -4,11 +4,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\CategoryComponentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +38,5 @@ Route::post("/suppliers", [SupplierController::class, "storeapi"]);
 Route::post("/customers", [CustomerController::class, "storeapi"]);
 
 Route::post("/purchase", [PurchaseController::class, "storeapi"]);
+
+Route::post("/categories", [CategoryComponentController::class, "storeapi"]);

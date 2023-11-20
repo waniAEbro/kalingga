@@ -20,7 +20,7 @@ class Purchase extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["components", "supplier", "histories", "products", "payment_purchases", "delivery_purchases"];
+    protected $with = ["components", "supplier", "histories", "products", "payment_purchases", "delivery_purchases", "deliveryComponents", "deliveryProducts", "historyDeliveries"];
 
     public function supplier(): BelongsTo
     {
@@ -50,5 +50,20 @@ class Purchase extends Model
     public function delivery_purchases(): HasOne
     {
         return $this->hasOne(DeliveryPurchase::class);
+    }
+
+    public function deliveryComponents()
+    {
+        return $this->belongsToMany(DeliveryComponent::class);
+    }
+
+    public function deliveryProducts()
+    {
+        return $this->belongsToMany(DeliveryProduct::class);
+    }
+
+    public function historyDeliveries()
+    {
+        return $this->hasMany(HistoryDeliveryPurchase::class);
     }
 }

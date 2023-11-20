@@ -17,7 +17,13 @@
                 <x-input-with-desc :desc="'Rp'" :name="'price_per_unit'" :type="'number'" :label="'Harga Per Unit'"
                     :placeholder="'1000'" :value="old('price_per_unit') ?? $componentedit->price_per_unit" />
             </div>
+            <div class="flex-initial w-64">
+                <label for="category_id" class="block text-sm mb-2">Kategori</label>
+                <x-select :dataLists="$categories->toArray()" :value="$componentedit->category->id" :label="$componentedit->category->name" :name="'category_id'" :id="'category_id'"
+                    :new="'newCategoryModal()'" />
+            </div>
         </div>
+
 
         <table class="w-full mt-5 text-left table-fixed">
             <thead>
@@ -34,8 +40,8 @@
                         <tr x-data="{ supplier: $el }" class="border-b">
                             <td id="number" class="p-2 text-center"></td>
                             <td class="p-2">
-                                <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'"
-                                    :value="$supplier" :new="'newSupplierModal(supplier)'" />
+                                <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" :value="$supplier"
+                                    :new="'newSupplierModal(supplier)'" />
                                 @error('supplier_id.' . $index)
                                     <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
                                 @enderror
@@ -61,12 +67,12 @@
                         <tr x-data="{ supplier: $el }" class="border-b">
                             <td id="number" class="p-2 text-center"></td>
                             <td class="p-2">
-                                <x-select :value="$supplier->id" :label="$supplier->name" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'"
-                                    :new="'newSupplierModal(supplier)'" />
+                                <x-select :value="$supplier->id" :label="$supplier->name" :dataLists="$suppliers->toArray()" :name="'supplier_id[]'"
+                                    :id="'supplier_id'" :new="'newSupplierModal(supplier)'" />
                             </td>
                             <td class="p-2">
-                                <x-input-with-desc :value="$supplier->pivot->price_per_unit" :desc="'Rp'" :name="'price_supplier[]'" :type="'number'"
-                                    :placeholder="'1000'" />
+                                <x-input-with-desc :value="$supplier->pivot->price_per_unit" :desc="'Rp'" :name="'price_supplier[]'"
+                                    :type="'number'" :placeholder="'1000'" />
                             </td>
                             <td id="aksi" class="p-2">
                                 <button type="button" x-on:click="supplier.remove(); set_number(); deleteBtnToggle()"

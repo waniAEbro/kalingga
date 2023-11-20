@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->text("name");
             $table->text("unit");
-            $table->text("price_per_unit");
+            $table->double("price_per_unit");
+            $table->foreignId("category_component_id")->constrained("category_components");
             $table->timestamps();
         });
     }

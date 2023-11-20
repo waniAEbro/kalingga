@@ -86,22 +86,8 @@ class SupplierController extends Controller
         return redirect("/suppliers");
     }
 
-    public function storeapi(Request $request)
+    public function storeapi(StoreSupplierRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'code' => 'required',
-        ], [
-            'name.required' => 'Nama tidak boleh kosong',
-            'email.required' => 'Email tidak boleh kosong',
-            'phone.required' => 'Nomor Telepon tidak boleh kosong',
-            'address.required' => 'Alamat tidak boleh kosong',
-            'code.required' => 'Kode tidak boleh kosong',
-        ]);
-
         Supplier::create([
             'name' => $request->name,
             'email' => $request->email,

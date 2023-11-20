@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
-use App\Models\PaymentSale;
 use App\Models\Product;
 use App\Models\Customer;
-use App\Models\DeliverySale;
 use App\Models\Production;
+use App\Models\PaymentSale;
 use App\Models\SaleHistory;
+use App\Models\DeliverySale;
+use App\Models\DeliveryProduct;
+use App\Models\HistoryDeliverySale;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Sale extends Model
 {
@@ -21,7 +23,7 @@ class Sale extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["customer", "histories", "payment_sales", "delivery_sales"];
+    protected $with = ["customer", "histories", "payment_sales", "delivery_sales", "deliveryProducts", "deliveryHistories"];
 
     public function customer(): BelongsTo
     {
@@ -48,8 +50,18 @@ class Sale extends Model
         return $this->hasOne(DeliverySale::class);
     }
 
-    public function sale_productions(): HasMany
+    public function sale_productions()
     {
-        return $this->hasMany(SaleProduction::class);
+        return $this->belongsToMany(Production::class);
+    }
+
+    public function deliveryProducts()
+    {
+        return $this->belongsToMany(DeliveryProduct::class);
+    }
+
+    public function deliveryHistories()
+    {
+        return $this->hasMany(HistoryDeliverySale::class);
     }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('component_id')->constrained()->cascadeOnDelete();
             $table->foreignId('supplier_id')->constrained()->cascadeOnDelete();
-            $table->text('price_per_unit');
+            $table->double('price_per_unit');
             $table->timestamps();
         });
     }

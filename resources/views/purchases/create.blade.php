@@ -1,185 +1,250 @@
 @extends('layouts.layout')
 
 @section('content')
-    <h1 class="text-lg font my-7 font-[500]">Create Purchases</h1>
+    <form action="/purchases" method="POST">
+        @csrf
+        <div class="flex gap-5">
+            <div class="basis-3/4">
+                <h1 class="text-xl font-bold text-center m-4">Data Transaksi</h1>
+                <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+                    <div class="grid grid-cols-2">
+                        <div class="px-4">
+                            <label for="purchase_date" class="block text-sm">Tanggal Pembelian</label>
+                            <x-input type="date" :name="'purchase_date'" :inputParentClass="'mb-3'" :value="old('purchase_date') ?? Carbon\Carbon::now()->format('Y-m-d')" />
+                        </div>
 
-    <x-create-input-field :action="'purchases'" :width="'w-full'">
-        <div class="flex gap-5 text-sm">
-            <div>
-                <label for="purchase_date" class="block text-sm">Tanggal Pembelian</label>
-                <x-input type="date" :name="'purchase_date'" :inputParentClass="'mb-3'" :value="old('purchase_date') ?? Carbon\Carbon::now()->format('Y-m-d')" />
+                        <div class="px-4">
+                            <label for="due_date" class="block text-sm">Tanggal Jatuh Tempo</label>
+                            <x-input type="date" :name="'due_date'" :inputParentClass="'mb-3'" :value="old('due_date') ?? Carbon\Carbon::now()->format('Y-m-d')" />
+                        </div>
 
-                <label for="due_date" class="block text-sm">Tanggal Jatuh Tempo</label>
-                <x-input type="date" :name="'due_date'" :inputParentClass="'mb-3'" :value="old('due_date') ?? Carbon\Carbon::now()->format('Y-m-d')" />
-
-                <label for="supplier_id" class="block text-sm">Pemasok</label>
-                <div class="w-full mt-2 mb-3">
-                    <x-select x-on:click="getSupplier()" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'"
-                        :value="old('supplier_id')" :new="'newSupplierModal()'" />
-                    @error('supplier_id')
-                        <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
-                    @enderror
+                        <div class="px-4 col-span-2 mt-2">
+                            <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" :inputParentClass="'mb-3'"
+                                :value="old('code') ?? 0" />
+                        </div>
+                    </div>
                 </div>
 
-                <x-input :name="'supplier_address'" :label="'Alamat Pemasok'" readonly class="mb-3 bg-slate-100" />
+                <h1 class="text-xl font-bold text-center m-4">Data Diri Supplier</h1>
+                <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+                    <div class="grid grid-cols-3">
+                        <div class="col-span-3 px-4">
+                            <label for="supplier_id" class="block text-sm">Pemasok</label>
+                            <div class="w-full mt-2 mb-3">
+                                <x-select x-on:click="getSupplier()" :dataLists="$suppliers->toArray()" :name="'supplier_id'"
+                                    :id="'supplier_id'" :value="old('supplier_id')" :new="'newSupplierModal()'" />
+                                @error('supplier_id')
+                                    <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="px-4 mt-2">
+                            <x-input :name="'supplier_address'" :label="'Alamat Pemasok'" readonly class="mb-3 bg-slate-100" />
+                        </div>
+                        <div class="px-4 mt-2">
+                            <x-input :name="'supplier_email'" :label="'Email Pemasok'" readonly class="mb-3 bg-slate-100" />
+                        </div>
+                        <div class="px-4 mt-2">
+                            <x-input :name="'supplier_phone'" :label="'No Hp Pemasok'" readonly class="mb-3 bg-slate-100" />
+                        </div>
+                    </div>
+                </div>
 
-                <x-input :name="'supplier_email'" :label="'Email Pemasok'" readonly class="mb-3 bg-slate-100" />
+                <h1 class="text-xl font-bold text-center m-4">Data Pembayaran</h1>
+                <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+                    <div class="grid grid-cols-3">
+                        <div class="col-span-3 px-4">
+                            <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :inputParentClass="'mb-3'"
+                                :value="old('method') ?? 0" />
+                        </div>
 
-                <x-input :name="'supplier_phone'" :label="'No Hp Pemasok'" readonly class="mb-3 bg-slate-100" />
+                        <div class="px-4 mt-2">
+                            <x-input :name="'beneficiary_bank'" :type="'text'" :label="'Beneficiary\'s Bank'" :inputParentClass="'mb-3'"
+                                :value="old('beneficiary_bank') ?? 0" />
+                        </div>
 
-                <x-input :name="'code'" :type="'text'" :label="'Kode Pembelian'" :inputParentClass="'mb-3'" :value="old('code') ?? 0" />
+                        <div class="px-4 mt-2">
+                            <x-input :name="'beneficiary_ac_usd'" :type="'text'" :label="'Beneficiary A/C USD'" :inputParentClass="'mb-3'"
+                                :value="old('beneficiary_ac_usd') ?? 0" />
+                        </div>
 
-                <x-input :name="'method'" :type="'text'" :label="'Metode Pembayaran'" :inputParentClass="'mb-3'" :value="old('method') ?? 0" />
+                        <div class="px-4 mt-2">
+                            <x-input :name="'bank_address'" :type="'text'" :label="'Bank Address'" :inputParentClass="'mb-3'"
+                                :value="old('bank_address') ?? 0" />
+                        </div>
 
-                <x-input :name="'beneficiary_bank'" :type="'text'" :label="'Beneficiary\'s Bank'" :inputParentClass="'mb-3'" :value="old('beneficiary_bank') ?? 0" />
+                        <div class="px-4 mt-2">
+                            <x-input :name="'swift_code'" :type="'text'" :label="'Swift Code'" :inputParentClass="'mb-3'"
+                                :value="old('swift_code') ?? 0" />
+                        </div>
+                        <div class="px-4 mt-2">
+                            <x-input :name="'beneficiary_name'" :type="'text'" :label="'Beneificiary Name'" :inputParentClass="'mb-3'"
+                                :value="old('beneficiary_name') ?? 0" />
+                        </div>
+                        <div class="px-4 mt-2">
+                            <x-input :name="'beneficiary_address'" :type="'text'" :label="'Beneficiary\'s Address'" :inputParentClass="'mb-3'"
+                                :value="old('beneficiary_address') ?? 0" />
+                        </div>
+                        <div class="px-4 mt-2">
+                            <x-input :name="'phone'" :type="'text'" :label="'Phone'" :inputParentClass="'mb-3'"
+                                :value="old('phone') ?? 0" />
+                        </div>
+                        <div class="px-4 mt-2 col-span-2">
+                            <x-input-textarea :name="'location'" :label="'Lokasi Pengiriman'" :placeholder="'location'" :value="old('location') ?? 0" />
+                        </div>
+                    </div>
+                </div>
 
-                <x-input :name="'beneficiary_ac_usd'" :type="'text'" :label="'Beneficiary A/C USD'" :inputParentClass="'mb-3'" :value="old('beneficiary_ac_usd') ?? 0" />
+                <h1 class="text-xl font-bold text-center m-4">Data Keranjang</h1>
+                <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+                    <div class="grid grid-cols-1 px-4">
+                        <h1 class="mb-3 text-xl font-bold">Komponen</h1>
 
-                <x-input :name="'bank_address'" :type="'text'" :label="'Bank Address'" :inputParentClass="'mb-3'" :value="old('bank_address') ?? 0" />
+                        <table class="w-full text-left table-fixed">
+                            <thead>
+                                <tr class="border-b-2">
+                                    <th class="w-10 p-2 text-center">#</th>
+                                    <th class="p-2">Komponen</th>
+                                    <th class="w-20 p-2">Jumlah</th>
+                                    <th class="w-10 p-2">Unit</th>
+                                    <th class="p-2">Harga</th>
+                                    <th class="p-2">Subtotal</th>
+                                    <th class="w-20 p-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-component">
+                                @if (old('component_id', []))
+                                    @foreach (old('component_id', []) as $index => $component)
+                                        <tr x-data="{ component: $el }" class="border-b">
+                                            <td id="number-component" class="p-2 text-center"></td>
+                                            <td class="w-40 p-2">
+                                                <x-select
+                                                    x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)"
+                                                    :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'"
+                                                    :value="$component" :new="'newComponentModal()'" />
+                                                @error('component_id.' . $index)
+                                                    <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                                @enderror
+                                            </td>
+                                            <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
+                                                    x-init="getComponent(component);
+                                                    await $nextTick();
+                                                    set_subtotal($refs.quantity)" oninput="set_subtotal(this)"
+                                                    value="{{ old('quantity', [])[$index] }}" step="0.0001"
+                                                    class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                                @error('quantity.' . $index)
+                                                    <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                                @enderror
+                                            </td>
+                                            <td id="unit" class="p-2"></td>
+                                            <td id="price" class="p-2"></td>
+                                            <td id="subtotal" class="p-2"></td>
+                                            <td class="p-2">
+                                                <button type="button"
+                                                    x-on:click="component.remove(); set_total(); set_number_component()"
+                                                    class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                                        class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
 
-                <x-input :name="'swift_code'" :type="'text'" :label="'Swift Code'" :inputParentClass="'mb-3'" :value="old('swift_code') ?? 0" />
+                        <button type="button" x-data
+                            x-on:click="addNewComponent(); set_number_component(); await $nextTick(); setKomponen()"
+                            class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
+                            New</button>
 
-                <x-input :name="'beneficiary_name'" :type="'text'" :label="'Beneificiary Name'" :inputParentClass="'mb-3'" :value="old('beneficiary_name') ?? 0" />
+                        <h1 class="mt-5 mb-3 text-xl font-bold">Produk</h1>
 
-                <x-input :name="'beneficiary_address'" :type="'text'" :label="'Beneficiary\'s Address'" :inputParentClass="'mb-3'" :value="old('beneficiary_address') ?? 0" />
+                        <table class="w-full text-left table-fixed">
+                            <thead>
+                                <tr class="border-b-2">
+                                    <th class="w-10 p-2 text-center">#</th>
+                                    <th class="p-2">Produk</th>
+                                    <th class="w-20 p-2">Jumlah</th>
+                                    <th class="p-2">Harga</th>
+                                    <th class="p-2">Subtotal</th>
+                                    <th class="w-20 p-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-product">
+                                @if (old('product_id', []))
+                                    @foreach (old('product_id', []) as $index => $product)
+                                        <tr x-data="{ product: $el }" class="border-b">
+                                            <td id="number-product" class="p-2 text-center"></td>
+                                            <td class="w-40 p-2">
+                                                <x-select x-on:click="getProduct(product); await $nextTick(); setProduk();"
+                                                    :dataLists="$products->toArray()" :name="'product_id[]'" :value="$product"
+                                                    :id="'product_id'" :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); setFilepond()'" />
+                                                @error('product_id.' . $index)
+                                                    <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                                @enderror
+                                            </td>
+                                            <td class="p-2"><input x-ref="quantity" type="number"
+                                                    name="quantity_product[]" oninput="subTotalProduk(this)"
+                                                    value="{{ old('quantity_product', [])[$index] }}"
+                                                    x-init="getProduct(product);
+                                                    await $nextTick();
+                                                    subTotalProduk($refs.quantity)" step="1"
+                                                    class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                                @error('quantity_product.' . $index)
+                                                    <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                                @enderror
+                                            </td>
+                                            <td id="price" class="p-2"></td>
+                                            <td id="subtotal" class="p-2"></td>
+                                            <td class="p-2">
+                                                <button type="button"
+                                                    x-on:click="product.remove(); set_total(); set_number_product()"
+                                                    class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
+                                                        class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
 
-                <x-input :name="'phone'" :type="'text'" :label="'Phone'" :inputParentClass="'mb-3'" :value="old('phone') ?? 0" />
-
-                <div class="flex w-full gap-3 my-3">
-                    <div class="flex-1">
-                        <x-input-textarea :name="'location'" :label="'Lokasi Pengiriman'" :placeholder="'location'" :value="old('location') ?? 0" />
+                        <button type="button" x-data
+                            x-on:click="addNewProduct(); set_number_product(); await $nextTick(); setProduk()"
+                            class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
+                            New</button>
                     </div>
                 </div>
             </div>
-
-            <div class="divider divider-horizontal"></div>
-
-            <div class="w-full">
-                <h1 class="mb-3 text-xl font-bold">Komponen</h1>
-
-                <table class="w-full text-left table-fixed">
-                    <thead>
-                        <tr class="border-b-2">
-                            <th class="w-10 p-2 text-center">#</th>
-                            <th class="p-2">Komponen</th>
-                            <th class="w-20 p-2">Jumlah</th>
-                            <th class="w-10 p-2">Unit</th>
-                            <th class="p-2">Harga</th>
-                            <th class="p-2">Subtotal</th>
-                            <th class="w-20 p-2"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-component">
-                        @if (old('component_id', []))
-                            @foreach (old('component_id', []) as $index => $component)
-                                <tr x-data="{ component: $el }" class="border-b">
-                                    <td id="number-component" class="p-2 text-center"></td>
-                                    <td class="w-40 p-2">
-                                        <x-select
-                                            x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)"
-                                            :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" :value="$component"
-                                            :new="'newComponentModal()'" />
-                                        @error('component_id.' . $index)
-                                            <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
-                                        @enderror
-                                    </td>
-                                    <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
-                                            x-init="getComponent(component);
-                                            await $nextTick();
-                                            set_subtotal($refs.quantity)" oninput="set_subtotal(this)"
-                                            value="{{ old('quantity', [])[$index] }}" step="0.0001"
-                                            class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
-                                        @error('quantity.' . $index)
-                                            <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
-                                        @enderror
-                                    </td>
-                                    <td id="unit" class="p-2"></td>
-                                    <td id="price" class="p-2"></td>
-                                    <td id="subtotal" class="p-2"></td>
-                                    <td class="p-2">
-                                        <button type="button"
-                                            x-on:click="component.remove(); set_total(); set_number_component()"
-                                            class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
-                                                class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-
-                <button type="button" x-data
-                    x-on:click="addNewComponent(); set_number_component(); await $nextTick(); setKomponen()"
-                    class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
-                    New</button>
-
-                <h1 class="mt-5 mb-3 text-xl font-bold">Produk</h1>
-
-                <table class="w-full text-left table-fixed">
-                    <thead>
-                        <tr class="border-b-2">
-                            <th class="w-10 p-2 text-center">#</th>
-                            <th class="p-2">Produk</th>
-                            <th class="w-20 p-2">Jumlah</th>
-                            <th class="p-2">Harga</th>
-                            <th class="p-2">Subtotal</th>
-                            <th class="w-20 p-2"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-product">
-                        @if (old('product_id', []))
-                            @foreach (old('product_id', []) as $index => $product)
-                                <tr x-data="{ product: $el }" class="border-b">
-                                    <td id="number-product" class="p-2 text-center"></td>
-                                    <td class="w-40 p-2">
-                                        <x-select x-on:click="getProduct(product); await $nextTick(); setProduk();"
-                                            :dataLists="$products->toArray()" :name="'product_id[]'" :value="$product" :id="'product_id'"
-                                            :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); setFilepond()'" />
-                                        @error('product_id.' . $index)
-                                            <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
-                                        @enderror
-                                    </td>
-                                    <td class="p-2"><input x-ref="quantity" type="number" name="quantity_product[]"
-                                            oninput="subTotalProduk(this)" value="{{ old('quantity_product', [])[$index] }}"
-                                            x-init="getProduct(product);
-                                            await $nextTick();
-                                            subTotalProduk($refs.quantity)" step="1"
-                                            class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
-                                        @error('quantity_product.' . $index)
-                                            <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
-                                        @enderror
-                                    </td>
-                                    <td id="price" class="p-2"></td>
-                                    <td id="subtotal" class="p-2"></td>
-                                    <td class="p-2">
-                                        <button type="button"
-                                            x-on:click="product.remove(); set_total(); set_number_product()"
-                                            class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
-                                                class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-
-                <button type="button" x-data
-                    x-on:click="addNewProduct(); set_number_product(); await $nextTick(); setProduk()"
-                    class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
-                    New</button>
-
-                <div class="flex justify-end gap-3 mt-10">
-                    <div class="w-40">
-                        <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bayar'" :type="'number'" readonly />
-                    </div>
-                    <div class="w-40">
-                        <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
-                            :value="old('paid')" oninput="batasBayar(this)" />
+            <div class="basis-1/4">
+                <div class="sticky top-10">
+                    <h1 class="text-xl font-bold text-center m-4 sticky">Data Biaya</h1>
+                    <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+                        <div class="grid grid-cols-2">
+                            <div class="px-4">
+                                <x-input :label="'Total'" :name="'total_bill'" :placeholder="'Total Bayar'" :type="'number'"
+                                    readonly />
+                            </div>
+                            <div class="px-4">
+                                <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
+                                    :value="old('paid') ?? 0" oninput="batasBayar(this)" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </x-create-input-field>
+        <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+            <div class="grid grid-cols-2">
+                <div class="px-4">
+                    <a href="/purchases"><button type="button"
+                            class="w-full  py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button></a>
+                </div>
+                <div class="px-4">
+                    <button type="submit"
+                        class="w-full py-2 px-5 border text-[#F7F9F9] bg-[#064e3be1] text-sm rounded-lg">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </form>
 @endsection
 @push('script')
     <script>
@@ -671,7 +736,7 @@
                     <button type="button" onclick="hideModal()"
                         class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button>
                         <button id="create-supplier" type="button" onclick="createSupplier()" onmouseover="toggleSupplierSaveButtonState()"
-                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
+                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg bg-[#064e3be1] flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
                 </div>
             </div>`
         }
@@ -707,6 +772,10 @@
                         <div class="flex-1">
                             <x-input-with-desc :desc="'Rp'" :name="'price_per_unit'" :type="'number'"
                                 :label="'Harga Per Unit'" :placeholder="'1000'"  oninput="toggleComponentSaveButtonState()" />
+                        </div>
+                        <div class="flex-initial w-64">
+                            <label for="category_id" class="block text-sm mb-2">Kategori</label>
+                            <x-select :dataLists="$categories->toArray()" :name="'category_id'" :id="'category_id'" />
                         </div>
                     </div>
 
@@ -749,7 +818,7 @@
                     <button type="button" onclick="hideModal()"
                         class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button>
                     <button id="create-component" type="button" onmouseover="toggleComponentSaveButtonState()"
-                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
+                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg bg-[#064e3be1] flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
                 </div>
             </div>`
 
@@ -1056,7 +1125,7 @@
                         <button type="button" onclick="hideModal()"
                             class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button>
                         <button onmouseover="toggleProductSaveButtonState()" id="create-product" type="button" 
-                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
+                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg bg-[#064e3be1] flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
                     </div>
                 </div>
             </div>`
@@ -1075,6 +1144,7 @@
             const name = document.getElementById('component_name').value
             const unit = document.getElementById('component_unit').value
             const price_per_unit = document.getElementById('price_per_unit').value
+            const category_id = document.getElementById('category_id').value
             const supplier_id = Array.from(document.querySelectorAll('#supplier_id_component')).map(e => e.value)
             const price_supplier = Array.from(document.querySelectorAll('.price_supplier_component')).map(e => e
                 .value)
@@ -1094,7 +1164,8 @@
                         price_per_unit,
                         unit,
                         supplier_id,
-                        price_supplier
+                        price_supplier,
+                        category_id
                     })
                 })
 
@@ -1165,8 +1236,6 @@
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                // components = await fetchComponents()
-                // products = await fetchProducts()
                 suppliers = await response.json(); // Mengambil data JSON dari respons
                 const supplierId = document.getElementById("supplier_id")
                 const supplierClass = document.querySelector('.supplier_id')

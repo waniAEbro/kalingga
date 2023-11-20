@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreComponentRequest;
 use App\Http\Requests\UpdateComponentRequest;
+use App\Models\CategoryComponent;
 
 class ComponentController extends Controller
 {
@@ -26,7 +27,7 @@ class ComponentController extends Controller
      */
     public function create(): View
     {
-        return view("component.create", ["suppliers" => Supplier::get()]);
+        return view("component.create", ["suppliers" => Supplier::get(), "categories" => CategoryComponent::get()]);
     }
 
     /**
@@ -37,7 +38,8 @@ class ComponentController extends Controller
         $component = Component::create([
             "name" => $request->name,
             "price_per_unit" => $request->price_per_unit,
-            "unit" => $request->unit
+            "unit" => $request->unit,
+            "category_component_id" => $request->category_id
         ]);
 
         foreach ($request->supplier_id as $index => $supplier) {
@@ -64,7 +66,7 @@ class ComponentController extends Controller
      */
     public function edit(component $component): View
     {
-        return view("component.edit", ["componentedit" => Component::find($component->id), "suppliers" => Supplier::get()]);
+        return view("component.edit", ["componentedit" => Component::find($component->id), "suppliers" => Supplier::get(), "categories" => CategoryComponent::get()]);
     }
 
     /**
@@ -75,7 +77,8 @@ class ComponentController extends Controller
         $component->update([
             "name" => $request->name,
             "price_per_unit" => $request->price_per_unit,
-            "unit" => $request->unit
+            "unit" => $request->unit,
+            "category_component_id" => $request->category_id
         ]);
 
         DB::table("component_supplier")->where("component_id", $component->id)->delete();
@@ -107,7 +110,8 @@ class ComponentController extends Controller
         $component = Component::create([
             "name" => $request->name,
             "price_per_unit" => $request->price_per_unit,
-            "unit" => $request->unit
+            "unit" => $request->unit,
+            "category_component_id" => $request->category_id
         ]);
 
         foreach ($request->supplier_id as $index => $supplier) {

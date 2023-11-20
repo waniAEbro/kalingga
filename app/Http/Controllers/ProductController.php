@@ -4,22 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Pack;
 use App\Models\Product;
-use App\Models\Category;
 use App\Models\Supplier;
 use App\Models\Component;
 use App\Models\OtherCost;
 use App\Models\Production;
 use Illuminate\Http\Request;
+use App\Models\TemporaryFile;
 use App\Models\ProductionCost;
+use App\Models\CategoryComponent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Models\TemporaryFile;
 
 class ProductController extends Controller
 {
@@ -36,7 +34,7 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        return view("products.create", ["components" => Component::get(), "suppliers" => Supplier::get(), 'products' => Product::get()]);
+        return view("products.create", ["components" => Component::get(), "suppliers" => Supplier::get(), 'products' => Product::get(), "categories" => CategoryComponent::get()]);
     }
 
     /**
@@ -44,6 +42,18 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request): RedirectResponse
     {
+        if ($request->supplier_id) {
+            $request->validate([
+                "supplier_id.*" => 'required',
+                "price_supplier.*" => 'required',
+            ]);
+        }
+        if ($request->component_id) {
+            $request->validate([
+                'component_id.*' => 'required',
+                'quantity.*' => 'required',
+            ]);
+        }
         $pack = Pack::create([
             "cost" => $request->pack_cost,
             "outer_length" => $request->pack_outer_length,
@@ -149,7 +159,7 @@ class ProductController extends Controller
      */
     public function edit(product $product): View
     {
-        return view("products.edit", ["product" => Product::find($product->id), "components" => Component::get(), "suppliers" => Supplier::get()]);
+        return view("products.edit", ["product" => Product::find($product->id), "components" => Component::get(), "suppliers" => Supplier::get(), "categories" => CategoryComponent::get()]);
     }
 
     /**
@@ -157,6 +167,18 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, product $product): RedirectResponse
     {
+        if ($request->supplier_id) {
+            $request->validate([
+                "supplier_id.*" => 'required',
+                "price_supplier.*" => 'required',
+            ]);
+        }
+        if ($request->component_id) {
+            $request->validate([
+                'component_id.*' => 'required',
+                'quantity.*' => 'required',
+            ]);
+        }
         $pack = Pack::where("id", $product->pack_id)->first();
         $production_costs = ProductionCost::where("id", $product->productioncosts_id)->first();
         $other_costs = OtherCost::where("id", $product->othercosts_id)->first();
@@ -239,7 +261,9 @@ class ProductController extends Controller
         $tmp_file = TemporaryFile::where('folder', $request->product_image)->first();
 
         if ($tmp_file) {
-            Storage::deleteDirectory('public/' . substr($product->image, 0, strpos($product->image, '/')));
+            if ($product->image) {
+                Storage::deleteDirectory('public/' . substr($product->image, 0, strpos($product->image, '/')));
+            }
             Storage::copy('products/tmp/' . $tmp_file->folder . '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
             Product::where("id", $product->id)->first()->update([
                 'image' => $tmp_file->folder . '/' . $tmp_file->file
@@ -269,6 +293,18 @@ class ProductController extends Controller
 
     public function storeapi(StoreProductRequest $request)
     {
+        if ($request->supplier_id) {
+            $request->validate([
+                "supplier_id.*" => 'required',
+                "price_supplier.*" => 'required',
+            ]);
+        }
+        if ($request->component_id) {
+            $request->validate([
+                'component_id.*' => 'required',
+                'quantity.*' => 'required',
+            ]);
+        }
         $pack = Pack::create([
             "cost" => $request->pack_cost,
             "outer_length" => $request->pack_outer_length,
@@ -348,10 +384,10 @@ class ProductController extends Controller
 
         $tmp_file = TemporaryFile::latest()->first();
 
-        if($tmp_file){
-            Storage::copy('products/tmp/' . $tmp_file->folder. '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
+        if ($tmp_file) {
+            Storage::copy('products/tmp/' . $tmp_file->folder . '/' . $tmp_file->file, 'public/' . $tmp_file->folder . '/' . $tmp_file->file);
             Product::where("id", $product->id)->first()->update([
-                'image' => $tmp_file->folder. '/' . $tmp_file->file
+                'image' => $tmp_file->folder . '/' . $tmp_file->file
             ]);
         }
 
@@ -363,7 +399,6 @@ class ProductController extends Controller
 
     public function tmpUpload(Request $request)
     {
-        // dd($request)
         if ($request->hasFile('product_image')) {
             $image = $request->file('product_image');
             $file_name = $image->getClientOriginalName();
@@ -374,7 +409,6 @@ class ProductController extends Controller
                 'file' => $file_name
             ]);
             return $folder;
-            // return $file_name;
         }
     }
 

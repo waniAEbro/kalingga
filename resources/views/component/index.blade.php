@@ -12,8 +12,8 @@
 
 @push('script')
     <script>
-        state.columnName = ["Nomor", "Nama Komponen", "Satuan", "Harga Per Satuan", "Aksi"]
-        state.columnQuery = ["name", "unit", "price_per_unit"]
+        state.columnName = ["Nomor", "Kategori", "Nama Komponen", "Satuan", "Harga Per Satuan", "Aksi"]
+        state.columnQuery = ["category.name", "name", "unit", "price_per_unit"]
         state.menu = "components"
 
         document.querySelector(".table-fixed").appendChild(buildHeader())
