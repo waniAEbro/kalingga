@@ -29,10 +29,14 @@
                 <form action="/login/user" method="post">
                     @csrf
                     <x-input :label="'Email'" :name="'email'" :inputParentClass="'my-5'" :labelClass="'font-[500]'" :placeholder="'example@example.com'"
-                        class="bg-gray-200 focus:bg-white" />
+                        class="bg-gray-200 focus:bg-white" :value="old('email')" />
                     <x-input :label="'Password'" :name="'password'" :type="'password'" :labelClass="'font-[500]'"
                         class="bg-gray-200 focus:bg-white" oninput="validasi(event)" :placeholder="'*************'" />
-                    <p id="error" class="hidden mt-2 text-xs italic text-red-500">Password minimal 8 karakter</p>
+
+                    @if (!($errors->has('password')))
+                        <p id="error" class="hidden mt-2 text-xs text-red-500">Password minimal 8 karakter</p>
+                        
+                    @endif
                     <button
                         class="mt-10 text-sm text-white bg-[#16A34A] focus:bg-[#278e4d] hover:bg-[#2b9d54] rounded-lg w-full py-2">Sign
                         in to your

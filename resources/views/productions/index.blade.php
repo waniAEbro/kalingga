@@ -9,7 +9,7 @@
         </div>
 
     </x-data-list>
-    @dump($products)
+    {{-- @dump($products) --}}
 @endsection
 
 @push('script')

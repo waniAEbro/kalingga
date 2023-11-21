@@ -230,12 +230,12 @@
                                                     <hr class="mt-5">
 
                                                     <div class="flex gap-3 mt-5 text-sm">
-                                                        <button onclick="show(${data.id})" class="flex items-center"><ion-icon name="eye-outline"></ion-icon><span class="ml-2">Preview</span></button>
-                                                        <a href="/${state.menu}/${ data.id }/edit" class="flex items-center"><ion-icon name="create-outline"></ion-icon><span class="ml-2">Edit</span></a>
+                                                        <button onclick="show(${data.id})" class="flex items-center hover:opacity-70"><ion-icon name="eye-outline"></ion-icon><span class="ml-2">Preview</span></button>
+                                                        <a href="/${state.menu}/${ data.id }/edit" class="flex items-center hover:opacity-70"><ion-icon name="create-outline"></ion-icon><span class="ml-2">Edit</span></a>
                                                         <form action="/${state.menu}/${ data.id }" method="post">
                                                             @csrf
                                                             @method('delete')
-                                                            <button class="flex items-center text-red-500"><ion-icon name="trash-outline"></ion-icon><span class="ml-2">Delete</span></button>
+                                                            <button class="flex items-center hover:opacity-70 text-red-500"><ion-icon name="trash-outline"></ion-icon><span class="ml-2">Delete</span></button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -250,7 +250,8 @@
                 tbody.id = "table-body"
                 state.currentData.forEach((data, index) => {
                     const tr = document.createElement("tr")
-                    tr.classList.add("cursor-pointer", "text-sm", "bg-white", "transition-all", "drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]")
+                    tr.classList.add("cursor-pointer", "text-sm", "bg-white", "transition-all",
+                        "drop-shadow-[0_0_15px_rgba(0,0,0,0.05)]")
                     tr.id = "daftar-item";
                     tr.height = "30px";
                     tr.setAttribute('x-data', '{ open: false }')
@@ -274,11 +275,13 @@
 
                         tr.appendChild(td)
                     })
-                    
+
                     const download = `
                             <button x-on:click="open = !open" class="flex items-center gap-1 text-slate-600 relative">
-                                <span class="text-lg"><ion-icon name="download-outline"></ion-icon></span>
-                                Unduh
+                                <div class="hover:opacity-70 flex items-center gap-1">
+                                    <span class="text-lg hover:opacity-"><ion-icon name="download-outline"></ion-icon></span>
+                                    Unduh
+                                </div>
                                 <div x-show="open" x-transition x-on:click.outside="open = false" class="absolute left-0 -top-24 bg-white  rounded-lg border-2 border-slate-300 p-2">
                                     <a href="/${state.menu}/${ data.id }/print" target="_blank" class="flex hover:bg-slate-100 rounded-md p-1 rounded w-20 items-center gap-1 text-slate-600">
                                         <span class="text-lg flex items-center"><ion-icon name="print-outline"></ion-icon></span>

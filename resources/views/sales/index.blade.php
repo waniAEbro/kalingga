@@ -178,7 +178,7 @@
                     </div>
                 </div>
 
-                <div class="grid w-full grid-cols-[0.7fr_1.3fr] px-[30px] my-5">
+                <div class="grid w-full grid-cols-[0.7fr_1.3fr] px-[30px] py-5 overscroll-none  h-[380px] overflow-y-scroll">
                     <div class="w-full">
                         <div class="mb-5 font-bold">Informasi Pelanggan</div>
 

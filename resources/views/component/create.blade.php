@@ -139,6 +139,8 @@
             const modal = document.querySelector('#modal');
 
             const name = modal.querySelector("#category_name").value
+            const loading = document.querySelector('.loading');
+            loading.classList.remove('hidden')
 
             try {
                 const response = await fetch("/api/categories", {
@@ -172,6 +174,7 @@
                 categoryId._x_dataStack[0].selectedlabel = categories[categories.length - 1].name
 
                 toastr.success(`${name} berhasil ditambahkan ke Kategori`)
+                loading.classList.add('hidden')
                 hideModal()
             } catch (error) {
                 console.log(error)

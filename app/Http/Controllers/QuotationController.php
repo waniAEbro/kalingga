@@ -10,7 +10,7 @@ class QuotationController extends Controller
     public function index()
     {
         return view('quotation.index', [
-            "sales" => Sale::get(),
+            "sales" => Sale::with('products')->get(),
             "purchases" => Purchase::get()
         ]);
     }

@@ -16,8 +16,8 @@
             </thead>
             <tbody id="table-body">
                 @foreach ($sales as $no => $sale)
-                    <tr onclick="showSale({{ $sale->id }})"
-                        class="cursor-pointer text-sm bg-white hover:scale-[1.01] transition-all overflow-hidden drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] text-center">
+                    <tr x-data onclick="showSale({{ $sale->id }})"
+                        class="cursor-pointer text-sm bg-white transition-all overflow-hidden drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] text-center">
                         <td class="px-4 py-2">
                             <div class="flex items-center justify-center gap-3 border-r h-7 border-slate-200">
                                 {{ $no + 1 }}</div>
@@ -25,11 +25,11 @@
                         <td class="p-4 break-words">{{ $sale->code }}</td>
                         <td class="p-4 break-words">{{ $sale->customer->name }}</td>
                         <td class="p-4 break-words">{{ date('Y-m-d', strtotime($sale->sale_date)) }}</td>
-                        <td class="p-4 break-word">{{ $sale->total_bill }}</td>
+                        <td class="p-4 break-word" x-text="toRupiah({{ $sale->total_bill }})"></td>
                         <td class="px-4 py-2" onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
                             <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                                 <a href="/sales/{{ $sale->id }}/print" target="_blank"
-                                    class="flex items-center gap-1 text-slate-600">
+                                    class="flex items-center gap-1 text-slate-600 hover:opacity-70">
                                     <span class="text-lg"><ion-icon name="print-outline"></ion-icon></span>Print
                                 </a>
                             </div>
@@ -53,8 +53,8 @@
             </thead>
             <tbody>
                 @foreach ($purchases as $no => $purchase)
-                    <tr onclick="showPurchase({{ $purchase->id }})"
-                        class="cursor-pointer text-sm bg-white hover:scale-[1.01] transition-all overflow-hidden drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] text-center">
+                    <tr x-data onclick="showPurchase({{ $purchase->id }})"
+                        class="cursor-pointer text-sm bg-white transition-all overflow-hidden drop-shadow-[0_0_15px_rgba(0,0,0,0.05)] text-center">
                         <td class="px-4 py-2">
                             <div class="flex items-center justify-center gap-3 border-r h-7 border-slate-200">
                                 {{ $no + 1 }}</div>
@@ -62,11 +62,11 @@
                         <td class="p-4 break-words">{{ $purchase->code }}</td>
                         <td class="p-4 break-words">{{ $purchase->supplier->name }}</td>
                         <td class="p-4 break-words">{{ date('Y-m-d', strtotime($purchase->purchase_date)) }}</td>
-                        <td class="p-4 break-word">{{ $purchase->total_bill }}</td>
+                        <td class="p-4 break-word" x-text="toRupiah({{ $purchase->total_bill }})"></td>
                         <td class="px-4 py-2" onclick="stopPropagation(event)" class="p-4 rounded-r-lg">
                             <div class="flex items-center justify-center gap-3 border-l h-7 border-slate-200">
                                 <a href="/purchases/{{ $purchase->id }}/print" target="_blank"
-                                    class="flex items-center gap-1 text-slate-600">
+                                    class="flex items-center gap-1 text-slate-600 hover:opacity-70">
                                     <span class="text-lg"><ion-icon name="print-outline"></ion-icon></span>Print
                                 </a>
                             </div>
@@ -87,8 +87,8 @@
                 const modal = document.querySelector('#modal');
                 document.querySelector('#modal-background').classList.remove('hidden');
 
-                modal.classList.remove('opacity-0', '-z-20');
-                modal.classList.add('opacity-100', 'z-20');
+                modal.classList.remove('opacity-0', '-z-40');
+                modal.classList.add('opacity-100', 'z-40');
 
                 let components_lists = '';
                 let components_price = 0;
@@ -144,7 +144,7 @@
                     </div>
                 </div>
 
-                <div class="grid w-full grid-cols-[0.7fr_1.3fr] px-[30px] my-5">
+                <div class="grid w-full grid-cols-[0.7fr_1.3fr] px-[30px] py-5 overscroll-none h-[380px] overflow-y-scroll">
                     <div class="w-full">
                         <div class="mb-5 font-bold">Informasi Pemasok</div>
 
@@ -278,16 +278,17 @@
 
             function showSale(id) {
                 const sale = sales.find(data => data.id === id);
+                console.log('sale', sale)
 
                 const modal = document.querySelector('#modal');
                 document.querySelector('#modal-background').classList.remove('hidden');
 
-                modal.classList.remove('opacity-0', '-z-20');
-                modal.classList.add('opacity-100', 'z-20');
+                modal.classList.remove('opacity-0', '-z-40');
+                modal.classList.add('opacity-100', 'z-40');
 
                 let products_lists = '';
                 let products_price = 0;
-                sale.product.forEach((pr, i) => {
+                sale.products.forEach((pr, i) => {
                     products_price += pr.pivot.quantity * pr.sell_price;
                     console.log(products_price)
 
@@ -337,7 +338,7 @@
                     </div>
                 </div>
 
-                <div class="grid w-full grid-cols-[0.7fr_1.3fr] px-[30px] my-5">
+                <div class="grid w-full grid-cols-[0.7fr_1.3fr] px-[30px] py-5 overscroll-none  h-[380px] overflow-y-scroll">
                     <div class="w-full">
                         <div class="mb-5 font-bold">Informasi Pelanggan</div>
 

@@ -3,7 +3,320 @@
 @section('content')
     <form action="/purchases" method="POST">
         @csrf
-        <div class="flex gap-5">
+
+        <div class="text-[18px] font-medium">Buat Pembelian</div>
+
+        <div x-data="{ open: true }" class="mt-5 bg-white rounded-lg w-full">
+            <div x-on:click="open = !open"
+                class="p-5 cursor-pointer active:bg-gray-50 transition-all items-center font-medium flex gap-5">
+                <ion-icon :class="open ? 'rotate-0' : '-rotate-90'" class="transition-all"
+                    name="chevron-down-outline"></ion-icon>
+                <div>Data Transaksi</div>
+            </div>
+            <div x-show="open" x-transition class="mx-5 border-t border-slate-200 pb-5">
+                <div class="mt-10 grid text-sm grid-cols-2 gap-[110px]">
+                    <div>
+                        <div class="flex justify-between">
+                            <div class="font-medium">Tanggal Pembelian</div>
+                            <input id="purchase_date" name="purchase_date" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                                value="{{ old('purchase_date') ?? Carbon\Carbon::now()->format('Y-m-d') }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Kode Pembelian</div>
+                            <input id="code" name="code" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                                value="{{ old('code') ?? 0 }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Beneficiary's Bank</div>
+                            <input id="beneficiary_bank" name="beneficiary_bank" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                                value="{{ old('beneficiary_bank') ?? 0 }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Bank Address</div>
+                            <input id="bank_address" name="bank_address" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                                value="{{ old('bank_address') ?? 0 }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Beneficiary Name</div>
+                            <input id="beneficiary_name" name="beneficiary_name" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                                value="{{ old('beneficiary_name') ?? 0 }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Phone</div>
+                            <input id="phone" name="phone" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                                value="{{ old('phone') ?? 0 }}">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between">
+                            <div class="font-medium">Tanggal Jatuh Tempo</div>
+                            <input id="due_date" name="due_date" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                                value="{{ old('due_date') ?? Carbon\Carbon::now()->format('Y-m-d') }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Metode Pembayaran</div>
+                            <input id="method" name="method" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                                value="{{ old('method') ?? 0 }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Beneficiary A/C USD</div>
+                            <input id="beneficiary_ac_usd" name="beneficiary_ac_usd" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                                value="{{ old('bank_address') ?? 0 }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Swift Code</div>
+                            <input id="swift_code" name="swift_code" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                                value="{{ old('swift_code') ?? 0 }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Beneficiary's Address</div>
+                            <input id="beneficiary_address" name="beneficiary_address" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                                value="{{ old('beneficiary_address') ?? 0 }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Lokasi Pengiriman</div>
+                            <textarea name="location" id="location" cols="30" rows="10"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded">{{ old('location') ?? 0 }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div x-data="{ open: true }" class="mt-5 bg-white rounded-lg w-full">
+            <div x-on:click="open = !open"
+                class="p-5 cursor-pointer active:bg-gray-50 transition-all items-center font-medium flex gap-5">
+                <ion-icon :class="open ? 'rotate-0' : '-rotate-90'" class="transition-all"
+                    name="chevron-down-outline"></ion-icon>
+                <div>Data Supplier</div>
+            </div>
+            <div x-show="open" x-transition class="mx-5 border-t border-slate-200 pb-5">
+                <div class="mt-10 grid text-sm grid-cols-2 gap-[110px]">
+                    <div>
+                        <div class="flex justify-between">
+                            <div class="font-medium">Nama Supplier</div>
+                            <div class="w-[255px]">
+                                <x-select x-on:click="getSupplier()" :dataLists="$suppliers->toArray()" :name="'supplier_id'" :id="'supplier_id'"
+                                    :value="old('supplier_id')" :new="'newSupplierModal()'" />
+                                @error('supplier_id')
+                                    <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Informasi Supplier</div>
+                            <input id="supplier_email" name="supplier_email" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] bg-gray-100 rounded"
+                                placeholder="Email" readonly>
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div></div>
+                            <input id="supplier_phone" name="supplier_phone" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] bg-gray-100 rounded"
+                                placeholder="No Hp" readonly>
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div></div>
+                            <textarea name="supplier_address" id="supplier_address" cols="30" rows="10"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] bg-gray-100 rounded" placeholder="Alamat"
+                                readonly></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div x-data="{ open: true }" class="mt-5 bg-white rounded-lg w-full">
+            <div x-on:click="open = !open"
+                class="p-5 cursor-pointer active:bg-gray-50 transition-all items-center font-medium flex gap-5">
+                <ion-icon :class="open ? 'rotate-0' : '-rotate-90'" class="transition-all"
+                    name="chevron-down-outline"></ion-icon>
+                <div>Data Keranjang</div>
+            </div>
+            <div x-show="open" x-transition class="mx-5 border-t border-slate-200 pb-5 text-sm">
+                <div class="mt-10 flex justify-between">
+                    <div class="font-medium">Komponen</div>
+                    <div>
+                        <table class="w-[790px] table-fixed mb-2">
+                            <thead>
+                                <tr class="bg-gray-100 border border-gray-200">
+                                    <th class="py-3 font-medium text-start w-14"></th>
+                                    <th class="py-3 font-medium text-start w-[255px]">Nama</th>
+                                    <th class="py-3 font-medium text-start w-[75px]">Jumlah</th>
+                                    <th class="py-3 font-medium text-start w-16">Unit</th>
+                                    <th class="py-3 font-medium text-start">Harga</th>
+                                    <th class="py-3 font-medium text-start">Subtotal</th>
+                                    <th class="py-3 font-medium text-start w-14"></th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="table-component">
+                                @if (old('component_id', []))
+                                    @foreach (old('component_id', []) as $index => $cp)
+                                        <tr x-data="{ component: $el }" class="border-x border-b border-gray-200">
+                                            <td id="number-component" class="py-3 text-center"></td>
+                                            <td class="py-3 pr-5">
+                                                <x-select
+                                                    x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)"
+                                                    :dataLists="$components->toArray()" :name="'component_id[]'" :id="'component_id'" :new="'newComponentModal(component); await $nextTick(); setSupplier();'"
+                                                    :value="$cp" />
+                                                @error('component_id.' . $index)
+                                                    <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                                @enderror
+                                            </td>
+                                            <td class="py-3 pr-5">
+                                                <input x-ref="quantity" x-init="getComponent(cp);
+                                                await $nextTick();
+                                                set_subtotal($refs.quantity)" type="number"
+                                                    name="quantity[]" oninput="set_subtotal(this)"
+                                                    value="{{ old('quantity', [])[$index] }}" step="0.0001"
+                                                    class="p-2 outline-none border-slate-200 border w-full rounded">
+                                                @error('quantity.' . $index)
+                                                    <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                                @enderror
+                                            </td>
+                                            <td id="unit" class="py-3 pr-5"></td>
+                                            <td id="price" class="py-2"></td>
+                                            <td id="subtotal" class="py-2"></td>
+                                            <td class="py-2">
+                                                <button type="button"
+                                                    x-on:click="component.remove(); set_total(); set_number_component()">
+                                                    <ion-icon class="text-xl text-gray-400 hover:opacity-70"
+                                                        name="trash-outline"></ion-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+
+                        <button x-data
+                            x-on:click="addNewComponent(); set_number_component(); await $nextTick(); setKomponen()"
+                            class="w-full py-3 rounded-xl border-2 border-dashed border-gray-300 font-medium flex items-center justify-center gap-3 hover:bg-gray-100 active:bg-gray-200 transition-all"
+                            type="button">
+                            <ion-icon class="text-lg" name="add-outline"></ion-icon>
+                            Tambah Komponen Baru
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-7 flex justify-between">
+                    <div class="font-medium">Produk</div>
+                    <div>
+                        <table class="w-[790px] table-fixed mb-2">
+                            <thead>
+                                <tr class="bg-gray-100 border border-gray-200">
+                                    <th class="py-3 font-medium text-start w-14"></th>
+                                    <th class="py-3 font-medium text-start w-[255px]">Nama</th>
+                                    <th class="py-3 font-medium text-start w-[75px]">Jumlah</th>
+                                    <th class="py-3 font-medium text-start">Harga</th>
+                                    <th class="py-3 font-medium text-start">Subtotal</th>
+                                    <th class="py-3 font-medium text-start w-14"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-product">
+                                @if (old('product_id', []))
+                                    @foreach (old('product_id', []) as $index => $product)
+                                        <tr x-data="{ product: $el }" class="border-x border-b border-gray-200">
+                                            <td id="number-product" class="py-3 text-center"></td>
+                                            <td class="py-3 pr-5">
+                                                <x-select x-on:click="getProduct(product); await $nextTick(); setProduk();"
+                                                    :dataLists="$products->toArray()" :value="$product" :name="'product_id[]'"
+                                                    :id="'product_id'" :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); setFilepond()'" />
+                                                @error('product_id.' . $index)
+                                                    <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                                @enderror
+                                            </td>
+                                            <td class="py-3 pr-5">
+                                                <input type="number" name="quantity_product[]"
+                                                    value="{{ old('quantity_product', [])[$index] }}"
+                                                    x-init="getProduct(product);
+                                                    await $nextTick();
+                                                    subTotalProduk($refs.quantity)" oninput="subTotalProduk(this)" step="1"
+                                                    class="p-2 outline-none border-slate-200 border w-full rounded">
+                                                @error('quantity_product.' . $index)
+                                                    <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                                @enderror
+                                            </td>
+                                            <td id="price" class="py-3"></td>
+                                            <td id="subtotal" class="py-3"></td>
+                                            <td class="py-3">
+                                                <button type="button"
+                                                    x-on:click="product.remove(); set_total(); set_number_product()">
+                                                    <ion-icon class="text-xl text-gray-400"
+                                                        name="trash-outline"></ion-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+
+                        <button x-data x-on:click="addNewProduct(); set_number_product(); await $nextTick(); setProduk()"
+                            class="w-full py-3 rounded-xl border-2 border-dashed border-gray-300 font-medium flex items-center justify-center gap-3 hover:bg-gray-100 active:bg-gray-200 transition-all"
+                            type="button">
+                            <ion-icon class="text-lg" name="add-outline"></ion-icon>
+                            Tambah Produk Baru
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-7 flex gap-[120px]">
+                    <div class="font-medium">Total Biaya</div>
+                    <div>
+                        <table class="w-96 table-fixed mb-2">
+                            <thead>
+                                <tr class="bg-gray-100 border border-gray-200">
+                                    <th class="p-3 font-medium text-start">Total</th>
+                                    <th class="py-3 font-medium text-start">Bayar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-x border-b border-gray-200">
+                                    <td class="p-3">
+                                        <input id="total_bill" name="total_bill" type="number"
+                                            class="p-2 outline-none border-slate-200 border w-full rounded"
+                                            placeholder="Total Bayar" readonly>
+                                    </td>
+                                    <td class="p-3">
+                                        <input id="paid" name="paid" type="number"
+                                            class="p-2 outline-none border-slate-200 border w-full rounded"
+                                            placeholder="Bayar" value="old('paid') ?? 0" oninput="batasBayar(this)">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full flex justify-end gap-5 mt-7 text-sm font-medium">
+            <a href="/purchase">
+                <button type="button"
+                    class="w-[208px] py-3 border border-gray-200 hover:bg-[#064E3B]/10 active:bg-[#064E3B]/20 transition-all hover:text-[#064E3B] rounded-md text-gray-600">Batalkan</button>
+            </a>
+            <button type="submit"
+                class="w-[208px] py-3 bg-[#064E3B] hover:bg-[#064E3B]/90 active:bg-[#064E3B]/80 transition-all rounded-md text-gray-200">Simpan</button>
+        </div>
+
+
+
+        {{-- <div class="flex gap-5">
             <div class="basis-3/4">
                 <h1 class="text-xl font-bold text-center m-4">Data Transaksi</h1>
                 <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
@@ -96,7 +409,7 @@
                 </div>
 
                 <h1 class="text-xl font-bold text-center m-4">Data Keranjang</h1>
-                <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
+                <div class="h-fit z-10 relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
                     <div class="grid grid-cols-1 px-4">
                         <h1 class="mb-3 text-xl font-bold">Komponen</h1>
 
@@ -243,7 +556,7 @@
                         class="w-full py-2 px-5 border text-[#F7F9F9] bg-[#064e3be1] text-sm rounded-lg">Simpan</button>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </form>
 @endsection
 @push('script')
@@ -256,6 +569,12 @@
         let componentsSelected = {}
         let suppliersSelected = {}
 
+        // products.forEach(p => selectedProduct[p.id] = p.name)
+        // components.forEach(c => componentsSelected[c.id] = c.name)
+
+
+        // setProduk();
+        // setKomponen();
         set_number_product();
         set_number_component();
 
@@ -286,24 +605,6 @@
         function set_modal_supplier_number() {
             const numbers = document.querySelectorAll('#modal-supplier-number');
             numbers.forEach((number, i) => number.innerText = i + 1)
-        }
-
-        function deleteBtnToggle() {
-            const deleteBtn = document.querySelectorAll('.delete-btn')
-            if (deleteBtn.length == 1) {
-                deleteBtn[0].style.display = "none"
-            } else {
-                deleteBtn.forEach(btn => btn.style.display = 'block')
-            }
-        }
-
-        function componentDeleteBtnToggle() {
-            const deleteBtn = document.querySelectorAll('.comp-delete-btn')
-            if (deleteBtn.length == 1) {
-                deleteBtn[0].style.display = "none"
-            } else {
-                deleteBtn.forEach(btn => btn.style.display = 'block')
-            }
         }
 
         function supplierDeleteBtnToggle() {
@@ -340,12 +641,14 @@
         }
 
         function setProduk() {
+            console.log('selectedProduct', selectedProduct)
             document.querySelectorAll(".product_id").forEach(element => {
                 element._x_dataStack[0].list = selectedProduct
             })
         }
 
         function setKomponen() {
+            console.log('componentsSelected', componentsSelected)
             document.querySelectorAll(".component_id").forEach(element => {
                 element._x_dataStack[0].list = componentsSelected
             })
@@ -429,54 +732,56 @@
 
         function addNewComponent() {
             const tableComponent = document.getElementById('table-component');
+            console.log('tableComponent', tableComponent)
             const componentRow = document.createElement('tr');
             componentRow.setAttribute('x-data', '{ component: $el }')
-            componentRow.className = 'border-b';
+            componentRow.className = 'border-x border-b border-gray-200';
             componentRow.innerHTML = `
-                                        <td id="number-component" class="p-2 text-center"></td>
-                                        <td class="w-40 p-2">
-                                            <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
+                                        <td id="number-component" class="py-3 text-center"></td>
+                                        <td class="py-3 pr-5">
+                                            <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity);" :dataLists="$components->toArray()"
                                                 :name="'component_id[]'" :id="'component_id'" :new="'newComponentModal(component); await $nextTick(); setSupplier();'" />
                                         </td>
-                                        <td class="p-2"><input x-ref="quantity" type="number" name="quantity[]"
+                                        <td class="py-3 pr-5">
+                                            <input x-ref="quantity" type="number" name="quantity[]"
                                                 oninput="set_subtotal(this)" value="0" step="0.0001"
-                                                class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                                class="p-2 outline-none border-slate-200 border w-full rounded">
                                         </td>
-                                        <td id="unit" class="p-2"></td>
-                                        <td id="price" class="p-2"></td>
-                                        <td id="subtotal" class="p-2"></td>
-                                        <td class="p-2">
-                                            <button type="button" x-on:click="component.remove(); set_total(); set_number_component()"
-                                                class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
-                                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                        <td id="unit" class="py-3 pr-5"></td>
+                                        <td id="price" class="py-2"></td>
+                                        <td id="subtotal" class="py-2"></td>
+                                        <td class="py-2">
+                                            <button type="button" x-on:click="component.remove(); set_total(); set_number_component()">
+                                                <ion-icon class="text-xl text-gray-400 hover:opacity-70" name="trash-outline"></ion-icon>
+                                            </button>
                                         </td>
                                     `;
 
             tableComponent.appendChild(componentRow);
-            componentDeleteBtnToggle();
         }
 
         function addNewProduct() {
             const tableProduct = document.getElementById('table-product');
             const productRow = document.createElement('tr');
             productRow.setAttribute('x-data', '{ product: $el }')
-            productRow.className = 'border-b';
+            productRow.className = 'border-x border-b border-gray-200';
             productRow.innerHTML = `
-                                        <td id="number-product" class="p-2 text-center"></td>
-                                        <td class="w-40 p-2">
+                                        <td id="number-product" class="py-3 text-center"></td>
+                                        <td class="py-3 pr-5">
                                             <x-select x-on:click="getProduct(product); await $nextTick(); setProduk();"  x-init="await $nextTick(); setProduk();" :dataLists="$products->toArray()"
                                                 :name="'product_id[]'" :id="'product_id'" :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); setFilepond()'" />
                                         </td>
-                                        <td class="p-2"><input type="number" name="quantity_product[]"
+                                        <td class="py-3 pr-5">
+                                            <input type="number" name="quantity_product[]"
                                                 oninput="subTotalProduk(this)" value="0" step="1"
-                                                class="w-16 px-2 py-2 text-sm transition-all duration-100 border rounded outline-none focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
+                                                class="p-2 outline-none border-slate-200 border w-full rounded">
                                         </td>
-                                        <td id="price" class="p-2"></td>
-                                        <td id="subtotal" class="p-2"></td>
-                                        <td class="p-2">
-                                            <button type="button" x-on:click="product.remove(); set_total(); set_number_product()"
-                                                class="transition-all duration-300 rounded-full hover:bg-slate-100 active:bg-slate-200"><span
-                                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
+                                        <td id="price" class="py-3"></td>
+                                        <td id="subtotal" class="py-3"></td>
+                                        <td class="py-3">
+                                            <button type="button" x-on:click="product.remove(); set_total(); set_number_product()">
+                                                <ion-icon class="text-xl text-gray-400" name="trash-outline"></ion-icon>
+                                            </button>
                                         </td>
                                     `;
 
@@ -534,7 +839,7 @@
                                         <td id="price-product-modal" class="p-2"></td>
                                         <td id="subtotal-product-modal" class="p-2"></td>
                                         <td id="comp" class="p-2">
-                                            <button type="button" x-on:click="component.remove(); set_total(); set_number_component_product(); componentDeleteBtnToggleProduct()"
+                                            <button type="button" x-on:click="component.remove(); set_total(); set_number_component_product();"
                                                 class="transition-all duration-300 rounded-full comp-delete-btn-product hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
@@ -560,7 +865,7 @@
                                     </td>
                                     <td id="suppl" class="p-2">
                                         <button type="button"
-                                            x-on:click="supplier.remove(); set_total(); set_number_supplier_product(); supplierDeleteBtnToggleProduct()"
+                                            x-on:click="supplier.remove(); set_total(); set_number_supplier_product();"
                                             class="transition-all duration-300 rounded-full supplier-delete-btn-product hover:bg-slate-100 active:bg-slate-200"><span
                                                 class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                     </td>
@@ -577,24 +882,6 @@
         function set_number_supplier_product() {
             const numbers = document.querySelectorAll('#number-supplier-product');
             numbers.forEach((number, i) => number.innerText = i + 1)
-        }
-
-        function supplierDeleteBtnToggleProduct() {
-            const deleteBtn = document.querySelectorAll('.supplier-delete-btn-product')
-            if (deleteBtn.length == 1) {
-                deleteBtn[0].style.display = "none"
-            } else {
-                deleteBtn.forEach(btn => btn.style.display = 'block')
-            }
-        }
-
-        function componentDeleteBtnToggleProduct() {
-            const deleteBtn = document.querySelectorAll('.comp-delete-btn-product')
-            if (deleteBtn.length == 1) {
-                deleteBtn[0].style.display = "none"
-            } else {
-                deleteBtn.forEach(btn => btn.style.display = 'block')
-            }
         }
 
         function set_total_produksi() {
@@ -886,7 +1173,7 @@
                                         <td id="subtotal-product-modal" class="p-2"></td>
                                         <td id="comp" class="p-2">
                                             <button type="button"
-                                                x-on:click="component.remove(); await $nextTick; set_total(); set_number_component_product(); componentDeleteBtnToggleProduct()"
+                                                x-on:click="component.remove(); await $nextTick; set_total(); set_number_component_product();"
                                                 class="transition-all duration-300 rounded-full comp-delete-btn-product hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
@@ -896,7 +1183,7 @@
                             </table>
     
                             <button type="button" x-data
-                                x-on:click="addNewComponentProduct(); set_number_component_product(); componentDeleteBtnToggleProduct(); await $nextTick(); setComponentListInProduct() "
+                                x-on:click="addNewComponentProduct(); set_number_component_product(); await $nextTick(); setComponentListInProduct() "
                                 class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Tambah
                                 Data Baru</button>
     
@@ -925,7 +1212,7 @@
                                         </td>
                                         <td id="suppl" class="p-2">
                                             <button type="button"
-                                                x-on:click="supplier.remove(); set_total(); set_number_supplier_product(); supplierDeleteBtnToggleProduct()"
+                                                x-on:click="supplier.remove(); set_total(); set_number_supplier_product();"
                                                 class="transition-all duration-300 rounded-full supplier-delete-btn-product hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
@@ -934,7 +1221,7 @@
                             </table>
     
                             <button type="button" x-data
-                                x-on:click="addNewSupplierProduct(); set_number_supplier_product(); supplierDeleteBtnToggleProduct(); await $nextTick(); setSupplierListInProduct(); "
+                                x-on:click="addNewSupplierProduct(); set_number_supplier_product(); await $nextTick(); setSupplierListInProduct(); "
                                 class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
                                 New</button>
                         </div>
@@ -1134,8 +1421,6 @@
                 createProduct(productRow)
             })
 
-            componentDeleteBtnToggleProduct();
-            supplierDeleteBtnToggleProduct();
             set_number_supplier_product();
             set_number_component_product();
         }
@@ -1513,10 +1798,7 @@
             const hpp = modal.querySelector('#hpp').value
             const saveButton = document.getElementById('create-product')
 
-            const productsList = [component_id,
-                quantity,
-                supplier_id,
-                price_supplier,
+            const productsList = [
                 name,
                 logo,
                 rfid,
@@ -1559,8 +1841,9 @@
             ]
 
             let save = productsList.every((p) => ((typeof p === 'object' && p[0]) || (typeof p !== 'object' && p)))
+            const x = (component_id && quantity[0]) || (supplier_id && price_supplier[0])
 
-            if (save) {
+            if (save && x) {
                 saveButton.disabled = false
                 saveButton.style.cursor = 'pointer'
             } else {

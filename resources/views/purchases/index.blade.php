@@ -132,8 +132,8 @@
                             <td class="px-4 py-2">${cp.name}</td>
                             <td class="px-4 py-2">${cp.pivot.quantity}</td>
                             <td class="px-4 py-2">${cp.unit}</td>
-                            <td class="px-4 py-2">${toRupiah(cp.sell_price)}</td>
-                            <td class="px-4 py-2">${toRupiah(cp.sell_price*cp.pivot.quantity)}</td>
+                            <td class="px-4 py-2">${toRupiah(cp.price_per_unit)}</td>
+                            <td class="px-4 py-2">${toRupiah(cp.price_per_unit*cp.pivot.quantity)}</td>
                         </tr>`;
             })
 
@@ -149,15 +149,15 @@
             let product_lists = '';
             let product_price = 0;
             purchase.products.forEach((p, i) => {
-                product_price += p.pivot.quantity * p.price_per_unit;
+                product_price += p.pivot.quantity * p.sell_price;
                 console.log(product_price)
 
                 product_lists += `<tr>
                             <td class="px-4 py-2">${i+1}</td>
                             <td class="px-4 py-2">${p.name}</td>
                             <td class="px-4 py-2">${p.pivot.quantity}</td>
-                            <td class="px-4 py-2">${toRupiah(p.price_per_unit)}</td>
-                            <td class="px-4 py-2">${toRupiah(p.price_per_unit*p.pivot.quantity)}</td>
+                            <td class="px-4 py-2">${toRupiah(p.sell_price)}</td>
+                            <td class="px-4 py-2">${toRupiah(p.sell_price*p.pivot.quantity)}</td>
                         </tr>`;
             })
 
@@ -199,7 +199,7 @@
                     </div>
                 </div>
 
-                <div class="grid w-full grid-cols-[0.7fr_1.3fr] px-[30px] my-5">
+                <div class="grid w-full grid-cols-[0.7fr_1.3fr] px-[30px] py-5 overscroll-none  h-[380px] overflow-y-scroll">
                     <div class="w-full">
                         <div class="mb-5 font-bold">Informasi Pemasok</div>
 

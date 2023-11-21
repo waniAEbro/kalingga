@@ -187,7 +187,7 @@
                                         <td id="price-product-modal" class="p-2"></td>
                                         <td id="subtotal-product-modal" class="p-2"></td>
                                         <td id="comp" class="p-2">
-                                            <button type="button" x-on:click="component.remove(); set_total(); set_number_component_product(); componentDeleteBtnToggleProduct()"
+                                            <button type="button" x-on:click="component.remove(); set_total(); set_number_component_product();"
                                                 class="transition-all duration-300 rounded-full comp-delete-btn-product hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
@@ -213,7 +213,7 @@
                                     </td>
                                     <td id="suppl" class="p-2">
                                         <button type="button"
-                                            x-on:click="supplier.remove(); set_total(); set_number_supplier_product(); supplierDeleteBtnToggleProduct()"
+                                            x-on:click="supplier.remove(); set_total(); set_number_supplier_product();"
                                             class="transition-all duration-300 rounded-full supplier-delete-btn-product hover:bg-slate-100 active:bg-slate-200"><span
                                                 class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                     </td>
@@ -559,7 +559,7 @@
                                         <td id="subtotal-product-modal" class="p-2"></td>
                                         <td id="comp" class="p-2">
                                             <button type="button"
-                                                x-on:click="component.remove(); await $nextTick; set_total(); set_number_component_product(); componentDeleteBtnToggleProduct()"
+                                                x-on:click="component.remove(); await $nextTick; set_total(); set_number_component_product();"
                                                 class="transition-all duration-300 rounded-full comp-delete-btn-product hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
@@ -569,7 +569,7 @@
                             </table>
     
                             <button type="button" x-data
-                                x-on:click="addNewComponentProduct(); set_number_component_product(); componentDeleteBtnToggleProduct(); await $nextTick(); setComponentListInProduct() "
+                                x-on:click="addNewComponentProduct(); set_number_component_product(); await $nextTick(); setComponentListInProduct() "
                                 class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Tambah
                                 Data Baru</button>
     
@@ -598,7 +598,7 @@
                                         </td>
                                         <td id="suppl" class="p-2">
                                             <button type="button"
-                                                x-on:click="supplier.remove(); set_total(); set_number_supplier_product(); supplierDeleteBtnToggleProduct()"
+                                                x-on:click="supplier.remove(); set_total(); set_number_supplier_product();"
                                                 class="transition-all duration-300 rounded-full supplier-delete-btn-product hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
@@ -607,7 +607,7 @@
                             </table>
     
                             <button type="button" x-data
-                                x-on:click="addNewSupplierProduct(); set_number_supplier_product(); supplierDeleteBtnToggleProduct(); await $nextTick(); setSupplierListInProduct(); "
+                                x-on:click="addNewSupplierProduct(); set_number_supplier_product(); await $nextTick(); setSupplierListInProduct(); "
                                 class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Add
                                 New</button>
                         </div>
@@ -807,8 +807,6 @@
                 createProduct(productRow)
             })
 
-            componentDeleteBtnToggleProduct();
-            supplierDeleteBtnToggleProduct();
             set_number_supplier_product();
             set_number_component_product();
         }
@@ -1029,24 +1027,6 @@
             })
         }
 
-        function supplierDeleteBtnToggleProduct() {
-            const deleteBtn = document.querySelectorAll('.supplier-delete-btn-product')
-            if (deleteBtn.length == 1) {
-                deleteBtn[0].style.display = "none"
-            } else {
-                deleteBtn.forEach(btn => btn.style.display = 'block')
-            }
-        }
-
-        function componentDeleteBtnToggleProduct() {
-            const deleteBtn = document.querySelectorAll('.comp-delete-btn-product')
-            if (deleteBtn.length == 1) {
-                deleteBtn[0].style.display = "none"
-            } else {
-                deleteBtn.forEach(btn => btn.style.display = 'block')
-            }
-        }
-
         function toggleProductSaveButtonState() {
             const modal = document.querySelector('#modal');
 
@@ -1103,10 +1083,7 @@
             const hpp = modal.querySelector('#hpp').value
             const saveButton = document.getElementById('create-product')
 
-            const productsList = [component_id,
-                quantity,
-                supplier_id,
-                price_supplier,
+            const productsList = [
                 name,
                 logo,
                 rfid,
@@ -1148,12 +1125,18 @@
                 hpp
             ]
 
-            let save = productsList.every((p) => ((typeof p === 'object' && p[0]) || (typeof p !== 'object' && p)))
+            const save = productsList.every((p) => ((typeof p === 'object' && p[0]) || (typeof p !== 'object' && p)))
+            const x = (component_id && quantity[0]) || (supplier_id && price_supplier[0])
 
-            if (save) {
+            if (save && x) {
+                console.log('boleh save')
+                console.log('save, x', save, x)
+                console.log('x', x)
                 saveButton.disabled = false
                 saveButton.style.cursor = 'pointer'
             } else {
+                console.log('tak boleh')
+                console.log('save, x', save, x)
                 saveButton.disabled = true
                 saveButton.style.cursor = "not-allowed"
             }

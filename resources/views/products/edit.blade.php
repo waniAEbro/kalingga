@@ -48,7 +48,7 @@
                                     <td id="subtotal" class="p-2"></td>
                                     <td id="comp" class="p-2">
                                         <button type="button"
-                                            x-on:click="component.remove(); await $nextTick; set_total(); set_number_component(); componentDeleteBtnToggle()"
+                                            x-on:click="component.remove(); await $nextTick; set_total(); set_number_component();"
                                             class="transition-all duration-300 rounded-full comp-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                                 class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                     </td>
@@ -74,7 +74,7 @@
                                     <td id="subtotal" class="p-2"></td>
                                     <td id="comp" class="p-2">
                                         <button type="button"
-                                            x-on:click="component.remove(); componentDeleteBtnToggle(); await $nextTick; set_total(); set_number_component()"
+                                            x-on:click="component.remove(); await $nextTick; set_total(); set_number_component()"
                                             class="transition-all duration-300 rounded-full comp-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                                 class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                     </td>
@@ -86,7 +86,7 @@
                 </table>
 
                 <button type="button" x-data
-                    x-on:click="addNewComponent(); set_number_component(); componentDeleteBtnToggle(); await $nextTick(); setNewComponents()"
+                    x-on:click="addNewComponent(); set_number_component(); await $nextTick(); setNewComponents()"
                     class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">Tambah
                     Data Baru</button>
 
@@ -124,7 +124,7 @@
 
                                     <td id="aksi" class="p-2">
                                         <button type="button"
-                                            x-on:click="supplier.remove(); set_number_supplier(); supplierDeleteBtnToggle()"
+                                            x-on:click="supplier.remove(); set_number_supplier();"
                                             class="transition-all duration-300 rounded-full supplier-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                                 class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                     </td>
@@ -144,7 +144,7 @@
                                     </td>
                                     <td id="aksi" class="p-2">
                                         <button type="button"
-                                            x-on:click="supplier.remove(); set_number_supplier(); supplierDeleteBtnToggle()"
+                                            x-on:click="supplier.remove(); set_number_supplier();"
                                             class="transition-all duration-300 rounded-full supplier-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                                 class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                     </td>
@@ -155,7 +155,7 @@
                 </table>
 
                 <button type="button" x-data
-                    x-on:click="addNewSupplier(); set_number_supplier(); supplierDeleteBtnToggle(); await $nextTick(); setNewSuppliers()"
+                    x-on:click="addNewSupplier(); set_number_supplier();await $nextTick(); setNewSuppliers()"
                     class="flex justify-center w-full py-2 text-sm transition duration-300 border-b border-dashed border-x hover:bg-slate-50 active:bg-sky-100">
                     Add New
                 </button>
@@ -354,8 +354,8 @@
         suppliers.forEach(s => suppliersSelected[s.id] = s.name)
         components.forEach(c => componentsSelected[c.id] = c.name)
 
-        componentDeleteBtnToggle();
-        supplierDeleteBtnToggle();
+        
+       
         set_number_supplier();
         set_number_component();
 
@@ -374,7 +374,7 @@
                                             <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'" :placeholder="'1000'" />
                                         </td>
                                         <td id="aksi" class="p-2">
-                                            <button type="button" x-on:click="supplier.remove(); set_number_supplier(); supplierDeleteBtnToggle()"
+                                            <button type="button" x-on:click="supplier.remove(); set_number_supplier();"
                                                 class="transition-all duration-300 rounded-full supplier-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
@@ -490,7 +490,7 @@
                                         <td id="price" class="p-2"></td>
                                         <td id="subtotal" class="p-2"></td>
                                         <td id="comp" class="p-2">
-                                            <button type="button" x-on:click="component.remove(); set_total(); set_number_component(); componentDeleteBtnToggle()"
+                                            <button type="button" x-on:click="component.remove(); set_total(); set_number_component();"
                                                 class="transition-all duration-300 rounded-full comp-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                                     class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                         </td>
@@ -531,24 +531,6 @@
             total += production_cost + other_cost + pack_cost
 
             document.querySelector('#hpp').value = total;
-        }
-
-        function componentDeleteBtnToggle() {
-            const deleteBtn = document.querySelectorAll('.comp-delete-btn')
-            if (deleteBtn.length == 1) {
-                deleteBtn[0].style.display = "none"
-            } else {
-                deleteBtn.forEach(btn => btn.style.display = 'block')
-            }
-        }
-
-        function supplierDeleteBtnToggle() {
-            const deleteBtn = document.querySelectorAll('.supplier-delete-btn')
-            if (deleteBtn.length == 1) {
-                deleteBtn[0].style.display = "none"
-            } else {
-                deleteBtn.forEach(btn => btn.style.display = 'block')
-            }
         }
 
         function modalSupplierDeleteBtnToggle() {
