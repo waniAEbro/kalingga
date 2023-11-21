@@ -70,7 +70,7 @@ class ProductionController extends Controller
             "quantity_not_finished" => $request->quantity_not_finished,
         ]);
         foreach ($request->sale_production_id as $key => $sale_production_id) {
-            DB::table("sale_production")->where("id", $sale_production_id)->update([
+            DB::table("production_sale")->where("id", $sale_production_id)->update([
                 "quantity_not_finished" => $request->sale_quantity_not_finished[$key],
                 "quantity_finished" => $request->sale_quantity_finished[$key]
             ]);

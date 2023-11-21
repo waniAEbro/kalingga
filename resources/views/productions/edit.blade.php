@@ -1,4 +1,5 @@
 @extends('layouts.layout')
+
 @section('content')
     <form action="/products/production/{{ $product->id }}" method="post">
         @csrf
@@ -32,24 +33,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($product->production->saleProductions()->wherePivot('quantity_not_finished', '>', 0)->get() as $index => $sale)
+                    @foreach ($product->production->saleProductions as $index => $sale_production)
                         <tr class="shadow-md bg-white">
-                            <input name="sale_id[]" type="hidden" value="{{ $sale->id }}">
+                            <input name="sale_production_id[]" type="hidden" value="{{ $sale_production->id }}">
                             <td class="p-4 rounded-l-lg">{{ $index + 1 }}</td>
-                            <td class="p-4">{{ $sale->code }}</td>
-                            <td class="p-4">{{ $sale->customer->name }}</td>
+                            <td class="p-4">{{ $sale_production->code }}</td>
+                            <td class="p-4">{{ $sale_production->customer->name }}</td>
                             <td class="p-4">
                                 <x-input :name="'sale_quantity_not_finished[]'" :type="'number'" :placeholder="'0'" readonly
-                                    :value="$sale->pivot->quantity_not_finished" class="sale_quantity_not_finished id-{{ $sale->id }}" />
+                                    :value="$sale_production->pivot->quantity_not_finished" class="sale_quantity_not_finished id-{{ $sale_production->id }}" />
                             </td>
                             <td class="p-4 rounded-r-lg">
                                 <x-input :name="'sale_quantity_finished[]'" :type="'number'"
-                                    oninput="setNotFinished({{ $sale->id }}, this)" :placeholder="'0'"
-                                    :step="1" :value="$sale->pivot->quantity_finished" class="sale_quantity_finished" />
+                                    oninput="setNotFinished({{ $sale_production->id }}, this)" :placeholder="'0'"
+                                    :step="1" :value="$sale_production->pivot->quantity_finished" class="sale_quantity_finished" />
                             </td>
                             <td>
                                 <button type="button"
-                                    onclick="showModalPurchase({{ $sale->id }}, {{ $index }}, this)"
+                                    onclick="showModalPurchase({{ $sale_production->id }}, {{ $index }}, this)"
                                     class="flex items-center gap-1 text-slate-600">
                                     <span class="text-lg"><ion-icon name="basket-outline"></ion-icon></span>Beli Dari
                                     Supplier
@@ -84,10 +85,10 @@
         }
 
         function setNotFinished(id, e) {
-            const sale_production = product.production.sale_production.find(sale_production => sale_production.id == id)
+            const sale_production = product.production.sale_productions.find(sale_production => sale_production.id == id)
             const maks = sale_production.pivot.quantity_not_finished + sale_production.pivot.quantity_finished;
             const parent = e.parentElement.parentElement.parentElement;
-            const selisih_finish = parseInt(e.value) - sale_production.quantity_finished;
+            const selisih_finish = parseInt(e.value) - sale_production.pivot.quantity_finished;
             const quantity_not_finished = sale_production.pivot.quantity_not_finished - selisih_finish;
 
             if (quantity_not_finished <= 0) {
@@ -111,12 +112,6 @@
                     supplier_id).phone;
                 document.getElementById("price_purchase").value = product.suppliers.find(supplier => supplier.id ==
                     supplier_id).pivot.price_per_unit;
-
-                const quantity_purchase = document.getElementById("quantity_purchase").value;
-                const price_purchase = document.getElementById('price_purchase').value;
-                const subtotal = quantity_purchase * price_purchase;
-                document.getElementById('subtotal').innerHTML = subtotal;
-                document.getElementById('total_bill').value = subtotal;
             } else {
                 document.getElementById('supplier_address').value = '';
                 document.getElementById('supplier_email').value = '';
@@ -125,9 +120,9 @@
         }
 
         function setSubtotal(element) {
-            if (parseInt(element.value) >= parseInt(element.max)) {
+            if (element.value >= element.max) {
                 element.value = element.max;
-            } else if (parseInt(element.value) <= 0) {
+            } else if (element.value <= 0) {
                 element.value = 0;
             }
             const quantity_purchase = element.value;
@@ -209,18 +204,16 @@
                     throw purchase
                 }
 
-                console.log(purchase)
-
                 document.querySelector("#quantity_not_finished").value = purchase.production.quantity_not_finished
-                document.querySelector(".id-" + id).value = purchase.production.sale_productions.find(sale => sale.id ==
-                        id).pivot
-                    .quantity_not_finished
+                document.querySelector(".id-" + id).value = purchase.production.sale_productions
+                    .find(sale_production => sale_production.id == id).pivot.quantity_not_finished
 
                 product = purchase
 
                 loading.classList.add('hidden')
                 hideModal()
             } catch (error) {
+                console.log(error)
                 loading.classList.add('hidden')
                 const supplier_error = document.querySelector("#supplier-error")
                 supplier_error.innerText = error.errors.supplier_id

@@ -47,7 +47,7 @@
 @endsection
 @push('script')
     <script>
-        state.columnName = ["Nomor", "Nama Supplier", "Tanggal Transaksi", "Jatuh Tempo", "Status", "Sisa Stansaksi",
+        state.columnName = ["Nomor", "Nama Supplier", "Tanggal Transaksi", "Jatuh Tempo", "Status", "Sisa Transaksi",
             "Total Transaksi", "Aksi"
         ]
         state.columnQuery = ["supplier.name", "purchase_date", "due_date", "status", "remain_bill", "total_bill"]
