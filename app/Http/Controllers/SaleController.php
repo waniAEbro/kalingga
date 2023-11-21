@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\SaleExport;
 use App\Models\Sale;
-use App\Models\PaymentSale;
 use App\Models\Product;
 use App\Models\Customer;
-use App\Models\DeliverySale;
+use App\Models\Supplier;
+use App\Models\Component;
 use App\Models\Production;
+use App\Exports\SaleExport;
+use App\Models\PaymentSale;
 use App\Models\SaleHistory;
+use App\Models\DeliverySale;
+use App\Models\ProductionSale;
+use App\Models\SaleProduction;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use App\Models\HistoryDeliverySale;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
-use App\Models\Component;
-use App\Models\HistoryDeliverySale;
-use App\Models\ProductionSale;
-use App\Models\Supplier;
 
 class SaleController extends Controller
 {
@@ -83,7 +84,7 @@ class SaleController extends Controller
                 "quantity_not_finished" => DB::raw("quantity_not_finished + " . $request->quantity_product[$key])
             ]);
 
-            ProductionSale::create([
+            DB::table("production_sale")->insert([
                 "sale_id" => $sale->id,
                 "production_id" => Product::find($id)->production->id,
                 "quantity_finished" => 0,
@@ -160,15 +161,16 @@ class SaleController extends Controller
 
         if ($request->delivered_product) {
             foreach ($request->delivered_product as $index => $delivered) {
-                DB::table("delivery_products")->where("product_id", $sale->products[$index]->id)->update([
-                    "delivered" => $delivered,
-                    "remain" => $request->remain_product[$index]
-                ]);
-
-                HistoryDeliverySale::create([
-                    "sale_id" => $sale->id,
-                    "description" => $sale->products[$index]->name . " sebanyak " . $delivered . " pcs telah dikirim",
-                ]);
+                if ($delivered > 0 && $delivered != $request->old_delivered_product[$index]) {
+                    DB::table("delivery_products")->where("product_id", $sale->products[$index]->id)->update([
+                        "delivered" => $delivered,
+                        "remain" => $request->remain_product[$index]
+                    ]);
+                    HistoryDeliverySale::create([
+                        "sale_id" => $sale->id,
+                        "description" => $sale->products[$index]->name . " sebanyak " . $delivered - $request->old_delivered_product[$index] . " pcs telah dikirim",
+                    ]);
+                }
             }
         }
 
@@ -183,6 +185,7 @@ class SaleController extends Controller
         DB::table("product_sale")->where("sale_id", $sale->id)->delete();
         ProductionSale::where("sale_id", $sale->id)->delete();
         SaleHistory::where("sale_id", $sale->id)->delete();
+        HistoryDeliverySale::where("sale_id", $sale->id)->delete();
         $sale->delete();
         return redirect("/sales");
     }

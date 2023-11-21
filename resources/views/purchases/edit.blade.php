@@ -115,8 +115,8 @@
                                         <th class="p-2">Komponen</th>
                                         <th class="p-2">Jumlah</th>
                                         <th class="p-2">Unit</th>
-                                        <th class="p-2">Harga Per Produk</th>
-                                        <th class="p-2">Subtotal</th>
+                                        <th class="p-2 max-w-6 break-all">Harga Per Produk</th>
+                                        <th class="p-2 max-w-6 break-all">Subtotal</th>
                                         <th class="p-2">Delivered</th>
                                         <th class="p-2">Remain</th>
                                         <th class="p-2">Total</th>
@@ -130,13 +130,19 @@
                                             <td id="quantity" class="p-2" x-ref="quantity">{{ $cs->pivot->quantity }}
                                             </td>
                                             <td id="unit" class="p-2">{{ $cs->unit }}</td>
-                                            <td id="price" x-ref="price" class="p-2 rupiah">
+                                            <td id="price" x-ref="price" class="p-2 rupiah max-w-6 break-all">
                                                 {{ $cs->suppliers->find($purchase->supplier->id)->pivot->price_per_unit }}
                                             </td>
                                             <td id="subtotal"
                                                 x-text="toRupiah(parseFloat($refs.quantity.innerText) * parseFloat($refs.price.innerText.replace(/[^0-9\.,]/g, '').replace(/[^0-9\.,]/g, '').replace(/\./g,'').replace(',', '.')))"
-                                                class="p-2"></td>
+                                                class="p-2 max-w-6 break-all"></td>
                                             <td class="p-2">
+                                                <input type="hidden" name="old_delivered_component[]" value="{{ number_format(
+                                                    $purchase->deliveryComponents
+                                                        ->where('component_id', $cs->id)
+                                                        ->first()->delivered,
+                                                    5,
+                                                ) ?? 0 }}">
                                                 <x-input :name="'delivered_component[]'" :step="0.00001" :min="number_format(
                                                     $purchase->deliveryComponents
                                                         ->where('component_id', $cs->id)
@@ -198,8 +204,8 @@
                                         <th class="p-2">#</th>
                                         <th class="p-2">Produk</th>
                                         <th class="p-2">Jumlah</th>
-                                        <th class="p-2">Harga Per Produk</th>
-                                        <th class="p-2">Subtotal</th>
+                                        <th class="p-2 max-w-6 break-all">Harga Per Produk</th>
+                                        <th class="p-2 max-w-6 break-all">Subtotal</th>
                                         <th class="p-2">Delivered</th>
                                         <th class="p-2">Remain</th>
                                         <th class="p-2">Total</th>
@@ -213,14 +219,17 @@
                                             <td id="quantity" class="p-2" x-ref="quantity">
                                                 {{ $cs->pivot->quantity }}
                                             </td>
-                                            <td id="price" x-ref="price" class="p-2 rupiah">
+                                            <td id="price" x-ref="price" class="p-2 rupiah max-w-6 break-all">
                                                 {{ $cs->suppliers->find($purchase->supplier->id)->pivot->price_per_unit }}
                                             </td>
                                             <td id="subtotal"
                                                 x-text="toRupiah(parseFloat($refs.quantity.innerText) * parseFloat($refs.price.innerText.replace(/[^0-9\.,]/g, '').replace(/[^0-9\.,]/g, '').replace(/\./g,'').replace(',', '.')))"
-                                                class="p-2"></td>
+                                                class="p-2 max-w-6 break-all"></td>
                                             <td class="p-2">
-                                                <x-input :name="'delivered_product[]'" :step="0.00001" :min="$purchase->deliveryProducts
+                                                <input type="hidden" name="old_delivered_product[]" value="{{ $purchase->deliveryProducts
+                                                    ->where('product_id', $cs->id)
+                                                    ->first()->delivered ?? 0 }}">
+                                                <x-input :name="'delivered_product[]'" :step="1" :min="$purchase->deliveryProducts
                                                     ->where('product_id', $cs->id)
                                                     ->first()->delivered ?? 0"
                                                     max="{{ $purchase->deliveryProducts->where('product_id', $cs->id)->first()->total ?? 0 }}"
@@ -371,8 +380,8 @@
 @push('script')
     <script>
         function setDeliveredComponent(e) {
-            if (e.value > e.max) e.value = e.max
-            if (e.value < e.min) e.value = e.min
+            if (parseFloat(e.value) > parseFloat(e.max)) e.value = e.max
+            if (parseFloat(e.value) < parseFloat(e.min) || e.value == "") e.value = e.min
             const parent = e.parentElement.parentElement.parentElement
             const total = parent.querySelector(".total_component").value
             const remain = (total - e.value).toFixed(5)
@@ -380,8 +389,8 @@
         }
 
         function setDeliveredProduct(e) {
-            if (e.value > e.max) e.value = e.max
-            if (e.value < 0) e.value = 0
+            if (parseFloat(e.value) > parseFloat(e.max)) e.value = e.max
+            if (parseFloat(e.value) < parseFloat(e.min) || e.value == "") e.value = e.min
             const parent = e.parentElement.parentElement.parentElement
             const total = parent.querySelector(".total_product").value
             const remain = (total - e.value).toFixed(5)

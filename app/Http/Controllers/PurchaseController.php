@@ -170,28 +170,33 @@ class PurchaseController extends Controller
     {
         if ($request->delivered_component) {
             foreach ($request->delivered_component as $index => $delivered) {
-                DB::table("delivery_components")->where("component_id", $purchase->components[$index]->id)->update([
-                    "delivered" => $delivered,
-                    "remain" => $request->remain_component[$index]
-                ]);
+                if ($delivered > 0 && $delivered != $request->old_delivered_component[$index]){
+                    DB::table("delivery_components")->where("component_id", $purchase->components[$index]->id)->update([
+                        "delivered" => $delivered,
+                        "remain" => $request->remain_component[$index]
+                    ]);
+                    HistoryDeliveryPurchase::create([
+                        "purchase_id" => $purchase->id,
+                        "description" => $purchase->components[$index]->name . " sebanyak " . number_format($delivered - $request->old_delivered_component[$index], 5) . " " . $purchase->components[$index]->unit . " telah diterima"
+                    ]);
+                }
 
-                HistoryDeliveryPurchase::create([
-                    "purchase_id" => $purchase->id,
-                    "description" => $purchase->components[$index]->name . " sebanyak " . $delivered . " " . $purchase->components[$index]->unit . " telah diterima"
-                ]);
             }
         }
         if ($request->delivered_product) {
             foreach ($request->delivered_product as $index => $delivered) {
-                DB::table("delivery_products")->where("product_id", $purchase->products[$index]->id)->update([
-                    "delivered" => $delivered,
-                    "remain" => $request->remain_product[$index]
-                ]);
+                if ($delivered > 0 && $delivered != $request->old_delivered_product[$index]) {
+                    DB::table("delivery_products")->where("product_id", $purchase->products[$index]->id)->update([
+                        "delivered" => $delivered,
+                        "remain" => $request->remain_product[$index]
+                    ]);
 
-                HistoryDeliveryPurchase::create([
-                    "purchase_id" => $purchase->id,
-                    "description" => $purchase->products[$index]->name . " sebanyak " . $delivered . " " . $purchase->products[$index]->unit . " telah diterima"
-                ]);
+                    HistoryDeliveryPurchase::create([
+                        "purchase_id" => $purchase->id,
+                        "description" => $purchase->products[$index]->name . " sebanyak " . $delivered - $request->old_delivered_product[$index] . " " . $purchase->products[$index]->unit . " telah diterima"
+                    ]);
+                }
+
             }
         }
         if ($request->paid) {
@@ -222,6 +227,7 @@ class PurchaseController extends Controller
     {
         DB::table("component_purchase")->where("purchase_id", $purchase->id)->delete();
         PurchaseHistory::where("purchase_id", $purchase->id)->delete();
+        HistoryDeliveryPurchase::where("purchase_id", $purchase->id)->delete();
         $purchase->delete();
         return redirect("/purchases");
     }
@@ -260,24 +266,11 @@ class PurchaseController extends Controller
             "quantity" => $request->quantity_purchase,
         ]);
 
-        $delivery_product = DB::table("delivery_products")->insertGetId([
-            "product_id" => $request->product_id,
-            "total" => $request->quantity_purchase,
-            "remain" => $request->quantity_purchase,
-        ]);
-
-        DB::table("delivery_product_purchase")->insert([
-            "delivery_product_id" => $delivery_product,
+        PurchaseHistory::create([
             "purchase_id" => $purchase->id,
+            "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
+            "payment" => $request->paid
         ]);
-
-        if ($request->paid > 0) {
-            PurchaseHistory::create([
-                "purchase_id" => $purchase->id,
-                "description" => $purchase->status == "closed" ? "Pembayaran Lunas" : "Pembayaran Pertama",
-                "payment" => $request->paid
-            ]);
-        }
 
         PaymentPurchase::create([
             "purchase_id" => $purchase->id,
@@ -302,7 +295,7 @@ class PurchaseController extends Controller
             "quantity_not_finished" => DB::raw("quantity_not_finished - " . $request->quantity_purchase)
         ]);
 
-        DB::table("production_sale")->where("sale_id", $request->sale_production_id)->update([
+        $product->production->saleProductions->find($request->sale_production_id)->update([
             "quantity_not_finished" => DB::raw("quantity_not_finished - " . $request->quantity_purchase)
         ]);
 

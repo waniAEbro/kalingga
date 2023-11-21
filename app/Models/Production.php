@@ -24,7 +24,12 @@ class Production extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function saleProductions()
+    public function sale(): BelongsTo
+    {
+        return $this->belongsTo(Sale::class);
+    }
+
+    public function saleProductions(): BelongsToMany
     {
         return $this->belongsToMany(Sale::class)->withPivot("quantity_finished", "quantity_not_finished");
     }

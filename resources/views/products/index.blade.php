@@ -410,7 +410,7 @@
                         <div class="w-60">
                             <div class="grid w-full grid-cols-2 mb-2 font-bold">HPP<span>: ${hpp}</span></div>
                             <div class="grid w-full grid-cols-2 font-bold mb-2">Harga Jual<span>: ${toRupiah(product.sell_price)}</span></div>
-                            <div class="grid w-full grid-cols-2 font-bold">Harga Jual USD<span>: ${toUSD(product.sell_price)}</span></div>
+                            <div class="grid w-full grid-cols-2 font-bold">Harga Jual USD<span>: ${toUSD(product.sell_price_usd)}</span></div>
                         </div>
                     </div>
                 </div>

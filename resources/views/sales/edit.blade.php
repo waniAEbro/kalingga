@@ -74,6 +74,7 @@
                                     x-text="toRupiah(parseInt($refs.quantity.innerText) * parseInt($refs.price.innerText.replace(/[^0-9\.,]/g, '').replace(/[^0-9\.,]/g, '').replace(/\./g, '').replace(',', '.')))">
                                     {{ $sales->total_bill }}</td>
                                 <td class="p-2">
+                                    <input type="hidden" name="old_delivered_product[]" value={{ $sales->deliveryProducts->where('product_id', $product->id)->first()->delivered ?? 0 }}>
                                     <x-input :name="'delivered_product[]'" step="1" min="0"
                                         max="{{ $sales->deliveryProducts->where('product_id', $product->id)->first()->total ?? 0 }}"
                                         :min="$sales->deliveryProducts->where('product_id', $product->id)->first()
@@ -205,7 +206,7 @@
 
         function setDeliveredProduct(e) {
             if (e.value > e.max) e.value = e.max
-            if (e.value < e.min) e.value = e.min
+            if (e.value < e.min || e.value == "") e.value = e.min
             const parent = e.parentElement.parentElement.parentElement
             const total = parent.querySelector(".total_product").value
             const remain = total - e.value
