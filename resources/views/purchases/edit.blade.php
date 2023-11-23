@@ -238,7 +238,7 @@
                                             <input type="hidden" name="old_delivered_product[]"
                                                 value="{{ $purchase->deliveryProducts->where('product_id', $product->id)->first()->delivered }}">
 
-                                            <input type="number" name="delivered_product[]" step="0.001""
+                                            <input type="number" name="delivered_product[]" step="0.00001""
                                                 class="p-2 outline-none border-slate-200 border w-full rounded focus:outline-2 focus:outline-slate-200"
                                                 value="{{ $purchase->deliveryProducts->where('product_id', $product->id)->first()->delivered }}"
                                                 x-on:change="$el.value = ($el.value > {{ $product->pivot->quantity }}) ? {{ $product->pivot->quantity }} : $el.value; 
@@ -288,7 +288,8 @@
                                         <input id="paid" name="paid" type="number"
                                             class="p-2 outline-none border-slate-200 border w-full rounded"
                                             placeholder="Bayar" value="{{ old('paid') ?? 0 }}"
-                                            x-on:input="$el.value = ($el.value > {{ $purchase->total_bill }} ? {{ $purchase->total_bill }} : $el.value); $refs.remain_bill.value = $refs.total_bill.value - $el.value">
+                                            x-on:input="$el.value = $el.value > {{ $purchase->remain_bill }} ? {{ $purchase->remain_bill }} : $el.value; 
+                                                        $refs.remain_bill.value = {{ $purchase->remain_bill }} - $el.value">
                                     </td>
                                 </tr>
                             </tbody>

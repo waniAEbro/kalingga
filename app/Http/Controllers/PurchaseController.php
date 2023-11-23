@@ -168,6 +168,7 @@ class PurchaseController extends Controller
      */
     public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
+        // dd($request);
         if ($request->delivered_component) {
             foreach ($request->delivered_component as $index => $delivered) {
                 if ($delivered > 0 && $delivered != $request->old_delivered_component[$index]) {
@@ -177,7 +178,7 @@ class PurchaseController extends Controller
                     ]);
                     HistoryDeliveryPurchase::create([
                         "purchase_id" => $purchase->id,
-                        "description" => $purchase->components[$index]->name . " sebanyak " . str_replace(".", ",", number_format($delivered - $request->old_delivered_component[$index], 5)) . " " . $purchase->components[$index]->unit . " telah diterima",
+                        "description" => $purchase->components[$index]->name . " sebanyak " . str_replace(".", ",", $delivered - $request->old_delivered_component[$index]) . " " . $purchase->components[$index]->unit . " telah diterima",
                     ]);
                 }
 
@@ -201,8 +202,8 @@ class PurchaseController extends Controller
         }
         if ($request->paid) {
             $purchase->update([
-                'status' => $purchase->remain_bill - $request->paid == 0 ? "closed" : "open",
-                'remain_bill' => $purchase->remain_bill - $request->paid,
+                'status' => $request->remain_bill == 0 ? "closed" : "open",
+                'remain_bill' => $request->remain_bill,
                 'paid' => $purchase->paid + $request->paid,
             ]);
 
