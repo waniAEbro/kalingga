@@ -195,7 +195,8 @@
                                             <input x-ref="belum" type="number" name="remain_component[]"
                                                 step="1"
                                                 class="p-2 outline-none border-slate-200 bg-slate-100 border w-full rounded"
-                                                value="{{ $purchase->deliveryComponents->where('component_id', $cs->id)->first()->remain }}" readonly>
+                                                value="{{ $purchase->deliveryComponents->where('component_id', $cs->id)->first()->remain }}"
+                                                readonly>
                                         </td>
 
                                     </tr>
@@ -247,10 +248,10 @@
                                                 x-on:input="$refs.belum.value = {{ $product->pivot->quantity }}-$el.value">
                                         </td>
                                         <td class="py-2 pr-5">
-                                            <input x-ref="belum" type="number" name="remain_product[]"
-                                                step="1"
+                                            <input x-ref="belum" type="number" name="remain_product[]" step="1"
                                                 class="p-2 outline-none border-slate-200 bg-slate-100 border w-full rounded"
-                                                value="{{ $purchase->deliveryProducts->where('product_id', $product->id)->first()->remain }}" readonly>
+                                                value="{{ $purchase->deliveryProducts->where('product_id', $product->id)->first()->remain }}"
+                                                readonly>
                                         </td>
                                     </tr>
                                 @endforeach

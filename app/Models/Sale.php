@@ -21,7 +21,7 @@ class Sale extends Model
 
     protected $guarded = ["id"];
 
-    protected $with = ["customer", "histories", "payment_sales", "delivery_sales", "deliveryProducts"];
+    protected $with = ["customer", "histories", "payment_sales", "delivery_sales", "deliveryProducts", "historyDeliveries"];
 
     public function customer(): BelongsTo
     {
@@ -58,7 +58,7 @@ class Sale extends Model
         return $this->belongsToMany(DeliveryProduct::class);
     }
 
-    public function deliveryHistories()
+    public function historyDeliveries()
     {
         return $this->hasMany(HistoryDeliverySale::class);
     }

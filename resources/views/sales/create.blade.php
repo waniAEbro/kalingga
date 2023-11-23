@@ -1,7 +1,256 @@
 @extends('layouts.layout')
 
 @section('content')
-    <h1 class="text-lg font my-7 font-[500]">Create Sales</h1>
+
+<form action="/sales" method="POST">
+    @csrf
+
+    <div class="text-[18px] font-medium">Buat Penjualan</div>
+
+    <div x-data="{ open: true }" class="mt-5 bg-white rounded-lg w-full">
+        <div x-on:click="open = !open"
+            class="p-5 cursor-pointer active:bg-gray-50 transition-all items-center font-medium flex gap-5">
+            <ion-icon :class="open ? 'rotate-0' : '-rotate-90'" class="transition-all"
+                name="chevron-down-outline"></ion-icon>
+            <div>Data Transaksi</div>
+        </div>
+        <div x-show="open" x-transition class="mx-5 border-t border-slate-200 pb-5">
+            <div class="mt-10 grid text-sm grid-cols-2 gap-[110px]">
+                <div>
+                    <div class="flex justify-between">
+                        <div class="font-medium">Tanggal Penjualan</div>
+                        <input id="purchase_date" name="sale_date" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                            value="{{ old('purchase_date') ?? Carbon\Carbon::now()->format('Y-m-d') }}">
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div class="font-medium">Kode Penjualan</div>
+                        <input id="code" name="code" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                            value="{{ old('code') ?? 0 }}">
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div class="font-medium">Beneficiary's Bank</div>
+                        <input id="beneficiary_bank" name="beneficiary_bank" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                            value="{{ old('beneficiary_bank') ?? 0 }}">
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div class="font-medium">Bank Address</div>
+                        <input id="bank_address" name="bank_address" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                            value="{{ old('bank_address') ?? 0 }}">
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div class="font-medium">Beneficiary Name</div>
+                        <input id="beneficiary_name" name="beneficiary_name" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                            value="{{ old('beneficiary_name') ?? 0 }}">
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div class="font-medium">Phone</div>
+                        <input id="phone" name="phone" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                            value="{{ old('phone') ?? 0 }}">
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between">
+                        <div class="font-medium">Tanggal Jatuh Tempo</div>
+                        <input id="due_date" name="due_date" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                            value="{{ old('due_date') ?? Carbon\Carbon::now()->format('Y-m-d') }}">
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div class="font-medium">Metode Pembayaran</div>
+                        <input id="method" name="method" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                            value="{{ old('method') ?? 0 }}">
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div class="font-medium">Beneficiary A/C USD</div>
+                        <input id="beneficiary_ac_usd" name="beneficiary_ac_usd" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                            value="{{ old('bank_address') ?? 0 }}">
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div class="font-medium">Swift Code</div>
+                        <input id="swift_code" name="swift_code" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                            value="{{ old('swift_code') ?? 0 }}">
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div class="font-medium">Beneficiary's Address</div>
+                        <input id="beneficiary_address" name="beneficiary_address" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded"
+                            value="{{ old('beneficiary_address') ?? 0 }}">
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div class="font-medium">Lokasi Pengiriman</div>
+                        <textarea name="location" id="location" cols="30" rows="10"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded">{{ old('location') ?? 0 }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div x-data="{ open: true }" class="mt-5 bg-white rounded-lg w-full">
+        <div x-on:click="open = !open"
+            class="p-5 cursor-pointer active:bg-gray-50 transition-all items-center font-medium flex gap-5">
+            <ion-icon :class="open ? 'rotate-0' : '-rotate-90'" class="transition-all"
+                name="chevron-down-outline"></ion-icon>
+            <div>Data Customer</div>
+        </div>
+        <div x-show="open" x-transition class="mx-5 border-t border-slate-200 pb-5">
+            <div class="mt-10 grid text-sm grid-cols-2 gap-[110px]">
+                <div>
+                    <div class="flex justify-between">
+                        <div class="font-medium">Nama Customer</div>
+                        <div class="w-[255px]">
+                            <x-select x-on:click="getCustomer()" :dataLists="$customers->toArray()" :name="'customer_id'" :id="'customer_id'"
+                                :value="old('customer_id')" :new="'newCustomerModal()'" />
+                            @error('customer_id')
+                                <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div class="font-medium">Informasi Customer</div>
+                        <input id="customer_email" name="customer_email" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] bg-gray-100 rounded"
+                            placeholder="Email" readonly>
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div></div>
+                        <input id="customer_phone" name="customer_phone" type="text"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] bg-gray-100 rounded"
+                            placeholder="No Hp" readonly>
+                    </div>
+                    <div class="flex justify-between mt-7">
+                        <div></div>
+                        <textarea name="customer_address" id="customer_address" cols="30" rows="10"
+                            class="py-2 px-4 outline-none border-slate-200 border w-[255px] bg-gray-100 rounded" placeholder="Alamat"
+                            readonly></textarea>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div x-data="{ open: true }" class="mt-5 bg-white rounded-lg w-full">
+        <div x-on:click="open = !open"
+            class="p-5 cursor-pointer active:bg-gray-50 transition-all items-center font-medium flex gap-5">
+            <ion-icon :class="open ? 'rotate-0' : '-rotate-90'" class="transition-all"
+                name="chevron-down-outline"></ion-icon>
+            <div>Data Keranjang</div>
+        </div>
+        <div x-show="open" x-transition class="mx-5 border-t border-slate-200 pb-5 text-sm">
+
+            <div class="mt-7 flex justify-between">
+                <div class="font-medium">Produk</div>
+                <div>
+                    <table class="w-[790px] table-fixed mb-2">
+                        <thead>
+                            <tr class="bg-gray-100 border border-gray-200">
+                                <th class="py-3 font-medium text-start w-14"></th>
+                                <th class="py-3 font-medium text-start w-[255px]">Nama</th>
+                                <th class="py-3 font-medium text-start w-[75px]">Jumlah</th>
+                                <th class="py-3 font-medium text-start">Harga</th>
+                                <th class="py-3 font-medium text-start">Subtotal</th>
+                                <th class="py-3 font-medium text-start w-14"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-product">
+                            @if (old('product_id', []))
+                                @foreach (old('product_id', []) as $index => $product)
+                                    <tr x-data="{ product: $el }" class="border-x border-b border-gray-200">
+                                        <td id="number-product" class="py-3 text-center"></td>
+                                        <td class="py-3 pr-5">
+                                            <x-select x-on:click="getProduct(product); await $nextTick(); setProduk(); subTotalProduk($refs.quantity)"
+                                                :dataLists="$products->toArray()" :value="$product" :name="'product_id[]'"
+                                                :id="'product_id'" :new="'newProductModal(product); await $nextTick(); setSupplierListInProduct(); setComponentListInProduct(); setFilepond()'" />
+                                            @error('product_id.' . $index)
+                                                <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                            @enderror
+                                        </td>
+                                        <td class="py-3 pr-5">
+                                            <input type="number" name="quantity_product[]"
+                                                value="{{ old('quantity_product', [])[$index] }}"
+                                                x-init="getProduct(product);
+                                                await $nextTick();
+                                                subTotalProduk($refs.quantity)" oninput="subTotalProduk(this)" step="1"
+                                                class="p-2 outline-none border-slate-200 border w-full rounded">
+                                            @error('quantity_product.' . $index)
+                                                <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
+                                            @enderror
+                                        </td>
+                                        <td id="price" class="py-3"></td>
+                                        <td id="subtotal" class="py-3"></td>
+                                        <td class="py-3">
+                                            <button type="button"
+                                                x-on:click="product.remove(); set_total(); set_number_product()">
+                                                <ion-icon class="text-xl text-gray-400"
+                                                    name="trash-outline"></ion-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+
+                    <button x-data x-on:click="addNewProduct(); set_number_product(); await $nextTick(); setProduk()"
+                        class="w-full py-3 rounded-xl border-2 border-dashed border-gray-300 font-medium flex items-center justify-center gap-3 hover:bg-gray-100 active:bg-gray-200 transition-all"
+                        type="button">
+                        <ion-icon class="text-lg" name="add-outline"></ion-icon>
+                        Tambah Produk Baru
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-7 flex gap-[120px]">
+                <div class="font-medium">Total Biaya</div>
+                <div>
+                    <table class="w-96 table-fixed mb-2">
+                        <thead>
+                            <tr class="bg-gray-100 border border-gray-200">
+                                <th class="p-3 font-medium text-start">Total</th>
+                                <th class="py-3 font-medium text-start">Bayar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-x border-b border-gray-200">
+                                <td class="p-3">
+                                    <input id="total_bill" name="total_bill" type="number"
+                                        class="p-2 outline-none border-slate-200 border w-full rounded"
+                                        placeholder="Total Bayar" readonly>
+                                </td>
+                                <td class="p-3">
+                                    <input id="paid" name="paid" type="number"
+                                        class="p-2 outline-none border-slate-200 border w-full rounded"
+                                        placeholder="Bayar" value="old('paid') ?? 0" oninput="batasBayar(this)">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full flex justify-end gap-5 mt-7 text-sm font-medium">
+        <a href="/sales">
+            <button type="button"
+                class="w-[208px] py-3 border border-gray-200 hover:bg-[#064E3B]/10 active:bg-[#064E3B]/20 transition-all hover:text-[#064E3B] rounded-md text-gray-600">Batalkan</button>
+        </a>
+        <button type="submit"
+            class="w-[208px] py-3 bg-[#064E3B] hover:bg-[#064E3B]/90 active:bg-[#064E3B]/80 transition-all rounded-md text-gray-200">Simpan</button>
+    </div>
+</form>
+
+    {{-- <h1 class="text-lg font my-7 font-[500]">Create Sales</h1>
 
     <x-create-input-field :action="'sales'" :width="'w-full'">
         <div class="flex gap-5">
@@ -137,14 +386,14 @@
                     <div class="w-40">
                         <x-input :label="'Bayar'" :name="'paid'" :placeholder="'Bayar'" :type="'number'"
                             :value="old('paid') ?? 0" onInput="update_bill(this)" />
-                        {{-- @error('quantity.' . $index)
+                        @error('quantity.' . $index)
                                             <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
-                                        @enderror --}}
+                                        @enderror
                     </div>
                 </div>
             </div>
         </div>
-    </x-create-input-field>
+    </x-create-input-field> --}}
 @endsection
 
 @push('script')
@@ -298,8 +547,8 @@
                 <div class="absolute flex gap-2 bottom-4 right-[30px]">
                     <button type="button" onclick="hideModal()"
                         class="py-2 px-5 border text-[#768498] text-sm rounded-lg hover:bg-[#F7F9F9]">Batalkan</button>
-                        <button id="create-customer" type="button" x-on:click="createCustomer()" onmouseover="toggleCustomerSaveButtonState()"
-                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg save flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
+                    <button id="create-customer" type="button" x-on:click="createCustomer()" onmouseover="toggleCustomerSaveButtonState()"
+                        class="py-2 px-5 border text-[#F7F9F9] text-sm rounded-lg bg-[#064E3B] flex items-center justify-center gap-3">Simpan <span class="hidden loading loading-spinner loading-sm"></span></button>
                 </div>
             </div>`
         }

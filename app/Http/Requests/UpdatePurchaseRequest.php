@@ -23,7 +23,7 @@ class UpdatePurchaseRequest extends FormRequest
     {
         if ($this->paid) {
             return [
-                "paid" => "required"
+                "paid" => "required",
             ];
         } else if ($this->delivered_product && $this->delivered_component) {
             return [
@@ -38,13 +38,11 @@ class UpdatePurchaseRequest extends FormRequest
             return [
                 "delivered_product.*" => "required",
                 "remain_product.*" => "required",
-                "total_product.*" => "required"
             ];
         } else {
             return [
                 "delivered_component.*" => "required",
                 "remain_component.*" => "required",
-                "total_component.*" => "required",
             ];
         }
     }

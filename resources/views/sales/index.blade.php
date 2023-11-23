@@ -170,6 +170,17 @@
                                     <td class="px-4 py-2"></td>
                                 </tr>`
 
+           
+            let history_delivery_lists = '';
+            sale.history_deliveries.forEach((hs, i) => {
+                history_delivery_lists += `
+                                <tr>
+                                    <td class="px-4 py-2">${i+1}</td>
+                                    <td class="px-4 py-2">${hs.created_at.split('T')[0]}</td>
+                                    <td class="px-4 py-2">${hs.description}</td>
+                                </tr>`
+            })
+
             modal.innerHTML = `
             <div class="w-[960px] bg-white rounded-xl">
                 <div class="py-[20px] px-[30px] w-full relative border-b-2 border-gray-200 flex justify-between items-center">
@@ -297,6 +308,21 @@
                             </thead>
                             <tbody>
                                 ${history_lists}
+                            </tbody>
+                        </table>
+
+                        <div class="my-5 font-bold">History Delivery</div>
+
+                        <table class="w-full text-xs table-fixed">
+                            <thead class="border-gray-200 border-y-2">
+                                <tr>
+                                    <th class="w-10 px-4 py-2">No</th>
+                                    <th class="px-4 py-2 text-start w-40">Tanggal</th>
+                                    <th class="px-4 py-2 text-start">Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${history_delivery_lists}
                             </tbody>
                         </table>
                     </div>

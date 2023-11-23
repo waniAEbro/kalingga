@@ -23,13 +23,12 @@ class UpdateSaleRequest extends FormRequest
     {
         if ($this->paid) {
             return [
-                "paid" => "required"
+                "paid" => "required",
             ];
         } else {
             return [
                 "delivered_product" => "required",
                 "remain_product" => "required",
-                "total_product" => "required"
             ];
         }
     }
