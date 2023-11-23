@@ -4,7 +4,377 @@
     <form action="/purchases/{{ $purchase->id }}" method="POST">
         @method('PUT')
         @csrf
-        <div class="flex gap-5">
+
+        <div class="text-[18px] font-medium">Edit Pembelian</div>
+
+        <div x-data="{ open: true }" class="mt-5 bg-white rounded-lg w-full">
+            <div x-on:click="open = !open"
+                class="p-5 cursor-pointer active:bg-gray-50 transition-all items-center font-medium flex gap-5">
+                <ion-icon :class="open ? 'rotate-0' : '-rotate-90'" class="transition-all"
+                    name="chevron-down-outline"></ion-icon>
+                <div>Data Transaksi</div>
+            </div>
+            <div x-show="open" x-transition class="mx-5 border-t border-slate-200 pb-5">
+                <div class="mt-10 grid text-sm grid-cols-2 gap-[110px]">
+                    <div>
+                        <div class="flex justify-between">
+                            <div class="font-medium">Tanggal Pembelian</div>
+                            <input id="purchase_date" name="purchase_date" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded bg-slate-100"
+                                readonly value="{{ $purchase->purchase_date }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Kode Pembelian</div>
+                            <input id="code" name="code" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded bg-slate-100"
+                                readonly value="{{ $purchase->code }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Beneficiary's Bank</div>
+                            <input id="beneficiary_bank" name="beneficiary_bank" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded bg-slate-100"
+                                readonly value="{{ $purchase->payment_purchases->beneficiary_bank }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Bank Address</div>
+                            <input id="bank_address" name="bank_address" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded bg-slate-100"
+                                readonly value="{{ $purchase->payment_purchases->bank_address }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Beneficiary Name</div>
+                            <input id="beneficiary_name" name="beneficiary_name" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded bg-slate-100"
+                                readonly value="{{ $purchase->payment_purchases->beneficiary_name }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Phone</div>
+                            <input id="phone" name="phone" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded bg-slate-100"
+                                readonly value="{{ $purchase->payment_purchases->phone }}">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between">
+                            <div class="font-medium">Tanggal Jatuh Tempo</div>
+                            <input id="due_date" name="due_date" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded bg-slate-100"
+                                readonly value="{{ $purchase->due_date }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Metode Pembayaran</div>
+                            {{-- @dd($req) --}}
+                            <input id="method" name="method" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded bg-slate-100"
+                                readonly value="{{ $purchase->payment_purchases->method }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Beneficiary A/C USD</div>
+                            <input id="beneficiary_ac_usd" name="beneficiary_ac_usd" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded bg-slate-100"
+                                readonly value="{{ $purchase->payment_purchases->beneficiary_ac_usd }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Swift Code</div>
+                            <input id="swift_code" name="swift_code" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded bg-slate-100"
+                                readonly value="{{ $purchase->payment_purchases->swift_code }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Beneficiary's Address</div>
+                            <input id="beneficiary_address" name="beneficiary_address" type="text"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded bg-slate-100"
+                                readonly value="{{ $purchase->payment_purchases->beneficiary_address }}">
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Lokasi Pengiriman</div>
+                            <textarea name="location" id="location" cols="30" rows="10"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] rounded bg-slate-100" readonly>{{ $purchase->delivery_purchases->location }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div x-data="{ open: true }" class="mt-5 bg-white rounded-lg w-full">
+            <div x-on:click="open = !open"
+                class="p-5 cursor-pointer active:bg-gray-50 transition-all items-center font-medium flex gap-5">
+                <ion-icon :class="open ? 'rotate-0' : '-rotate-90'" class="transition-all"
+                    name="chevron-down-outline"></ion-icon>
+                <div>Data Supplier</div>
+            </div>
+            <div x-show="open" x-transition class="mx-5 border-t border-slate-200 pb-5">
+                <div class="mt-10 grid text-sm grid-cols-2 gap-[110px]">
+                    <div>
+                        <div class="flex justify-between">
+                            <div class="font-medium">Nama Supplier</div>
+                            <div class="w-[255px]">
+                                <input id="supplier_name" name="supplier_name" type="text"
+                                    value="{{ $purchase->supplier->name }}"
+                                    class="py-2 px-4 outline-none border-slate-200 border w-[255px] bg-gray-100 rounded"
+                                    placeholder="Nama" readonly>
+                            </div>
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div class="font-medium">Informasi Supplier</div>
+                            <input id="supplier_email" name="supplier_email" type="text"
+                                value="{{ $purchase->supplier->email }}"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] bg-gray-100 rounded"
+                                placeholder="Email" readonly>
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div></div>
+                            <input id="supplier_phone" name="supplier_phone" type="text"
+                                value="{{ $purchase->supplier->phone }}"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] bg-gray-100 rounded"
+                                placeholder="No Hp" readonly>
+                        </div>
+                        <div class="flex justify-between mt-7">
+                            <div></div>
+                            <textarea name="supplier_address" id="supplier_address" cols="30" rows="10"
+                                class="py-2 px-4 outline-none border-slate-200 border w-[255px] bg-gray-100 rounded" placeholder="Alamat"
+                                readonly>{{ $purchase->supplier->address }}</textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div x-data="{ open: true }" class="mt-5 bg-white rounded-lg w-full">
+            <div x-on:click="open = !open"
+                class="p-5 cursor-pointer active:bg-gray-50 transition-all items-center font-medium flex gap-5">
+                <ion-icon :class="open ? 'rotate-0' : '-rotate-90'" class="transition-all"
+                    name="chevron-down-outline"></ion-icon>
+                <div>Data Keranjang</div>
+            </div>
+            <div x-show="open" x-transition class="mx-5 border-t border-slate-200 pb-5 text-sm">
+                <div class="mt-10 flex justify-between">
+                    <div class="font-medium">Komponen</div>
+                    <div>
+                        <table class="w-[790px] table-fixed mb-2">
+                            <thead>
+                                <tr class="bg-gray-100 border border-gray-200">
+                                    <th class="py-3 font-medium text-start w-20"></th>
+                                    <th class="py-3 font-medium text-start w-32">Nama</th>
+                                    <th class="py-3 font-medium text-start w-[75px]">Jumlah</th>
+                                    <th class="py-3 font-medium text-start w-16">Unit</th>
+                                    <th class="py-3 font-medium text-start">Harga</th>
+                                    <th class="py-3 font-medium text-start">Subtotal</th>
+                                    <th class="py-3 font-medium text-start w-20">Terkirim</th>
+                                    <th class="py-3 font-medium text-start w-20">Belum</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="table-component">
+                                @foreach ($purchase->components as $i => $cs)
+                                    <tr x-data="{ component: $el }" class="border-x border-b border-gray-200">
+                                        <td id="number-component" class="py-3 pr-5 text-center">{{ $i + 1 }}.</td>
+                                        <td class="py-3 pr-5">{{ $cs->name }}</td>
+                                        <td id="quantity" x-ref="quantity" class="py-3 pr-5">{{ $cs->pivot->quantity }}
+                                        </td>
+                                        <td id="unit" class="py-3 pr-5">{{ $cs->unit }}</td>
+                                        <td id="price" x-ref="price" class="py-2">
+                                            {{ $cs->suppliers->find($purchase->supplier->id)->pivot->price_per_unit }}</td>
+                                        <td id="subtotal" class="py-2"
+                                            x-text="toRupiah(parseFloat($refs.quantity.innerText) * parseFloat($refs.price.innerText.replace(/[^0-9\.,]/g, '').replace(/[^0-9\.,]/g, '').replace(/\./g,'').replace(',', '.')))">
+                                        </td>
+                                        <td class="py-2 pr-5">
+                                            <input type="hidden" name="old_delivered_component[]"
+                                                value="{{ $purchase->deliveryComponents->where('component_id', $cs->id)->first()->delivered }}">
+
+                                            <input type="number" name="delivered_component[]" step="0.001""
+                                                class="p-2 outline-none border-slate-200 border w-full rounded focus:outline-2 focus:outline-slate-200"
+                                                value="{{ $purchase->deliveryComponents->where('component_id', $cs->id)->first()->delivered }}"
+                                                x-on:change="$el.value = ($el.value > {{ $cs->pivot->quantity }}) ? {{ $cs->pivot->quantity }} : $el.value; 
+                                                            $el.value = ($el.value < {{ $purchase->deliveryComponents->where('component_id', $cs->id)->first()->delivered }}) ? {{ $purchase->deliveryComponents->where('component_id', $cs->id)->first()->delivered }} : $el.value; 
+                                                            $refs.belum.value = {{ $cs->pivot->quantity }}-$el.value"
+                                                x-on:input="$refs.belum.value = {{ $cs->pivot->quantity }}-$el.value">
+                                        </td>
+                                        <td class="py-2 pr-5">
+                                            <input x-ref="belum" type="number" name="remain_component[]"
+                                                step="1"
+                                                class="p-2 outline-none border-slate-200 bg-slate-100 border w-full rounded"
+                                                value="{{ $purchase->deliveryComponents->where('component_id', $cs->id)->first()->remain }}" readonly>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mt-7 flex justify-between">
+                    <div class="font-medium">Produk</div>
+                    <div>
+                        <table class="w-[790px] table-fixed mb-2">
+                            <thead>
+                                <tr class="bg-gray-100 border border-gray-200">
+                                    <th class="py-3 font-medium text-start w-20"></th>
+                                    <th class="py-3 font-medium text-start w-32">Nama</th>
+                                    <th class="py-3 font-medium text-start w-[75px]">Jumlah</th>
+                                    <th class="py-3 font-medium text-start">Harga</th>
+                                    <th class="py-3 font-medium text-start">Subtotal</th>
+                                    <th class="py-3 font-medium text-start w-20">Terkirim</th>
+                                    <th class="py-3 font-medium text-start w-20">Belum</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-product">
+                                {{-- @dd($purchase) --}}
+                                @foreach ($purchase->products as $i => $product)
+                                    <tr x-data="{ product: $el }" class="border-x border-b border-gray-200">
+                                        <td id="number-product" class="py-3 pr-5 text-center">{{ $i + 1 }}.</td>
+                                        <td class="py-3 pr-5">{{ $product->name }}</td>
+                                        <td id="quantity" x-ref="quantity" class="py-3 pr-5">
+                                            {{ $product->pivot->quantity }}</td>
+                                        <td id="price" x-ref="price" class="py-2">
+                                            {{ $product->suppliers->find($purchase->supplier->id)->pivot->price_per_unit }}
+                                        </td>
+                                        <td id="subtotal" class="py-2"
+                                            x-text="toRupiah(parseFloat($refs.quantity.innerHTML) * parseFloat($refs.price.innerHTML.replace(/[^0-9\.,]/g, '').replace(/[^0-9\.,]/g, '').replace(/\./g,'').replace(',', '.')))">
+                                        </td>
+                                        <td class="py-2 pr-5">
+                                            <input type="hidden" name="old_delivered_product[]"
+                                                value="{{ $purchase->deliveryProducts->where('product_id', $product->id)->first()->delivered }}">
+
+                                            <input type="number" name="delivered_product[]" step="0.001""
+                                                class="p-2 outline-none border-slate-200 border w-full rounded focus:outline-2 focus:outline-slate-200"
+                                                value="{{ $purchase->deliveryProducts->where('product_id', $product->id)->first()->delivered }}"
+                                                x-on:change="$el.value = ($el.value > {{ $product->pivot->quantity }}) ? {{ $product->pivot->quantity }} : $el.value; 
+                                                            $el.value = ($el.value < {{ $purchase->deliveryProducts->where('product_id', $product->id)->first()->delivered }}) ? {{ $purchase->deliveryProducts->where('product_id', $product->id)->first()->delivered }} : $el.value; 
+                                                            $refs.belum.value = {{ $product->pivot->quantity }}-$el.value"
+                                                x-on:input="$refs.belum.value = {{ $product->pivot->quantity }}-$el.value">
+                                        </td>
+                                        <td class="py-2 pr-5">
+                                            <input x-ref="belum" type="number" name="remain_product[]"
+                                                step="1"
+                                                class="p-2 outline-none border-slate-200 bg-slate-100 border w-full rounded"
+                                                value="{{ $purchase->deliveryProducts->where('product_id', $product->id)->first()->remain }}" readonly>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mt-7 flex gap-[120px]">
+                    <div class="font-medium">Total Biaya</div>
+                    <div>
+                        <table class="w-[600px] table-fixed mb-2">
+                            <thead>
+                                <tr class="bg-gray-100 border border-gray-200">
+                                    <th class="p-3 font-medium text-start">Total</th>
+                                    <th class="p-3 font-medium text-start">Sisa</th>
+                                    <th class="p-3 font-medium text-start">Bayar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr x-data class="border-x border-b border-gray-200">
+                                    <td class="p-3">
+                                        <input x-ref="total_bill" id="total_bill" name="total_bill" type="number"
+                                            value="{{ $purchase->total_bill }}"
+                                            class="p-2 outline-none border-slate-200 border bg-slate-100 w-full rounded"
+                                            placeholder="Total Bayar" readonly>
+                                    </td>
+                                    <td class="p-3">
+                                        <input x-ref="remain_bill" id="remain_bill" name="remain_bill" type="number"
+                                            value="{{ $purchase->remain_bill }}"
+                                            class="p-2 outline-none border-slate-200 border bg-slate-100 w-full rounded"
+                                            placeholder="Sisa" readonly>
+                                    </td>
+                                    <td class="p-3">
+                                        <input id="paid" name="paid" type="number"
+                                            class="p-2 outline-none border-slate-200 border w-full rounded"
+                                            placeholder="Bayar" value="{{ old('paid') ?? 0 }}"
+                                            x-on:input="$el.value = ($el.value > {{ $purchase->total_bill }} ? {{ $purchase->total_bill }} : $el.value); $refs.remain_bill.value = $refs.total_bill.value - $el.value">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div x-data="{ open: true }" class="mt-5 bg-white rounded-lg w-full">
+            <div x-on:click="open = !open"
+                class="p-5 cursor-pointer active:bg-gray-50 transition-all items-center font-medium flex gap-5">
+                <ion-icon :class="open ? 'rotate-0' : '-rotate-90'" class="transition-all"
+                    name="chevron-down-outline"></ion-icon>
+                <div>History</div>
+            </div>
+            <div x-show="open" x-transition class="mx-5 border-t border-slate-200 pb-5 text-sm">
+                <div class="mt-10 flex justify-between">
+                    <div class="font-medium">History Pembayaran</div>
+                    <div>
+                        <table class="w-[790px] table-fixed mb-2">
+                            <thead>
+                                <tr class="bg-gray-100 border border-gray-200">
+                                    <th class="py-3 font-medium text-start w-20"></th>
+                                    <th class="py-3 font-medium text-start w-32">Tanggal</th>
+                                    <th class="py-3 font-medium text-start w-52">Bayar</th>
+                                    <th class="py-3 font-medium text-start">Keterangan</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($purchase->histories as $i => $history)
+                                    <tr class="border-x border-b border-gray-200">
+                                        <td class="py-3 pr-5 text-center">{{ $i + 1 }}.</td>
+                                        <td class="py-3 pr-5">{{ date('Y-m-d', strtotime($history->created_at)) }}</td>
+                                        <td class="py-3 pr-5" x-text="toRupiah({{ $history->payment }})"></td>
+                                        <td class="py-3 pr-5">{{ $history->description }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        @if (!$purchase->histories->first())
+                            <div class="text-center py-2 font-medium">Belum ada history</div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="mt-7 flex justify-between">
+                    <div class="font-medium">History Pengiriman</div>
+                    <div>
+                        <table class="w-[790px] table-fixed mb-2">
+                            <thead>
+                                <tr class="bg-gray-100 border border-gray-200">
+                                    <th class="py-3 font-medium text-start w-20"></th>
+                                    <th class="py-3 font-medium text-start w-32">Tanggal</th>
+                                    <th class="py-3 font-medium text-start">Keterangan</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($purchase->historyDeliveries as $i => $history)
+                                    <tr class="border-x border-b border-gray-200">
+                                        <td class="py-3 pr-5 text-center">{{ $i + 1 }}.</td>
+                                        <td class="py-3 pr-5">{{ date('Y-m-d', strtotime($history->created_at)) }}</td>
+                                        <td class="py-3 pr-5">{{ $history->description }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        @if (!$purchase->historyDeliveries->first())
+                            <div class="text-center py-2 font-medium">Belum ada history</div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full flex justify-end gap-5 mt-7 text-sm font-medium">
+            <a href="/purchases">
+                <button type="button"
+                    class="w-[208px] py-3 border border-gray-200 hover:bg-[#064E3B]/10 active:bg-[#064E3B]/20 transition-all hover:text-[#064E3B] rounded-md text-gray-600">Batalkan</button>
+            </a>
+            <button type="submit"
+                class="w-[208px] py-3 bg-[#064E3B] hover:bg-[#064E3B]/90 active:bg-[#064E3B]/80 transition-all rounded-md text-gray-200">Simpan</button>
+        </div>
+        {{-- <div class="flex gap-5">
             <div class="basis-8/12">
                 <h1 class="text-xl font-bold text-center m-4">Data Transaksi</h1>
                 <div class="h-fit relative bg-white rounded-xl px-4 py-6 drop-shadow-lg my-4">
@@ -374,7 +744,7 @@
                         class="w-full py-2 px-5 border text-[#F7F9F9] bg-[#064e3be1] text-sm rounded-lg">Simpan</button>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </form>
 @endsection
 @push('script')
@@ -418,6 +788,6 @@
             Array.from(document.querySelectorAll('.total_bayar')).map(el => el.innerText = toRupiah(total));
         }
 
-        total_bayar()
+        // total_bayar()
     </script>
 @endpush
