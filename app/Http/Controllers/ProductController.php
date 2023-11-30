@@ -55,7 +55,6 @@ class ProductController extends Controller
             ]);
         }
         $pack = Pack::create([
-            "cost" => $request->pack_cost,
             "outer_length" => $request->pack_outer_length,
             "outer_width" => $request->pack_outer_width,
             "outer_height" => $request->pack_outer_height,
@@ -74,7 +73,6 @@ class ProductController extends Controller
         ]);
 
         $production_costs = ProductionCost::create([
-            "total_production" => $request->total_production,
             "price_perakitan" => $request->price_perakitan,
             "price_perakitan_prj" => $request->price_perakitan_prj,
             "price_grendo" => $request->price_grendo,
@@ -106,7 +104,6 @@ class ProductController extends Controller
             "barcode" => $request->barcode,
             "hpp" => $request->hpp,
             "sell_price_usd" => $request->sell_price_usd,
-            "cbm" => $request->cbm
         ]);
 
         Production::create([
@@ -203,7 +200,7 @@ class ProductController extends Controller
         ]);
 
         $production_costs->update([
-            "total_production" => $request->total_production,
+            // "total_production" => $request->total_production,
             "price_perakitan" => $request->price_perakitan,
             "price_perakitan_prj" => $request->price_perakitan_prj,
             "price_grendo" => $request->price_grendo,
@@ -236,7 +233,7 @@ class ProductController extends Controller
             "sell_price" => $request->sell_price,
             "hpp" => $request->hpp,
             "sell_price_usd" => $request->sell_price_usd,
-            "cbm" => $request->cbm
+            // "cbm" => $request->cbm
         ]);
 
         DB::table("component_product")->where("product_id", $product->id)->delete();

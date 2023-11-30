@@ -27,7 +27,8 @@
                                 <tr x-data="{ component: $el }" class="border-b">
                                     <td id="number-component" class="p-2 text-center"></td>
                                     <td class="w-40 p-2">
-                                        <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)"
+                                        <x-select
+                                            x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)"
                                             :dataLists="$components->toArray()" :new="'newComponentModal(component); await $nextTick(); setSuppliersComponent();'" :name="'component_id[]'" :id="'component_id'"
                                             :value="$cp" />
                                         @error('component_id.' . $index)
@@ -54,30 +55,7 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        @else
-                            <tr x-data="{ component: $el }" class="border-b">
-                                <td id="number-component" class="p-2 text-center"></td>
-                                <td class="w-40 p-2">
-                                    <x-select x-on:click="getComponent(component); await $nextTick(); set_subtotal($refs.quantity)" :dataLists="$components->toArray()"
-                                        :new="'newComponentModal(component); await $nextTick(); setSuppliersComponent();'" :name="'component_id[]'" :id="'component_id'" />
-                                </td>
-                                <td class="p-2">
-                                    <input step="0.001" x-ref="quantity" type="number" name="quantity[]" min="0"
-                                        oninput="set_subtotal(this)" value=""
-                                        class="w-20 px-2 py-2 transition-all duration-100 border rounded outline-none input_quantity focus:outline focus:outline-4 focus:outline-offset-0 focus:outline-slate-300">
-                                </td>
-                                <td id="unit" class="p-2"></td>
-                                <td id="price" class="p-2"></td>
-                                <td id="subtotal" class="p-2"></td>
-                                <td id="comp" class="p-2">
-                                    <button type="button"
-                                        x-on:click="component.remove(); await $nextTick; set_total(); set_number_component()"
-                                        class="transition-all duration-300 rounded-full comp-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
-                                            class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
-                                </td>
-                            </tr>
                         @endif
-
                     </tbody>
                 </table>
 
@@ -103,8 +81,8 @@
                                 <tr x-data="{ supplier: $el }" class="border-b">
                                     <td id="number-supplier" class="p-2 text-center"></td>
                                     <td class="p-2">
-                                        <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'"
-                                            :value="$supplier" :new="'newSupplierModal(supplier)'" />
+                                        <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" :value="$supplier"
+                                            :new="'newSupplierModal(supplier)'" />
                                         @error('supplier_id.' . $index)
                                             <div class="mt-1 text-xs text-red-400">{{ $message }}</div>
                                         @enderror
@@ -119,30 +97,12 @@
                                     </td>
 
                                     <td id="aksi" class="p-2">
-                                        <button type="button"
-                                            x-on:click="supplier.remove(); set_number_supplier();"
+                                        <button type="button" x-on:click="supplier.remove(); set_number_supplier();"
                                             class="transition-all duration-300 rounded-full supplier-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                                 class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                     </td>
                                 </tr>
                             @endforeach
-                        @else
-                            <tr x-data="{ supplier: $el }" class="border-b">
-                                <td id="number-supplier" class="p-2 text-center"></td>
-                                <td class="p-2">
-                                    <x-select  :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" :new="'newSupplierModal(supplier)'" />
-                                </td>
-                                <td class="p-2">
-                                    <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'"
-                                        :placeholder="'1000'" />
-                                </td>
-                                <td id="aksi" class="p-2">
-                                    <button type="button"
-                                        x-on:click="supplier.remove(); set_number_supplier();"
-                                        class="transition-all duration-300 rounded-full supplier-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
-                                            class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
-                                </td>
-                            </tr>
                         @endif
                     </tbody>
                 </table>
@@ -218,7 +178,6 @@
                 </div>
                 <div class="w-40 my-3">
                     <x-input :label="'Volume (m³)'" :name="'volume'" :type="'number'" :value="0" readonly />
-                    <x-input :label="'CBM'" :name="'cbm'" :type="'number'" :value="old('cbm') ?? 0" />
                 </div>
 
                 <h1 class="my-3 font-bold">Berat</h1>
@@ -330,8 +289,8 @@
         suppliers.forEach(s => suppliersSelected[s.id] = s.name)
         components.forEach(c => componentsSelected[c.id] = c.name)
 
-        
-       
+
+
         set_number_supplier();
         set_number_component();
 

@@ -67,6 +67,7 @@ Route::middleware(['login.check'])->group(function () {
 
     Route::get("/sales/{sale}/print", [SaleController::class, "print"]);
     Route::get("/sales/{sale}/export", [SaleController::class, "export"]);
+    Route::post("/sales/import", [SaleController::class, "import"]);
 
     Route::get("/purchases/{purchase}/print", [PurchaseController::class, "print"]);
     Route::get("/purchases/{purchase}/export", [PurchaseController::class, "export"]);

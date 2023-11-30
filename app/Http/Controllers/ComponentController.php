@@ -42,12 +42,18 @@ class ComponentController extends Controller
             "category_component_id" => $request->category_id
         ]);
 
-        foreach ($request->supplier_id as $index => $supplier) {
-            DB::table("component_supplier")->insert([
-                "component_id" => $component->id,
-                "supplier_id" => $supplier,
-                "price_per_unit" => $request->price_supplier[$index]
+        if ($request->supplier_id) {
+            $request->validate([
+                'supplier_id.*' => 'required',
+                'price_supplier.*' => 'required'
             ]);
+            foreach ($request->supplier_id as $index => $supplier) {
+                DB::table("component_supplier")->insert([
+                    "component_id" => $component->id,
+                    "supplier_id" => $supplier,
+                    "price_per_unit" => $request->price_supplier[$index]
+                ]);
+            }
         }
 
         return redirect("/components");
@@ -81,14 +87,21 @@ class ComponentController extends Controller
             "category_component_id" => $request->category_id
         ]);
 
-        DB::table("component_supplier")->where("component_id", $component->id)->delete();
-
-        foreach ($request->supplier_id as $index => $supplier) {
-            DB::table("component_supplier")->insert([
-                "component_id" => $component->id,
-                "supplier_id" => $supplier,
-                "price_per_unit" => $request->price_supplier[$index]
+        if ($request->supplier_id) {
+            $request->validate([
+                'supplier_id.*' => 'required',
+                'price_supplier.*' => 'required'
             ]);
+
+            DB::table("component_supplier")->where("component_id", $component->id)->delete();
+
+            foreach ($request->supplier_id as $index => $supplier) {
+                DB::table("component_supplier")->insert([
+                    "component_id" => $component->id,
+                    "supplier_id" => $supplier,
+                    "price_per_unit" => $request->price_supplier[$index]
+                ]);
+            }
         }
 
         return redirect("/components");
@@ -114,12 +127,19 @@ class ComponentController extends Controller
             "category_component_id" => $request->category_id
         ]);
 
-        foreach ($request->supplier_id as $index => $supplier) {
-            DB::table("component_supplier")->insert([
-                "component_id" => $component->id,
-                "supplier_id" => $supplier,
-                "price_per_unit" => $request->price_supplier[$index]
+        if ($request->supplier_id) {
+            $request->validate([
+                'supplier_id.*' => 'required',
+                'price_supplier.*' => 'required'
             ]);
+
+            foreach ($request->supplier_id as $index => $supplier) {
+                DB::table("component_supplier")->insert([
+                    "component_id" => $component->id,
+                    "supplier_id" => $supplier,
+                    "price_per_unit" => $request->price_supplier[$index]
+                ]);
+            }
         }
 
         return response()->json(Component::get(), 200);

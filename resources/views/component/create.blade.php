@@ -60,22 +60,6 @@
                             </td>
                         </tr>
                     @endforeach
-                @else
-                    <tr x-data="{ supplier: $el }" class="border-b">
-                        <td id="number" class="p-2 text-center"></td>
-                        <td class="p-2">
-                            <x-select :dataLists="$suppliers->toArray()" :name="'supplier_id[]'" :id="'supplier_id'" :new="'newSupplierModal(supplier)'" />
-                        </td>
-                        <td class="p-2">
-                            <x-input-with-desc :desc="'Rp'" :name="'price_supplier[]'" :type="'number'"
-                                :placeholder="'1000'" />
-                        </td>
-                        <td id="aksi" class="p-2">
-                            <button type="button" x-on:click="supplier.remove(); set_number(); deleteBtnToggle()"
-                                class="transition-all duration-300 rounded-full delete-btn hover:bg-slate-100 active:bg-slate-200"><span
-                                    class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
-                        </td>
-                    </tr>
                 @endif
             </tbody>
         </table>

@@ -24,9 +24,7 @@ class UpdateComponentRequest extends FormRequest
         return [
             'name' => 'required',
             'price_per_unit' => 'required',
-            'unit' => 'required',
-            'supplier_id.*' => 'required',
-            'price_supplier.*' => 'required'
+            'unit' => 'required'
         ];
     }
 }

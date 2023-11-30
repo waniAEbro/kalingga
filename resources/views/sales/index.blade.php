@@ -1,4 +1,3 @@
-{{-- @dd($sales) --}}
 @extends('layouts.layout')
 
 @section('content')
@@ -170,7 +169,7 @@
                                     <td class="px-4 py-2"></td>
                                 </tr>`
 
-           
+
             let history_delivery_lists = '';
             sale.history_deliveries.forEach((hs, i) => {
                 history_delivery_lists += `

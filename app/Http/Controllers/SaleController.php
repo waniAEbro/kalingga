@@ -9,16 +9,22 @@ use App\Models\Supplier;
 use App\Models\Component;
 use App\Models\Production;
 use App\Exports\SaleExport;
+use App\Imports\SaleImport;
 use App\Models\PaymentSale;
 use App\Models\SaleHistory;
 use App\Models\DeliverySale;
+use Illuminate\Http\Request;
 use App\Models\ProductionSale;
 use App\Models\SaleProduction;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Models\HistoryDeliverySale;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreSaleRequest;
+use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Http\Requests\UpdateSaleRequest;
+use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 
 class SaleController extends Controller
 {
@@ -203,5 +209,14 @@ class SaleController extends Controller
     {
         $excel = app('excel');
         return $excel->download(new SaleExport($sale), "quotation-sales-" . $sale->code . '.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $rows = new SaleImport;
+
+        Excel::import($rows, $request->file("excel"));
+
+        return redirect("/products");
     }
 }

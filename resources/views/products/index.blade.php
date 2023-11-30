@@ -1,6 +1,11 @@
 @extends('layouts.layout')
 
 @section('content')
+    <form action="/sales/import" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="excel">
+        <button type="submit" class="p-2 bg-[#064e3be1] rounded-lg text-white">Import</button>
+    </form>
     <x-data-list>
         <div class="relative">
             <div id="product-grid" class="grid grid-cols-4 gap-5 pb-20 mt-10"></div>

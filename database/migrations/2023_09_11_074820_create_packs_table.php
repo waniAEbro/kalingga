@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('packs', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('cost');
             $table->double('outer_length');
             $table->double('outer_width');
             $table->double('outer_height');

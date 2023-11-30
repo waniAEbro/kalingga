@@ -25,9 +25,7 @@ class StoreComponentRequest extends FormRequest
             'name' => 'required',
             'price_per_unit' => 'required',
             'unit' => 'required',
-            "category_id" => "required",
-            'supplier_id.*' => 'required',
-            'price_supplier.*' => 'required'
+            "category_id" => "required"
         ];
     }
 }

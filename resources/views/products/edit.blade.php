@@ -123,8 +123,7 @@
                                     </td>
 
                                     <td id="aksi" class="p-2">
-                                        <button type="button"
-                                            x-on:click="supplier.remove(); set_number_supplier();"
+                                        <button type="button" x-on:click="supplier.remove(); set_number_supplier();"
                                             class="transition-all duration-300 rounded-full supplier-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                                 class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                     </td>
@@ -143,8 +142,7 @@
                                             :type="'number'" :placeholder="'1000'" />
                                     </td>
                                     <td id="aksi" class="p-2">
-                                        <button type="button"
-                                            x-on:click="supplier.remove(); set_number_supplier();"
+                                        <button type="button" x-on:click="supplier.remove(); set_number_supplier();"
                                             class="transition-all duration-300 rounded-full supplier-delete-btn hover:bg-slate-100 active:bg-slate-200"><span
                                                 class="p-2 text-red-600 material-symbols-outlined">delete</span></button>
                                     </td>
@@ -242,7 +240,6 @@
                 </div>
                 <div class="w-40 my-3">
                     <x-input :label="'Volume (m³)'" :name="'volume'" :type="'number'" :value="0" readonly />
-                    <x-input :label="'CBM'" :name="'cbm'" :type="'number'" :value="old('cbm') ?? $product->cbm" />
                 </div>
 
                 <h1 class="my-3 font-bold">Berat</h1>
@@ -354,11 +351,8 @@
         suppliers.forEach(s => suppliersSelected[s.id] = s.name)
         components.forEach(c => componentsSelected[c.id] = c.name)
 
-        
-       
         set_number_supplier();
         set_number_component();
-
 
         function addNewSupplier() {
             const tableBody = document.getElementById('table-supplier');
@@ -405,6 +399,9 @@
 
             tableBody.appendChild(tableRow);
         }
+        set_total_produksi()
+        set_total_lain()
+        set_total_packing()
 
         function set_total_produksi() {
             const el_biaya_produksi = document.querySelectorAll('.biaya_produksi input')
@@ -435,6 +432,8 @@
 
             set_total();
         }
+
+        set_volume()
 
         function set_volume() {
             const packOuterLength = document.getElementById('pack_outer_length').value;
